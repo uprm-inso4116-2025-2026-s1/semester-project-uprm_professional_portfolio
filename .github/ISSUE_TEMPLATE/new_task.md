@@ -1,27 +1,25 @@
 ---
-name: 💡 Feature Request
-about: Suggest a new feature or improvement for this project
+name: Feature Request
+about: Use this template to request or document a new feature
 title: "[Feature]: "
 labels: enhancement
 assignees: ""
 ---
 
-# 💡 Feature Request  
-
-## 📝 Summary  
-<!-- One or two sentences describing the feature or improvement -->  
-Example: Add dark mode toggle for better usability at night.  
+# 📝 Title  
+<!-- Short, clear summary of the task -->  
+Example: Implement Accessibility Testing for the Login & Sign-Up Process  
 
 ---
 
-## 🎯 Goal / Motivation  
-<!-- Why is this needed? What problem does it solve? -->  
-Example: Many users work late and find the bright interface uncomfortable.  
+## 🎯 Objective  
+<!-- What is the main goal of this issue? Why is it needed? -->  
+Example: Many users work late and find the bright interface uncomfortable.  .  
 
 ---
 
-## 📋 Proposed Solution  
-<!-- Describe what should be implemented. Include details if possible. -->  
+## 📄 Description  
+<!-- Detailed explanation of what needs to be done. Include requirements if possible. -->  
 - Add a toggle in the settings menu.  
 - Store preference locally and persist across sessions.  
 - Apply system preference by default (`prefers-color-scheme`).  
@@ -56,14 +54,16 @@ Example: Auto-switch based on time of day, but rejected for lack of user control
 
 ---
 
-## 🚦 Priority, Effort  & Difficulty
-**Priority:** (Low | Medium | High | Critical)  
-**Effort Estimate:** (S | M | L | XL)  
-**Difficulty** (1 – Easy | 10 – Complex)
+## 🚦 Urgency & Difficulty  
+**Urgency:** (1 – Low | 5 – Critical)  
+**Difficulty:** (1 – Easy | 10 – Complex)  
 
-  
+Example:  
+- Urgency: 4 – Important for ensuring inclusivity.  
+- Difficulty: 8 – Requires automated + manual assistive testing.  
+
 ---
 
-## 👤 Suggested Owner  
-<!-- Tag a developer or leave blank -->  
-Example: @janvivas  
+## 👤 Recommended Assigned Developer  
+<!-- Tag or suggest a developer to take on this task -->  
+Example: @janvivas
