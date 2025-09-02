@@ -1,0 +1,66 @@
+= Professional Portfolio Application Proposal 
+First Milestone - Software Design - INSO 4115
+Prof. Marko Schütz 
+:doctype: book
+:toc:
+:sectnums:
+
+== Informative Part
+
+=== Team
+
+=== Current Situation, Needs, Ideas
+
+==== Current Situation
+
+==== Need
+
+==== Ideas
+
+=== Scope, Span, and Synopsis
+
+==== Scope and Span
+
+==== Synopsis
+
+=== Other Activities than Just Developing Source Code
+
+=== Derived Goals
+
+== Descriptive Part
+
+=== Domain Description
+
+==== Domain Rough Sketch
+
+==== Terminology
+
+==== Domain Terminology in Relation to Domain Rough Sketch
+
+==== Narrative
+
+==== Events, Actions, and Behaviors
+
+==== Function Signatures
+
+=== Requirements
+
+==== User Stories, Epics, Features
+
+==== Personas
+
+==== Domain Requirements
+
+==== Interface Requirements
+
+==== Machine Requirements
+
+=== Implementation
+
+==== Selected Fragments of the Implementation
+
+== Analytic Part
+
+=== Concept Analysis
+
+=== Validation and Verification
