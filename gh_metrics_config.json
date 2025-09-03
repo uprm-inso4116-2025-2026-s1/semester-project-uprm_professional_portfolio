@@ -1,13 +1,13 @@
 {
   "version": "2.0",
-  "projectName": "UPRM Professional_Portfolio",
+  "projectName": "UPRM_Professional_Portfolio",
   "managers": ["julivivas", "JRRR0912", "Kay9876"],
   "milestones": {
     "Milestone #1": {
       "startDate": "2025-08-25",
       "endDate": "2025-09-19",
       "projectedGroupGrade": 100.0
-    },
+    }
   },
   "lectureTopicTaskQuota": 4,
   "countOpenIssues": false,
