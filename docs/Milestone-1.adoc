@@ -49,6 +49,26 @@ reveals needs that belong to domain actors, not to a platform. The needs are out
 
 ==== Scope and Span
 
+===== Scope
+The project's scope is to develop a mobile application aimed at improving the connection between students and recruiters. The app will address issues with traditional job search platforms and career fairs, which are often impersonal and inefficient, leading to a lack of engagement and missed opportunities. The project will encompass several key areas:
+
+* Domain Engineering: Analyze the current landscape of student-recruiter engagement, identifying pain points in job fairs, static job boards, and passive search platforms. The goal is to create a faster, more efficient, and more engaging way for students and recruiters to connect.
+
+* Requirements Engineering: Define system requirements to enable students to showcase their skills, qualifications, portfolios, and preferences dynamically. Recruiters will also be able to display what their company is offering and looking for. Requirements will focus on improving job placement rates, event attendance, and reducing the time spent in the recruitment process. These requirements will be refined continuously using direct feedback from both students and recruiters.
+
+* Software Architecture: The architecture will feature a mobile front-end with a Tinder-like swiping system, real-time notifications, and event integration. The back-end will connect with job boards, applicant tracking systems, career services, and on-campus event data to strengthen student-recruiter engagement.
+
+* Software Design Process: The project will follow an iterative design and development process, beginning with a pilot test to evaluate performance and identify areas of improvement. User feedback will drive optimization of the user interface, swiping experience, and the matching algorithm.
+
+===== Span
+The project's span is focused on creating a scalable and user-friendly solution that streamlines the student-recruiter connection process. The app is designed to support efficient matching, real-time communication, and event integration.
+
+* Specifics of the System: Students can create detailed profiles including videos, portfolios, and soft skills. Recruiters will also create company profiles that highlight roles, culture, and expectations. When both parties swipe right, they are notified of a match and can begin communicating via chat or set up interviews. The app will also notify students about campus events that involve companies they have swiped right on, even if a match has not occurred.
+
+* Target Audience and Expansion: The initial span of the project involves a pilot test with a defined user base of students and recruiters. Expansion will include partnerships with recruiters, direct marketing to universities, and support for on-campus career fairs. Over time, the platform will expand to larger student and recruiter networks beyond the initial pilot.
+
+* Methodology and Maintenance: The project will adopt an iterative methodology with regular update cycles guided by new technology trends and continuous user feedback. Effectiveness will be tracked through key metrics such as app usage frequency, match success rate, recruiter follow-up rate, event attendance, and user satisfaction. The cycle of feedback, optimization and scaling will ensure the app remains relevant and impactful.
+
 ==== Synopsis
 
 === Other Activities than Just Developing Source Code
