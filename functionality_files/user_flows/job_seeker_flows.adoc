@@ -1,0 +1,67 @@
+= Job Seeker Flows
+:toc: macro
+:toclevels: 3
+:sectnums:
+
+A self-contained AsciiDoc containing the Job Seeker (J) flows for the Tinder‑style matching app.
+
+toc::[]
+
+== Roles & Quick Definitions
+
+*Student*:: University user creating a dynamic portfolio and seeking internships or new‑grad roles.
+*Job Seeker*:: Non‑student (alumni, career switcher, professional) seeking roles.
+*Recruiter*:: Company user creating role cards, swiping talent, scheduling interviews, and exporting to ATS.
+*Match*:: Mutual right‑swipe between a candidate and a recruiter/role.
+*Events*:: Career fairs, info sessions, or virtual talks published by companies.
+
+== Job Seeker Flows (J)
+
+=== J1 — Onboarding & Account Creation
+. Launch app → *Get started*.
+. Sign up (personal email, LinkedIn, or SSO) → verify.
+. Choose role = *Job Seeker*.
+. Accept terms and privacy.
+. Land on *Profile Setup* (link:#J2[J2]).
+
+=== J2 — Profile Setup
+. Enter basics: name, location, desired roles, availability.
+. Select background: *Alumni* (optional school verify) or *Career Switcher* (certs/courses/experience).
+. Upload resume *(required for Job Seekers).*
+. Add skills, industries, job type (full‑time/contract/remote), seniority.
+. Optional: portfolio links or short intro video.
+. Save → *Discovery* (link:#J3[J3]).
+
+=== J3 — Discovery & Swiping
+. Browse recruiter/company role cards.
+. Swipe right/left; filter by seniority, experience, location.
+. Mutual match → *Match & Outreach* (link:#J4[J4]).
+
+=== J4 — Match & Outreach
+. "It’s a match!" → quick intro templates (career change, alumni connection, relocation).
+. Recruiter can access resume immediately.
+. Open *Chat* (link:#J5[J5]) or propose interview (link:#J6[J6]).
+
+=== J5 — Chat & Networking
+. In‑app chat with templates highlighting transferable skills.
+. Share links, references, or portfolio; request informational chats.
+. *Networking mode:* connect even without an open role (mentorship/referrals).
+. Safety: block/report.
+
+=== J6 — Scheduling Interviews
+. Propose or accept interview slots; calendar invites + reminders.
+. ATS integration via *Sys2* for pipeline creation.
+
+=== J7 — Events & Resources
+. Join company events; RSVP and check in via QR.
+. Access resource hub: resume tips, interview prep, alumni mentors.
+
+=== J8 — Notifications & Nudges
+. New matches, profile views by recruiters.
+. Weekly digest of roles matching profile.
+. Profile completeness nudges (e.g., *Add skills to increase visibility*).
+
+=== J9 — Post‑Match Outcomes
+. Pipeline stages mirror from recruiter’s system; job seeker sees status.
+. No reply after X days → reminder or auto‑close.
+. Withdraw application or mark *Not interested*.
