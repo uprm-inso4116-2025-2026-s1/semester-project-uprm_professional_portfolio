@@ -13,33 +13,35 @@ Prof. Marko Schütz
 
 ==== Current Situation
 
-  The transition from academia to the professional workforce presents a significant challenge for both recent graduates and employers. For students, the job search often feels impersonal and inefficient, characterized by sending countless applications into automated systems with low response rates—a phenomenon often referred to as the "resume black hole." A study by Forbes Advisor noted that nearly 60% of job seekers report feeling ghosted by a prospective employer, leading to frustration and career anxiety. Conversely, employers face their own difficulties in this saturated market; they are inundated with applications for entry-level positions, many from candidates who are not a strong skills or culture fit, making it time-consuming and costly to identify truly suitable talent. This inefficient, transactional process fails to capture the potential for genuine, mutual interest between a candidate's aspirations and a company's mission, creating a disconnected and often discouraging experience for both parties involved.
+The transition from academia to the professional workforce presents a significant challenge for both recent graduates and employers. For students, the job search often feels impersonal and inefficient, characterized by sending countless applications into automated systems with low response rates—a phenomenon often referred to as the "resume black hole." A study by Forbes Advisor noted that nearly 60% of job seekers report feeling ghosted by a prospective employer, leading to frustration and career anxiety. Conversely, employers face their own difficulties in this saturated market; they are inundated with applications for entry-level positions, many from candidates who are not a strong skills or culture fit, making it time-consuming and costly to identify truly suitable talent. This inefficient, transactional process fails to capture the potential for genuine, mutual interest between a candidate's aspirations and a company's mission, creating a disconnected and often discouraging experience for both parties involved. 
 
 ==== Need
 
-  Structural friction in early-career recruiting (lack of visibility, opaque communication, and operational overload) reveals needs that belong to domain actors, not to a platform. The needs are outlined below.
+Structural friction in early-career recruiting (lack of visibility, opaque communication, and operational overload) 
+reveals needs that belong to domain actors, not to a platform. The needs are outlined below.
 
-  Applicant / recent graduates:
-  - Be discoverable for roles that truly match skills, interests, eligibility, availability, and location.
-  - Receive timely, transparent feedback about interest and status to reduce ghosting and uncertainty.
-  - Fair access to opportunities and control over privacy when sharing work and personal data.
-  - Guidance to translate coursework, projects, and soft skills into recruiter-trusted signals.
+===== Applicant / Recent Graduates
+* Be discoverable for roles that truly match skills, interests, eligibility, availability, and location.  
+* Receive timely, transparent feedback about interest and status to reduce ghosting and uncertainty.  
+* Ensure fair access to opportunities and maintain control over privacy when sharing work and personal data.  
+* Obtain guidance to translate coursework, projects, and soft skills into recruiter-trusted signals.  
 
-  Employers / Recruiter:
-  - Efficient triage toward candidates who meet must-have criteria and show mutual interest.
-  - Rich, trustworthy evidence of capability and professional culture.
-  - Predictable, compliant communication and scheduling to minimize drop-off and miscommunication.
+===== Employers / Recruiters
+* Efficient triage toward candidates who meet must-have criteria and show mutual interest.  
+* Rich, trustworthy evidence of capability and professional culture.  
+* Predictable, compliant communication and scheduling to minimize drop-off and miscommunication.  
 
-  Cross-cutting needs:
-  - Mutual-interest signaling before deep engagement.
-  - Early expectation alignment on role scope, compensation range, work modality, and timeline.
-  - Low-friction coordination for first conversations and follow-ups.
-  - Trust and safety: identity assurance, respectful conduct, and clear reporting channels.
+===== Cross-Cutting Needs
+* Mutual-interest signaling before deep engagement.  
+* Early expectation alignment on role scope, compensation range, work modality, and timeline.  
+* Low-friction coordination for first conversations and follow-ups.  
+* Trust and safety: identity assurance, respectful conduct, and clear reporting channels.  
 
-  Project-internal enabling needs:
-  - A shared domain description and a baseline set of requirements so the team understands needs independently of any system-to-be.
-  - A consistent, ubiquitous language across analysis, design, and code to prevent concept drift.
-  - Plans for requirements, architecture, component design, implementation, and testing to support whatever idea is chosen later.
+===== Project-Internal Enabling Needs
+* A shared domain description and a baseline set of requirements so the team understands needs independently of any system-to-be.  
+* A consistent, ubiquitous language across analysis, design, and code to prevent concept drift.  
+* Plans for requirements, architecture, component design, implementation, and testing to support whatever idea is chosen later.  
+
 
 ==== Ideas
 
@@ -59,7 +61,7 @@ Prof. Marko Schütz
 
 ==== Domain Rough Sketch
 
-NOTE: This is an unprocessed collection of notes, quotes, and observations from the domain (student–recruiter interactions). 
+NOTE: This is an unprocessed collection of notes, quotes, and observations from the domain (student-recruiter interactions). 
 
 - Student: "At the job fair, I stood in line 40 minutes just to hand over my résumé."
 - Recruiter: "We meet hundreds of students in a single afternoon. After a while, names and faces blur together."
