@@ -59,6 +59,30 @@ Prof. Marko Schütz
 
 ==== Domain Rough Sketch
 
+NOTE: This is an unprocessed collection of notes, quotes, and observations from the domain (student–recruiter interactions). 
+
+- Student: "At the job fair, I stood in line 40 minutes just to hand over my résumé."
+- Recruiter: "We meet hundreds of students in a single afternoon. After a while, names and faces blur together."
+- Some recruiters use spreadsheets during the fair to jot notes about students: "Has Python," "Strong communication," "Not ready."
+- Student frustration: "I never know if recruiters actually looked at my résumé or if it went into a pile."
+- Recruiter: "We usually contact students weeks later, but many either lose interest or already have offers by then."
+- Students often rely on school provided career services for résumé templates, but recruiters say they "all look the same."
+- Recruiters: "We prefer quick ways to identify students with the right skills rather than going résumé by résumé."
+- Informal hallway conversations sometimes lead to opportunities, students value those more than formal booths.
+- Some recruiters only target juniors and seniors, ignoring freshmen.
+- Student: "I’m nervous approaching a recruiter if I don’t already know about the company."
+- Recruiters say a lot of students come unprepared, don’t know what positions are open.
+- Student: "I applied through Handshake, LinkedIn, and the company website. Did they even see my application?"
+- Recruiter: "We’re under pressure to find talent quickly. If the first batch of candidates looks good, we stop looking."
+- Some recruiters mention re-hiring interns they already know -> "trust factor."
+- Students compare the process to "speed dating", due to quick, superficial interactions.
+- Recruiters complain they can’t gauge "soft skills" (teamwork, communication) in the short job fair chats.
+- Student: "I wish I knew immediately if I had a chance instead of waiting months."
+- Job fairs are often loud, crowded, chaotic -> recruiters and students both stressed.
+- Some recruiters hand out swag -> students often remember the company by this.
+- Students sometimes attend fairs "just to practice talking" rather than actually seeking jobs.
+- Recruiters: "We’d like to pre screen students before the fair to save time."
+
 ==== Terminology
 
 ==== Domain Terminology in Relation to Domain Rough Sketch
