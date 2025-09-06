@@ -9,6 +9,62 @@ Prof. Marko Schütz
 
 === Team
 
+For Milestone 1, the team was organized into four functional groups. These are Research, Functionality, Design, and Documentation; plus three Managers. In this context, all team members are considered partners. No external partners have been identified for this milestone; if any arise, their roles and responsibilities will be documented. The lists are presented in alphabetical order and indicate each group’s Team Leader. The Tasks column is reserved for recording completed issues.
+
+===== Managers:
+[cols="3,2,5",options="header"]
+|===
+| Student| GitHub username | Tasks
+| Kaysha L. Pagan López | link:https://github.com/Kay9876[@Kay9876] | Nothing at all.
+| Juan R. Rivera Rodríguez | link:https://github.com/JRRR0912[@JRRR0912] | Nothing at all.
+| Julian A. Vivas Gandarillas | link:https://github.com/julivivas[@julivivas] | Nothing at all.
+|===
+
+===== Design:
+[cols="3,2,5",options="header"]
+|===
+| Student | GitHub username | Tasks
+| Luis J. Cruz Cruz _(Team Leader)_ | link:https://github.com/LuisJCruz[@LuisJCruz] | #4, #16, #45
+| Yandre Cabán Torres | link:https://github.com/YandreCaban[@YandreCaban] | #16, #35
+| Carlos A. Ferrer Hayes | link:https://github.com/CarlosxFerrer[@CarlosxFerrer] | #16, #34
+| Osvaldo F. Figueroa Canino | link:https://github.com/Osvaldoo1414[@Osvaldoo1414] | #16, #36
+| Ariana P. Rodríguez Méndez | link:https://github.com/arianrodz21[@arianrodz21] | #37
+|===
+
+===== Documentation:
+[cols="3,2,5",options="header"]
+|===
+| Student | GitHub username | Tasks
+| Jeanpiere I. Sánchez Félix _(Team Leader)_ | link:https://github.com/JeanSanchezFelix[@JeanSanchezFelix] | #2, #15, #23, #26, #45
+| Carlos E. Cabán González | link:https://github.com/Carloscaban[@Carloscaban] | #32, #33
+| Jahdiel E. Montero Alicea | link:https://github.com/JadStelar[@JadStelar] | #29, #30, #31
+| Kiara N. Pérez Rivera | link:https://github.com/kiarancole[@kiarancole] | #47, #48, #63
+| Pedro A. Rodríguez Vélez | link:https://github.com/PedroRodz[@PedroRodz] | #13, #14, #28, #41
+| Alexa M. Zaragoza Torres | link:https://github.com/alexamzt[@alexamzt] | #25, #27
+|===
+
+===== Functionality:
+[cols="3,2,5",options="header"]
+|===
+| Student | GitHub username | Tasks
+| Diego Pérez Ganradillas _(Team Leader)_ | link:https://github.com/diegoperez16[@diegoperez16] | #17, #18, #21, #45, #65
+| Axel A. Orta Félix | link:https://github.com/Axl47[@Axl47] | #20
+| Carlos Pepin Delgado |  link:https://github.com/carlospepin23[@carlospepin23] | #19, #21, #40, #42, #43, #44
+| Ryan R. Vélez Villarrubia | link:https://github.com/RyanVelez101[@RyanVelez101] | #66
+|===
+
+===== Research:
+[cols="3,2,5",options="header"]
+|===
+| Student | GitHub username | Tasks
+| Horeb Cotto Rosado _(Team Leader)_ | link:https://github.com/horebcotto21[@horebcotto21] | #6, #12, #45
+| Samarys Barreiro Meléndez | link:https://github.com/SamarysB[@SamarysB] | #7
+| Fernando Castro Cancel | link:https://github.com/fernan-castro[@fernan-castro] | #10
+| Abdiel Cotto Claudio | link:https://github.com/abdielcotto[@abdielcotto] | #11
+| Naedra J. Feliciano Agostini | link:https://github.com/Naedra[@Naedra] | #8
+| Heribiell A. Rodríguez Cruz | link:https://github.com/LightPolution[@LightPolution] | #9
+|===
+
 === Current Situation, Needs, Ideas
 
 ==== Current Situation
