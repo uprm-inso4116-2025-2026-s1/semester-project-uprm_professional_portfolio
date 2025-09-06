@@ -15,9 +15,9 @@ For Milestone 1, the team was organized into four functional groups. These are R
 [cols="3,2,5",options="header"]
 |===
 | Student| GitHub username | Tasks
-| Kaysha L. Pagan López | link:https://github.com/Kay9876[@Kay9876] | Nothing at all.
-| Juan R. Rivera Rodríguez | link:https://github.com/JRRR0912[@JRRR0912] | Nothing at all.
-| Julian A. Vivas Gandarillas | link:https://github.com/julivivas[@julivivas] | Nothing at all.
+| Kaysha L. Pagan López | link:https://github.com/Kay9876[@Kay9876] | 
+| Juan R. Rivera Rodríguez | link:https://github.com/JRRR0912[@JRRR0912] | 
+| Julian A. Vivas Gandarillas | link:https://github.com/julivivas[@julivivas] | 
 |===
 
 ===== Design:
