@@ -177,6 +177,137 @@ The domain is governed by stable rules: each search process ties recruiters to a
 
 ==== Events, Actions, and Behaviors
 
+===== Events
+
+[%autowidth.stretch,options="header"]
+|===
+|Event |Who/What triggers it |Immediate responses |Expected outcome/postcondition |Anchor to Sketch
+
+|Recruiting event announced or openings published
+|Recruiter, University, or Organizer
+|Recruiter defines roles and requirements; the organizer or university disseminates the information
+|Candidates learn about opportunities and plan attendance or apply online
+|Job fairs; desire to pre-screen before the fair
+
+|Arrival and check-in at the event such as a campus fair, industry fair, or meetup
+|Candidate or Student
+|Candidate registers and receives the map and agenda
+|Candidate is able to approach booths and tables
+|Fairs are loud, crowded, and chaotic
+
+|Queue formed in front of a booth or table
+|Candidates
+|Candidate waits; staff organizes the line
+|Long wait times and very short turns
+|Reports of waiting up to forty minutes
+
+|Brief booth interaction / quick pitch
+|Candidate and Recruiter
+|Candidate delivers a 30 to 60 second elevator pitch; recruiter asks quick questions
+|Initial and superficial evaluation
+|Interactions resemble speed dating and create stress on both sides
+
+|Resume or portfolio handoff, physical or digital
+|Candidate
+|Candidate hands over the résumé or portfolio; recruiter receives and sorts it
+|The document enters a pile or list and may lose visibility
+|Concern that résumés are not actually reviewed
+
+|Recruiter note taking
+|Recruiter
+|Recruiter records short notes and tags on paper or in a spreadsheet, for example: has Python; not ready
+|Notes are linked to the contact for later review
+|Many recruiters rely on spreadsheets for quick notes
+
+|Informal hallway or meetup conversation
+|Candidate and Recruiter
+|They meet away from the booth and talk informally
+|May create a lead or opportunity
+|Informal conversations sometimes lead to opportunities
+
+|Application submitted through multiple portals or via referral
+|Candidate
+|Candidate applies through Handshake, LinkedIn, the company website, or by referral
+|Parallel entries for the same profile
+|Uncertainty about whether multichannel applications are reviewed
+
+|Pre-screen or quick sift
+|Recruiter or System
+|Recruiter uses heuristics such as year, visible skills, and seniority; the system applies rules
+|Candidate is marked preliminarily eligible or ruled out by a documented rule
+|Preference for quick identification of fit and targeting juniors or seniors
+
+|Delayed invitation or follow up
+|Recruiter
+|Recruiter contacts candidates weeks later
+|Some candidates are no longer available or interested
+|Late outreach leads to loss of interest
+
+|Decision to stop sourcing
+|Recruiter
+|Recruiter stops the search when the first batch looks good
+|The window for new applicants narrows
+|Search ends once early candidates meet expectations
+
+|Rehire of known talent such as former interns
+|Recruiter
+|Recruiter prioritizes known profiles
+|Faster hiring due to a trust factor
+|Rehiring former interns is common
+
+|Swag or promotional material handed out
+|Recruiter
+|Recruiter distributes swag
+|Improves employer brand recall
+|Candidates often remember the company by the swag
+|===
+
+===== Actions
+
+*Candidate.*  
+Before showing up, the candidate tunes the résumé and, if applicable, the professional portfolio to the role and researches the company. When it is their turn, they deliver a brief elevator pitch, hand over a résumé, and ask specific questions. In parallel, they submit applications through one or more platforms and keep a courteous follow up thread by email or LinkedIn. If responses stall or plans change, they may withdraw or pause the application.
+
+*Recruiter.*  
+The recruiter defines the role, its requirements, and the target audience, whether junior or senior, students or experienced hires. They publish the opening and organize their presence at fairs or meetups. During screening, they jot quick notes and tags about candidates, run prescreens, invite candidates to interviews, and keep communication moving. When the first batch covers the need, sourcing stops. Known talent such as former interns is often prioritized because the risk is lower.
+
+*System/Institution.*  
+Supports communication and record keeping. It announces events and openings, records check-ins, centralizes résumés and applications, deduplicates multichannel entries, and preserves traceability through versioning and logs. It also provides tools for note taking and auditable prescreen rules.
+
+*Third parties.*  
+Referees and background check providers supply information that helps corroborate the hiring decision when appropriate.
+
+===== Behaviors
+
+*In person recruiting flow.*  
+The process moves from announcement to attendance, then queuing, a brief conversation at the booth, and follow up. Noise, crowding, and time pressure push interactions toward quick impressions and coarse screening. Soft skills are hard to judge in under a minute.
+
+*Multichannel applications and unclear status.*  
+Candidates often apply through several portals and by referral. Without a single source of truth, duplicate records and uncertain statuses appear, which confuses both sides and slows review.
+
+*Fast screening and prioritization.*  
+To manage volume, recruiters rely on simple heuristics such as year, visible skills, and seniority, as well as rule based filters. Throughput improves, but the risk of overlooking strong profiles increases.
+
+*Communication delay and attrition.*  
+If outreach arrives weeks after the first contact, interest declines and other processes advance. Early signals and timely touchpoints reduce drop off.
+
+*Stopping after the first promising group.*  
+When the initial cohort seems sufficient, active sourcing pauses. The window for new applicants narrows and the range of options can shrink.
+
+*Rehiring based on trust.*  
+People already known to the team, such as former interns, are often prioritized because their performance is validated. Time to hire shortens and uncertainty decreases compared with external candidates.
+
+*Uneven candidate preparation.*  
+Some arrive with generic résumés or limited knowledge of the company, while others attend mainly to practice and build confidence. The level of preparation shapes the quality of the pitch and the impression left.
+
+*Informal networking that converts well.*  
+Unplanned conversations away from the booth allow calmer and more genuine exchanges that sometimes outperform the formal interaction.
+
+*Notes as the memory of the process.*  
+With many brief encounters, concise notes and tags become essential to remember people and make decisions. Consistent record keeping improves later review and shortlist quality.
+
+*Brand recall from presence and giveaways.*  
+A well run booth and thoughtful materials strengthen memory of the employer and help reengage candidates after the event.
+
 ==== Function Signatures
 
 === Requirements
