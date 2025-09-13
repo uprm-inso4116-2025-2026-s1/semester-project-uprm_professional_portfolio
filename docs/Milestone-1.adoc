@@ -69,11 +69,7 @@ For Milestone 1, the team was organized into four functional groups. These are R
 
 ==== Current Situation
 
-  The transition from academia to the professional workforce presents a significant challenge for both recent graduates and employers. For students, the job search often feels impersonal and inefficient, characterized by +
-sending countless applications into automated systems with low response rates—a phenomenon often referred to as the "resume black hole." A study by Forbes Advisor noted that nearly 60% of job seekers report feeling +
-ghosted by a prospective employer, leading to frustration and career anxiety. Conversely, employers face their own difficulties in this saturated market; they are inundated with applications for entry-level positions, +
-many from candidates who are not a strong skills or culture fit, making it time-consuming and costly to identify truly suitable talent. This inefficient, transactional process fails to capture the potential for genuine, +
-mutual interest between a candidate's aspirations and a company's mission, creating a disconnected and often discouraging experience for both parties involved.
+  The transition from academia to the professional workforce presents a significant challenge for both recent graduates and employers. For students, the job search often feels impersonal and inefficient, characterized by sending countless applications into automated systems with low response rates—a phenomenon often referred to as the "resume black hole." A study by Forbes Advisor noted that nearly 60% of job seekers report feeling ghosted by a prospective employer, leading to frustration and career anxiety. Conversely, employers face their own difficulties in this saturated market; they are inundated with applications for entry-level positions, many from candidates who are not a strong skills or culture fit, making it time-consuming and costly to identify truly suitable talent. This inefficient, transactional process fails to capture the potential for genuine, mutual interest between a candidate's aspirations and a company's mission, creating a disconnected and often discouraging experience for both parties involved.
 
 ==== Need
 
@@ -105,18 +101,11 @@ reveals needs that belong to domain actors, not to a platform. The needs are out
 
 ==== Ideas
 
-  We propose a three-part design focused on a personalized, efficient, and high-quality user experience. The foundation of this approach is a dual persona onboarding and profile system. This means the system would +
-initiate with a single sign-up process that creates two fundamentally different experiences based on the user, whether they are a recruiter or a candidate. The system will request only the most relevant information for +
-each persona, such as linking portfolios for students or verifying company details for recruiters. The system will have an interface that avoids clutter and ensures the platform feels built for each user from their very +
-first interaction. Making it easier and more inclusive without replacing the current infrastructure.
+  We propose a three-part design focused on a personalized, efficient, and high-quality user experience. The foundation of this approach is a dual persona onboarding and profile system. This means the system would initiate with a single sign-up process that creates two fundamentally different experiences based on the user, whether they are a recruiter or a candidate. The system will request only the most relevant information for each persona, such as linking portfolios for students or verifying company details for recruiters. The system will have an interface that avoids clutter and ensures the platform feels built for each user from their very first interaction. Making it easier and more inclusive without replacing the current infrastructure.
 
-  Once users are onboarded, the swiping mechanism would enhance the core matching process by moving beyond a simple binary decision. This means creating carefully designed card UIs that act as a layered information +
-display. The profiles can have an essentials only view and a more detailed view. The key to this design is a rigorous information hierarchy that is informed by user research and which surfaces key decision making data +
-relevant to the user directly in the swiping interface to maximize informed matches without causing overload.
+  Once users are onboarded, the swiping mechanism would enhance the core matching process by moving beyond a simple binary decision. This means creating carefully designed card UIs that act as a layered information display. The profiles can have an essentials only view and a more detailed view. The key to this design is a rigorous information hierarchy that is informed by user research and which surfaces key decision making data relevant to the user directly in the swiping interface to maximize informed matches without causing overload.
 
-  Finally, to ensure connections are meaningful and productive, the mutual match connection and messaging gateway would unlock direct messaging only after both parties have shown interest. The post match screen would +
-immediately facilitate the first message and it could include some kind of icebreaker or customizable openers. Furthermore, a dedicated inbox would organize conversations, allow for easy profile review, and potentially +
-integrate scheduling tools, transforming a simple match into a genuine gateway to opportunity.
+  Finally, to ensure connections are meaningful and productive, the mutual match connection and messaging gateway would unlock direct messaging only after both parties have shown interest. The post match screen would immediately facilitate the first message and it could include some kind of icebreaker or customizable openers. Furthermore, a dedicated inbox would organize conversations, allow for easy profile review, and potentially integrate scheduling tools, transforming a simple match into a genuine gateway to opportunity.
 
 
 === Scope, Span, and Synopsis
