@@ -346,6 +346,16 @@ The system must uniquely identify every candidate, every recruiter, every employ
 
 ==== Interface Requirements
 
+The first requirement is that the system must provide a means for a new user identifying as a recruiter to initialize their internal recruiter profile representation. This initialization shall be performed by the recruiter via a structured form presented during the registration process. The form must include fields to capture the shared phenomena of company name, professional email address, and job role. The initialisation process shall include a validation step where a confirmation email is sent to the provided professional email address. The internal profile representation shall not be considered active until this validation is complete.
+
+Secondly, the system must provide a means to update the internal representation of a student's skills when these phenomena change in the domain such as adding new projects. The student shall be able to initiate an update via an edit profile screen. The system shall provide input fields and controls to allow the student to modify their skill set. The internal representation shall be updated immediately upon the student saving the changes.
+The next requirement is that the internal event of a match must be communicated to the involved users to reflect this new shared state in the domain. The system shall present a visual notification to both users immediately upon the match being recorded in the system. This interface must provide a clear indication of who the match is with and shall include a prominent means to initiate communication, thereby enabling the next domain action.
+
+The system must provide a means for an authorized recruiter to correct the internal representation of their company's information if it was initially entered incorrectly or becomes outdated. Recruiters shall have access to a company profile management screen. This interface shall allow them to edit fields such as company description and website URL. The system shall log all such changes. The company name field shall be immutable through this interface after the initial validation to ensure traceability. Changes to the company name must be handled by a separate administrative process to maintain data integrity.
+
+Lastly, the internal system state must be updated to reflect a user's swipe action on a profile card. The user's gesture shall be the sole initiating action. The system shall immediately update the internal state to record this decision and remove the presented profile card from the user's current deck. No explicit save or confirm action is required; the gesture itself is the interface event.
+
+
 ==== Machine Requirements
 
 === Implementation
