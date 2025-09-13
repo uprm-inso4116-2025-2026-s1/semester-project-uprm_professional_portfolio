@@ -69,7 +69,7 @@ For Milestone 1, the team was organized into four functional groups. These are R
 
 ==== Current Situation
 
-The transition from academia to the professional workforce presents a significant challenge for both recent graduates and employers. For students, the job search often feels impersonal and inefficient, characterized by sending countless applications into automated systems with low response rates—a phenomenon often referred to as the "resume black hole." A study by Forbes Advisor noted that nearly 60% of job seekers report feeling ghosted by a prospective employer, leading to frustration and career anxiety. Conversely, employers face their own difficulties in this saturated market; they are inundated with applications for entry-level positions, many from candidates who are not a strong skills or culture fit, making it time-consuming and costly to identify truly suitable talent. This inefficient, transactional process fails to capture the potential for genuine, mutual interest between a candidate's aspirations and a company's mission, creating a disconnected and often discouraging experience for both parties involved. 
+  The transition from academia to the professional workforce presents a significant challenge for both recent graduates and employers. For students, the job search often feels impersonal and inefficient, characterized by sending countless applications into automated systems with low response rates—a phenomenon often referred to as the "resume black hole." A study by Forbes Advisor noted that nearly 60% of job seekers report feeling ghosted by a prospective employer, leading to frustration and career anxiety. Conversely, employers face their own difficulties in this saturated market; they are inundated with applications for entry-level positions, many from candidates who are not a strong skills or culture fit, making it time-consuming and costly to identify truly suitable talent. This inefficient, transactional process fails to capture the potential for genuine, mutual interest between a candidate's aspirations and a company's mission, creating a disconnected and often discouraging experience for both parties involved. 
 
 ==== Need
 
@@ -100,6 +100,11 @@ reveals needs that belong to domain actors, not to a platform. The needs are out
 
 
 ==== Ideas
+
+  We propose a three-part design focused on a personalized, efficient, and high-quality user experience. The foundation of this approach is a dual persona onboarding and profile system. This means the system would initiate with a single sign-up process that creates two fundamentally different experiences based on the user, whether they are a recruiter or a candidate. The system will request only the most relevant information for each persona, such as linking portfolios for students or verifying company details for recruiters. The system will have an interface that avoids clutter and ensures the platform feels built for each user from their very first interaction. Making it easier and more inclusive without replacing the current infrastructure.
+  Once users are onboarded, the swiping mechanism would enhance the core matching process by moving beyond a simple binary decision. This means creating carefully designed card UIs that act as a layered information display. The profiles can have an essentials only view and a more detailed view. The key to this design is a rigorous information hierarchy that is informed by user research and which surfaces key decision making data relevant to the user directly in the swiping interface to maximize informed matches without causing overload.
+  Finally, to ensure connections are meaningful and productive, the mutual match connection and messaging gateway would unlock direct messaging only after both parties have shown interest. The post match screen would immediately facilitate the first message and it could include some kind of icebreaker or customizable openers. Furthermore, a dedicated inbox would organize conversations, allow for easy profile review, and potentially integrate scheduling tools, transforming a simple match into a genuine gateway to opportunity.
+
 
 === Scope, Span, and Synopsis
 
@@ -164,6 +169,16 @@ NOTE: This is an unprocessed collection of notes, quotes, and observations from 
 ==== Terminology
 
 ==== Domain Terminology in Relation to Domain Rough Sketch
+
+*Recruiter: (Actor)A user who represents a company or organization and uses the platform to discover and evaluate potential candidates. This term was refined from the rough concept of employer to specify the human actor, distinct from the company entity itself.
+*Candidate: (Actor)A user who is seeking professional opportunities and uses the platform to discover companies and recruiters by reviewing recruiter profiles. This term should be revised as a candidate alludes to the user's primary role once a connection is made.
+*Profile: The core digital representation of a user within the system. It is categorized as either a candidate profile or a recruiter profile containing corresponding relevant information.
+*Swipe: The primary gesture of evaluation. A right swipe indicates a like or expression of interest, and a left swipe indicates a Pass, which indicates a dismissal. This defines the core action of the system, removing ambiguity from the informal "Tinder-like" description.
+*Profile Card: The user interface component that presents a condensed view of a Profile within the feed for the purpose of being swiped on. This term distinguishes the interactive element from the full Profile data structure.
+*Match: A domain event that occurs only when two users have mutually Liked each other's profile cards.
+*Connection: The persistent relationship state between two users that is established upon a match. This term defines the context in which messaging and further interaction can occur. Moving beyond the transient event of the match itself.
+*Discovery Feed: The main application view where a user is presented with a “deck” of profile cards to evaluate. This term provides a specific name for the core screen, derived from its purpose.
+
 
 ==== Narrative
 
@@ -309,6 +324,11 @@ With many brief encounters, concise notes and tags become essential to remember 
 A well run booth and thoughtful materials strengthen memory of the employer and help reengage candidates after the event.
 
 ==== Function Signatures
+
+  The system's core domain logic is defined by a set of function signatures that explicitly outline operations, inputs, outputs, and potential failure states. The core user interaction is governed by swiping and matching mechanics. The process is as follows; getNextProfile : UserId -> Option ProfileCard . This function fetches the next profile card from a user's personalized deck and returns none if the deck is empty. Once a user swipes,processSwipe : UserId >< ProfileId >< SwipeDirection -> Result<Unit, Error> records the swipe direction to determine like or pass for a given profile, returning a result that signifies success or an error. Following a like action, checkForMatch : UserId >< ProfileId -> Option Match determines if the swipe created a mutual like.
+  Upon a successful match, profile and connection management functions take over. The createConnection : Match -> Connection function creates persistent  new connections between the two users, establishing a channel for communication. Immediately after a connection is formed, sendMessage : ConnectionId >< UserId >< MessageContent -> Result<Message, Error> allows a participant to add a new message to the chat history, returning the sent message or an error for invalid requests. For viewing detailed information, getProfile : UserId -> Result<Profile, Error> retrieves a user's full profile as opposed to the condensed profile card with checks to ensure the requester has appropriate permissions.
+  Finally, session and state management functions handle user authentication and data preparation. The initializeUserSession : UserCredentials -> Result<UserSession, Error> function authenticates a user's credentials and, if successful, creates a user session containing their identity and role. To populate the swiping interface, getUserDeck : UserId -> Deck is responsible for building a user's deck of profile cards. This function encapsulates the platform's matching algorithm, dynamically generating a personalized queue of profiles based on the user's preferences and past activity.
+
 
 === Requirements
 
