@@ -170,21 +170,14 @@ NOTE: This is an unprocessed collection of notes, quotes, and observations from 
 
 ==== Domain Terminology in Relation to Domain Rough Sketch
 
-*Recruiter: (Actor)A user who represents a company or organization and uses the platform to discover and evaluate potential candidates. This term was refined from the rough concept of employer to specify the human actor, distinct from the company entity itself.
-
-*Candidate: (Actor)A user who is seeking professional opportunities and uses the platform to discover companies and recruiters by reviewing recruiter profiles. This term should be revised as a candidate alludes to the user's primary role once a connection is made.
-
-*Profile: The core digital representation of a user within the system. It is categorized as either a candidate profile or a recruiter profile containing corresponding relevant information.
-
-*Swipe: The primary gesture of evaluation. A right swipe indicates a like or expression of interest, and a left swipe indicates a Pass, which indicates a dismissal. This defines the core action of the system, removing ambiguity from the informal "Tinder-like" description.
-
-*Profile Card: The user interface component that presents a condensed view of a Profile within the feed for the purpose of being swiped on. This term distinguishes the interactive element from the full Profile data structure.
-
-*Match: A domain event that occurs only when two users have mutually Liked each other's profile cards.
-
-*Connection: The persistent relationship state between two users that is established upon a match. This term defines the context in which messaging and further interaction can occur. Moving beyond the transient event of the match itself.
-
-*Discovery Feed: The main application view where a user is presented with a “deck” of profile cards to evaluate. This term provides a specific name for the core screen, derived from its purpose.
+* Recruiter: (Actor)A user who represents a company or organization and uses the platform to discover and evaluate potential candidates. This term was refined from the rough concept of employer to specify the human actor, distinct from the company entity itself.
+* Candidate: (Actor)A user who is seeking professional opportunities and uses the platform to discover companies and recruiters by reviewing recruiter profiles. This term should be revised as a candidate alludes to the user's primary role once a connection is made.
+* Profile: The core digital representation of a user within the system. It is categorized as either a candidate profile or a recruiter profile containing corresponding relevant information.
+* Swipe: The primary gesture of evaluation. A right swipe indicates a like or expression of interest, and a left swipe indicates a Pass, which indicates a dismissal. This defines the core action of the system, removing ambiguity from the informal "Tinder-like" description.
+* Profile Card: The user interface component that presents a condensed view of a Profile within the feed for the purpose of being swiped on. This term distinguishes the interactive element from the full Profile data structure.
+* Match: A domain event that occurs only when two users have mutually Liked each other's profile cards.
+* Connection: The persistent relationship state between two users that is established upon a match. This term defines the context in which messaging and further interaction can occur. Moving beyond the transient event of the match itself.
+* Discovery Feed: The main application view where a user is presented with a “deck” of profile cards to evaluate. This term provides a specific name for the core screen, derived from its purpose.
 
 
 ==== Narrative
