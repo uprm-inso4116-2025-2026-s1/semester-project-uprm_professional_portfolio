@@ -1,0 +1,63 @@
+= Recruiter Flows
+:toc: macro
+:toclevels: 3
+:sectnums:
+
+A self-contained AsciiDoc containing the Recruiter (R) flows for the Tinder‑style matching app.
+
+toc::[]
+
+== Roles & Quick Definitions
+
+*Student*:: University user creating a dynamic portfolio and seeking internships or new‑grad roles.
+*Job Seeker*:: Non‑student (alumni, career switcher, professional) seeking roles.
+*Recruiter*:: Company user creating role cards, swiping talent, scheduling interviews, and exporting to ATS.
+*Match*:: Mutual right‑swipe between a candidate and a recruiter/role.
+*Events*:: Career fairs, info sessions, or virtual talks published by companies.
+
+== Recruiter Flows (R)
+
+=== R1 — Onboarding & Account Creation
+. Sign up (work email/SSO) → verify.
+. Choose role = *Recruiter*.
+. Accept terms and branding rules.
+. Create company org or join existing (domain match/invite).
+. Land on *Company Profile* (link:#R2[R2]).
+
+=== R2 — Company & Role Profile
+. Complete company profile (mission, culture, benefits, media).
+. Create *Role Cards* (title, location, pay band, skills, min reqs).
+. Define target preferences (majors, grad windows, locations for student roles; experience/seniority for job seekers).
+. Save → *Talent Discovery* (link:#R3[R3]).
+
+=== R3 — Talent Discovery & Swiping
+. Swipe through student/job‑seeker cards using role filters.
+. Tap for full profile (video, projects, skills, resume).
+. Right‑swipe to signal interest; left = pass; *Save* to shortlist.
+. Mutual right‑swipe → *Match* (link:#R4[R4]).
+
+=== R4 — Match & Outreach
+. "It’s a match!" → use templates (intro, role pitch, scheduling link).
+. Open *Chat* (link:#R5[R5]) or propose interview (link:#R6[R6]).
+. SLA reminder if no response within N days.
+
+=== R5 — Chat & Collaboration
+. Chat with candidate; share links/files.
+. Mention teammates/hiring managers for collaboration.
+. Hand‑off to ATS or continue in‑app.
+
+=== R6 — Scheduling & ATS Bridge
+. Choose interview template (screen/tech/onsite).
+. Select interviewers and available windows.
+. Candidate confirms slot → calendar invites + video link.
+. If ATS connected → create candidate, stage, and interview automatically.
+
+=== R7 — Events Management
+. Create events (career fair, info session) with audience & RSVP cap.
+. Publish → followers/targets notified.
+. Track attendance via QR; export attendees; send follow‑ups.
+
+=== R8 — Pipeline & Outcomes
+. Track stages (new, contacted, screening, onsite, offer).
+. Mark outcomes; trigger feedback surveys.
+. Close role; export matched candidates to ATS.

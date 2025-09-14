@@ -1,0 +1,73 @@
+= Student Flows
+:toc: macro
+:toclevels: 3
+:sectnums:
+
+A self-contained AsciiDoc containing the Student (S) flows for the Tinder‑style matching app.
+
+toc::[]
+
+== Roles & Quick Definitions
+
+*Student*:: University user creating a dynamic portfolio and seeking internships or new‑grad roles.
+*Job Seeker*:: Non‑student (alumni, career switcher, professional) seeking roles.
+*Recruiter*:: Company user creating role cards, swiping talent, scheduling interviews, and exporting to ATS.
+*Match*:: Mutual right‑swipe between a candidate and a recruiter/role.
+*Events*:: Career fairs, info sessions, or virtual talks published by companies.
+
+== Student Flows (S)
+
+=== S1 — Onboarding & Account Creation
+. Launch app → *Get started*.
+. Sign up (school email or SSO) → verify email.
+. Choose role = *Student*.
+. Review & accept terms and privacy.
+. Land on *Profile Setup* (link:#S2[S2]).
+
+=== S2 — Profile Setup (Dynamic Portfolio)
+. Enter basics: major, grad year, location prefs.
+. Add skills (hard/soft), interests, desired job type (internship/full‑time).
+. Attach media: optional intro video, portfolio links, projects.
+. Upload resume (optional for students).
+. Set swipe preferences (industries, company size, relocation, visa).
+. *Save* → go to *Discovery* (link:#S3[S3]).
+
+=== S3 — Discovery & Swiping
+. View company/role cards (logo, highlights, culture blurbs).
+. Swipe right = interested; left = pass; tap for details.
+. Optional: *Follow* a company to see events without a match.
+. If mutual right‑swipe → *Match* (link:#S4[S4]).
+. If out of cards → adjust filters or return later.
+
+=== S4 — Match & First Contact
+. "It’s a match!" modal with quick intro prompt.
+. Open *Chat* (link:#S5[S5]) or go to *Scheduling* (link:#S6[S6]).
+. Push/email notifications sent to both parties.
+
+=== S5 — Chat & Safety
+. In‑app chat with message templates (intro, availability, salary range nudge).
+. Share portfolio/GitHub links and attachments.
+. Safety options: block/report user.
+. From chat, suggest interview → *Scheduling* (link:#S6[S6]).
+
+=== S6 — Scheduling Interviews
+. Student proposes time slots *or* accepts recruiter slots.
+. Recruiter confirms → calendar invites (ICS) sent.
+. Automated reminders 24h and 1h before.
+. If ATS is connected, interview is created via *Sys2*.
+
+=== S7 — Events & Fairs (Company Follow)
+. Following a company enables an *Events* feed.
+. View on‑campus/virtual events; RSVP → reminders + QR check‑in.
+. After event, prompt to swipe on attending companies or leave feedback.
+
+=== S8 — Notifications & Nudges
+. New match → open chat CTA.
+. Recruiter viewed your profile → suggest greeting.
+. New events from followed companies.
+. Weekly digest: matches, replies, and suggested events.
+
+=== S9 — Post‑Match Outcome
+. Recruiter updates stage (screen, onsite, offer); student sees status.
+. No reply after X days → gentle nudge or auto‑close.
+. Student can withdraw interest (optional reason) → feeds product insights.
