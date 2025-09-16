@@ -469,6 +469,84 @@ This section outlines the experience our platform aims to provide for people see
 
 ==== Personas
 
+The following personas capture our primary user segments and justify the user stories, epics, and features defined in 2.2.1. Each persona includes goals, pains, behavior, accessibility needs, and a mapping to relevant stories/epics. The names are memorable so the team can invoke them in planning.
+
+.María “New Grad” Rivera — University candidate (mobile-first)
+[cols="1,3"]
+|===
+|Profile|22, UPRM (CS). Looking for her first role; phone is the primary device.
+|Goals|Publish a complete profile quickly; showcase a simple portfolio; control visibility; get event reminders.
+|Pains|Long forms; vague errors; unwanted exposure.
+|Behavior|Short sessions; prefers simple actions (Like/Pass).
+|Accessibility|Clear, actionable error messages; low latency on mobile.
+|Related Stories|Create profile; Add portfolio; Choose visibility; Like/Pass; Match notification; 1:1 messaging; Events feed & RSVP.
+|Epics|Candidate Profile & Portfolio; Matching & Messaging; Events & Notifications; Safety & Moderation.
+|Quote|"I want to upload the essentials and start exploring without oversharing."
+|===
+
+.Luis “Switcher” Santiago — Career-transition candidate (privacy-first)
+[cols="1,3"]
+|===
+|Profile|30, IT support background; moving into QA. Prefers “visibility by match.”
+|Goals|Import/organize history; highlight skills; appear in relevant searches without going fully public.
+|Pains|Lack of control over who sees his profile; imprecise recruiter filters.
+|Behavior|Logs in a few times per week; replies only when there’s a real match.
+|Accessibility|Desktop-oriented; concise summaries.
+|Related Stories|Choose visibility (private/by-match/public); Profile & portfolio; 1:1 messaging.
+|Epics|Candidate Profile & Portfolio; Matching & Messaging; Safety & Moderation.
+|Quote|"I want to be visible only to people who truly match with me."
+|===
+
+.Karla “Campus Recruiter” Gómez — Recruiter (events & funnel)
+[cols="1,3"]
+|===
+|Profile|Recruiter at a tech company; manages 3 junior openings; runs campus events.
+|Goals|Publish company page; filter by skills/interest/availability; view candidate detail; manage RSVPs and reminders.
+|Pains|Noisy results; search latency; incomplete candidate info.
+|Behavior|1–2 h desktop sessions; heavy use of combined filters; saves shortlists.
+|Service Level|Search with sample data should load in ~2s (p95).
+|Related Stories|Company page; Search with filters; Results highlight matched terms; Events feed & RSVP; Notifications.
+|Epics|Recruiter Discovery & Search; Events & Notifications.
+|Quote|"I need ten viable profiles in minutes and a way to nurture them to interview."
+|===
+
+.Jorge “HR Generalist” Ortiz — SMB recruiter (speed & safety)
+[cols="1,3"]
+|===
+|Profile|HR at a small company; very limited time; wants quick shortlists.
+|Goals|Filter by skills and availability; chat 1:1; report or block bad behavior.
+|Pains|Incomplete profiles; spam/inappropriate contacts.
+|Behavior|Short work blocks; values online indicators and read receipts.
+|Related Stories|Filter by skills/interest/availability; 1:1 chat with sent/read states; Report/Block.
+|Epics|Recruiter Discovery & Search; Matching & Messaging; Safety & Moderation.
+|Quote|"Give me a reliable shortlist and a clear conversation; the rest is noise."
+|===
+
+.Ana “Safe User” Lozada — Candidate focused on safety
+[cols="1,3"]
+|===
+|Profile|24, first time using a jobs platform; highly concerned about safety.
+|Goals|Block or report profiles; prevent re-appearance after Pass; receive only useful notifications.
+|Pains|Unwanted interactions; intrusive alerts.
+|Behavior|Reviews privacy settings; uses reporting if something feels unsafe.
+|Accessibility|Simple controls for privacy, block, and report.
+|Related Stories|Report/Block; Like/Pass does not re-show in session; Relevant in-app notifications.
+|Epics|Safety & Moderation; Matching & Messaging; Events & Notifications.
+|Quote|"I want to feel in control and safe at all times."
+|===
+
+===== Coverage matrix (personas × epics)
+[cols="1,5*^", options="header"]
+|===
+|Persona |Candidate Profile & Portfolio |Recruiter Discovery & Search |Matching & Messaging |Events & Notifications |Safety & Moderation
+|María (New Grad) |✓ |  |✓ |✓ |✓
+|Luis (Switcher)   |✓ |  |✓ |  |✓
+|Karla (Recruiter) |  |✓ |  |✓ | 
+|Jorge (HR Gen.)   |  |✓ |✓ |  |✓
+|Ana (Safe User)   |  |  |✓ |✓ |✓
+|===
+
+
 ==== Domain Requirements
 
 The system must uniquely identify every candidate, every recruiter, every employer, and every event organizer, while distinguishing natural persons from institutional profiles when the entity is a company or an organizer, and it must record the role performed by each entity in every interaction together with the time and the context of that role. The system must represent every opening with explicit requirements including minimum experience, qualifications, certifications, languages, legal authorizations, work modality, location, compensation range, and start date, must record the number of positions available for each opening, must link every opening to its responsible employer, and must allow requirement updates while preserving a complete history of changes. The system must represent each candidate profile with education, work history, competencies, certifications, portfolios, and verifiable references, must allow attaching documents to the profile preserving issue date, validity, and verification status, and must record candidate preferences such as areas of interest, desired location, and work modality. The system must represent recruiting events with name, organizer, venue, agenda, date, and capacity, must represent company booths or tables within each event and their relation to the promoted openings, must register attendance and arrival of candidates and recruiters, and must enforce registration rules and capacity limits defined by the organizer. The system must model queues in front of booths or tables preserving a first come first served order, must allow limiting the duration of each turn, must register the closure of each turn by staff, and must prevent assigning turns that exceed the declared capacity of a booth or of a time block. The system must allow candidates and recruiters to express interest in openings or in profiles and must record when the expression is reciprocal, must create a match when both sides express positive interest and must preserve the date and the context of that event, must allow recruiters to define shortlisting criteria based on requirements and evidence and must register the decision with its justification, and must allow candidates to withdraw their interest and update any pending matches. The system must represent availability of candidates and recruiters through calendars and time blocks, must schedule interviews only on valid matches, must prevent double booking of the same block, and must register interview outcomes with clear states such as continues in process, rejected, or offer extended together with the date and the responsible party. The system must allow message exchanges between candidate and recruiter only when there is a valid match or an explicit permission from the candidate, must register candidate consent for sharing information with an employer or with an organizer, and must allow revocation of that consent. The system must compute and display the degree of requirement fulfillment for each candidate with categories such as meets, partially meets, or does not meet, must prevent practices that alter queue order without a rule defined by the event such as priority for confirmed appointments, and must keep an auditable record of shortlisting and rejection decisions together with their criteria. The system must notify candidates and recruiters when a match is created, when an interview is confirmed, and when changes to opening requirements affect eligibility, and it must notify candidates about recruiting events related to employers or openings in which they have shown interest. The system must record domain metrics such as match rate, queue waiting time, average turn duration, follow up rate after matches, and event attendance, and it must support funnel analysis from expression of interest to offer extended in order to identify bottlenecks. The system must prevent the creation of matches when any party does not exist or when the opening is closed, must keep the link between every document and the identity of the person or the entity that provided it together with its validation status, and must preserve the full state history of each opening and of each candidacy from origin to closure.
