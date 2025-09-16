@@ -338,6 +338,135 @@ Finally, session and state management functions handle user authentication and d
 
 ==== User Stories, Epics, Features
 
+This section outlines the experience our platform aims to provide for people seeking opportunities and for the organizations hiring them. We present the product in three layers short narrative user stories, the broader areas of value they belong to (epics), and the capabilities that bring those areas to life (features). Each use case includes acceptance criteria so the team can confirm behavior and reviewers can evaluate scope and quality.
+
+===== User stories
+
+• _As a candidate, I want to create my profile with my background and skills so that recruiters can quickly assess my fit._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| I'm signed in | I complete required fields and save | My profile is published
+| Required info is missing | I try to publish | I’m shown exactly which fields to complete
+|===
+
+• _As a candidate, I want to add portfolio items (PDF or public URLs) so that my work is easy to review._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| A valid file/URL | I upload | The item appears in a gallery I can reorder
+| An unsupported type/size | I upload | I see an error listing allowed types and max size
+|===
+
+• _As a candidate, I want to choose my profile visibility (public / by match / private) so that I control my exposure._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| "Private" visibility | Recruiters search | My profile does not appear in results
+| "By match" visibility | A mutual match occurs | My profile becomes visible to the matched party
+| "Public" visibility | Recruiters search | My profile can appear in recruiter results
+|===
+
+• _As a recruiter, I want to publish a simple company page so that candidates understand who we are and our roles._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| Logo, short description, sectors, and location are provided | I publish | The company page is visible to candidates
+| Required info is incomplete | I attempt to publish | I’m prompted to complete the missing fields
+|===
+
+• _As a recruiter, I want to filter candidates by skills, role interest and availability so that I can shortlist relevant profiles._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| Combined filters | I search | Results highlight matched terms
+| Sample data under normal conditions | I search | Results load in ~2 seconds (p95)
+|===
+
+• _As a candidate, I want to express interest with a quick like or pass so that I can move fast through options._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| A profile is shown | I press Like | My interest is stored
+| A profile is shown | I press Pass | That profile does not appear again in the current session
+|===
+
+• _As a user (candidate or recruiter), I want to be notified when there’s a mutual like so that we can start a conversation._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| Both sides liked each other | The system detects a mutual like | A chat thread opens and an in-app notification is sent
+|===
+
+• _As a matched user, I want to exchange messages so that we can coordinate next steps._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| A match chat is open | I send a message | The recipient receives it near real time and I see sent/read states
+| I have blocked the other party | They try to message me | The message is not sent and I receive no notification
+|===
+
+• _As a user, I want to report or block a profile so that I feel safe using the platform._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| I submit a report | — | A moderation case is created for review
+| I block a profile | — | It no longer appears in my experience and cannot open new chats
+|===
+
+• _As a candidate, I want to see upcoming recruiting events and RSVP so that I don’t miss opportunities._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| I RSVP to an event | The event is 24h away | An in-app reminder is delivered
+| The events feed is available | — | Items are ordered by date and show title, location, and registration/RSVP
+|===
+
+===== Epics
+- Candidate Profile and Portfolio
+- Recruiter Discovery and Search
+- Matching and Messaging
+- Events and Notifications
+- Safety and Moderation
+
+===== Features
+
+*Candidate Profile and Portfolio:*
+- Create/Edit candidate profile, add portfolio items (PDF/links/video), privacy and visibility controls and profile completeness indicator.
+
+*Recruiter Discovery and Search:*
+- Company page, candidate search with filters and candidate detail view.
+
+*Matching and Messaging:*
+- Like/Pass interactions, mutual match and in-app notification, 1:1 chat and report/Block.
+
+*Events and Notifications:*
+- Events feed, RSVP and Reminder notifications.
+
+*Safety and Moderation:*
+- Submit report, admin review queue and user block/unblock.
+
+
 ==== Personas
 
 ==== Domain Requirements
