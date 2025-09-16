@@ -338,7 +338,7 @@ Finally, session and state management functions handle user authentication and d
 
 ==== User Stories, Epics, Features
 
-This section outlines the experience our platform aims to provide for people seeking opportunities and for the organizations hiring them. We present the product in three layers short narrative user stories, the broader areas of value they belong to (epics), and the capabilities that bring those areas to life (features). Each use case includes acceptance criteria so the team can confirm behavior and reviewers can evaluate scope and quality.
+This section outlines the experience our platform aims to provide for people seeking opportunities and for the organizations hiring them. We present the product in three layers short narrative user stories, the broader areas of value they belong to (epics), and the capabilities that bring those areas to life (features).
 
 ===== User stories
 
