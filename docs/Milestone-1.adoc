@@ -469,7 +469,7 @@ This section outlines the experience our platform aims to provide for people see
 
 ==== Personas
 
-The following personas capture our primary user segments and justify the user stories, epics, and features defined in 2.2.1. Each persona includes goals, pains, behavior, accessibility needs, and a mapping to relevant stories/epics. The names are memorable so the team can invoke them in planning.
+The personas below represent our core user segments and ground the scope of this product. For each persona we outline goals, pains, typical behaviors, and accessibility needs, and we link them to the stories, epics, and features defined in 2.2.1. We’ll reference these personas by name during planning and reviews to keep decisions concrete and tied to user value.
 
 .María “New Grad” Rivera — University candidate (mobile-first)
 [cols="1,3"]
