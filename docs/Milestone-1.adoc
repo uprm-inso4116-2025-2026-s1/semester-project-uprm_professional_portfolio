@@ -69,7 +69,7 @@ For Milestone 1, the team was organized into four functional groups. These are R
 
 ==== Current Situation
 
-The transition from academia to the professional workforce presents a significant challenge for both recent graduates and employers. For students, the job search often feels impersonal and inefficient, characterized by sending countless applications into automated systems with low response rates—a phenomenon often referred to as the "resume black hole." A study by Forbes Advisor noted that nearly 60% of job seekers report feeling ghosted by a prospective employer, leading to frustration and career anxiety. Conversely, employers face their own difficulties in this saturated market; they are inundated with applications for entry-level positions, many from candidates who are not a strong skills or culture fit, making it time-consuming and costly to identify truly suitable talent. This inefficient, transactional process fails to capture the potential for genuine, mutual interest between a candidate's aspirations and a company's mission, creating a disconnected and often discouraging experience for both parties involved.
+The transition from academia to the professional workforce presents a significant challenge for both recent graduates and employers. For students, the job search often feels impersonal and inefficient, characterized by sending countless applications into automated systems with low response rates-a phenomenon often referred to as the "resume black hole." A study by Forbes Advisor noted that nearly 60% of job seekers report feeling ghosted by a prospective employer, leading to frustration and career anxiety. Conversely, employers face their own difficulties in this saturated market; they are inundated with applications for entry-level positions, many from candidates who are not a strong skills or culture fit, making it time-consuming and costly to identify truly suitable talent. This inefficient, transactional process fails to capture the potential for genuine, mutual interest between a candidate's aspirations and a company's mission, creating a disconnected and often discouraging experience for both parties involved.
 
 ==== Need
 
@@ -327,11 +327,35 @@ A well run booth and thoughtful materials strengthen memory of the employer and 
 
 ==== Function Signatures
 
-The system's core domain logic is defined by a set of function signatures that explicitly outline operations, inputs, outputs, and potential failure states. The core user interaction is governed by swiping and matching mechanics. The process is as follows; getNextProfile : UserId -> Option ProfileCard, this function fetches the next profile card from a user's personalized deck and returns none if the deck is empty. Once a user swipes,processSwipe : UserId >< ProfileId >< SwipeDirection -> Result<Unit, Error> records the swipe direction to determine like or pass for a given profile, returning a result that signifies success or an error. Following a like action, checkForMatch : UserId >< ProfileId -> Option Match determines if the swipe created a mutual like.
+The system's core domain logic is defined by a set of function signatures that outline operations, inputs, outputs, and potential failure states. At its foundation, user interaction is governed by swiping and matching mechanics.
 
-Upon a successful match, profile and connection management functions take over. The createConnection : Match -> Connection function creates persistent  new connections between the two users, establishing a channel for communication. Immediately after a connection is formed, sendMessage : ConnectionId >< UserId >< MessageContent -> Result<Message, Error> allows a participant to add a new message to the chat history, returning the sent message or an error for invalid requests. For viewing detailed information, getProfile : UserId -> Result<Profile, Error> retrieves a user's full profile as opposed to the condensed profile card with checks to ensure the requester has appropriate permissions.
+* `getNextProfile : UserId -> Option ProfileCard`  
+  Fetches the next profile card from a user's personalized deck. Returns `None` if the deck is empty.
 
-Finally, session and state management functions handle user authentication and data preparation. The initializeUserSession : UserCredentials -> Result<UserSession, Error> function authenticates a user's credentials and, if successful, creates a user session containing their identity and role. To populate the swiping interface, getUserDeck : UserId -> Deck is responsible for building a user's deck of profile cards. This function encapsulates the platform's matching algorithm, dynamically generating a personalized queue of profiles based on the user's preferences and past activity.
+* `processSwipe : UserId >< ProfileId >< SwipeDirection -> Result<Unit, Error>`  
+  Records a swipe (like or pass) for a given profile. Returns a result indicating success or an error.
+
+* `checkForMatch : UserId >< ProfileId -> Option Match`  
+  Determines whether a swipe action resulted in a mutual like, returning a `Match` if successful.
+
+Once a successful match is established, profile and connection management functions handle communication setup:
+
+* `createConnection : Match -> Connection`  
+  Creates a persistent connection between two matched users, establishing a channel for communication.
+
+* `sendMessage : ConnectionId >< UserId >< MessageContent -> Result<Message, Error>`  
+  Sends a message within a connection. Returns the message if successful, or an error for invalid requests.
+
+* `getProfile : UserId -> Result<Profile, Error>`  
+  Retrieves a full user profile (as opposed to the condensed profile card), with permission checks applied.
+
+Session and state management functions ensure authentication and preparation of user data:
+
+* `initializeUserSession : UserCredentials -> Result<UserSession, Error>`  
+  Authenticates a user's credentials. If successful, returns a session containing identity and role.
+
+* `getUserDeck : UserId -> Deck`  
+  Builds a user's deck of profile cards, dynamically generated using the platform's matching algorithm and the user’s past activity and preferences.
 
 
 === Requirements
@@ -428,8 +452,8 @@ This section outlines the experience our platform aims to provide for people see
 [cols="1,1,2",options="header,autowidth"]
 |===
 | Given | When | Then
-| I submit a report | — | A moderation case is created for review
-| I block a profile | — | It no longer appears in my experience and cannot open new chats
+| I submit a report |-| A moderation case is created for review
+| I block a profile |-| It no longer appears in my experience and cannot open new chats
 |===
 
 • _As a candidate, I want to see upcoming recruiting events and RSVP so that I don’t miss opportunities._
@@ -439,7 +463,7 @@ This section outlines the experience our platform aims to provide for people see
 |===
 | Given | When | Then
 | I RSVP to an event | The event is 24h away | An in-app reminder is delivered
-| The events feed is available | — | Items are ordered by date and show title, location, and registration/RSVP
+| The events feed is available |-| Items are ordered by date and show title, location, and registration/RSVP
 |===
 
 ===== Epics
@@ -491,157 +515,166 @@ Lastly, the internal system state must be updated to reflect a user's swipe acti
 
 ==== Selected Fragments of the Implementation
 
-The implementation fragments presented here illustrate how the proposed system realizes its core concepts—profiles, swiping, matching, messaging, and event participation—within the domain of student–recruiter interactions. They are not exhaustive; instead, they show how selected components are translated into concrete structures and operations.
+The implementation fragments presented here illustrate how the proposed system realizes its core concept-rofiles, swiping, matching, messaging, and event participatio-ithin the domain of student-recruiter interactions. They are not exhaustive; instead, they show how selected components are translated into concrete structures and operations.
 
 ===== Domain-Centric Function Signatures
 
-To maintain clarity and prevent ambiguity, the domain logic is captured through explicit function signatures. These serve as contracts between layers of the architecture.
+In Flutter/Dart, we express domain contracts through method signatures and service interfaces. These serve as contracts between the UI layer, application logic, and backend services.
 
-[source,scala]
-----
+```dart
 // Fetch the next profile card for a user’s deck
-getNextProfile : UserId -> Option ProfileCard
+Future<ProfileCard?> getNextProfile(String userId);
 
 // Record a swipe action, either Like or Pass
-processSwipe : UserId >< ProfileId >< SwipeDirection -> Result<Unit, Error>
+Future<Result<void>> processSwipe(String userId, String profileId, SwipeDirection direction);
 
 // Determine if a mutual like exists
-checkForMatch : UserId >< ProfileId -> Option Match
+Future<Match?> checkForMatch(String userId, String profileId);
 
 // Create a persistent connection once a match occurs
-createConnection : Match -> Connection
+Future<Connection> createConnection(Match match);
 
 // Exchange a message between two matched users
-sendMessage : ConnectionId >< UserId >< MessageContent -> Result<Message, Error>
-----
+Future<Result<Message>> sendMessage(String connectionId, String userId, String content);
+```
 
-Each function encodes a clear business rule. For example, `processSwipe` ensures that only valid swipe actions are stored, while `checkForMatch` guards the creation of matches until both parties express interest. This separation of concerns keeps the domain logic auditable and transparent.
-
-===== Example: Swiping Interaction Flow
-
-When a candidate views a recruiter’s profile card, the sequence of calls is as follows:
-
-. *Deck generation* → `getUserDeck : UserId -> Deck` builds the candidate’s deck based on preferences and availability.  
-. *Profile presentation* → `getNextProfile` surfaces the next card.  
-. *Gesture capture* → A Like/Pass is processed through `processSwipe`.  
-. *Match evaluation* → The system triggers `checkForMatch`, and if successful, a `createConnection` is invoked.  
-. *Notification* → Both parties receive an in-app notification of the new connection.  
-
-This fragment demonstrates how the conceptual “Tinder-like” behavior translates into a precise flow with defined entry and exit points.
-
-===== Example: Event Participation
-
-Event logic complements the swiping flow by offering an additional interaction channel:
-
-[source,scala]
-----
-// Candidate RSVPs for an event
-rsvpEvent : UserId >< EventId -> Result<Attendance, Error>
-
-// Notify candidate 24h before the event
-sendReminder : EventId >< UserId -> Notification
-----
-
-This ensures that events are integrated seamlessly with candidate–recruiter interactions, enforcing constraints like capacity and timely communication.
+Each function encodes a clear business rule. For example, `processSwipe` ensures that only valid swipe actions are stored, while `checkForMatch` guards the creation of matches until both parties express interest.
 
 ===== User Interface Complement
 
-Below is a conceptual sketch of the *Profile Card* UI component. It reflects the condensed information hierarchy surfaced during swiping:
+A conceptual *Profile Card* widget in Flutter may look like this. This shows how domain concepts (like `ProfileCard`) translate directly into Flutter widgets.:
 
-* *Header:* Candidate name / Recruiter organization.  
-* *Body:* Key skills, eligibility, and location.  
-* *Footer:* Action buttons (Like, Pass, More Info).  
+```dart
+class ProfileCard extends StatelessWidget {
+  final Profile profile;
+  final VoidCallback onLike;
+  final VoidCallback onPass;
+  final VoidCallback onMoreInfo;
 
-This design complements the textual logic by showing how the domain concept of a *ProfileCard* manifests visually in the system.
+  const ProfileCard({
+    required this.profile,
+    required this.onLike,
+    required this.onPass,
+    required this.onMoreInfo,
+    super.key,
+  });
 
-===== Rationale for Including These Fragments
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(12),
+      child: Column(
+        children: [
+          Text(profile.name, style: Theme.of(context).textTheme.headline6),
+          Text(profile.details),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(icon: Icon(Icons.close), onPressed: onPass),
+              IconButton(icon: Icon(Icons.favorite), onPressed: onLike),
+              IconButton(icon: Icon(Icons.info), onPressed: onMoreInfo),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+```
 
-Natural language descriptions of swiping, matching, and event participation quickly become cumbersome. By including the code-like signatures, the intended behavior is made precise while remaining platform-independent. The accompanying UI sketch ties the abstract logic back to user experience, showing how requirements map into implementation.
-
-==== Architecture vs. Design
+==== SOLID-Oriented Software Design
 
 At the *software architecture* level, the system is divided into three main components:
 
-. *Mobile Frontend* – provides the user experience for candidates and recruiters through onboarding, profile cards, swiping, and messaging.  
-. *Application Backend* – enforces business rules (swiping, matching, event capacity) and orchestrates communication with external services.  
-. *Data Layer* – persists entities such as profiles, swipes, matches, events, and messages.  
+. *Mobile Frontend (Flutter)* - Handles profile cards, swiping, and messaging.
+. *Application Backend* - Contains the business logic for swiping, matching, and event handling.
+. *Data Layer* - Manages persistence of profiles, swipes, matches, and messages.
 
-These components are related in a layered structure: the frontend issues commands, the backend enforces domain rules, and the data layer ensures consistency and durability.
+At the *software design* level, these components are realized through service classes and repositories. 
+To ensure scalability and maintainability, the design applies the *SOLID principles*:
 
-At the *software design* level, each architectural component is realized through specific responsibilities. For example, the *Matching Service* in the backend design is responsible for evaluating swipes, confirming matches, and triggering notifications. Its logic is expressed through explicit operations.
+===== 1. Single Responsibility Principle (SRP)
+Each service has one responsibility:  
 
-===== Example: Swiping and Matching Flow
+* *Deck Service* → Builds personalized decks and presents the next profile card.  
+* *Swipe Service* → Processes swipe gestures and evaluates potential matches.  
+* *Connection Service* → Manages new connections, messaging, and communication channels.  
+* *Profile Service* → Retrieves detailed profile information.  
+* *Session Service* → Handles authentication and user session management.  
 
-When a candidate swipes right on a recruiter’s profile card, the system records the action and checks for a reciprocal swipe. If both parties have liked each other, the *Matching Service* establishes a `Connection` object and immediately notifies both users.
+===== 2. Open/Closed Principle (OCP)
+Business rules can be extended without modifying existing code.  
 
-[source,scala]
-----
-// Domain service for processing swipes
+* The deck generation algorithm can switch strategies (e.g., location-based, interest-based) without altering the service itself.  
+* New swipe actions such as “Super Like” can be added without changing the base swipe logic.  
+
+===== 3. Liskov Substitution Principle (LSP)
+Services can be swapped with alternatives that share the same behavior.  
+
+* Different matching strategies (e.g., mutual likes, weighted scoring) can replace one another without breaking the system.  
+* Notification services (push, email, SMS) can be substituted transparently.  
+
+===== 4. Interface Segregation Principle (ISP)
+Clients depend only on the operations they use.  
+
+* Messaging relies solely on a lightweight *Message Sender* interface, without being tied to connection logic.  
+* Profile data access is split between read and write operations to avoid unnecessary coupling.  
+
+===== 5. Dependency Inversion Principle (DIP)
+High-level modules depend on abstractions, not low-level implementations.  
+
+* Services depend on repositories and strategies rather than direct database queries.  
+* Dependency injection makes it possible to swap data stores or notification channels at runtime.  
+
+
+
+====== Example: Swiping and Matching Flow
+
+```dart
 class MatchingService {
-    def processSwipe(userId: UserId, profileId: ProfileId, direction: SwipeDirection): Result[Unit, Error] = {
-        // Persist swipe in repository
-        swipeRepository.save(userId, profileId, direction)
+  final SwipeRepository swipeRepository;
+  final ConnectionService connectionService;
 
-        // If Like, check for mutual interest
-        if (direction == SwipeDirection.Like) {
-            checkForMatch(userId, profileId) match {
-                case Some(matchObj) => createConnection(matchObj)
-                case None => ()
-            }
-        }
+  MatchingService(this.swipeRepository, this.connectionService);
+
+  Future<Result<void>> processSwipe(
+      String userId, String profileId, SwipeDirection direction) async {
+    await swipeRepository.save(userId, profileId, direction);
+
+    if (direction == SwipeDirection.like) {
+      final match = await checkForMatch(userId, profileId);
+      if (match != null) {
+        await connectionService.createConnection(match);
+      }
     }
+    return Result.success(null);
+  }
 }
-----
+```
 
-This fragment demonstrates the *Single Responsibility Principle (SRP)*: the service handles swiping logic only, delegating persistence to the repository and connection creation to another component.
+This applies the **Single Responsibility Principle (SRP)**: the service only coordinates swiping logic and delegates persistence/connection creation to other components.
 
-[plantuml, swiping-flow, svg]
-----
-@startuml
-actor User
-rectangle Frontend
-rectangle "Matching Service" {
-    Frontend --> "Matching Service" : Swipe Action
-    "Matching Service" --> "Swipe Repository" : Save Swipe
-    "Matching Service" --> "Connection Service" : Check & Create Match
-    "Connection Service" --> "Notification Service" : Send Notification
+
+
+====== Example: Event RSVP Flow
+
+```dart
+Future<Result<Attendance>> rsvpEvent(String userId, String eventId) async {
+  if (await eventRepository.hasCapacity(eventId)) {
+    final attendance = Attendance(userId: userId, eventId: eventId, confirmed: true);
+    await eventRepository.saveAttendance(attendance);
+    return Result.success(attendance);
+  }
+  return Result.failure(CapacityReachedError());
 }
-@enduml
-----
+```
 
-The diagram complements the code fragment by showing how swiping logic sits within the overall architecture.
+This demonstrates the **Open/Closed Principle (OCP)**: RSVP logic can be extended (e.g., add waitlists) without changing its core behavior.
 
-===== Example: Event RSVP Flow
 
-Recruiting events are another key interaction point. Candidates can RSVP, and the system enforces event capacity while also sending reminders 24 hours before the event.
 
-[source,scala]
-----
-def rsvpEvent(userId: UserId, eventId: EventId): Result[Attendance, Error] = {
-    if (eventRepository.hasCapacity(eventId)) {
-        val attendance = Attendance(userId, eventId, confirmed = true)
-        eventRepository.saveAttendance(attendance)
-        return Result.success(attendance)
-    }
-    Result.failure(CapacityReachedError)
-}
-----
 
-This example illustrates the *Open/Closed Principle (OCP)*: the RSVP logic is extensible (for example, to support waitlists later) without changing the core.
 
-[plantuml, event-flow, svg]
-----
-@startuml
-actor Candidate
-rectangle Frontend
-rectangle "Event Service" {
-    Candidate --> Frontend : RSVP
-    Frontend --> "Event Service" : RSVP Request
-    "Event Service" --> "Event Repository" : Save Attendance
-    "Event Service" --> "Notification Scheduler" : Schedule Reminder
-}
-@enduml
-----
 
 
 
