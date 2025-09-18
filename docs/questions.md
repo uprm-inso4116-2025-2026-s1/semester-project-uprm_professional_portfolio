@@ -8,10 +8,10 @@
 >Identifying and  uncovering  these unknown risks early  can help us -the team-  prepare in advance, either to prevent them or to respond effectively if they occur.
 
 
-  1.                            Brainstorming- What if Analysis:
-     **The scope of the project is to develop a mobile application aimed at improving the connection between  students and recruiters.
+  ##1 Brainstorming- What if Analysis:
+     >The scope of the project is to develop a mobile application aimed at improving the connection between  students and recruiters.
 
-     A. Technical Performance
+     ###A. Technical Performance
      -  What if user profiles are not properly recommended by the algorithm?
      - What if the algorithm exhibits bias?
      - What if the app doesn't scale well under high user load?
@@ -22,6 +22,7 @@
      - What if Students Professional data gets stolen?
      - What if someone impersonates a student?
      - What if a user's private portfolio content is unintentionally made public?
+     - What if a user upload malisious content (images, links, etc)
 
      C. User Experience
      - What if the users find it difficult to connect with interested recruiters?
@@ -29,16 +30,20 @@
      - What if users want to review profiles they previously rejected?
      - What if a student wants to be reconsidered by a recruiter who rejected them before?
      - What if recruiters struggle to see the best candidates because of algorithmic issues?
+    
+     2. List of Potential unknown Unknowns in our project:
+        a. Bias in algorithmic functions
+        b.
 
 
 
-     2.              Ongoing Discovery of unknown unknowns during the project
+     4.              Ongoing Discovery of unknown unknowns during the project
      To continuously uncover and manage unknown unknowns throughout the project, we will: 
        - Encourage Continuous Learning within the team to share new insights
        - Maintain documentation and knowledge management to keep track of changes
        - Continue using the agile development practices 
        - Scenario planning (e.g What if)
-       - Testing: unit tests, integration tests,etc.
+       - Testing: unit tests, integration tests, User testing etc.
 
    
 
