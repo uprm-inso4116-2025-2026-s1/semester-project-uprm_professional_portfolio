@@ -171,6 +171,55 @@ NOTE: This is an unprocessed collection of notes, quotes, and observations from 
 
 ==== Terminology
 
+*Applicant* :: (entity, domain)  
+A person, usually a student or recent graduate, pursuing professional chances. Candidates strive to highlight their abilities and credentials via their portfolios.
+
+*Employer / Recruiter* :: (entity, domain)  
+An organization or hiring professional responsible for filling open job positions. Employers seek evidence of capability and eligibility when evaluating applicants.  
+
+*Portfolio* :: (entity, domain)  
+A collection of an applicant’s work, projects, and achievements. Portfolios provide recruiters with evidence of professional skills.  
+
+*Skill* :: (entity, domain)  
+A demonstrated ability, either technical or interpersonal, that contributes to an applicant’s professional profile.  
+
+*Qualification* :: (entity, domain)  
+An educational or professional credential (e.g., degree, certification) that indicates formal preparation or eligibility.  
+
+*Work Modality* :: (entity, domain)  
+The way in which work is performed, such as on site, remote, or hybrid.  
+
+*Compensation Range* :: (entity, domain)  
+The expected or offered salary associated with a role. Considered between applicant and employer.  
+
+*Mutual Interest Signaling* :: (event, domain)  
+The occurrence of both applicant and employer expressing interest, creating the basis for a potential connection.  
+
+*Connection* :: (entity, domain)  
+The relationship formally established once mutual interest is confirmed between an applicant and an employer.  
+
+*First Conversation* :: (event, domain)  
+The initial professional interaction between an applicant and an employer following a confirmed connection, typically involving clarification of expectations or role details.  
+
+*Ghosting* :: (behavior, domain)  
+The act of ceasing communication without notice, leading to inefficiency in the recruitment process.  
+
+*Identity Assurance* :: (behavior, domain)  
+The process of verifying that participants are authentic and represent legitimate individuals.  
+
+*Recruitment Event* :: (entity, domain)  
+A scheduled occasion, such as a job fair or networking session, where applicants and employers directly engage.  
+
+*Expectation Alignment* :: (behavior, domain)  
+The process of clarifying and agreeing on key role aspects, including scope, compensation, timeline, and modality.  
+
+*Trust and Safety* :: (behavior, domain)  
+The assurance that professional interactions occur under respectful conduct, secure data handling, and clear reporting mechanisms.  
+
+*Feedback* :: (event, domain)  
+Information shared between employer and applicant regarding application status, interest, or evaluation, enabling transparency.  
+
+
 ==== Domain Terminology in Relation to Domain Rough Sketch
 
 * Recruiter: (Actor)A user who represents a company or organization and uses the platform to discover and evaluate potential candidates. This term was refined from the rough concept of employer to specify the human actor, distinct from the company entity itself.
