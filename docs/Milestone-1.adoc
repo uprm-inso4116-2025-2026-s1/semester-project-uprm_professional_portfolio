@@ -856,3 +856,47 @@ Through this analysis, the scattered ideas from the descriptive phase are distil
 
 
 === Validation and Verification
+
+The purpose of this section is to document how the team will validate and verify the domain concepts, requirements, and design decisions.
+
+* **Validation**: ensuring that what we documented reflects the real-world domain (student–recruiter interactions, job fairs, portfolio showcases, and online hiring practices).  
+* **Verification**: ensuring that the documentation is internally consistent, complete, and aligned with the project’s goals.
+
+==== Validation Strategy
+Validation activities focus on comparing our assumptions and requirements against real-world practices in recruiting and hiring.
+
+* **Literature and Online References**  
+  We reviewed external sources to validate that our domain concepts are realistic:  
+  - National Association of Colleges and Employers (NACE) reports show that **over 80% of employers review student portfolios or online profiles during hiring**.  
+  - LinkedIn’s Global Talent Trends indicate recruiters prioritize **skills, experiences, and project showcases** when evaluating candidates.  
+  - University career center guidelines (e.g., UC Berkeley Career Center) recommend portfolios to include **projects, reflections, and artifacts**, supporting our profile/portfolio requirements.  
+
+* **Scenario Walkthroughs (Planned)**  
+  We drafted sample scenarios to test the plausibility of requirements:  
+  - *Example*: “Student uploads a project to their portfolio. Recruiter filters by skill and reviews the project before deciding to Like or Pass.”  
+  These walkthroughs will be refined with feedback once pilot users are available.
+
+* **Stakeholder Proxies**  
+  Since direct recruiter interviews have not yet been conducted, validation relies on **career center publications** and **industry surveys** as proxies for stakeholder expectations. Later stages will replace proxies with real recruiter and student feedback.
+
+
+==== Verification Strategy
+Verification ensures that the documentation is internally consistent and traceable across milestones.
+
+* **Peer Reviews (Planned)**  
+  Each section of the documentation (terminology, requirements, narrative) will be reviewed by a different team member. Early reviews already revealed ambiguities between the terms “candidate” and “student,” which were clarified.
+
+* **Checklists**  
+  A milestone-based checklist will be used:  
+  - Every requirement uses only defined terms.  
+  - Requirements map to at least one domain concept.  
+  - No contradictions between terminology and requirements.  
+  - Requirements are measurable and testable (planned for Milestone 2).  
+
+* **Traceability Matrix (Planned)**  
+  A lightweight traceability matrix will link:  
+  - *Requirements → Goals* (does each requirement support at least one documented goal?).  
+  - *Requirements → Terminology* (is consistent terminology used?).  
+
+* **Walkthroughs of Documentation**  
+  We will simulate “reader walkthroughs,” where one team member acts as an external reviewer and checks whether requirements can be traced back to definitions. This approach helps identify undefined or ambiguous terms.
