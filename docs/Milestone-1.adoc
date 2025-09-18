@@ -761,4 +761,47 @@ This demonstrates the **Open/Closed Principle (OCP)**: RSVP logic can be extende
 
 === Concept Analysis
 
+This section refines the raw material from the "Domain Rough Sketch" into a set of domain concepts, abstractions, and relationships, following the guidelines for concept analysis. The process began by reviewing unprocessed notes and quotes, then abstracting recurring ideas into general concepts, clarifying their meaning, and documenting how they relate. This analysis provides a foundation for requirements and system design.
+
+==== Method
+We systematically reviewed the rough sketch, highlighting recurring themes, terms, and pain points. For each, we considered whether it represented a domain concept, event, or behavior, and how it might generalize beyond the specific example. Where terms were ambiguous or used differently by stakeholders, we clarified or resolved them for consistency.
+
+==== Key Concepts Identified
+
+*Queue/Waiting Time*: Multiple students mentioned long waits at job fairs. We abstract this as the concept of a "queue," representing bottlenecks in event based interactions.
+
+*Profile*: Résumés, portfolios, and company descriptions are generalized as "profiles", structured representations of actors in the domain. We distinguish between candidate and recruiter profiles.
+
+*Match and Connection*: Mutual interest is abstracted as a "match." If acted upon, this becomes a "connection", a persistent relationship enabling further interaction.
+
+*Discovery Feed*: Reviewing multiple candidates or companies is generalized as a "discovery feed," the set of profiles available for evaluation.
+
+*Event*: Job fairs, meetups, and interviews are all instances of "events," structuring interactions in time and space.
+
+*Note Taking*: Recruiter's use of spreadsheets and notes is abstracted as "record keeping," essential for memory and making decisions in high volume interactions.
+
+*Application*: Submitting interest through various channels is generalized as an "application," linking candidates to opportunities.
+
+==== Clarifications and Resolutions
+
+- The term "candidate" is used broadly to mean any job seeker, regardless of experience.
+- "Recruiter" refers specifically to the human actor representing an employer, not the company itself.
+- "Profile card" is distinguished from "profile" as the interactive, condensed representation used in the discovery process.
+- "Match" is an event, while "connection" is a state that persists after a match.
+
+==== Relationships and Abstractions
+
+- Candidates build and share their profiles, skills, and qualifications with recruiters.
+- Recruiters evaluate candidates based on these profiles, often within the context of an event.
+- When mutual interest is signaled, a match is formed, which can become a connection.
+- Connections enable further actions, such as messaging or scheduling interviews.
+- Events provide the environment where many of these interactions are initiated.
+- Record keeping and note taking support making decisions and memory throughout the process.
+
+==== Reasoning and Process
+This analysis was grounded in the raw observations and quotes from the rough sketch, ensuring that abstractions are traceable to real domain phenomena. Ambiguities were resolved by referencing both stakeholder language and the needs of the requirements phase. By documenting this process, we ensure that the resulting vocabulary is both consistent and shared across the team.
+
+Through this analysis, the scattered ideas from the descriptive phase are distilled into a structured vocabulary. These concepts and relationships now form a shared foundation for the requirements and system design phases that follow.
+
+
 === Validation and Verification
