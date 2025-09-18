@@ -8,10 +8,10 @@
 >Identifying and  uncovering  these unknown risks early  can help us -the team-  prepare in advance, either to prevent them or to respond effectively if they occur.
 
 
-  ##1 Brainstorming- What if Analysis:
+  ## 1. Brainstorming- What if Analysis:
      >The scope of the project is to develop a mobile application aimed at improving the connection between  students and recruiters.
 
-     ###A. Technical Performance
+     ### A. Technical Performance
      -  What if user profiles are not properly recommended by the algorithm?
      - What if the algorithm exhibits bias?
      - What if the app doesn't scale well under high user load?
