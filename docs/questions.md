@@ -18,17 +18,17 @@
      - What if there's a delay in syncing real-time interactions ?
 
      B. Security
-     ~ What if a threat actor creates a false recruiter profile to scam users?
-     ~ What if Students Professional data gets stolen?
-     ~ What if someone impersonates a student?
-     ~ What if a user's private portfolio content is unintentionally made public?
+     - What if a threat actor creates a false recruiter profile to scam users?
+     - What if Students Professional data gets stolen?
+     - What if someone impersonates a student?
+     - What if a user's private portfolio content is unintentionally made public?
 
      C. User Experience
-     ~ What if the users find it difficult to connect with interested recruiters?
-     ~ What if users accidentally swipe (left or right) and cannot undo their action?
-     ~ What if users want to review profiles they previously rejected?
-     ~ What if a student wants to be reconsidered by a recruiter who rejected them before?
-     ~ What if recruiters struggle to see the best candidates because of algorithmic issues?
+     - What if the users find it difficult to connect with interested recruiters?
+     - What if users accidentally swipe (left or right) and cannot undo their action?
+     - What if users want to review profiles they previously rejected?
+     - What if a student wants to be reconsidered by a recruiter who rejected them before?
+     - What if recruiters struggle to see the best candidates because of algorithmic issues?
 
 
 
