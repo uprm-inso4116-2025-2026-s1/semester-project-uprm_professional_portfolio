@@ -11,7 +11,7 @@
   ## 1. Brainstorming- What if Analysis:
      >The scope of the project is to develop a mobile application aimed at improving the connection between  students and recruiters.
 
-     ### A. Technical Performance
+    A. Technical Performance
      -  What if user profiles are not properly recommended by the algorithm?
      - What if the algorithm exhibits bias?
      - What if the app doesn't scale well under high user load?
@@ -22,7 +22,8 @@
      - What if Students Professional data gets stolen?
      - What if someone impersonates a student?
      - What if a user's private portfolio content is unintentionally made public?
-     - What if a user upload malisious content (images, links, etc)
+      - What if a user uploads malicious content (images, links, etc)
+
 
      C. User Experience
      - What if the users find it difficult to connect with interested recruiters?
@@ -31,13 +32,26 @@
      - What if a student wants to be reconsidered by a recruiter who rejected them before?
      - What if recruiters struggle to see the best candidates because of algorithmic issues?
     
-     2. List of Potential unknown Unknowns in our project:
-        a. Bias in algorithmic functions
-        b.
+     ## 2. List of Potential unknown Unknowns in our project:
+        1. Bias in algorithmic functions. This can Unintentionally favor or disadvantage certain users.
+        2.The algorithm may fail when recommending student profiles
+        3. Recruiters may struggle to find top candidates due to algorithm issues
+        4.Fake recruiter profiles may be useed to scam students
+        5.Real time features like swiping (left or right) may 
+        6. Users can accidentally take actions they can't reverse.(e.g, swiping left or right) 
+        7. Users may want to revisit previous rejected profiles
+        8. Recruiters may want to compare or know better a candidate before selecting one to match
+        9. Users may want to be recommended again to a recruiter that reject them
+        10. If users profiles are updated with more preparation(e.g. , experience, certifications, etc) users may want to 
+        reach more recruiters
+        11.Users may find it difficult to do meaningful professional connections trhough the app
+        12.Students professional data may be  leaked or stolen
+        13. A user may impersonate a Student or a recruiter
+        
 
 
 
-     4.              Ongoing Discovery of unknown unknowns during the project
+     ## 3. Ongoing Discovery of unknown unknowns during the project
      To continuously uncover and manage unknown unknowns throughout the project, we will: 
        - Encourage Continuous Learning within the team to share new insights
        - Maintain documentation and knowledge management to keep track of changes
