@@ -23,6 +23,7 @@
      - What if someone impersonates a student?
      - What if a user's private portfolio content is unintentionally made public?
       - What if a user uploads malicious content (images, links, etc)
+      - What if the recruiter verification process is not robust enough to prevent fake accounts?
 
 
      C. User Experience
@@ -44,9 +45,14 @@
         9. Users may want to be recommended again to a recruiter that reject them
         10. If users profiles are updated with more preparation(e.g. , experience, certifications, etc) users may want to 
         reach more recruiters
-        11.Users may find it difficult to do meaningful professional connections trhough the app
+        11.Users may find it difficult to do meaningful professional connections through the app
         12.Students professional data may be  leaked or stolen
         13. A user may impersonate a Student or a recruiter
+        14. There may not be a reliable system  in place to verify that recruiters are legitimate professionals
+        15. Third party API Failures
+        16. If there are many scammers, users might lose trust on the application
+        
+        
         
 
 
