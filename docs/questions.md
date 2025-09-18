@@ -12,10 +12,10 @@
      **The scope of the project is to develop a mobile application aimed at improving the connection between  students and recruiters.
 
      A. Technical Performance
-     ~ What if user profiles are not properly recommended by the algorithm?
-     ~ What if the algorithm exhibits bias?
-     ~ What if the app doesn't scale well under high user load?
-     ~What if there's a delay in syncing real-time interactions ?
+     -  What if user profiles are not properly recommended by the algorithm?
+     - What if the algorithm exhibits bias?
+     - What if the app doesn't scale well under high user load?
+     - What if there's a delay in syncing real-time interactions ?
 
      B. Security
      ~ What if a threat actor creates a false recruiter profile to scam users?
