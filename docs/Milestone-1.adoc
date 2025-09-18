@@ -135,6 +135,8 @@ The project's span is focused on creating a scalable and user-friendly solution 
 
 ==== Synopsis
 
+The project aims to develop a mobile application that revolutionizes the way students and recruiters connect by addressing the inefficiencies and impersonal nature of traditional job search methods. By leveraging a swiping feature, similar to popular dating apps, the platform will facilitate dynamic and real-time interactions between students showcasing their skills and recruiters highlighting their opportunities. The app will integrate with existing job boards and career services, providing a seamless experience that enhances visibility, engagement, and mutual interest. Through iterative design, user feedback, and continuous optimization, the project seeks to create a scalable solution that improves job placement rates and reduces recruitment time and effort.
+
 === Other Activities than Just Developing Source Code
 
 === Derived Goals
