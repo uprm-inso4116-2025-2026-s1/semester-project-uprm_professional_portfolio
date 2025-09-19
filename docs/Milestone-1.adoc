@@ -48,7 +48,7 @@ For Milestone 1, the team was organized into four functional groups. These are R
 [cols="3,2,5",options="header"]
 |===
 | Student | GitHub username | Tasks
-| Diego Pérez Ganradillas _(Team Leader)_ | link:https://github.com/diegoperez16[@diegoperez16] | #17, #18, #21, #45, #65, #76, #78, #93, #94, #98
+| Diego Pérez Ganradillas _(Team Leader)_ | link:https://github.com/diegoperez16[@diegoperez16] | #17, #18, #21, #45, #65, #76, #78, #93, #94, #98, #103
 | Axel A. Orta Félix | link:https://github.com/Axl47[@Axl47] | #20
 | Carlos Pepin Delgado |  link:https://github.com/carlospepin23[@carlospepin23] | #19, #21, #40, #42, #43, #44, #83, #84
 | Ryan R. Vélez Villarrubia | link:https://github.com/RyanVelez101[@RyanVelez101] | #66, #95
