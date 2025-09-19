@@ -35,7 +35,7 @@ For Milestone 1, the team was organized into four functional groups. These are R
 [cols="3,2,5",options="header"]
 |===
 | Student | GitHub username | Tasks
-| Jeanpiere I. Sánchez Félix _(Team Leader)_ | link:https://github.com/JeanSanchezFelix[@JeanSanchezFelix] | #2, #15, #23, #24, #26, #38, #45, #59, #76, #92, #96, #98
+| Jean P. I. Sánchez Félix _(Team Leader)_ | link:https://github.com/JeanSanchezFelix[@JeanSanchezFelix] | #2, #15, #23, #24, #26, #38, #45, #59, #76, #92, #96, #98
 | Carlos E. Cabán González | link:https://github.com/Carloscaban[@Carloscaban] | #24, #32, #33
 | Jahdiel E. Montero Alicea | link:https://github.com/JadStelar[@JadStelar] | #29, #30, #31, #67
 | Kiara N. Pérez Rivera | link:https://github.com/kiarancole[@kiarancole] | #38, #39, #47, #48, #60, #61, #63, #99
@@ -238,8 +238,8 @@ Information shared between employer and applicant regarding application status, 
 
 ==== Domain Terminology in Relation to Domain Rough Sketch
 
-* Recruiter: (Actor)A user who represents a company or organization and uses the platform to discover and evaluate potential candidates. This term was refined from the rough concept of employer to specify the human actor, distinct from the company entity itself.
-* Candidate: (Actor)A user who is seeking professional opportunities and uses the platform to discover companies and recruiters by reviewing recruiter profiles. This term should be revised as a candidate alludes to the user's primary role once a connection is made.
+* Recruiter: (Actor) A user who represents a company or organization and uses the platform to discover and evaluate potential candidates. This term was refined from the rough concept of employer to specify the human actor, distinct from the company entity itself.
+* Candidate: (Actor) A user who is seeking professional opportunities and uses the platform to discover companies and recruiters by reviewing recruiter profiles. This term should be revised as a candidate alludes to the user's primary role once a connection is made.
 * Profile: The core digital representation of a user within the system. It is categorized as either a candidate profile or a recruiter profile containing corresponding relevant information.
 * Swipe: The primary gesture of evaluation. A right swipe indicates a like or expression of interest, and a left swipe indicates a Pass, which indicates a dismissal. This defines the core action of the system, removing ambiguity from the informal "Tinder-like" description.
 * Profile Card: The user interface component that presents a condensed view of a Profile within the feed for the purpose of being swiped on. This term distinguishes the interactive element from the full Profile data structure.
@@ -629,11 +629,11 @@ The personas below represent our core user segments and ground the scope of this
 [cols="1,5*^", options="header"]
 |===
 |Persona |Candidate Profile & Portfolio |Recruiter Discovery & Search |Matching & Messaging |Events & Notifications |Safety & Moderation
-|María (New Grad) |✓ |  |✓ |✓ |✓
-|Luis (Switcher)   |✓ |  |✓ |  |✓
-|Karla (Recruiter) |  |✓ |  |✓ | 
-|Jorge (HR Gen.)   |  |✓ |✓ |  |✓
-|Ana (Safe User)   |  |  |✓ |✓ |✓
+|María (New Grad) |X |  |X |X |X
+|Luis (Switcher)   |X |  |X |  |X
+|Karla (Recruiter) |  |X |  |X | 
+|Jorge (HR Gen.)   |  |X |X |  |X
+|Ana (Safe User)   |  |  |X |X |X
 |===
 
 
@@ -658,8 +658,6 @@ Lastly, the internal system state must be updated to reflect a user's swipe acti
 
 This section specifies the hardware, software, and environmental requirements to develop, test, and deploy the Professional Portfolio application. These requirements are tailored to the technologies chosen for the project: Flutter/Dart for the mobile frontend, cloud services (Firebase, AWS, or Azure) for backend support, and SQLite for local storage.
 
----
-
 **Hardware Requirements**
 
 *Developer Workstations*  
@@ -673,8 +671,6 @@ This section specifies the hardware, software, and environmental requirements to
 *Servers / Cloud Hosting*  
   - Minimum: 2 vCPUs, 4 GB RAM, 50 GB storage.  
   - Recommended: 4 vCPUs, 8 GB RAM, 100 GB storage with autoscaling enabled on cloud platforms.
-
----
 
 **Software Requirements**
 
@@ -694,8 +690,6 @@ This section specifies the hardware, software, and environmental requirements to
   - SQLite for local offline storage.  
   - Firebase, AWS, or Azure for authentication, notifications, and backend integration.
 
----
-
 **Environmental Requirements**
 
 *Operating Systems*  
@@ -710,8 +704,6 @@ This section specifies the hardware, software, and environmental requirements to
   - Developers must test on both Android and iOS environments.  
   - Compliance with Google Play Store and Apple App Store distribution guidelines.  
   - External dependencies must be compatible with the current Flutter LTS release.  
-
----
 
 **Rationale and Validation**
 
