@@ -247,6 +247,34 @@ Information shared between employer and applicant regarding application status, 
 * Connection: The persistent relationship state between two users that is established upon a match. This term defines the context in which messaging and further interaction can occur. Moving beyond the transient event of the match itself.
 * Discovery Feed: The main application view where a user is presented with a “deck” of profile cards to evaluate. This term provides a specific name for the core screen, derived from its purpose.
 
+* Student: A person currently enrolled at a university/college. In our domain, every Student is a Candidate, but not every Candidate is a Student. We use **Student** when context involves campus events, student portfolios, or coursework.
+* User: A technical/authentication concept. A logged-in account that is either a **Student** or a **Recruiter**. We avoid using “User” to describe domain roles.
+* Employer: The organization that a Recruiter represents. Owns job **Openings** and brand presence. Distinct from the person acting (Recruiter).
+* Company (alias of Employer): The institutional profile representing the Employer in the system (logo, description, sectors, location).
+* StudentProfile: Typed Profile for a Student/Candidate. Contains resume, skills, preferences, visibility settings, and **Portfolio** items.
+* RecruiterProfile: Typed Profile for a Recruiter. Contains company association, role/title, sectors, location, and verification status.
+* Portfolio: Evidence of work attached to a StudentProfile (projects, links, PDFs, media). Supports recruiter evaluation.
+* Event: A scheduled activity relevant to recruiting (career fair, info session, meetup). Used for discovery, RSVP, and attendance tracking.
+* RSVP: An explicit intent to attend an Event. Updates capacity and powers reminders.
+* Notification: A system alert delivered to an account (e.g., Match created, unread Chat, Event reminder).
+* Queue:An ordered waiting line (physical or digital) used to preserve turn order (e.g., at a booth or for processing requests).
+* Opening (Job Opening): A role published by an Employer with defined **Requirements** (must-haves, nice-to-haves), location, modality, and timeline.
+* Requirements: Structured criteria for an Opening (skills, eligibility, language, authorization). Used to assess **Eligibility**.
+* Eligibility: Whether a Student/Candidate meets the defined Requirements of an Opening (meets / partially meets / does not meet).
+* Shortlist: A curated set of Candidates selected by a Recruiter for next steps (review, outreach, interview).
+* Interview: A scheduled conversation between a Recruiter and a Student following a Connection/Shortlist. Must avoid overlapping time blocks.
+* Visibility
+Profile exposure setting for a StudentProfile:
+- **Public** — appears in Recruiter search.
+- **By Match** — visible only to the matched party.
+- **Private** — not discoverable; shared only by explicit action.
+* Identity (UUID): An immutable unique identifier assigned to core entities (Profiles, Matches, Events). Ensures stability across updates and systems.
+* Session: The authenticated runtime context for an account. Authorizes actions (swipes, messages, RSVPs).
+* VerificationPolicy
+A rule requiring a Recruiter/Employer to satisfy verification checks before certain actions (e.g., messaging, event hosting).
+* Invariant: A rule that must always hold at the model boundary (e.g., no duplicate Recruiter–Student Match pairs).
+* Factory: A creation mechanism that enforces Invariants when instantiating entities (e.g., MatchFactory ensures valid parties and uniqueness).
+
 
 ==== Narrative
 
