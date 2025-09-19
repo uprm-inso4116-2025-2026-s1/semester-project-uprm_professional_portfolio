@@ -1,6 +1,6 @@
 = Professional Portfolio Application Proposal 
 First Milestone - Software Design - INSO 4115
-Prof. Marko Schütz 
+Prof. Marko Schütz-Schmuck 
 :doctype: book
 :toc:
 :sectnums:
