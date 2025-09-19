@@ -642,6 +642,68 @@ Lastly, the internal system state must be updated to reflect a user's swipe acti
 
 ==== Machine Requirements
 
+This section specifies the hardware, software, and environmental requirements to develop, test, and deploy the Professional Portfolio application. These requirements are tailored to the technologies chosen for the project: Flutter/Dart for the mobile frontend, cloud services (Firebase, AWS, or Azure) for backend support, and SQLite for local storage.
+
+---
+
+**Hardware Requirements**
+
+*Developer Workstations*  
+  - Minimum: Dual-core processor (Intel i5/AMD equivalent), 8 GB RAM, 256 GB SSD.  
+  - Recommended: Quad-core processor, 16 GB RAM, 512 GB SSD.  
+
+*Mobile Devices for Testing*  
+  - Android: Devices running Android 10.0+ with at least 3 GB RAM.  
+  - iOS: Devices running iOS 15+ (e.g., iPhone 11 or newer).  
+
+*Servers / Cloud Hosting*  
+  - Minimum: 2 vCPUs, 4 GB RAM, 50 GB storage.  
+  - Recommended: 4 vCPUs, 8 GB RAM, 100 GB storage with autoscaling enabled on cloud platforms.
+
+---
+
+**Software Requirements**
+
+*Development Tools*  
+  - Flutter SDK (latest stable release).  
+  - Dart SDK (bundled with Flutter).  
+  - Android Studio for Android builds and emulators.  
+  - Xcode for iOS builds and testing.  
+  - Git and GitHub for version control and collaboration.  
+
+*Programming Environment*  
+  - Dart as the primary programming language.  
+  - Flutter framework for cross-platform UI and logic.  
+  - Emulator/simulator tools for Android and iOS.  
+
+*Database and Services*  
+  - SQLite for local offline storage.  
+  - Firebase, AWS, or Azure for authentication, notifications, and backend integration.
+
+---
+
+**Environmental Requirements**
+
+*Operating Systems*  
+  - Developer machines: Windows 10/11 or macOS Monterey+.  
+  - Deployment targets: Android 10+ and iOS 15+.  
+
+*Network*  
+  - Stable broadband connection (≥10 Mbps) for syncing repositories, package downloads, and testing cloud-based services.  
+  - All client-server communication must use HTTPS.  
+
+*Other Constraints*  
+  - Developers must test on both Android and iOS environments.  
+  - Compliance with Google Play Store and Apple App Store distribution guidelines.  
+  - External dependencies must be compatible with the current Flutter LTS release.  
+
+---
+
+**Rationale and Validation**
+
+The requirements ensure that all contributors can work effectively while keeping compatibility with the targeted platforms. Minimum specifications guarantee accessibility across the team, while recommended specifications support smoother emulator performance and integration with cloud services. Each requirement is measurable (e.g., OS versions, RAM, network speed) and traceable to the technologies already adopted by the project.
+
+
 === Implementation
 
 ==== Selected Fragments of the Implementation
