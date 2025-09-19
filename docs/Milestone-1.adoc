@@ -138,8 +138,22 @@ The project's span is focused on creating a scalable and user-friendly solution 
 The project aims to develop a mobile application that revolutionizes the way students and recruiters connect by addressing the inefficiencies and impersonal nature of traditional job search methods. By leveraging a swiping feature, similar to popular dating apps, the platform will facilitate dynamic and real-time interactions between students showcasing their skills and recruiters highlighting their opportunities. The app will integrate with existing job boards and career services, providing a seamless experience that enhances visibility, engagement, and mutual interest. Through iterative design, user feedback, and continuous optimization, the project seeks to create a scalable solution that improves job placement rates and reduces recruitment time and effort.
 
 === Other Activities than Just Developing Source Code
+Projects are successful when coding is supported by planning, communication, and documentation. These activities keep the team organized and ready for future development.
+
+* Although source code development is a top priority on this project, its success depends on several activities that extend beyond programming. Documentation plays a crucial role in keeping the project aligned, covering goals, requirements, architectural decisions, and detailed contributions. Well-maintained records make it easier for members to integrate into new teams and ensure stakeholders remain informed about progress, scope, and direction throughout the project.
+
+* While the application is not yet developed enough for full-scale testing, it is still necessary to plan for quality assurance. This involves deciding how unit testing, integration testing, and usability evaluation will eventually be carried out once prototypes and code are available. In parallel, version control practices such as branching strategies, pull requests, and code reviews can already be defined so the team is prepared to manage collaboration effectively when development begins. These preparatory activities set the standard for a structured and reliable workflow.
+
+* Project management and communication establish the general structure that ties everything together during this milestone. Setting clear milestone goals, assigning responsibilities, and documenting meeting outcomes help the team stay organized and avoid confusion. Regular communication ensures that issues are identified and addressed early, while planning for security, privacy, and future phases prepares the project for ongoing development. By combining documentation, early planning for testing and version control, and strong management practices with the coding that will follow, the team lays the foundation for a successful project.
 
 === Derived Goals
+The project’s goals go beyond building an app, focusing on connecting students and recruiters effectively while guiding team efforts and decisions.
+
+* From the current situation, needs, and proposed scope, several goals appear that extend beyond simply building a mobile application. First, the project aims to create a system that improves the connection between students and recruiters by promoting mutual interest, transparent communication, and efficient matching. Students should be empowered to present their skills, interests, and career aspirations in a way that recruiters can trust and evaluate fairly, while recruiters should be able to quickly identify candidates that align with both role requirements and company culture.
+
+* In addition to these user-focused objectives, the project seeks to ensure usability, maintainability, and adaptability. The system should be easy to use and flexible, so it can improve based on user feedback and grow from a small pilot group to a wider audience. Security and privacy are also central goals, ensuring identity assurance, safe communication, and control over personal and company data.
+
+* Finally, internal team goals include ensuring collaboration, clear documentation, and structured processes for version control, testing, and requirements management. By clearly following these internal practices, the team can stay coordinated, reduce errors, and build a solid base for sustained success as development progresses, and the platform grows.
 
 == Descriptive Part
 
