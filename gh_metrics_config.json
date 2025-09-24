@@ -7,6 +7,16 @@
       "startDate": "2025-08-25",
       "endDate": "2025-09-19",
       "projectedGroupGrade": 100.0
+    },
+    "Milestone #2": {
+      "startDate": "2025-09-22",
+      "endDate": "2025-10-24",
+      "projectedGroupGrade": 100.0
+    },
+    "Milestone #3": {
+      "startDate": "2025-10-27",
+      "endDate": "2025-11-28",
+      "projectedGroupGrade": 100.0
     }
   },
   "lectureTopicTaskQuota": 4,
