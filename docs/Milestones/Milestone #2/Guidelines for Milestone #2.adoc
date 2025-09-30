@@ -1,0 +1,73 @@
+= GUIDELINES AND ADVICE ON THE PROJECT DOCUMENTATION
+Second Milestone
+Marko Schütz-Schmuck
+
+These guidelines should be used to evaluate each project's
+submission. The whole project is still in process, so we do not need to
+see any type of _completeness_. However, we do want to see some progress
+(not necessarily the same amount) on each of those aspects. The
+guidelines and examples are more detailed than what would easily fit
+into the format of rubrics, so the guidelines are stated separately and
+the rubrics then are generic.
+
+• Changes to the previous submission must be clearly visible. Use a
+  different background color, change bars in the page margin, or other
+  ways to clearly indicate the changes.
+• The log book gives an overview of the changes (but not the full
+  changed content) since the last submission.
+• The actual changes, new developments, etc are integrated into the
+  overall document.
+• All the criteria where the previous submission did not follow the
+  guidelines have been improved.
+• Any additions and changes follow the guidelines already established
+  for the proposal submission.
+• Progress in the implementation has been made: there are completed
+  features that are implemented end-to-end and that have a high value to
+  the users. The completion of the feature is evidenced by passing
+  acceptance/end-to-end tests.
+• Progress has been made in all phases of development: domain
+  description, requirements prescription, design, …
+
+• Application of topics, techniques, tools, methods, … from the
+  lectures:
+
+=== The following rubrics will have a higher weight than those above.
+
+  • *define/identify aggregates*
+
+- The team identifies and defines at least one aggregate consisting of
+multiple objects with one aggregate root. The aggregate captures a
+conceptual whole and the objects inside the aggregate boundary make
+sense as separate concepts on the one hand while justifiably
+belonging inside the aggregate boundary. The team uses the aggregate
+correctly: e.g. all access to inner objects is through the root
+object, the functions on the root object ensure the invariants,…
+
+  • *factories*
+
+- The team provides at least one example of the application of
+factories. For example, they might initially expose the directly the
+constructors of different sub-classes of some super-class. But then
+they decide that the construction should be hosted in a separate
+factory class with an API providing entry points behind which
+complex choices are made as to which concrete object to instantiate.
+
+  • *repositories*
+
+- The team uses repositories to expose an interface providing
+persistence related functions in terms of the domain and/or the
+application layer.
+
+  • *invariants*
+
+- The team states at least one non-trivial invariant of an aggregate.
+They state where the invariant might be violated temporarily and
+where it will be reestablished.
+
+  • *making implicit concepts explicit*
+
+- The team describes at least three examples of how they started with
+an understanding of the domain which they later found had a hidden
+concept and after some discussion they found the missing concept and
+made it explicit. They describe how this changes the ubiquitous
+language of their project.
