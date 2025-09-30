@@ -1,0 +1,7 @@
+= Research Enabling Seamless Notifications in Flutter
+Second Milestone — Software Design — INSO 4116
+Prof. Marko Schütz-Schmuck 
+:doctype: book
+:toc:
+:sectnums:
+
