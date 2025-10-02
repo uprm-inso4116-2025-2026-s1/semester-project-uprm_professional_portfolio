@@ -71,6 +71,99 @@ If you see NDK version errors during build:
 - Subsequent builds: 15-30 seconds
 - Hot reload: Instant changes
 
+## 🏗️ Strategic Design Architecture (Domain-Driven Design)
+
+### Bounded Contexts
+- **Authentication Context** (`lib/features/auth/`)
+  - Domain: User identity, access control, role management
+  - Team: Accounts Team
+  - Responsibilities: Login/signup flows, user sessions, profile setup
+
+- **Matching Context** (`lib/features/matching/`)
+  - Domain: Preference algorithms, compatibility scoring
+  - Team: Matching Team  
+  - Responsibilities: Swipe logic, recommendation engine
+
+- **Communication Context** (`lib/features/communications/`)
+  - Domain: Messaging, notifications, real-time updates
+  - Team: Communications Team
+  - Responsibilities: Chat APIs, push notifications, email alerts
+
+- **Search & Filters Context** (`lib/features/searchFilters/`)
+  - Domain: Job search, filtering, and sorting
+  - Team: Search Team
+  - Responsibilities: Search algorithms, filter settings, saved searches
+
+- **Notifications Context** (`lib/features/notifications/`)
+  - Domain: System alerts, user notifications
+  - Team: Notifications Team
+  - Responsibilities: Notification settings, push notification integration
+
+### Context Map
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  Authentication │    │    Matching     │    │ Communication   │
+│    Context      │    │    Context      │    │    Context      │
+│ (Accounts Team) │    │ (Matching Team) │    │  (Comms Team)   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         │              ┌────────▼────────┐              │
+         └──────────────▶│  Shared Kernel  │◀─────────────┘
+                         │   (lib/core/)   │
+                         │ • Theme/Styling │
+                         │ • Auth Services │
+                         │ • Base Models   │
+                         └─────────────────┘
+                                  ▲
+         ┌────────────────────────┼────────────────────────┐
+         │                       │                       │
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│ Search/Filters  │    │  UI Components  │    │  Notifications  │
+│    Context      │    │ (Enabling Team) │    │    Context      │
+│ (Search Team)   │    │   (UI/UX Team)  │    │ (Notify Team)   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+
+Relationships:
+• Shared Kernel: All contexts depend on lib/core/
+• Customer/Supplier: UI Components → Feature Teams
+• Published Language: API contracts in lib/models/
+• Conformist: All teams follow established patterns
+```
+
+### Integration Patterns
+- **Shared Kernel**: `lib/core/` (theme, constants, base services)
+- **Customer/Supplier**: UI components → Feature teams
+- **Published Language**: API contracts in `lib/models/`
+- **Anti-Corruption Layer**: Service abstractions
+
+### Conway's Law Application
+
+**"Organizations design systems that mirror their communication structures"** - Melvin Conway
+
+**Our Implementation:**
+
+| Team Structure | Architecture Reflection | Communication Pattern |
+|----------------|------------------------|----------------------|
+| **Accounts Team** | `lib/features/auth/` bounded context | Direct ownership, independent development |
+| **Matching Team** | `lib/features/matching/` bounded context | Algorithm focus, data science collaboration |
+| **Communications Team** | `lib/features/communications/` context | Real-time systems, backend integration |
+| **Search Team** | `lib/features/searchFilters/` context | Database queries, performance optimization |
+| **Notifications Team** | `lib/features/notifications/` context | Cross-cutting concerns, all-team integration |
+| **UI/UX Team** | `lib/components/` enabling services | Design system, supports all feature teams |
+| **Backend Team** | `lib/core/services/` platform services | Infrastructure, API contracts |
+
+**Benefits of This Alignment:**
+- **Autonomous Development**: Each team can work independently on their bounded context
+- **Clear Ownership**: No confusion about who owns which code areas
+- **Reduced Conflicts**: Git merge conflicts minimized by clear boundaries
+- **Scalable Communication**: Teams only need to coordinate on shared interfaces
+- **Faster Delivery**: Parallel development without blocking dependencies
+
+**Git Workflow Reflects Team Structure:**
+- Each team has their own branch (`Accounts`, `Matching`, `Communication`, etc.)
+- Shared components managed through controlled integration
+- Code review process follows team boundaries
+
 ## 📁 Project Structure
 
 ```
@@ -86,6 +179,10 @@ lib/
 ├── features/                   # Feature-based modules
 │   ├── auth/                   # Authentication (login, signup)
 │   ├── profiles/               # User profiles (recruiter, jobseeker)
+    ├── matching/               # Matching Team
+│   ├── communications/         # Comunnications Team
+│   ├── notifications/          # Notifications Team
+│   └── searchFilters/          # Shared features
 │   └── common/                 # Shared features
 └── routes/                     # App navigation and routing
 ```
