@@ -1,9 +1,30 @@
 = Professional Portfolio Application Proposal 
-Second Milestone - Software Design - INSO 4115
+Second Milestone - Software Design - INSO 4117
 Prof. Marko Schütz-Schmuck 
 :doctype: book
 :toc:
 :sectnums:
+
+===== Notation for Changes
+[cols="3,2,5",options="header"]
+|===
+| Symbol | Function | Example
+
+| #Highlight#
+| Added
+| #This text is new.#
+
+| [.underline]#Underline#
+| Paraphrased 
+| [.underline]#This text has been modified.#
+
+| [line-through]#Strikethrough#
+| Removed
+| [line-through]#This text is no longer relevant.#
+|===
+'''
+
+
 
 == Informative Part
 
@@ -20,7 +41,7 @@ For Milestone 1, the team was organized into four functional groups. These are R
 | Julian A. Vivas Gandarillas | link:https://github.com/julivivas[@julivivas] | 
 |===
 
-===== Design:
+===== Developers:
 [cols="3,2,5",options="header"]
 |===
 | Student | GitHub username | Tasks
@@ -30,8 +51,6 @@ For Milestone 1, the team was organized into four functional groups. These are R
 | Osvaldo F. Figueroa Canino | link:https://github.com/Osvaldoo1414[@Osvaldoo1414] | #16, #36, #60, #62, #69, #71, #91
 | Ariana P. Rodríguez Méndez | link:https://github.com/arianrodz21[@arianrodz21] | #37, #69, #73
 |===
-
-===== Documentation:
 [cols="3,2,5",options="header"]
 |===
 | Student | GitHub username | Tasks
@@ -43,8 +62,6 @@ For Milestone 1, the team was organized into four functional groups. These are R
 | Alexa M. Zaragoza Torres | link:https://github.com/alexamzt[@alexamzt] | #24, #25, #26, #27, #38, #39, #50, #51, #53, #54, #55, #56, #101
 |===
 
-
-===== Functionality:
 [cols="3,2,5",options="header"]
 |===
 | Student | GitHub username | Tasks
@@ -54,7 +71,6 @@ For Milestone 1, the team was organized into four functional groups. These are R
 | Ryan R. Vélez Villarrubia | link:https://github.com/RyanVelez101[@RyanVelez101] | #66, #95
 |===
 
-===== Research:
 [cols="3,2,5",options="header"]
 |===
 | Student | GitHub username | Tasks
@@ -998,3 +1014,29 @@ Verification ensures that the documentation is internally consistent and traceab
 
 * **Walkthroughs of Documentation**  
   We will simulate “reader walkthroughs,” where one team member acts as an external reviewer and checks whether requirements can be traced back to definitions. This approach helps identify undefined or ambiguous terms.
+
+
+== Log Book
+
+[cols="3,^2,5",options="header",]
+|===
+| Name | Section | Added/Modified
+
+| Jean P. I. Sanchez
+| 4.0
+| Added
+
+| 
+| 
+| 
+
+| 
+| 
+|
+
+| 
+| 
+| 
+
+|===
+'''

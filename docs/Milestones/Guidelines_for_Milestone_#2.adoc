@@ -75,7 +75,7 @@ language of their project.
 
 == General comments on the submission
 
-Software design is INSO 4117.
+- Software design is INSO 4117.
 
 - The synopsis should, very briefly, touch on all the things that the project will have to do. This includes e.g. requirements engineering, implementation, etc. etc.
 
