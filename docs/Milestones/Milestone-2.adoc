@@ -1056,7 +1056,7 @@ Verification ensures that the documentation is internally consistent and traceab
 - #Archived → Active: triggered by `ProfileReactivated`#  
 - #Active/Archived → Deletion: triggered by `ProfileDeleted` when authorized#  
 
-#image::..\Images\StudentProfile.png[StudentProfile Lifecycle Diagram]#
+image::..\Images\StudentProfile.png[StudentProfile Lifecycle Diagram]
 
 ===== Aggregate Deletion Rules
 
@@ -1074,8 +1074,8 @@ Verification ensures that the documentation is internally consistent and traceab
 
 * #**Validation Checks**#  
   - #Before deletion, the system must validate:#  
-    - #That no critical dependencies remain in other aggregates (e.g., group projects, team memberships).#  
-    - #That deletion will not violate invariants of related domain objects.#  
+    *** #That no critical dependencies remain in other aggregates (e.g., group projects, team memberships).#  
+    *** #That deletion will not violate invariants of related domain objects.#  
 
 * #**Compliance and Audit**#  
   - #All deletion events must be logged with timestamp, actor, and reason for deletion.#  
