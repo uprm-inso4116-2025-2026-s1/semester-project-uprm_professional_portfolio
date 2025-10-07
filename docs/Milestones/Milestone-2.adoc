@@ -1026,75 +1026,72 @@ Verification ensures that the documentation is internally consistent and traceab
 
 ==== StudentProfile Life Cycle
 
-The `StudentProfile` domain object represents a student within the system. Its lifecycle captures all possible states from creation to permanent deletion, including intermediate states such as active use and temporary archival. Understanding this lifecycle is critical to maintain data integrity, support aggregate consistency, and comply with domain rules.
+#The `StudentProfile` domain object represents a student within the system. Its lifecycle captures all possible states from creation to permanent deletion, including intermediate states such as active use and temporary archival. Understanding this lifecycle is critical to maintain data integrity, support aggregate consistency, and comply with domain rules.#
 
 ===== Lifecycle States
 
-* **Creation**: triggered when a student registers or the system instantiates a profile; initial validation and default values are assigned  
-  - event: `StudentRegistered`  
-  - outcome: profile moves to **Active** after successful validation  
+* #**Creation**: triggered when a student registers or the system instantiates a profile; initial validation and default values are assigned#  
+  - #event: `StudentRegistered`#  
+  - #outcome: profile moves to **Active** after successful validation#  
 
-* **Active**: default operational state of the profile; student can update personal information, add experiences, adjust visibility; interacts with other aggregates (e.g., enrollments, submissions)  
-  - events: `ProfileUpdated`, `ExperienceAdded`, `VisibilityChanged`  
+* #**Active**: default operational state of the profile; student can update personal information, add experiences, adjust visibility; interacts with other aggregates (e.g., enrollments, submissions)#  
+  - #events: `ProfileUpdated`, `ExperienceAdded`, `VisibilityChanged`#  
 
-* **Archived**: temporary deactivation due to inactivity, graduation, or administrative action  
-  - profile becomes read-only  
-  - guard: only profiles meeting archival criteria can be archived  
-  - event: `ProfileArchived`  
-  - reactivation: `ProfileReactivated` moves profile back to **Active**  
+* #**Archived**: temporary deactivation due to inactivity, graduation, or administrative action#  
+  - #profile becomes read-only#  
+  - #guard: only profiles meeting archival criteria can be archived#  
+  - #event: `ProfileArchived`#  
+  - #reactivation: `ProfileReactivated` moves profile back to **Active**#  
 
-* **Deletion**: permanent removal from the system; ensures compliance and data integrity; may cascade to related aggregates (enrollments, submissions)  
-  - guard: only authorized or archived profiles may be deleted  
-  - event: `ProfileDeleted`  
+* #**Deletion**: permanent removal from the system; ensures compliance and data integrity; may cascade to related aggregates (enrollments, submissions)#  
+  - #guard: only authorized or archived profiles may be deleted#  
+  - #event: `ProfileDeleted`#  
 
 ===== State Transitions
 
-Transitions are implied within the state descriptions and governed by events and guard conditions. Explicit state changes include:  
+#Transitions are implied within the state descriptions and governed by events and guard conditions. Explicit state changes include:#  
 
-- Creation → Active: triggered by `StudentRegistered` and validation  
--   Active → Archived: triggered by `ProfileArchived` when archival criteria are met  
--   Archived → Active: triggered by `ProfileReactivated`  
--   Active/Archived → Deletion: triggered by `ProfileDeleted` when authorized  
+- #Creation → Active: triggered by `StudentRegistered` and validation#  
+- #Active → Archived: triggered by `ProfileArchived` when archival criteria are met#  
+- #Archived → Active: triggered by `ProfileReactivated`#  
+- #Active/Archived → Deletion: triggered by `ProfileDeleted` when authorized#  
 
-image::..\Images\StudentProfile.png[StudentProfile Lifecycle Diagram]
+#image::..\Images\StudentProfile.png[StudentProfile Lifecycle Diagram]#
 
 ===== Aggregate Deletion Rules
 
-The deletion of a `StudentProfile` must adhere to strict rules to maintain **aggregate consistency**, ensure **data integrity**, and comply with **domain policies**. The following rules apply:
+#The deletion of a `StudentProfile` must adhere to strict rules to maintain **aggregate consistency**, ensure **data integrity**, and comply with **domain policies**. The following rules apply:#
 
-* **Authorization Requirement**
-- A profile can only be deleted if it is either archived or explicitly authorized for deletion by an administrator.  
-- Active profiles cannot be deleted without explicit authorization.
+* #**Authorization Requirement**#  
+  - #A profile can only be deleted if it is either archived or explicitly authorized for deletion by an administrator.#  
+  - #Active profiles cannot be deleted without explicit authorization.#  
 
-* **Cascading Deletions**
-- Deleting a `StudentProfile` may require cascading deletion or modification of related aggregates:'
+* #**Cascading Deletions**#  
+  - #Deleting a `StudentProfile` may require cascading deletion or modification of related aggregates:#  
+    - #**Enrollments:** Any active or historical enrollments linked to the student must be removed or anonymized.#  
+    - #**Submissions/Assignments:** Student submissions may need to be archived, anonymized, or deleted according to retention policies.#  
+    - #**Notifications/Logs:** Events related to the profile should remain in the audit trail but must be decoupled from personally identifiable information.#  
 
-- **Enrollments:** Any active or historical enrollments linked to the student must be removed or anonymized.  
-- **Submissions/Assignments:** Student submissions may need to be archived, anonymized, or deleted according to retention policies.  
-- **Notifications/Logs:** Events related to the profile should remain in the audit trail but must be decoupled from personally identifiable information.
+* #**Validation Checks**#  
+  - #Before deletion, the system must validate:#  
+    - #That no critical dependencies remain in other aggregates (e.g., group projects, team memberships).#  
+    - #That deletion will not violate invariants of related domain objects.#  
 
-* **Validation Checks**
-- Before deletion, the system must validate:  
-  *** That no critical dependencies remain in other aggregates (e.g., group projects, team memberships).  
+* #**Compliance and Audit**#  
+  - #All deletion events must be logged with timestamp, actor, and reason for deletion.#  
+  - #Logs must be immutable and stored according to institutional compliance requirements.#  
+  - #This ensures traceability and supports future audits or investigations.#  
 
-  *** That deletion will not violate invariants of related domain objects.  
+* #**Reversibility**#  
+  - #Once deletion is executed, it is permanent.#  
+  - #If recovery is required, it must rely on backups or archived snapshots, not the active database.#  
 
-* **Compliance and Audit**
-- All deletion events must be logged with timestamp, actor, and reason for deletion.  
-- Logs must be immutable and stored according to institutional compliance requirements.  
-- This ensures traceability and supports future audits or investigations.
+* #**Notification**#  
+  - #Dependent aggregates or stakeholders (e.g., course instructors, admin systems) may receive notifications when a profile is deleted, ensuring all systems maintain consistent state.#  
 
-* **Reversibility**
-- Once deletion is executed, it is permanent.  
-- If recovery is required, it must rely on backups or archived snapshots, not the active database.
-
-* **Notification**
-- Dependent aggregates or stakeholders (e.g., course instructors, admin systems) may receive notifications when a profile is deleted, ensuring all systems maintain consistent state.
-
-* **Guard Clauses**
-- Deletion is prevented if any of the above rules are violated.  
-- Only profiles satisfying all deletion conditions are allowed to transition into the `Deletion` state.
-
+* #**Guard Clauses**#  
+  - #Deletion is prevented if any of the above rules are violated.#  
+  - #Only profiles satisfying all deletion conditions are allowed to transition into the `Deletion` state.#
 
 
 === Using the Language
