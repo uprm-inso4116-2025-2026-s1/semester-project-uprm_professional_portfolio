@@ -15,7 +15,6 @@ class RecruiterProfileFormCard extends StatelessWidget {
   final RecruiterProfile model;
   final ValueChanged<RecruiterProfile> onChanged;
 
-  /// Pluggable validators with sensible defaults.
   final String? Function(String?) requiredValidator;
   final String? Function(String?) requiredUrlValidator;
 
@@ -66,7 +65,6 @@ class RecruiterProfileFormCard extends StatelessWidget {
             initialValue: model.bio ?? '',
             maxLines: 3,
             textCapitalization: TextCapitalization.sentences,
-            // Bio is optional; keep validator if you want to force it.
             validator: requiredValidator,
             onChanged: (v) => onChanged(
               model.copyWith(bio: v.trim().isEmpty ? null : v.trim()),
@@ -90,7 +88,6 @@ class RecruiterProfileFormCard extends StatelessWidget {
             hint: 'Add your contact phone here!',
             initialValue: model.phoneNumber ?? '',
             keyboardType: TextInputType.phone,
-            // Make it required or swap to a phone validator if you add one later.
             validator: requiredValidator,
             onChanged: (v) => onChanged(
               model.copyWith(phoneNumber: v.trim().isEmpty ? null : v.trim()),
