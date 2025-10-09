@@ -51,14 +51,10 @@ class _JobSeekerProfileScreenState extends State<JobSeekerProfileScreen> {
               },
             ),
             centerTitle: true,
-            title: Text(
-              'Job Seeker Profile',
-              style: theme.textTheme.titleLarge?.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 25,
-                letterSpacing: 0.2,
-              ),
+            title: Image.asset(
+              'assets/logo/professional_portfolio_logo.png',
+              height: 40,
+              fit: BoxFit.contain,
             ),
           ),
 
