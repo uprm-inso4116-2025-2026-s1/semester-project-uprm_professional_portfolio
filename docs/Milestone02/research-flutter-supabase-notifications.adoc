@@ -1,5 +1,7 @@
 = Research Enabling Seamless Notifications in Flutter
 :nofooter:
+:author: Alexa M. Zaragoza Torres
+:revdate: 2025-10-07
 :toc: macro
 :icons: font
 
