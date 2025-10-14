@@ -1,1 +1,341 @@
+[.text-center]
+= Jobseeker(Candidate) profile Aggregates
 
+[.text-center]
+*Modeling the Domain*
+
+*Jobseeker(Entity)*:
+
+Represents the users: Students/alumni who are actively seeking jobs or internships.
+
+*Why is it important?*
+This Entity contains the Professional information of users with a student or alumni role. This is the information recruiters view when evaluating candidates, making the Jobseeker entity important for job matching and hiring processes.
+
+*What other concepts exist around the Jobseeker?*
+The Jobseeker(Candidate) is related to various other concepts, including:
+
+* Recruiter
+* User
+* Applications
+* Matches
+* Communication
+
+== *Value Object or Entity Classification for the Jobseeker:*
+Based on the way our project is currently being developed:
+
+- Jobseeker id
+
+Unique identity that states the same over time?
+no
+
+Can it be created, updated, deleted?
+no
+
+Can it be referenced from other parts of the system?
+yes
+
+*Value object that identifies an Entity(Jobseeker)*
+
+- major
+
+Has a Unique identity ?
+No
+
+Does it need to be tracked on its own?
+No
+
+Can be replaced if deleted?
+yes
+
+*Value Object*
+
+- graduation year
+
+Has a Unique identity ?
+No
+
+Does it need to be tracked on its own?
+No
+
+Can it be replaced if deleted or if it changes?
+yes
+
+*Value Object*
+
+- bio
+
+Has a Unique identity ?
+No
+
+Does it need to be tracked on its own?
+No
+
+Can it be replaced if deleted or if it changes?
+yes
+
+*Value Object*
+
+- location
+
+Has a Unique identity ?
+No
+
+Does it need to be tracked on its own?
+No
+
+Can it be replaced if deleted or if it changes?
+yes
+
+*Value Object*
+
+- phone number
+
+Has a Unique identity ?
+No
+
+Does it need to be tracked on its own?
+No
+
+Can it be replaced if deleted or if it changes?
+yes
+
+*Value Object*
+
+- skills
+
+Has a Unique identity ?
+At the moment no
+
+Does it need to be tracked on its own?
+No
+
+Can it be replaced if deleted or if it changes?
+yes
+
+Value Object with Potential to be an Entity(Conceptually it is a Entity)
+
+- interest
+Has a Unique identity ?
+No
+
+Does it need to be tracked on its own?
+No
+
+Can it be replaced if deleted or if it changes?
+yes
+
+Value Object
+
+- LinkedIn, Github URL
+
+Has a Unique identity ?
+No
+
+Does it need to be tracked on its own?
+No
+
+Can it be replaced if deleted or if it changes?
+yes
+
+Value Object
+
+- resume
+
+Has a Unique identity ?
+No (at the moment in the implementation)
+
+Does it need to be tracked on its own?
+No
+
+Can it be replaced if deleted or if it changes?
+yes
+
+*Value Object with Potential to be an Entity(Conceptually it is a Entity)*
+
+- portfolio
+
+Has a Unique identity ?
+Not, at the moment.
+
+Does it need to be tracked on its own?
+no
+
+Can it be replaced if deleted or if it changes?
+yes
+
+*Value Object with Potential to be an Entity(Conceptually it is a Entity)*
+
+- job type
+
+Has a Unique identity ?
+No
+
+Does it need to be tracked on its own?
+No
+
+Can it be replaced if deleted or if it changes?
+yes
+
+*Value object*
+
+- willing to reallocate
+
+Has a Unique identity ?
+No
+
+Does it need to be tracked on its own?
+No
+
+Can it be replaced if deleted or if it changes?
+yes
+
+*Value Object*
+
+- Created At and Updated At
+
+Has a Unique identity ?
+No
+
+Does it need to be tracked on its own?
+No
+
+Can it be replaced if deleted or if it changes?
+yes
+
+*Value Object*
+
+== *Deletion Logic*
+=== *What happens if the Jobseeker deletes its profile?*
+(Important: There are strict deletion rules to maintain aggregate consistency and data integrity. 4.4.1 Aggregate Deletion Rules)
+
+Deleting the jobseeker profile would trigger deleting of:
+
+- Jobseeker id
+- major
+- graduation year
+- bio
+- location
+- phone number
+- skills
+- interest
+- resume, portfolio, LinkedIn, Github URL
+- job type
+- willing to reallocate
+- Created At and Updated At
+
+=== *What would not be deleted?*
+
+The user id - is referenced from the Users aggregate.
+-It includes personal data such as email, full name and role(Student/alumni-”Jobseeker” or recruiter)
+
+Even after deleting the Jobseeker profile, the application retains this core user information, although professional details are removed.
+What happens if individual value objects or entities e.g(Resume, skills, location, phone number, etc) of the Jobseeker profile are deleted ?
+The Jobseeker profile remains active.
+The system will warn the user that certain mandatory fields are missing. e.g. (if no skills are provided, the app will prompt the user that the Skills section is required to complete and save the profile. The application will have validation to ensure the Jobseeker profile is not saved without the necessary information)
+
+== *Relationships:*
+
+Jobseeker <-> Users - by user id reference
+
+Jobseeker <-> Recruiters - skills, portfolio, resume by reference . This means Recruiters can access and see this information, but they do not own it or can modify it
+
+Jobseeker owns -> location, phone number, major, graduation year, updated At, created At,interest, skills, resume, portfolio
+
+*Jobseeker(Candidate) (Aggregate Root):*
+*Boundary(Owns) :*
+
+- Jobseeker id
+- major
+- graduation year
+- bio
+- location
+- phone number
+- skills
+- interest
+- resume, portfolio, LinkedIn, Github URL
+- job type
+- willing to reallocate
+- Created At and Updated At
+
+[NOTE]
+Skills, resume, portfolio are conceptually( in the domain model of the project documentation) treated as entities, but currently they are implemented as simple fields(List and String URLs) within the Jobseeker aggregate. This keeps these three fields inside the Jobseeker boundary for now/temporally, but we may extract them as aggregates in the future if behavior or identity management becomes necessary), also to keep aggregate small as the Vaughn Vernon, “Effective Aggregate Design” suggest.
+
+Example of the future implementation: e.g
+
+It is important to have unique id’s for each entity to reference external aggregates
+
+<<Entity>> Resume
+- resume id
+- Track changes and uploads
+- Support for multiple resumes
+
+<<Entity>> Portfolio
+- portfolio id
+- Projects
+-Description
+
+<<Entity>> Skills
+- skills id
+- update and remove skills
+- track skills
+- history of skills
+
+*Outside(External Relationships):*
+Users
+Recruiter
+
+[NOTE]
+Conceptually the jobseeker interacts with other Aggregates such as Match, Communication, etc.This aggregates are currently being worked on this Milestone(This documentation will be updated once those are fully Implemented).
+
+== *Jobseeker Aggregate behaviour:*
+
+*What does the Jobseeker aggregate do?*
+
+- Updates profile information(phone number, location, bio),
+- Add or remove fields e.g (interests)
+- Upload URLs for resume , portfolio, GitHub, LinkedIn
+- Validate the profile completeness before saving
+- Checks if the user is a Student (bool isStudent)
+- Validate willingness to relocate
+
+=== *Invariants for the Jobseeker profile:*
+
+- user id cannot be NULL. Must reference a Valid user
+- Jobseeker id cannot be NULL and link to only one User
+
+-For bool isStudent :
+ if isStudent == true:
+        graduation year Must be provided. 
+ else if isStudent ==false:
+     NULL  graduation year
+
+- Skills >  1 :  the jobseeker must provide at least two skills
+- Interest >= 1: the jobseeker must provide one or more interest
+- The URLs: portfolio, resume, LinkedIn, GitHub Must be valid URLs
+- Only one resume is allowed (at our current implementation, in the future we may allow more)
+- Job type must be one of: (Internship, Full-Time, Part-Time)
+- CreatedAt < UpdatedAt: CreatedAt must be earlier than UpdatedAt
+
+
+=== *Temporary Invariants Violations*
+
+*When would these invariants be violated temporarily ? Where would they be reestablished?*
+
+1.In the initial profile creation before all fields are filled
+
+They would be reestablished once the user finishes the filling of all the fields.
+
+-Before saving, all fields go through a validation layer.
+
+2.If the user is updating its profile and temporarily deletes or modifies information e.g. old 
+skills, URLs(resume, portfolio, GitHub, LinkedIn), location, phone number, etc. or if user uploads invalid URLs
+
+They would be reestablished by validating the information and only allowing to save the updates/changes when the mandatory fields are filled.
+
+- Missing or invalid fields trigger warnings or exceptions
+
+Example:
+
+ if (jobseeker.skills.isEmpty){
+      throwException(“Skills are required”);
+}
