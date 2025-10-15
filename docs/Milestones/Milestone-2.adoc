@@ -295,14 +295,94 @@ A rule requiring a Recruiter/Employer to satisfy verification checks before cert
 
 
 ==== Narrative
-
+[.line-through]
 The domain concerns how employers identify, evaluate, and hire talent, and how job seekers explore and compare opportunities. In this context, the term “candidate” is used broadly to mean any person seeking a job, regardless of prior experience or stage of career. The observable world of the domain includes candidates with educational and employment histories, competencies, and preferences; employers with staffing needs and hiring calendars; recruiters who operate search and prioritization criteria; openings defined by requirements, number of positions, and relevant dates; application documents such as résumés, certifications, portfolios, and references; and recruitment events with agendas and limited capacity. Information circulates through common channels such as postings, professional networks, referrals, unions, and agencies, under rules of eligibility and time availability.
 
+[.line-through]
 A typical cycle begins when an employer defines and disseminates a vacancy with explicit requirements, for example minimum experience, qualifications, licenses or certifications, languages, and legal authorizations, together with job conditions such as work modality, location, reference compensation, and start date. Candidates discover these opportunities, compare requirements to their profile, and express interest. Reciprocally, recruiters may pursue profiles based on observable signals such as track record, achievements, work samples, or references. Eligibility verification precedes any advance. Based on that verification and perceived fit, shortlists are formed and, when appropriate, additional screenings are conducted, including technical or psychometric tests. Interviews are scheduled in non-overlapping time slots, held in person or virtually, and conclude with observations that inform later decisions.
 
+[.line-through]
 When there is sufficient correspondence between needs and demonstrated capabilities, the employer issues an offer with explicit terms and a validity period. Clarifications or adjustments may follow, after which the candidate accepts or declines within the stated deadline. In parallel, recruitment events concentrate interactions: an audience is convened, capacity is managed, attendance is confirmed, and participation is recorded. From these contacts, new expressions of interest and applications can emerge without a prior formal submission. Relevant information, including requirements, application states, evaluations, schedules, and event capacity, shows varying degrees of structure, which explains asymmetries and information overload on both sides.
 
+[.line-through]
 The domain is governed by stable rules: each search process ties recruiters to a specific employer; candidates and openings relate in a many-to-many manner through applications; applications do not advance without meeting minimum requirements; no person is assigned to overlapping interviews; attendance at an event consumes available capacity; and offers expire if no response is received within their validity period. Cyclical patterns also exist, with posting and closing windows that shape supply, participation, and acceptance decisions. This description reflects how the labor market operates, independent of any system to be built.
+
+
+[discrete]
+=== Scope and actors
+
+The domain covers how recruiters discover candidates, evaluate evidence of fit, and make time-bound decisions. It also covers how students prepare and publish profiles and artifacts, apply to openings, communicate with recruiters, and respond to decisions. Primary actors are students, recruiters, and organizations. Secondary actors are career offices and third-party services that send notifications or store artifacts.
+
+[discrete]
+=== Core flow of a hiring cycle
+
+. A recruiter defines an opening with role, eligibility, skills, seniority, location rules, and a clear decision calendar.
+. Students prepare a profile and publish artifacts such as resume, projects, certifications, and availability.
+. Students submit an application to an opening. The application freezes the versions of the artifacts used for that opening.
+. Recruiters triage the queue of applications using quick signals such as eligibility, program, graduation term, skills match, portfolio completeness, and recent activity.
+. Selected students move to screening and interviews. Interview outcomes and notes accumulate as evidence tied to the same application.
+. Recruiters decide. Outcomes can be rejection, waitlist, or offer. An offer specifies deadline, compensation ranges or bands, start date window, and required actions.
+. Students accept, decline, or ask for more time. The system records a final state for the application and closes the loop with both sides.
+
+[discrete]
+=== Key entities and relationships
+
+|===
+| Relationship | Multiplicity | Notes
+
+| Student to Application | one to many | A student may submit many applications. An application belongs to one student.
+| Opening to Application | one to many | An opening receives many applications. An application targets one opening.
+| Application to Interview | one to many | Each interview is tied to one application and records stage, outcome, and notes.
+| Application to Offer | zero or one | At most one active offer per application. Historical offers remain as records.
+| Offer to Acceptance | zero or one | One acceptance closes the offer. Decline also closes the offer.
+| Student to Artifact | one to many | Artifacts are versioned. An application references the versions used at submit time.
+| Recruiter to Opening | one to many | A recruiter may own several openings across teams or time.
+| Notification to Event | many to one | Multiple notifications can be sent for a single domain event with different channels.
+|===
+
+[discrete]
+=== Invariants that guide design
+
+* An application always links to exactly one student and one opening.
+* An offer cannot exist without an application in a decision-eligible state.
+* Once an offer is accepted, the application moves to hired and no other offers can be issued for that application.
+* Deadlines are stored with time zone and source. Any change to a deadline keeps a trace of who changed it, when, and why.
+* Interview outcomes and notes are immutable records once submitted. Corrections are stored as new records that supersede older ones.
+* Notifications are reproducible. Given an event and a preference set, the system can explain which messages went out, to whom, and when.
+
+[discrete]
+=== Concrete examples from raw observations
+
+* First triage by recruiters often takes less than one minute and checks basic eligibility and red flags such as missing graduation date or visa requirement.
+* Students reuse the same resume across many openings. The application must keep the exact file seen during triage even if the profile later changes.
+* Interviewers rely on a daily view named Interview Today with candidate, role, time window, location or link, and a quick link to notes.
+* Offers require reminders at common timing windows such as T-24 hours and T-2 hours before the deadline.
+* Career offices request an audit record of all messages sent to a student, including channel and delivery status.
+
+[discrete]
+=== Edge cases and ambiguity resolution
+
+* A student accepts after the deadline because a recruiter granted an extension by email. The system records an extension event with the new limit and the actor who granted it.
+* A recruiter publishes an offer with a deadline that is too early. The correction updates the active deadline and preserves the original as an error record. All related reminders are recalculated.
+* A student submits two applications to the same opening through different channels. Duplicate detection flags the situation and asks the recruiter to merge or keep separate with a reason.
+* An opening is withdrawn after interviews due to budget freeze. All active applications move to closed by employer with a reason code and a message to candidates.
+* A student withdraws an application after receiving an external offer. The application state becomes withdrawn by candidate and future notifications stop.
+* A student updates a resume after applying. The application still shows the submitted version and also displays that a newer profile exists for transparency.
+* Recruiter reassignment happens mid-process. Ownership moves to a new recruiter while preserving the decision trail and permissions on notes.
+
+[discrete]
+=== Language and abstractions used consistently
+
+* Ubiquitous terms include Student, Opening, Application, Interview, Offer, Acceptance, Reminder, and Notification.
+* Application is the aggregate root for interviews, offer, acceptance, and decision notes. All changes that affect the decision state go through the application.
+* Offer Deadline is a value that carries time zone and precision to minutes.
+* Artifact Version captures the exact resume or portfolio snapshot attached to an application.
+* Triage View and Interview Today are application services that orchestrate domain data into the screens recruiters use.
+
+[discrete]
+=== Why this structure matters?
+
+This narrative ties the abstract model to observable work. The multiplicities clarify what can exist at the same time. The invariants prevent silent corruption such as orphaned offers or moving deadlines without trace. The edge cases show where business rules bend and how the system should keep truth and history. The language aligns with the rough sketch and the terminology so that design, code, and tests refer to the same concepts.
 
 ==== Events, Actions, and Behaviors
 
@@ -472,136 +552,382 @@ Session and state management functions ensure authentication and preparation of 
 
 === Requirements
 
-==== User Stories, Epics, Features
+==== [.underline]#User Stories, Epics, Features#
 
-This section outlines the experience our platform aims to provide for people seeking opportunities and for the organizations hiring them. We present the product in three layers short narrative user stories, the broader areas of value they belong to (epics), and the capabilities that bring those areas to life (features).
+[NOTE]
+This subsection defines the product scope from a user-value perspective. It organizes the solution into Epics that capture high-level goals and Features that realize those goals in the system.
 
-===== User stories
+[discrete]
+==== Abbreviations and ID Conventions:
+[cols="1,3",options="header,autowidth"]
+|===
+|Abbrev. |Meaning
+|US |User Story: a user-centered need framed as intent and value.
+|E |Epic: a high-level goal that groups related features and stories.
+|F |Feature: a concrete capability that realizes part of an epic.
+|ReqRef |Requirement Reference: the requirement ID(s) a story or feature maps to.
+|REQ |Requirement: a functional or non-functional specification with a stable ID.
+|===
 
-• _As a candidate, I want to create my profile with my background and skills so that recruiters can quickly assess my fit._
+[discrete]
+==== Identifier Formats:
+[cols="1,2,3,2",options="header,autowidth"]
+|===
+|Type |Format |Components |Example
 
-**Acceptance criteria:**
+|User Story ID:
+|`US.AREA.NN`
+|`US` = user story.; `AREA` = functional area (e.g., `PROF`, `SRCH`, `MATCH`, `CHAT`, `EVT`, `NOTIF`, `SAFE`); `NN` = two-digit sequence.
+|`US.PROF.01`
+
+|Epic ID:
+|`E#` or “Epic E#: Title”.
+|`#` = epic number.; clear title preferred in headings.
+|`E1` or `Epic E1: Candidate Profile & Portfolio`
+
+|Feature ID:
+|`F#.N`
+|`#` = epic number; `N` = feature sequence within that epic.
+|`F1.1`, `F3.2`
+
+|Requirement ID:
+|`REQ-AREA-TYPE-NN`
+|`AREA` = functional area; `TYPE` = `F` (Functional) or `NF` (Non-functional); `NN` = two-digit sequence.
+|`REQ-PRF-F-01`, `REQ-CHAT-NF-01`
+|===
+
+[discrete]
+==== ReqRef Usage (inside a story or feature):
+[cols="1,3",options="header,autowidth"]
+|===
+|Placement |Syntax
+
+|Same line as the title:
+|`==== US.PROF.01: Publish a complete profile  ReqRef: REQ-PRF-F-01`.
+
+|Next line below the title:
+|`==== US.PROF.01: Publish a complete profile` +
+`_ReqRef: REQ-PRF-F-01_`.
+|===
+
+
+&#160;
+
+[discrete]
+===== *_Epic E1: Candidate Profile & Portfolio_*
+
+*Goal:* Present credible competence fast.
+
+*Problem/value:* Candidates need a concise, verifiable profile that allows recruiters to assess fit within seconds.
+
+*Features (F1):* 
+
+- F1.1 Profile editor: The profile editor captures a candidate’s education, skills, experience, and role interests.  
+
+- F1.2 Portfolio artifacts: Candidates can upload portfolio items such as PDFs, public links, and videos, and they can reorder those items. 
+
+- F1.3 Visibility and privacy controls: Candidates can set their profile visibility to Public, Match-only, or Private and retain full control over exposure.  
+
+- F1.4 Profile completeness indicator: The system displays a completeness indicator that shows progress toward a fully publishable profile.
+
+[discrete]
+===== _US.PROF.01: Publish a complete profile | ReqRef: REQ-PRF-F-01_
+
+_"As a candidate, I want to publish my education, skills, and experience so that recruiters can evaluate fit quickly."_
+
+*Assumptions/Dependencies:* verified university email; identity/enrollment verification available.
+
+*Acceptance criteria:*
 [cols="1,1,2",options="header,autowidth"]
 |===
-| Given | When | Then
-| I'm signed in | I complete required fields and save | My profile is published
-| Required info is missing | I try to publish | I’m shown exactly which fields to complete
+|Given |When |Then
+|A verified account. |All required fields are completed and saved. |The profile is published and listed as “Complete”.
+|Required info is missing. |Publish is attempted. |Inline errors show exactly which fields remain.
+|Profile is updated. |Changes are saved. |The last-updated timestamp is refreshed.
 |===
 
-• _As a candidate, I want to add portfolio items (PDF or public URLs) so that my work is easy to review._
+&#160;
 
-**Acceptance criteria:**
+[discrete]
+===== _US.PROF.02: Add portfolio items | ReqRef: REQ-PRF-F-02_
+
+_"As a candidate, I want to add portfolio items so that my work is easy to review."_
+
+*Acceptance criteria:*
 [cols="1,1,2",options="header,autowidth"]
 |===
-| Given | When | Then
-| A valid file/URL | I upload | The item appears in a gallery I can reorder
-| An unsupported type/size | I upload | I see an error listing allowed types and max size
+|Given |When |Then
+|A valid file or public URL |The item is uploaded. |The item appears in a gallery and can be reordered.
+|An unsupported type or size. |Upload is attempted. |An error lists allowed types and maximum size.
 |===
 
-• _As a candidate, I want to choose my profile visibility (public / by match / private) so that I control my exposure._
+&#160;
 
-**Acceptance criteria:**
+[discrete]
+===== _US.PROF.03: Control profile visibility | ReqRef: REQ-PRF-F-03_
+
+_"As a candidate, I want to choose my profile visibility so that I control my exposure."_
+
+*Acceptance criteria:*
 [cols="1,1,2",options="header,autowidth"]
 |===
-| Given | When | Then
-| "Private" visibility | Recruiters search | My profile does not appear in results
-| "By match" visibility | A mutual match occurs | My profile becomes visible to the matched party
-| "Public" visibility | Recruiters search | My profile can appear in recruiter results
+|Given |When |Then
+|Visibility is set to “Private”. |Recruiters search. |The profile does not appear in results.
+|Visibility is set to “Match-only”. |A mutual match occurs. |The profile becomes visible to the matched party.
+|Visibility is set to “Public”. |Recruiters search. |The profile can appear in results.
 |===
 
-• _As a recruiter, I want to publish a simple company page so that candidates understand who we are and our roles._
+&#160;
 
-**Acceptance criteria:**
+[discrete]
+===== E1 Traceability (Stories → Features → Requirements):
+[cols="1,2,2,2",options="header,autowidth"]
+|===
+|Story ID |Feature |ReqRef |Notes
+|US-PROF-01 |F1.1, F1.4 |REQ-PRF-F-01 |Completeness logic and publish rules.
+|US-PROF-02 |F1.2 |REQ-PRF-F-02 |File/URL validation constraints.
+|US-PROF-03 |F1.3 |REQ-PRF-F-03 |Access control and search filtering.
+|===
+
+&#160;
+
+[discrete]
+===== *_Epic E2: Recruiter Discovery & Search_*
+
+*Goal:* Shortlist qualified candidates efficiently.
+
+*Problem/value:* Recruiters need to discover relevant candidates quickly and understand organizational context without friction.
+
+*Features (F2):*
+
+- F2.1 Company page: The organization can publish a company page with logo, sectors, locations, and available roles.  
+
+- F2.2 Candidate search with filters: Recruiters can search using filters such as skills, role interests, and availability.  
+
+- F2.3 Candidate detail view: Recruiters can open a detailed candidate view that consolidates profile and portfolio information.
+
+[discrete]
+===== _US.SRCH.01: Publish a company page | ReqRef: REQ-SRCH-F-01_
+
+_"As a recruiter, I want to publish a simple company page so that candidates understand who we are and our roles."_
+
+*Acceptance criteria:*
 [cols="1,1,2",options="header,autowidth"]
 |===
-| Given | When | Then
-| Logo, short description, sectors, and location are provided | I publish | The company page is visible to candidates
-| Required info is incomplete | I attempt to publish | I’m prompted to complete the missing fields
+|Given |When |Then
+|Logo, description, sectors, and location are provided. |Publishing is requested. |The page becomes visible to candidates.
+|Required info is incomplete. |Publishing is requested. |Prompts indicate missing fields.
 |===
 
-• _As a recruiter, I want to filter candidates by skills, role interest and availability so that I can shortlist relevant profiles._
+&#160;
 
-**Acceptance criteria:**
+[discrete]
+===== _US.SRCH.02: Filter and rank candidates | ReqRef: REQ-SRCH-F-02_
+
+_"As a recruiter, I want to filter candidates by skills, role interest, and availability so that I can shortlist relevant profiles."_
+
+*Acceptance criteria:*
 [cols="1,1,2",options="header,autowidth"]
 |===
-| Given | When | Then
-| Combined filters | I search | Results highlight matched terms
-| Sample data under normal conditions | I search | Results load in ~2 seconds (p95)
+|Given |When |Then
+|Combined filters. |Search is executed. |Results highlight matched terms.
+|Normal traffic and sample data. |Search is executed. |Results load in ~2 seconds (p95).
 |===
 
-• _As a candidate, I want to express interest with a quick like or pass so that I can move fast through options._
+&#160;
 
-**Acceptance criteria:**
+[discrete]
+===== E2 Traceability (Stories → Features → Requirements):
+[cols="1,2,2,2",options="header,autowidth"]
+|===
+|Story ID |Feature |ReqRef |Notes
+|US-SRCH-01 |F2.1 |REQ-SRCH-F-01 |Company profile schema.
+|US-SRCH-02 |F2.2, F2.3 |REQ-SRCH-F-02 |Filter set and performance target.
+|===
+
+&#160;
+
+[discrete]
+===== *_Epic E3: Matching & Messaging_*
+
+*Goal:* Move from interest to conversation quickly.
+
+*Problem/value:* Both parties need a fast way to express interest, form a mutual match, and start secure conversations.
+
+*Features (F3):*  
+
+- F3.1 Like and pass interactions: Users can register quick likes or passes on presented profiles. 
+
+- F3.2 Mutual match and notification: The system detects mutual interest and triggers an in-app notification that opens a chat.  
+
+- F3.3 One-to-one chat: Matched users can exchange messages with delivery and read states.
+
+[discrete]
+===== _US.MATCH.01: Express quick interest | ReqRef: REQ-MATCH-F-01_
+
+_"As a candidate, I want to like or pass quickly so that I can move fast through options."_
+
+*Acceptance criteria:*
 [cols="1,1,2",options="header,autowidth"]
 |===
-| Given | When | Then
-| A profile is shown | I press Like | My interest is stored
-| A profile is shown | I press Pass | That profile does not appear again in the current session
+|Given |When |Then
+|A profile is shown. |Like is pressed. |Interest is stored.
+|A profile is shown. |Pass is pressed. |That profile is removed from the current session.
 |===
 
-• _As a user (candidate or recruiter), I want to be notified when there’s a mutual like so that we can start a conversation._
+&#160;
 
-**Acceptance criteria:**
+[discrete]
+===== _US.MATCH.02: Get notified on mutual like | ReqRef: REQ-MATCH-F-02_
+
+_"As a user, I want to be notified when there is a mutual like so that a conversation can start."_
+
+*Acceptance criteria:*
 [cols="1,1,2",options="header,autowidth"]
 |===
-| Given | When | Then
-| Both sides liked each other | The system detects a mutual like | A chat thread opens and an in-app notification is sent
+|Given |When |Then
+|Both sides liked each other. |The system detects mutual like. |A chat thread opens and an in-app notification is sent.
 |===
 
-• _As a matched user, I want to exchange messages so that we can coordinate next steps._
+&#160;
 
-**Acceptance criteria:**
+[discrete]
+===== _US.CHAT.01: Exchange messages with safety | ReqRef: REQ-CHAT-F-01_
+
+_"As a matched user, I want to exchange messages so that next steps can be coordinated."_
+
+*Acceptance criteria:*
 [cols="1,1,2",options="header,autowidth"]
 |===
-| Given | When | Then
-| A match chat is open | I send a message | The recipient receives it near real time and I see sent/read states
-| I have blocked the other party | They try to message me | The message is not sent and I receive no notification
+|Given |When |Then
+|A match chat is open. |A message is sent. |The recipient receives it near real time; the sender sees sent and read states.
+|The other party is blocked. |They attempt to send a message. |The message is not delivered and no notification is generated.
 |===
 
-• _As a user, I want to report or block a profile so that I feel safe using the platform._
+&#160;
 
-**Acceptance criteria:**
+[discrete]
+===== E3 Traceability (Stories → Features → Requirements):
+[cols="1,2,2,2",options="header,autowidth"]
+|===
+|Story ID |Feature |ReqRef |Notes
+|US-MATCH-01 |F3.1 |REQ-MATCH-F-01 |Interaction logging.
+|US-MATCH-02 |F3.2 |REQ-MATCH-F-02 |Match detection and notification trigger.
+|US-CHAT-01 |F3.3 |REQ-CHAT-F-01 |Realtime delivery, receipts, block rules.
+|===
+
+&#160;
+
+[discrete]
+===== *_Epic E4: Events & Notifications_*
+
+*Goal:* Increase attendance and timely follow-through.
+
+*Problem/value:* Candidates must discover opportunities in time and receive reminders that respect preferences and quiet hours.
+
+*Features (F4):*  
+
+- F4.1 Events feed: The system lists events with title, date and time, location, and RSVP state.  
+
+- F4.2 RSVP and reminders: Users can RSVP and receive reminders before the event.  
+
+- F4.3 Notification preferences: Users can configure quiet hours and choose preferred channels.
+
+[discrete]
+===== _US.EVT.01: Discover and RSVP to events | ReqRef: REQ-EVT-F-01_
+
+_"As a candidate, I want to see upcoming recruiting events and RSVP so that opportunities are not missed."_
+
+*Acceptance criteria:*
 [cols="1,1,2",options="header,autowidth"]
 |===
-| Given | When | Then
-| I submit a report |-| A moderation case is created for review
-| I block a profile |-| It no longer appears in my experience and cannot open new chats
+|Given |When |Then
+|Events feed is available. |- |Items are ordered by date and show title, location, and RSVP.
+|An RSVP exists. |The event is 24 hours away. |An in-app reminder is delivered.
 |===
 
-• _As a candidate, I want to see upcoming recruiting events and RSVP so that I don’t miss opportunities._
+&#160;
 
-**Acceptance criteria:**
+[discrete]
+===== _US.NOTIF.01: Respect notification preferences | ReqRef: REQ-NOTIF-F-01_
+
+_"As a user, I want notifications to follow my channel and quiet-hour settings so that interruptions are minimized."_
+
+*Acceptance criteria:*
 [cols="1,1,2",options="header,autowidth"]
 |===
-| Given | When | Then
-| I RSVP to an event | The event is 24h away | An in-app reminder is delivered
-| The events feed is available |-| Items are ordered by date and show title, location, and registration/RSVP
+|Given |When |Then
+|Quiet hours are active. |A non-urgent event occurs. |Notifications are queued until quiet hours end.
+|The user opted in to in-app only. |A reminder must be sent. |Only in-app is used; no email or SMS is sent.
 |===
 
-===== Epics
-- Candidate Profile and Portfolio
-- Recruiter Discovery and Search
-- Matching and Messaging
-- Events and Notifications
-- Safety and Moderation
+&#160;
 
-===== Features
+[discrete]
+===== E4 Traceability (Stories → Features → Requirements):
+[cols="1,2,2,2",options="header,autowidth"]
+|===
+|Story ID |Feature |ReqRef |Notes
+|US-EVT-01 |F4.1, F4.2 |REQ-EVT-F-01 |RSVP state and reminders.
+|US-NOTIF-01 |F4.3 |REQ-NOTIF-F-01 |Quiet hours and channel policy.
+|===
 
-*Candidate Profile and Portfolio:*
-- Create/Edit candidate profile, add portfolio items (PDF/links/video), privacy and visibility controls and profile completeness indicator.
+&#160;
 
-*Recruiter Discovery and Search:*
-- Company page, candidate search with filters and candidate detail view.
+[discrete]
+===== *_Epic E5: Safety & Moderation_*
 
-*Matching and Messaging:*
-- Like/Pass interactions, mutual match and in-app notification, 1:1 chat and report/Block.
+*Goal:* Maintain a safe, trusted environment.
 
-*Events and Notifications:*
-- Events feed, RSVP and Reminder notifications.
+*Problem/value:* Users must be able to report issues and block unwanted contacts, and moderators need clear workflows.
 
-*Safety and Moderation:*
-- Submit report, admin review queue and user block/unblock.
+*Features (F5):*  
 
+- F5.1 Report a profile: Users can submit a report for moderation review.  
+
+- F5.2 Block or unblock a user: Users can block or later restore interaction with another profile.  
+
+- F5.3 Moderation review queue: Administrators can triage and process reported cases.
+
+[discrete]
+===== _US.SAFE.01: Report inappropriate behavior | ReqRef: REQ-SAFE-F-01_
+
+_"As a user, I want to report a profile so that moderation can review and act."_
+
+*Acceptance criteria:*
+[cols="1,1,2",options="header,autowidth"]
+|===
+|Given |When |Then
+|A report is submitted. |- |A moderation case is created with timestamp and reporter ID.
+|===
+
+&#160;
+
+[discrete]
+===== _US.SAFE.02: Block interactions | ReqRef: REQ-SAFE-F-02_
+
+_"As a user, I want to block a profile so that it no longer appears or can initiate chats."_
+
+*Acceptance criteria:*
+[cols="1,1,2",options="header,autowidth"]
+|===
+|Given |When |Then
+|Block action is confirmed. |- |The blocked profile no longer appears and new chats cannot be opened.
+|Unblock is requested. |- |Visibility and messaging return to the pre-block state.
+|===
+
+&#160;
+
+[discrete]
+===== E5 Traceability (Stories → Features → Requirements):
+[cols="1,2,2,2",options="header,autowidth"]
+|===
+|Story ID |Feature |ReqRef |Notes
+|US-SAFE-01 |F5.1, F5.3 |REQ-SAFE-F-01 |Moderator workflow.
+|US-SAFE-02 |F5.2 |REQ-SAFE-F-02 |Block and unblock policy with propagation.
+|===
+
+&#160;
 
 ==== Personas
 
@@ -1022,6 +1348,305 @@ Verification ensures that the documentation is internally consistent and traceab
 
 === Effective Modeling
 === Communication and the Use of Language
+
+==== #Lecture Topic Task — Knowledge Crunching for Recruiter Needs#
+:author: Alexa M. Zaragoza Torres
+
+[NOTE]
+Objective: Understand what recruiters actually need from messaging and notifications to guide near-term design/implementation.
+
+[discrete]
+=== One-Page Interview Guide
+* Which events are immediate vs batch later? Give concrete examples.
+* During quiet hours, what must still break through (by role/stage)?
+* Preferred channel per event (push, in-app, email, SMS opt-in) and why.
+* Timing windows: reminders (T-24h/T-2h), follow-ups after 48–72h silence, offer deadlines.
+* Inbox filters you must have (Interview Today, Needs Feedback, New Priority Match, At-Risk/Idle X days).
+* Triage: labels, urgency flags, snooze/mute rules.
+* Exact deep-link target on open (thread top, interview card, offer card, note anchor).
+* Receipts/“seen” policy (opt-in? per thread/org?). Etiquette concerns.
+* Internal mentions: who gets notified and when (@roles, offer steps).
+* Automatic follow-ups (first/second nudge cadence, templates).
+* Compliance/consent: time zones, opt-in for SMS/email, do-not-disturb, retention.
+* One thing current tools get wrong about notifications—and how to fix it.
+
+[discrete]
+=== Interviews
+
+*Interview 01:*
+Mid-market Tech Recruiter · Date: 2025-10-05 · Mode: phone (28 min) · Region: urban + suburban sites · Anonymized
+
+*Answer 1:* Immediate vs batch. _Immediate:_ same-day interviews, <24h reschedules, offer steps. _Batch:_ new applicants, minor status changes.
+
+*Answer 2:* Quiet hours. 7pm–7am local; exceptions: <24h reschedule, offer accept/expire.
+
+*Answer 3:* Channels. Urgent → push + in-app (SMS if candidate opted-in); routine → in-app + email digest.
+
+*Answer 4:* Timing. Reminders T-24h/T-2h; feedback prompt 2h post-interview; no-reply nudges at 48h/96h.
+
+*Answer 5:* Filters. Interview Today, Needs Feedback, New Priority Match, Idle 3+ days.
+
+*Answer 6:* Triage. Urgent flag; snooze until 08:00; mute threads after closure.
+
+*Answer 7:* links. Open the interview card pinned inside the thread.
+
+*Answer 8:* Receipts. Delivery timestamp OK; “seen” off by default (adds pressure).
+
+*Answer 9:* Internal. Hiring Manager on interview feedback; Finance only on offer.
+
+*Answer 10:* Automation. “Thanks—feedback soon” to candidates; 48/96h nudges to keep momentum.
+
+*Answer 11:* Compliance. Respect candidate time zone; store per-channel consent; honor DND.
+
+*Answer 12:* tools. Too many pings; batch low-signal changes and keep deep links precise.
+
+*Structured Notes (Interview 1):*
+[cols="2,3",options="header"]
+|===
+|Theme |Signals / Details
+|Urgent |Interview day, reschedule<24h, offer
+|Batch |New applicant, non-critical status change
+|Policies |Per-thread quiet hours + role overrides
+|Navigation |Deep link → interview/offer card
+|Etiquette |Delivery receipts over “seen”
+|Automation |48/96h nudges; 2h feedback prompt
+|===
+
+&#160;
+
+*Interview 2:*
+Agency Recruiter (multi-timezone) · Date: 2025-10-06 · Mode: video (28 min) · Region: urban + suburban sites · Anonymized
+
+*Answer 1:* Immediate vs batch. Immediate: offer steps, day-of schedule changes. Batch: sourcing/status updates.
+
+*Answer 2:* Quiet hours. After 7pm local; override only for <24h reschedules/offer deadlines.
+
+*Answer 3:* Channels. Urgent → push; day-of SMS if opted-in; daily email digest for summaries.
+
+*Answer 4:* Timing. T-24h/T-2h reminders; auto re-invite at 72h no-reply.
+
+*Answer 5:* Filters. Interview Today, Offer Pending, At-Risk (no response 96h).
+
+*Answer 6:* Triage. Labels: Urgent / Follow-up / Waiting; snooze per thread.
+
+*Answer 7:* Deep links. Interview details with join link and call button.
+
+*Answer 8:* Receipts. Opt-in per thread; org default is off.
+
+*Answer 9:* Internal. @Legal/@Finance only during offer; no alerts for routine notes.
+
+*Answer 10:* Automation. Post-interview “thank you” + 48/96h nudges.
+
+*Answer 11:* Compliance. Regional DND and recorded consent (SMS/email).
+
+*Answer 12:* Gap in tools. Alerts are not role-aware; everything notifies everyone.
+
+*Structured Notes (Interview 2):*
+[cols="2,3",options="header"]
+|===
+|Theme |Signals / Details
+|Urgent |Reschedule<24h, offer, interview reminder
+|Batch |Sourcing and stage changes
+|Overrides |Offer steps ignore quiet hours for recruiter/manager
+|Deep link |Interview details with join link
+|Automation |72h re-invite; At-Risk at 96h
+|Consent |Per-channel opt-ins saved
+|===
+
+&#160;
+[discrete]
+=== Synthesis
+
+*_What recruiters actually need from chat/notifications?_*
+
+* Urgency rules separate true interrupts (reschedule<24h, offer, day-of interview) from batchable noise (status/sourcing).
+* Per-thread quiet hours with role-based overrides for offer & day-of scheduling.
+* Channels by event (push/in-app urgent; email digest for low-signal; SMS only with opt-in).
+* Reliable deep links to the exact action (Interview card, Offer card, Note anchor).
+* Inbox controls (Interview Today, Needs Feedback, New Priority Match, At-Risk/Idle).
+* Polite automation (48/96h nudges; feedback prompt 2h; 72h re-invite).
+* Etiquette & consent defaults (delivery receipts vs “seen”; stored per-channel consent).
+* Outcomes: fewer no-shows, faster time-to-respond, clear audit of what alerted whom and why.
+
+[discrete]
+==== Event Taxonomy & Matrix
+[cols="2,2,1,1,2,3",options="header"]
+|===
+|Event |Actor |When |Priority |Channel |Deep Link
+|Interview Reminder |Candidate, Recruiter |T-24h, T-2h |High |Push + In-app |Interview card
+|Reschedule/Cancel <24h |Both |Instant |Break Quiet Hours |Push + SMS (opt-in) |Interview card (new time)
+|Offer Extended |Candidate, Recruiter |Instant |High |Push + Email |Offer card
+|Offer Deadline T-48h |Candidate, Recruiter |T-48h |High |Push + In-app |Offer card (deadline)
+|New Priority Match |Recruiter |Instant |High |Push + In-app |Profile → thread
+|No Reply 48h/96h |Recruiter |Daily batch |Medium |In-app + badge |Thread with “Nudge”
+|Internal @Mention |Mentioned role |Instant |Normal |In-app + Email |Note anchor
+|Doc Request |Candidate |Daily batch |Low |Email |Files tab
+|Snooze Ends |Recruiter |At wake time |Low |In-app |Thread top
+|===
+
+&#160;
+
+[discrete]
+
+=== Prioritization
+==== Must
+* Policy engine for urgency & quiet hours (thread/role aware)
+* Reliable deep links (interview/offer/note anchors)
+* RSVP + calendar integration
+* Morning digest (07:30 local) for low-signal updates
+* Auto-nudge at 48/96h silence
+* Internal @mentions with anchors
+
+[discrete]
+==== Should
+* Opt-in delivery receipts and SLA badges
+* Candidate quiet hours and consent per channel
+* Role-based overrides for urgent events
+
+[discrete]
+==== Could
+* Stage-aware bundling of notifications
+* Intent/sentiment hints in threads
+
+[discrete]
+==== Won’t (now)
+* Cross-org notification analytics
+
+[discrete]
+=== Implementable Requirements
+
+[discrete]
+==== R1 — Policy Engine for Urgency & Quiet Hours
+[source,gherkin]
+----
+Feature: Notification policy engine
+
+Scenario: Reschedule within 24 hours breaks quiet hours
+  Given the thread has quiet hours from 19:00 to 07:00
+  And an interview is rescheduled 12 hours before start
+  When the event is processed at 22:00
+  Then a HIGH priority push notification is sent
+  And the deep link opens the interview card
+
+Scenario: Non-urgent updates during quiet hours are batched
+  Given quiet hours are active
+  When a status change event occurs
+  Then no push is sent
+  And the update appears in the 07:30 digest
+----
+
+[discrete]
+==== R2 — Interview RSVP + Calendar Deep Link
+[source,gherkin]
+----
+Feature: RSVP and calendar
+
+Scenario: Candidate receives invite
+  Given an interview invite is sent
+  When the candidate opens the notification
+  Then the app shows RSVP buttons
+  And an .ics file is available
+  And the meeting link is visible
+----
+
+[discrete]
+==== R3 — Daily Digest at 07:30 Local
+[source,gherkin]
+----
+Feature: Morning digest
+
+Scenario: Recruiter starts day
+  Given there are interviews today and 48h+ unreplied threads
+  When it is 07:30 local time
+  Then a digest groups interviews, unreplied threads, and new priority matches
+  And each item deep links to the exact context
+----
+
+[discrete]
+==== R4 — Auto-Nudge After Silence (48h/96h)
+[source,gherkin]
+----
+Feature: Auto follow-up
+
+Scenario: First nudge at 48h
+  Given a candidate has not replied for 48 hours
+  When automation runs
+  Then a polite nudge is posted in the thread
+
+Scenario: At-risk at 96h
+  Given no reply after the first nudge
+  When 96 hours elapse
+  Then a second nudge is posted
+  And the thread is labeled "At Risk"
+----
+
+[discrete]
+==== R5 — Thread-Level Mute/Snooze
+[source,gherkin]
+----
+Feature: Snooze thread
+
+Scenario: Snooze until tomorrow 08:00
+  Given a recruiter snoozes a thread until 08:00 tomorrow
+  Then no notifications are sent for that thread until 08:00
+  And a "Snoozed" badge is visible
+----
+
+[discrete]
+==== R6 — Internal @Mentions with Anchors
+[source,gherkin]
+----
+Feature: Internal mentions
+
+Scenario: Mention hiring manager
+  Given a note mentions the hiring manager
+  Then the manager receives a notification
+  And opening it jumps to the note anchor in the thread
+----
+
+[discrete]
+==== R7 — Delivery Receipts + SLA Badges (opt-in)
+[source,gherkin]
+----
+Feature: Delivery receipts and SLA
+
+Scenario: SLA risk after threshold
+  Given the organization SLA is response within 24 hours
+  And a message has been delivered for 24 hours without reply
+  Then the thread shows "SLA at risk"
+----
+
+[discrete]
+==== Traceability — Pain → Event → Requirement:
+[cols="3,3,1",options="header"]
+|===
+|Pain Point |Event(s) |Requirement(s)
+|Too many alerts / noise overload |Reschedule<24h, Interview reminders, Offer updates |R1 (Policy Engine), R3 (Morning Digest)
+|Missed follow-ups / dropped threads |No Reply 48h/96h |R4 (Auto-Nudge After Silence)
+|Wrong screen after tapping notification |All (Interview, Offer, Mention) |R2 (Deep Links + RSVP/Calendar)
+|Coordination gaps between roles |Internal @Mention |R6 (Internal @Mentions with Anchors)
+|Pressure from read receipts |Any (messages, updates) |R7 (Delivery Receipts opt-in)
+|Need for silent focus time |All (Batch, low-priority) |R1 (Policy Engine + Quiet Hours)
+|Inconsistent candidate updates |Interview reminder, Offer deadline |R2 (RSVP/Calendar), R3 (Digest)
+|===
+
+[discrete]
+=== References
+
+LinkedIn. (n.d.). Alerts and notifications. Recruiter Help. https://www.linkedin.com/help/recruiter/topic/a100022 
+
+LinkedIn. (n.d.). InMail and Inbox. Recruiter Help. https://www.linkedin.com/help/recruiter/topic/a52 
+
+Workable. (n.d.). Scheduling events overview. Workable Help Center. https://help.workable.com/hc/en-us/articles/115013135088-Scheduling-events-overview 
+
+Workable. (n.d.). Do candidates receive reminder emails for scheduled events? Workable Help Center. https://help.workable.com/hc/en-us/articles/32871072712855-Do-candidates-receive-reminder-emails-for-scheduled-events 
+
+Indeed for Employers. (2025, May 27). How to message candidates on Indeed: A guide for employers. https://www.indeed.com/hire/resources/howtohub/indeed-messaging 
+
+Indeed for Employers. (2024, November 4). 6 texting and chatting rules with candidates. https://www.indeed.com/hire/c/info/texting-chatting-rules-with-candidates 
+
+04CommunicationAndTheUseOfLanguage.pdf — Ubiquitous Language; aligning terms across interviews, requirements, and data/model.
+
 === Isolating the Domain & Expressing Models in Software
 
 === Life Cycle of Domain Objects
@@ -1120,9 +1745,9 @@ image::..\Images\StudentProfile.png[StudentProfile Lifecycle Diagram]
 | 1.3.2
 | Modified
 
-| 
-| 
-|
+| Alexa M. Zaragoza
+| 4.2.1, 2.2.1, 2.1.4
+|Added, Modified, Modified.
 
 | 
 | 
