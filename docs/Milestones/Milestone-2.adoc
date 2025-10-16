@@ -1023,7 +1023,7 @@ The personas below represent our core user segments and ground the scope of this
 |Quote|"I want to feel in control and safe at all times."
 |===
 
-.Mina “International Grad” Shah - International candidate (compliance-first, cross-time-zone)
+.Mina “International Grad” Shah - International candidate (compliance-first)
 [cols="1,3"]
 |===
 |Snapshot|International MS grad navigating visas and time zones; needs clarity and eligibility signals.
