@@ -205,53 +205,146 @@ NOTE: This is an unprocessed collection of notes, quotes, and observations from 
 
 ==== Terminology
 
-*Applicant* :: (entity, domain)  
+*Applicant* :: (entity, domain)
 A person, usually a student or recent graduate, pursuing professional chances. Candidates strive to highlight their abilities and credentials via their portfolios.
 
-*Employer / Recruiter* :: (entity, domain)  
-An organization or hiring professional responsible for filling open job positions. Employers seek evidence of capability and eligibility when evaluating applicants.  
+*Employer* :: (entity, domain)
+An organization that owns openings and ultimately employs candidates. Multiple recruiters may represent the same employer during sourcing and selection.
 
-*Portfolio* :: (entity, domain)  
-A collection of an applicant’s work, projects, and achievements. Portfolios provide recruiters with evidence of professional skills.  
+*Recruiter* :: (actor, domain)
+A hiring professional acting on behalf of an employer to discover, evaluate, and engage candidates. A candidate may interact with several recruiters for the same employer.
 
-*Skill* :: (entity, domain)  
-A demonstrated ability, either technical or interpersonal, that contributes to an applicant’s professional profile.  
+*Portfolio* :: (entity, domain)
+A collection of an applicant’s work, projects, and achievements. Portfolios provide recruiters with evidence of professional skills.
 
-*Qualification* :: (entity, domain)  
-An educational or professional credential (e.g., degree, certification) that indicates formal preparation or eligibility.  
+*Skill* :: (entity, domain)
+A demonstrated ability, either technical or interpersonal, that contributes to an applicant’s professional profile.
 
-*Work Modality* :: (entity, domain)  
-The way in which work is performed, such as on site, remote, or hybrid.  
+*Qualification* :: (entity, domain)
+An educational or professional credential (e.g., degree, certification) that indicates formal preparation or eligibility.
 
-*Compensation Range* :: (entity, domain)  
-The expected or offered salary associated with a role. Considered between applicant and employer.  
+*Work Modality* :: (entity, domain)
+The way in which work is performed, such as on site, remote, or hybrid.
 
-*Mutual Interest Signaling* :: (event, domain)  
-The occurrence of both applicant and employer expressing interest, creating the basis for a potential connection.  
+*Compensation Range* :: (attribute, domain)
+The expected or offered salary **plus applicable benefits** (e.g., equity/options, health plan, stipends, shuttle/transport, on-site meals). Considered between applicant and employer.
 
-*Connection* :: (entity, domain)  
-The relationship formally established once mutual interest is confirmed between an applicant and an employer.  
+*Location* :: (attribute, domain)
+The geographic context for a role or event (e.g., city/region/country) or “remote-eligible,” used for discovery and filtering.
 
-*First Conversation* :: (event, domain)  
-The initial professional interaction between an applicant and an employer following a confirmed connection, typically involving clarification of expectations or role details.  
+*Start Date* :: (attribute, domain)
+The intended employment start date or window associated with an opening or offer.
 
-*Ghosting* :: (behavior, domain)  
-The act of ceasing communication without notice, leading to inefficiency in the recruitment process.  
+*Mutual Interest Signaling* :: (event, domain)
+The occurrence of both applicant and employer expressing interest, creating the basis for a potential connection.
 
-*Identity Assurance* :: (behavior, domain)  
-The process of verifying that participants are authentic and represent legitimate individuals.  
+*Connection* :: (entity, domain)
+The relationship established upon mutual interest. Day-to-day interaction typically occurs between the applicant and the **recruiter** representing the **employer**; any employment outcome is with the employer.
 
-*Recruitment Event* :: (entity, domain)  
-A scheduled occasion, such as a job fair or networking session, where applicants and employers directly engage.  
+*First Conversation* :: (event, domain)
+The initial professional interaction after a confirmed connection, typically between an applicant and a **recruiter**; it may still be considered as leading to a connection with the **employer**.
 
-*Expectation Alignment* :: (behavior, domain)  
-The process of clarifying and agreeing on key role aspects, including scope, compensation, timeline, and modality.  
+*Interview Modality* :: (taxonomy, domain)
+The manner in which an interview is conducted (e.g., in-person, virtual). Serves as the parent concept for specific interview types.
 
-*Trust and Safety* :: (behavior, domain)  
-The assurance that professional interactions occur under respectful conduct, secure data handling, and clear reporting mechanisms.  
+*Validity Period* :: (attribute, domain)
+The time window during which an offer remains actionable before it expires.
 
-*Feedback* :: (event, domain)  
-Information shared between employer and applicant regarding application status, interest, or evaluation, enabling transparency.  
+*Clarifications* :: (process, domain)
+Bidirectional questions and answers to resolve ambiguities (scope, duties, timeline) without changing negotiated terms.
+
+*Adjustments* :: (process, domain)
+Mutually agreed changes to offer terms (e.g., title, start date, compensation range) prior to acceptance.
+
+*Accept* :: (decision/event, domain)
+The applicant’s affirmative decision to proceed under the current offer within its validity period.
+
+*Decline* :: (decision/event, domain)
+The applicant’s explicit decision not to proceed under the current offer.
+
+*Ghosting* :: (behavior, domain)
+The act of ceasing communication without notice, leading to inefficiency in the recruitment process.
+
+*Identity Assurance* :: (behavior, domain)
+The process of verifying that participants are authentic and represent legitimate individuals.
+
+*Recruitment Event* :: (entity, domain)
+A scheduled occasion, such as a job fair or networking session, where applicants and employers directly engage.
+
+*Expectation Alignment* :: (behavior, domain)
+The process of clarifying and agreeing on key role aspects, including scope, compensation, timeline, and modality.
+
+*Trust and Safety* :: (behavior, domain)
+The assurance that professional interactions occur under respectful conduct, secure data handling, and clear reporting mechanisms.
+
+*Feedback* :: (event, domain)
+Information shared between employer and applicant regarding application status, interest, or evaluation, enabling transparency.
+
+*User* :: (technical/authentication, domain)
+An authenticated account in the system. Each User is typed as either Candidate (e.g., Student) or Recruiter; avoid using “User” to describe domain roles.
+
+*Student* :: (subset, domain)
+A Candidate currently enrolled at a university/college. Used when context involves campus events, coursework, or student services.
+
+*Profile* :: (entity, domain)
+The core representation of a User in the system (typed as StudentProfile or RecruiterProfile). Distinct from a Profile Card used for swiping.
+
+*StudentProfile* :: (typed entity, domain)
+A Candidate’s profile containing résumé, skills, preferences, portfolio items, and visibility settings. Identified by an immutable UUID.
+
+*RecruiterProfile* :: (typed entity, domain)
+A Recruiter’s profile including employer association, role/title, sectors, location, and verification status.
+
+*Profile Card* :: (ui artifact, domain)
+Condensed, swipeable representation of a Profile shown in the Discovery Feed.
+
+*Discovery Feed* :: (experience, domain)
+A personalized deck of Profile Cards presented for evaluation.
+
+*Swipe* :: (action, domain)
+The primary gesture to evaluate a Profile Card. Right-swipe = Like; left-swipe = Pass.
+
+*Like* :: (action, domain)
+An expression of interest on a Profile Card (right-swipe). Stored by the system for match evaluation.
+
+*Pass* :: (action, domain)
+A dismissal on a Profile Card (left-swipe). Removes the card from the current session.
+
+*Match* :: (event, domain)
+Created only when both sides have explicitly liked each other’s Profile Cards (mutual interest signaling).
+
+*Message* :: (entity/action, domain)
+A communication exchanged only when a valid Connection exists (or explicit permission).
+
+*Opening (Job Opening)* :: (entity, domain)
+A role posted by an Employer with explicit Requirements, Location, Work Modality, Compensation Range, and Start Date.
+
+*Requirements* :: (structure, domain)
+Must-have and nice-to-have criteria for an Opening (e.g., skills, eligibility, language, authorization). Used to assess Eligibility.
+
+*Eligibility* :: (assessment, domain)
+Whether a Candidate meets the Requirements of an Opening (meets / partially meets / does not meet).
+
+*Shortlist* :: (collection, domain)
+A curated set of Candidates selected by a Recruiter for next steps (review, outreach, interview).
+
+*Interview* :: (event, domain)
+A scheduled conversation following a Connection/Shortlist; must respect non-overlapping time blocks and uses an Interview Modality.
+
+*RSVP* :: (action/state, domain)
+An explicit intent to attend an Event; updates capacity and powers reminders.
+
+*Offer* :: (entity, domain)
+A proposal from an Employer to a Candidate with explicit terms (role, Compensation Range, Location/Work Modality, Start Date) and a Validity Period.
+
+*Notification* :: (system event, domain)
+An in-app alert for key events (e.g., Match created, unread Message, Event reminder, Offer updates).
+
+*Visibility* :: (setting, domain)
+Exposure level of a StudentProfile: Public (searchable), By Match (visible only to the matched party), or Private (not discoverable; shared explicitly).
+
+*Session* :: (technical, domain)
+The authenticated runtime context for a User. Authorizes actions (swipes, messages, RSVPs).
 
 
 ==== Domain Terminology in Relation to Domain Rough Sketch
@@ -1044,6 +1137,7 @@ _"As a user, I want to block a profile so that it no longer appears or can initi
 
 &#160;
 
+
 ==== Personas
 
 The personas below represent our core user segments and ground the scope of this product. For each persona we outline goals, pains, typical behaviors, and accessibility needs, and we link them to the stories, epics, and features defined in 2.2.1. We’ll reference these personas by name during planning and reviews to keep decisions concrete and tied to user value.
@@ -1051,7 +1145,12 @@ The personas below represent our core user segments and ground the scope of this
 .María “New Grad” Rivera — University candidate (mobile-first)
 [cols="1,3"]
 |===
-|Profile|22, UPRM (CS). Looking for her first role; phone is the primary device.
+|Snapshot|Loves hackathon weekends and cafés near campus; anxious about first-job search but optimistic.
+|Background|22, UPRM (CS). First-gen grad, part-time tutoring; lives off-campus with roommates.
+|Motivations|Land her first SWE role where she can keep learning; wants fast, clear signals of interest.
+|Hobbies|Campus hackathons, short video reels of projects, weekend hikes.
+|Tech Setup|iPhone as primary device; edits portfolio on a shared laptop.
+|Relationship to App|Wants quick Like/Pass and reminders for events tied to companies she follows.
 |Goals|Publish a complete profile quickly; showcase a simple portfolio; control visibility; get event reminders.
 |Pains|Long forms; vague errors; unwanted exposure.
 |Behavior|Short sessions; prefers simple actions (Like/Pass).
@@ -1064,7 +1163,12 @@ The personas below represent our core user segments and ground the scope of this
 .Luis “Switcher” Santiago — Career-transition candidate (privacy-first)
 [cols="1,3"]
 |===
-|Profile|30, IT support background; moving into QA. Prefers “visibility by match.”
+|Snapshot|Careful planner changing lanes into QA; values control and signal quality over volume.
+|Background|30, IT support → moving into QA; evening bootcamp; helping family on weekends.
+|Motivations|Show real, verifiable skills without broadcasting a job search to current contacts.
+|Hobbies|Keyboard mods, bug-bash meetups, journaling progress.
+|Tech Setup|Desktop first; tracks opportunities in spreadsheets.
+|Relationship to App|Prefers “visibility by match”; wants strong filters and concise profile previews.
 |Goals|Import/organize history; highlight skills; appear in relevant searches without going fully public.
 |Pains|Lack of control over who sees his profile; imprecise recruiter filters.
 |Behavior|Logs in a few times per week; replies only when there’s a real match.
@@ -1077,7 +1181,12 @@ The personas below represent our core user segments and ground the scope of this
 .Karla “Campus Recruiter” Gómez — Recruiter (events & funnel)
 [cols="1,3"]
 |===
-|Profile|Recruiter at a tech company; manages 3 junior openings; runs campus events.
+|Snapshot|Organized, metric-driven; splits time between campus events and fast triage.
+|Background|Tech company recruiter; owns 3 junior openings; coordinates campus tours with a small team.
+|Motivations|Build a clean funnel quickly; reduce no-shows; capture reliable signals pre-event.
+|Hobbies|Morning runs; mentors student groups; podcast commutes.
+|Tech Setup|Laptop + ATS tabs; lives in filters and saved searches.
+|Relationship to App|Needs crisp company page, combined filters, and event RSVP with reminders.
 |Goals|Publish company page; filter by skills/interest/availability; view candidate detail; manage RSVPs and reminders.
 |Pains|Noisy results; search latency; incomplete candidate info.
 |Behavior|1–2 h desktop sessions; heavy use of combined filters; saves shortlists.
@@ -1090,7 +1199,12 @@ The personas below represent our core user segments and ground the scope of this
 .Jorge “HR Generalist” Ortiz — SMB recruiter (speed & safety)
 [cols="1,3"]
 |===
-|Profile|HR at a small company; very limited time; wants quick shortlists.
+|Snapshot|Wears many hats; wants quick, safe conversations that don’t waste cycles.
+|Background|HR at a 35-person firm; manages onboarding, payroll, and recruiting.
+|Motivations|Shortlists fast; protect team time; keep the conversation professional and safe.
+|Hobbies|Weekend leagues; DIY home projects.
+|Tech Setup|Older office desktop; checks mobile during site visits.
+|Relationship to App|Needs practical filters, read receipts, and easy report/block.
 |Goals|Filter by skills and availability; chat 1:1; report or block bad behavior.
 |Pains|Incomplete profiles; spam/inappropriate contacts.
 |Behavior|Short work blocks; values online indicators and read receipts.
@@ -1099,10 +1213,15 @@ The personas below represent our core user segments and ground the scope of this
 |Quote|"Give me a reliable shortlist and a clear conversation; the rest is noise."
 |===
 
-.Ana “Safe User” Lozada — Candidate focused on safety
+.Ana “Safe User” Lozada - Safety-focused candidate (safety-first)
 [cols="1,3"]
 |===
-|Profile|24, first time using a jobs platform; highly concerned about safety.
+|Snapshot|Cautious first-timer; wants control and predictable notifications.
+|Background|24, first time on a jobs platform; previous negative social app experiences.
+|Motivations|Try a new channel without risking privacy or overwhelm.
+|Hobbies|Photography walks, language exchange groups.
+|Tech Setup|Android mid-range; limits notifications outside 9–6.
+|Relationship to App|Wants visibility controls, block/report, and meaningful alerts only.
 |Goals|Block or report profiles; prevent re-appearance after Pass; receive only useful notifications.
 |Pains|Unwanted interactions; intrusive alerts.
 |Behavior|Reviews privacy settings; uses reporting if something feels unsafe.
@@ -1111,6 +1230,21 @@ The personas below represent our core user segments and ground the scope of this
 |Epics|Safety & Moderation; Matching & Messaging; Events & Notifications.
 |Quote|"I want to feel in control and safe at all times."
 |===
+
+.Mina “International Grad” Shah - International candidate (compliance-first)
+[cols="1,3"]
+|===
+|Snapshot|International MS grad navigating visas and time zones; needs clarity and eligibility signals.
+|Profile|24, MS in Data Science, international student; lives off-campus; phone for browsing, laptop for uploads.
+|Goals|Visa-friendly profile & portfolio; appear in searches filtered by skills, location, and authorization; timely match notifications; RSVP and reminders; safe messaging.
+|Pains|Ambiguous job location and start date; unclear offer validity; outreach without consent; slow search; duplicate event notices.
+|Behavior|Curates projects weekly; short-burst swipes; evening chats; shortlists companies; RSVPs to virtual events.
+|Accessibility|Clear copy on compensation (salary + benefits), readable tables, timezone-aware reminders.
+|Related Stories|Create profile & portfolio; Choose visibility; Recruiter search (skills, location, authorization, availability); Match notification; 1:1 messaging; Events feed & RSVP; Report/Block.
+|Epics|Candidate Profile & Portfolio; Recruiter Discovery & Search; Matching & Messaging; Events & Notifications; Safety & Moderation.
+|Quote|"Make it crystal clear where the role is, whether I’m eligible, and ping me when it’s a real match—then I can move fast."
+|===
+
 
 ===== Coverage matrix (personas × epics)
 [cols="1,5*^", options="header"]
@@ -1121,7 +1255,9 @@ The personas below represent our core user segments and ground the scope of this
 |Karla (Recruiter) |  |X |  |X | 
 |Jorge (HR Gen.)   |  |X |X |  |X
 |Ana (Safe User)   |  |  |X |X |X
+|Mina (Intl. Grad) |X |X |X |X |X
 |===
+
 
 
 
@@ -1864,9 +2000,14 @@ image::..\Images\StudentProfile.png[StudentProfile Lifecycle Diagram]
 | 4.2.1, 2.2.1, 2.1.4
 |Added, Modified, Modified.
 
-| 
-| 
-| 
+| Heribiell A. Rodríguez Cruz
+| 2.1.2 Terminology
+| Modified
+
+| Heribiell A. Rodríguez Cruz
+| 2.2.2 Personas
+| Modified, Added
+
 
 |===
 '''
