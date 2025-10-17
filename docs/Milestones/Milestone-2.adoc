@@ -1022,6 +1022,7 @@ _"As a user, I want to block a profile so that it no longer appears or can initi
 
 &#160;
 
+
 ==== Personas
 
 The personas below represent our core user segments and ground the scope of this product. For each persona we outline goals, pains, typical behaviors, and accessibility needs, and we link them to the stories, epics, and features defined in 2.2.1. We’ll reference these personas by name during planning and reviews to keep decisions concrete and tied to user value.
@@ -1029,7 +1030,12 @@ The personas below represent our core user segments and ground the scope of this
 .María “New Grad” Rivera — University candidate (mobile-first)
 [cols="1,3"]
 |===
-|Profile|22, UPRM (CS). Looking for her first role; phone is the primary device.
+|Snapshot|Loves hackathon weekends and cafés near campus; anxious about first-job search but optimistic.
+|Background|22, UPRM (CS). First-gen grad, part-time tutoring; lives off-campus with roommates.
+|Motivations|Land her first SWE role where she can keep learning; wants fast, clear signals of interest.
+|Hobbies|Campus hackathons, short video reels of projects, weekend hikes.
+|Tech Setup|iPhone as primary device; edits portfolio on a shared laptop.
+|Relationship to App|Wants quick Like/Pass and reminders for events tied to companies she follows.
 |Goals|Publish a complete profile quickly; showcase a simple portfolio; control visibility; get event reminders.
 |Pains|Long forms; vague errors; unwanted exposure.
 |Behavior|Short sessions; prefers simple actions (Like/Pass).
@@ -1042,7 +1048,12 @@ The personas below represent our core user segments and ground the scope of this
 .Luis “Switcher” Santiago — Career-transition candidate (privacy-first)
 [cols="1,3"]
 |===
-|Profile|30, IT support background; moving into QA. Prefers “visibility by match.”
+|Snapshot|Careful planner changing lanes into QA; values control and signal quality over volume.
+|Background|30, IT support → moving into QA; evening bootcamp; helping family on weekends.
+|Motivations|Show real, verifiable skills without broadcasting a job search to current contacts.
+|Hobbies|Keyboard mods, bug-bash meetups, journaling progress.
+|Tech Setup|Desktop first; tracks opportunities in spreadsheets.
+|Relationship to App|Prefers “visibility by match”; wants strong filters and concise profile previews.
 |Goals|Import/organize history; highlight skills; appear in relevant searches without going fully public.
 |Pains|Lack of control over who sees his profile; imprecise recruiter filters.
 |Behavior|Logs in a few times per week; replies only when there’s a real match.
@@ -1055,7 +1066,12 @@ The personas below represent our core user segments and ground the scope of this
 .Karla “Campus Recruiter” Gómez — Recruiter (events & funnel)
 [cols="1,3"]
 |===
-|Profile|Recruiter at a tech company; manages 3 junior openings; runs campus events.
+|Snapshot|Organized, metric-driven; splits time between campus events and fast triage.
+|Background|Tech company recruiter; owns 3 junior openings; coordinates campus tours with a small team.
+|Motivations|Build a clean funnel quickly; reduce no-shows; capture reliable signals pre-event.
+|Hobbies|Morning runs; mentors student groups; podcast commutes.
+|Tech Setup|Laptop + ATS tabs; lives in filters and saved searches.
+|Relationship to App|Needs crisp company page, combined filters, and event RSVP with reminders.
 |Goals|Publish company page; filter by skills/interest/availability; view candidate detail; manage RSVPs and reminders.
 |Pains|Noisy results; search latency; incomplete candidate info.
 |Behavior|1–2 h desktop sessions; heavy use of combined filters; saves shortlists.
@@ -1068,7 +1084,12 @@ The personas below represent our core user segments and ground the scope of this
 .Jorge “HR Generalist” Ortiz — SMB recruiter (speed & safety)
 [cols="1,3"]
 |===
-|Profile|HR at a small company; very limited time; wants quick shortlists.
+|Snapshot|Wears many hats; wants quick, safe conversations that don’t waste cycles.
+|Background|HR at a 35-person firm; manages onboarding, payroll, and recruiting.
+|Motivations|Shortlists fast; protect team time; keep the conversation professional and safe.
+|Hobbies|Weekend leagues; DIY home projects.
+|Tech Setup|Older office desktop; checks mobile during site visits.
+|Relationship to App|Needs practical filters, read receipts, and easy report/block.
 |Goals|Filter by skills and availability; chat 1:1; report or block bad behavior.
 |Pains|Incomplete profiles; spam/inappropriate contacts.
 |Behavior|Short work blocks; values online indicators and read receipts.
@@ -1077,10 +1098,15 @@ The personas below represent our core user segments and ground the scope of this
 |Quote|"Give me a reliable shortlist and a clear conversation; the rest is noise."
 |===
 
-.Ana “Safe User” Lozada — Candidate focused on safety
+.Ana “Safe User” Lozada - Safety-focused candidate (safety-first)
 [cols="1,3"]
 |===
-|Profile|24, first time using a jobs platform; highly concerned about safety.
+|Snapshot|Cautious first-timer; wants control and predictable notifications.
+|Background|24, first time on a jobs platform; previous negative social app experiences.
+|Motivations|Try a new channel without risking privacy or overwhelm.
+|Hobbies|Photography walks, language exchange groups.
+|Tech Setup|Android mid-range; limits notifications outside 9–6.
+|Relationship to App|Wants visibility controls, block/report, and meaningful alerts only.
 |Goals|Block or report profiles; prevent re-appearance after Pass; receive only useful notifications.
 |Pains|Unwanted interactions; intrusive alerts.
 |Behavior|Reviews privacy settings; uses reporting if something feels unsafe.
@@ -1089,6 +1115,21 @@ The personas below represent our core user segments and ground the scope of this
 |Epics|Safety & Moderation; Matching & Messaging; Events & Notifications.
 |Quote|"I want to feel in control and safe at all times."
 |===
+
+.Mina “International Grad” Shah - International candidate (compliance-first)
+[cols="1,3"]
+|===
+|Snapshot|International MS grad navigating visas and time zones; needs clarity and eligibility signals.
+|Profile|24, MS in Data Science, international student; lives off-campus; phone for browsing, laptop for uploads.
+|Goals|Visa-friendly profile & portfolio; appear in searches filtered by skills, location, and authorization; timely match notifications; RSVP and reminders; safe messaging.
+|Pains|Ambiguous job location and start date; unclear offer validity; outreach without consent; slow search; duplicate event notices.
+|Behavior|Curates projects weekly; short-burst swipes; evening chats; shortlists companies; RSVPs to virtual events.
+|Accessibility|Clear copy on compensation (salary + benefits), readable tables, timezone-aware reminders.
+|Related Stories|Create profile & portfolio; Choose visibility; Recruiter search (skills, location, authorization, availability); Match notification; 1:1 messaging; Events feed & RSVP; Report/Block.
+|Epics|Candidate Profile & Portfolio; Recruiter Discovery & Search; Matching & Messaging; Events & Notifications; Safety & Moderation.
+|Quote|"Make it crystal clear where the role is, whether I’m eligible, and ping me when it’s a real match—then I can move fast."
+|===
+
 
 ===== Coverage matrix (personas × epics)
 [cols="1,5*^", options="header"]
@@ -1099,7 +1140,9 @@ The personas below represent our core user segments and ground the scope of this
 |Karla (Recruiter) |  |X |  |X | 
 |Jorge (HR Gen.)   |  |X |X |  |X
 |Ana (Safe User)   |  |  |X |X |X
+|Mina (Intl. Grad) |X |X |X |X |X
 |===
+
 
 
 
