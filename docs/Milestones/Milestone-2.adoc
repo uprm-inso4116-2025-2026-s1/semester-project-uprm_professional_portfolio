@@ -552,8 +552,123 @@ Session and state management functions ensure authentication and preparation of 
 
 === Requirements
 
-==== [.underline]#User Stories, Epics, Features#
+[line-through]#User Stories, Epics, Features#
 
+
+[line-through]#User Stories, Epics, Features#
+
+[line-through]#This section outlines the experience our platform aims to provide for people seeking opportunities and for the organizations hiring them. We present the product in three layers short narrative user stories, the broader areas of value they belong to (epics), and the capabilities that bring those areas to life (features).#
+
+[line-through]#===== User stories#
+
+[line-through]#• _As a candidate, I want to create my profile with my background and skills so that recruiters can quickly assess my fit._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#I'm signed in# | [line-through]#I complete required fields and save# | [line-through]#My profile is published#
+| [line-through]#Required info is missing# | [line-through]#I try to publish# | [line-through]#I’m shown exactly which fields to complete#
+|===
+
+[line-through]#• _As a candidate, I want to add portfolio items (PDF or public URLs) so that my work is easy to review._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#A valid file/URL# | [line-through]#I upload# | [line-through]#The item appears in a gallery I can reorder#
+| [line-through]#An unsupported type/size# | [line-through]#I upload# | [line-through]#I see an error listing allowed types and max size#
+|===
+
+[line-through]#• _As a candidate, I want to choose my profile visibility (public / by match / private) so that I control my exposure._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#"Private" visibility# | [line-through]#Recruiters search# | [line-through]#My profile does not appear in results#
+| [line-through]#"By match" visibility# | [line-through]#A mutual match occurs# | [line-through]#My profile becomes visible to the matched party#
+| [line-through]#"Public" visibility# | [line-through]#Recruiters search# | [line-through]#My profile can appear in recruiter results#
+|===
+
+[line-through]#• _As a recruiter, I want to publish a simple company page so that candidates understand who we are and our roles._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#Logo, short description, sectors, and location are provided# | [line-through]#I publish# | [line-through]#The company page is visible to candidates#
+| [line-through]#Required info is incomplete# | [line-through]#I attempt to publish# | [line-through]#I’m prompted to complete the missing fields#
+|===
+
+[line-through]#• _As a recruiter, I want to filter candidates by skills, role interest and availability so that I can shortlist relevant profiles._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#Combined filters# | [line-through]#I search# | [line-through]#Results highlight matched terms#
+| [line-through]#Sample data under normal conditions# | [line-through]#I search# | Results load in ~2 seconds (p95)#
+|===
+
+[line-through]#• _As a candidate, I want to express interest with a quick like or pass so that I can move fast through options._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#A profile is shown# | [line-through]#I press Like# | [line-through]#My interest is stored#
+| [line-through]#A profile is shown# | [line-through]#I press Pass# | [line-through]#That profile does not appear again in the current session#
+|===
+
+[line-through]#• _As a user (candidate or recruiter), I want to be notified when there’s a mutual like so that we can start a conversation.#
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#Both sides liked each other# | [line-through]#The system detects a mutual like# | [line-through]#A chat thread opens and an in-app notification is sent#
+|===
+
+[line-through]#• _As a matched user, I want to exchange messages so that we can coordinate next steps._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#A match chat is open# | [line-through]#I send a message# | [line-through]#The recipient receives it near real time and I see sent/read states#
+| [line-through]#I have blocked the other party# | [line-through]#They try to message me# | [line-through]#The message is not sent and I receive no notification#
+|===
+
+[line-through]#• _As a user, I want to report or block a profile so that I feel safe using the platform._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#I submit a report# |-| [line-through]#A moderation case is created for review#
+| [line-through]#I block a profile# |-| [line-through]#It no longer appears in my experience and cannot open new chats#
+|===
+
+[line-through]#• _As a candidate, I want to see upcoming recruiting events and RSVP so that I don’t miss opportunities._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#I RSVP to an event# | [line-through]#The event is 24h away# | [line-through]#An in-app reminder is delivered#
+| [line-through]#The events feed is available# |-| [line-through]#Items are ordered by date and show title, location, and registration/RSVP#
+|===
+
+[line-through]#===== Epics#
+[line-through]#- Candidate Profile and Portfolio
+- Recruiter Discovery and Search
+- Matching and Messaging
+- Events and Notifications
+- Safety and Moderation#
+
+==== User Stories, Epics, Features
 [NOTE]
 This subsection defines the product scope from a user-value perspective. It organizes the solution into Epics that capture high-level goals and Features that realize those goals in the system.
 
