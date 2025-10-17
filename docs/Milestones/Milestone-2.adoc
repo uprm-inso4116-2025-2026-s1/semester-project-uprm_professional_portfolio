@@ -647,9 +647,6 @@ Session and state management functions ensure authentication and preparation of 
 
 [line-through]#User Stories, Epics, Features#
 
-
-[line-through]#User Stories, Epics, Features#
-
 [line-through]#This section outlines the experience our platform aims to provide for people seeking opportunities and for the organizations hiring them. We present the product in three layers short narrative user stories, the broader areas of value they belong to (epics), and the capabilities that bring those areas to life (features).#
 
 [line-through]#===== User stories#
