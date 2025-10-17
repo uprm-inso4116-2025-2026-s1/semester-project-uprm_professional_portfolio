@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'package:uprm_professional_portfolio/features/matches.dart';
 import '../core/constants/app_constants.dart';
 import '../features/auth/login/login_screen.dart';
 import '../features/auth/signup/signup_screen.dart';
@@ -65,6 +66,10 @@ class AppRouter {
       GoRoute(
         path: AppConstants.jobseekerProfileRoute,
         builder: (context, state) => const JobSeekerProfileScreen(),
+      ),
+      GoRoute(
+        path: AppConstants.matchesScreenRoute,
+        builder: (context, state) => const MatchesScreen(),
       ),
 
       // TODO: Add more routes as needed
