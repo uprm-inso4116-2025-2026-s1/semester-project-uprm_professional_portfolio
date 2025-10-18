@@ -141,27 +141,27 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<void> _handleLogin() async {
-    if (!_formKey.currentState!.validate()) return;
+Future<void> _handleLogin() async {
+  if (!_formKey.currentState!.validate()) return;
 
-    final result = await _controller.login(
-      _emailController.text.trim(),
-      _passwordController.text,
-    );
+  final result = await _controller.login(
+    _emailController.text.trim(),
+    _passwordController.text,
+  );
 
-    if (mounted) {
-      if (result.success) {
-        // Navigate based on user role
-        // TODO: Get actual user role from result
-        context.go('/dashboard'); // This will be implemented later
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(result.error ?? 'Login failed'),
-            backgroundColor: Theme.of(context).colorScheme.error,
-          ),
-        );
-      }
+  if (mounted) {
+    if (result.success) {
+      // No manual navigation — Supabase will trigger the GoRouter redirect automatically
+      // once auth state changes (login event detected).
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(result.error ?? 'Login failed'),
+          backgroundColor: Theme.of(context).colorScheme.error,
+        ),
+      );
     }
   }
+}
+
 }
