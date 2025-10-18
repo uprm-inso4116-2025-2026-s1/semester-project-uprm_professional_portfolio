@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'core/constants/env.dart';
+// import 'core/constants/env.dart';
+import 'core/constants/env_prod.dart';
 import 'core/theme/app_theme.dart';
 import 'routes/app_router.dart';
 

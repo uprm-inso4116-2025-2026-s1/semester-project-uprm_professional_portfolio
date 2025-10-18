@@ -4,9 +4,9 @@ import '../constants/app_constants.dart';
 
 /// Supabase-backed AuthService that preserves the existing public API.
 class AuthService {
-  static final AuthService _instance = AuthService._internal();
   factory AuthService() => _instance;
   AuthService._internal();
+  static final AuthService _instance = AuthService._internal();
 
   final supa.SupabaseClient _sb = supa.Supabase.instance.client;
 
@@ -37,7 +37,7 @@ class AuthService {
       return AuthResult(success: true);
     } on supa.AuthException catch (e) {
       return AuthResult(success: false, error: _friendlyAuthMessage(e));
-    } catch (_) {
+    } on Exception catch (_) {
       return AuthResult(success: false, error: 'Unexpected error during sign in. Please try again.');
     }
   }
@@ -71,7 +71,7 @@ class AuthService {
       return AuthResult(success: true);
     } on supa.AuthException catch (e) {
       return AuthResult(success: false, error: _friendlyAuthMessage(e));
-    } catch (_) {
+    } on Exception catch (_) {
       return AuthResult(success: false, error: 'Unexpected error during sign up. Please try again.');
     }
   }
@@ -118,7 +118,7 @@ class AuthService {
   }
 
   String _friendlyAuthMessage(supa.AuthException e) {
-    final msg = (e.message ?? '').toLowerCase();
+    final msg = e.message.toLowerCase();
     if (msg.contains('invalid login') ||
         msg.contains('invalid email') ||
         msg.contains('invalid credentials') ||
@@ -131,14 +131,13 @@ class AuthService {
     if (msg.contains('email not confirmed')) {
       return 'Please confirm your email to continue.';
     }
-    return e.message ?? 'Authentication error.';
+    return e.message;
   }
 }
 
-// Auth result class (unchanged)
+// Auth result class
 class AuthResult {
+  AuthResult({required this.success, this.error});
   final bool success;
   final String? error;
-
-  AuthResult({required this.success, this.error});
 }

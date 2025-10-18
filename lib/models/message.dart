@@ -3,12 +3,7 @@
 /// Base class representing a single chat message.
 /// Database independent (no Firestore/SQL yet).
 class Message {
-  final String id;
-  final String senderId;
-  final String receiverId;
-  final String text;
-  final DateTime timestamp;
-
+  // === Constructor(s) first (fixes dartsort_constructors_first) ===
   const Message({
     required this.id,
     required this.senderId,
@@ -17,7 +12,25 @@ class Message {
     required this.timestamp,
   });
 
-  /// Convert this object into a JSON map.
+  /// Create a Message instance from a JSON map. (expression body)
+  factory Message.fromJson(Map<String, dynamic> json) => Message(
+        id: json['id'] as String,
+        senderId: json['senderId'] as String,
+        receiverId: json['receiverId'] as String,
+        text: json['text'] as String,
+        timestamp: DateTime.parse(json['timestamp'] as String),
+      );
+
+  // === Fields ===
+  final String id;
+  final String senderId;
+  final String receiverId;
+  final String text;
+  final DateTime timestamp;
+
+  // === Methods ===
+
+  /// Convert this object into a JSON map. (expression body)
   Map<String, dynamic> toJson() => {
         'id': id,
         'senderId': senderId,
@@ -25,17 +38,6 @@ class Message {
         'text': text,
         'timestamp': timestamp.toIso8601String(),
       };
-
-  /// Create a Message instance from a JSON map.
-  factory Message.fromJson(Map<String, dynamic> json) {
-    return Message(
-      id: json['id'] as String,
-      senderId: json['senderId'] as String,
-      receiverId: json['receiverId'] as String,
-      text: json['text'] as String,
-      timestamp: DateTime.parse(json['timestamp'] as String),
-    );
-  }
 
   @override
   String toString() =>
