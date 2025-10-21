@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uprm_professional_portfolio/mock/mock_data.dart';
+import 'package:uprm_professional_portfolio/features/chat/widgets/message_bubble.dart';
 
 class ChatListScreen extends StatelessWidget {
   const ChatListScreen({Key? key}) : super(key: key);
@@ -82,7 +83,7 @@ class ChatListScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
+                  MaterialPageRoute<void>(
                     builder: (context) => ChatDetailScreen(
                       conversationId: conversation.id,
                     ),
@@ -180,41 +181,15 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
 
   Widget _buildMessageBubble(Message message) {
     final isCurrentUser = message.isFromCurrentUser;
-    
-    return Align(
-      alignment: isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 4),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.75,
-        ),
-        decoration: BoxDecoration(
-          color: isCurrentUser ? Colors.blue : Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(18),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              message.content,
-              style: TextStyle(
-                color: isCurrentUser ? Colors.white : Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              _formatDetailTimestamp(message.timestamp),
-              style: TextStyle(
-                fontSize: 11,
-                color: isCurrentUser 
-                    ? Colors.white.withOpacity(0.7)
-                    : Colors.grey.shade600,
-              ),
-            ),
-          ],
-        ),
-      ),
+
+    // For demo purposes, mark current user's messages as delivered.
+    final status = isCurrentUser ? MessageStatus.delivered : null;
+
+    return MessageBubble(
+      text: message.content,
+      timestamp: message.timestamp,
+      isCurrentUser: isCurrentUser,
+      status: status,
     );
   }
 
@@ -278,21 +253,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
     });
     
     _messageController.clear();
-  }
-
-  String _formatDetailTimestamp(DateTime timestamp) {
-    final now = DateTime.now();
-    final difference = now.difference(timestamp);
-    
-    if (difference.inMinutes < 1) {
-      return 'Just now';
-    } else if (difference.inMinutes < 60) {
-      return '${difference.inMinutes}m ago';
-    } else if (difference.inHours < 24) {
-      return '${difference.inHours}h ago';
-    } else {
-      return '${difference.inDays}d ago';
-    }
   }
 
   @override
