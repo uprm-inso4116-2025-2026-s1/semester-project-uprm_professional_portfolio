@@ -9,7 +9,7 @@ import '../features/profiles/jobseeker_profile/jobseeker_profile_screen.dart';
 // App router configuration
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: AppConstants.loginRoute,
+    initialLocation: AppConstants.matchesScreenRoute,
     routes: [
       // Authentication routes
       GoRoute(

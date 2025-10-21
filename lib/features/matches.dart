@@ -18,13 +18,47 @@ class MatchesState extends State<MatchesScreen> {
         ),
         body: Align(
           child: SafeArea(
-            child: Container(
-              // Background
-              decoration: const BoxDecoration(color: Colors.grey),
-              child: const Text("Matches Screen"),
-            ),
-          ),
-        ),
+            child: Container(decoration : const BoxDecoration(color: Colors.white),
+            child: Column(mainAxisAlignment : MainAxisAlignment.center,
+             children: [Text("Matches Screen"),
+
+         const Spacer(),
+
+        Padding(
+         padding: const EdgeInsets.only(bottom:10),
+
+         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:[
+
+             IconButton(
+              onPressed: (){},
+              icon : Image.asset('matches_accept_button.png', width:50),
+               ), IconButton(
+
+                      onPressed: (){},
+                                icon : Image.asset('matches_skip_button.png', width:50),
+                                 ),
+               IconButton(
+
+                onPressed: (){},
+                   icon : Image.asset('matches_info_button.png', width:50),
+                                                                     ),
+                   IconButton(
+
+                   onPressed: (){},
+                   icon : Image.asset('matches_star_button.png', width:50),
+                                                    ),
+
+
+                      ],
+              ),),
+              ],
+              ),
+              ),
+              ),
+              ),
+
 
         /// bottom navigation bar place-holder png, ALL work should be done above this,
         /// DON'T replace bottomNavigationBar with matchesScreen buttons
