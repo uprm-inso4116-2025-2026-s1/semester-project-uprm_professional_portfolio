@@ -46,7 +46,8 @@ flutter:
   uses-material-design: true
 
   # Assets
-  # assets:
+  assets:
+    - assets/logo/professional_portfolio_logo.png
   #   - images/
   #   - icons/
 
