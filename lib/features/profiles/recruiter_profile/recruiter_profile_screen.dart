@@ -68,7 +68,13 @@ class _RecruiterProfileScreenState extends State<RecruiterProfileScreen> {
         leading: IconButton(
           tooltip: 'Back',
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => context.push(AppConstants.signupRoute),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              Navigator.of(context).maybePop();
+            }
+          },
         ),
         title: Image.asset(
           'assets/logo/professional_portfolio_logo.png',
