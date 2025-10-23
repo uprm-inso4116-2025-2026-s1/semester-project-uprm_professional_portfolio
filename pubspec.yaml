@@ -48,6 +48,9 @@ flutter:
   # Assets
   assets:
     - assets/logo/professional_portfolio_logo.png
+    - assets/logo/google_logo.png
+    - assets/logo/linkedin_logo.jpg
+    - assets/logo/professional_portfolio_logo_with_txt.png
   #   - images/
   #   - icons/
 
