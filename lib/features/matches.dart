@@ -39,11 +39,36 @@ class MatchesState extends State<MatchesScreen> {
                       onPressed: (){},
                                 icon : Image.asset('matches_skip_button.png', width:50),
                                  ),
-               IconButton(
 
-                onPressed: (){},
-                   icon : Image.asset('matches_info_button.png', width:50),
-                                                                     ),
+            IconButton(
+              onPressed: ()
+              {
+                showDialog<void>(
+                  context: context,
+                  builder: (context) {
+                    return const AlertDialog(
+                      title: Text('Profile Information'),
+                      content: Text(
+                        'TODO: Take information from jobseeker/recruiter profile and insert into information screen. Cannot be done currently because form fields have not been implemented in profiles.\n\n'
+                            'Major:\n'
+                            'Graduation Year:\n'
+                            'Bio:\n'
+                            'Skills:\n'
+                            'Interests:\n'
+                            'Portfolio Links:\n'
+                            'Resume:\n'
+                            'Job Preferences:',
+                      ),
+                    );
+                  },
+                );
+              },
+              icon: Image.asset(
+                'matches_info_button.png',
+                width: 50,
+              ),
+            ),
+
                    IconButton(
 
                    onPressed: (){},
