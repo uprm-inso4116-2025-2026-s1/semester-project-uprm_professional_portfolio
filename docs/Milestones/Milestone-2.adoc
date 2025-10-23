@@ -1907,6 +1907,76 @@ Indeed for Employers. (2024, November 4). 6 texting and chatting rules with cand
 
 === Isolating the Domain & Expressing Models in Software
 
+==== Lecture Topic Task — Modeling the Address as a Value Object
+:author: Carlos J. Pepín Delgado
+
+#Highlight#
+
+[NOTE]
+Objective: Apply Section 4.3 (Isolating the Domain & Expressing Models in Software) by refactoring the `StudentProfile` aggregate to include `Address` as an immutable Value Object. This isolates the domain model, enforces invariants at construction, and maintains persistence independence through a repository layer.
+
+=== Topic Overview
+Section 4.3 emphasizes modeling the domain in code by identifying **entities**, **value objects**, and **aggregates** that mirror real-world concepts. Entities are defined by identity, while value objects are defined solely by their attributes and must remain immutable. The lecture also introduced factories and repositories as tools to keep domain logic clean and separated from technical infrastructure.
+
+=== Application in the Project
+In the Professional Portfolio System, the `StudentProfile` aggregate initially scattered raw address fields (`street`, `city`, `postal_code`, etc.), which led to duplicated logic and weak cohesion. Through knowledge-crunching and discussion, this revealed an *implicit concept* — the Address itself. The team made it explicit as a dedicated `Address` Value Object embedded within the `StudentProfile` aggregate root.
+
+The `StudentProfileRepository` mediates between the domain and Supabase, exposing methods in terms of domain concepts (`getById`, `updateAddress`) rather than SQL statements. This structure follows the Dependency Inversion Principle, allowing the domain to remain pure while infrastructure adapts around it.
+
+=== Implementation Summary
+* **Aggregate Definition:** `StudentProfile` acts as the aggregate root, controlling all access and updates to its internal `Address` object.  
+* **Factory Construction:** `Address` uses a factory constructor that validates input and enforces domain rules before instance creation.  
+* **Value Object Semantics:** Two `Address` instances with the same attribute values are equal; all fields are `final`, ensuring immutability.  
+* **Repository Abstraction:** `StudentProfileRepository` translates between database rows and domain models (`_rowToAddress`, `_addressParams`) to maintain separation of concerns.  
+* **Persistence Shape:** Six flat columns were added to `student_profiles` for address data:  
+  `address_line1`, `address_line2`, `address_city`, `address_region`, `address_postal_code`, and `address_country_code`.  
+  A constraint ensures the `country_code` is always a two-letter uppercase ISO-3166 value.  
+
+=== Invariants and Guards
+The following invariants must hold within the `Address` Value Object:
+* `line1`, `city`, and `postalCode` cannot be empty.  
+* `countryCode` must match `/^[A-Z]{2}$/`.  
+* All string values are normalized (trimmed, single spaces).  
+* Once created, an `Address` cannot be mutated; changes require a new instance.
+
+Validation occurs at the boundary—user input is verified before `Address` construction to ensure all invariants hold.  
+Profiles may temporarily lack an address (e.g., new user); null updates are intentionally supported to clear address data safely.
+
+=== Testing & Verification
+A live Supabase integration test demonstrated:
+. The user authenticated and updated their own `StudentProfile` with a valid `Address`.  
+. The repository persisted and retrieved the same value object correctly.  
+. Null updates safely cleared all address columns.  
+. Row-Level Security (RLS) correctly restricted updates to the profile owner.
+
+All checks passed, confirming domain integrity, immutability, and persistence consistency.
+
+=== Outcome and Reflection
+Refactoring `Address` as a Value Object achieved:
+* **Isolation of the Domain:** Address logic resides solely in the model; database details are hidden behind the repository.  
+* **Cohesion and Clarity:** Related primitives unified under one explicit concept.  
+* **Data Integrity:** Invariants enforce correctness at creation time.  
+* **Expressive Model:** Code now mirrors the domain language (“profile has an address”) rather than database fields.  
+
+This task fully embodies the lecture’s intent — expressing the domain through explicit modeling, factories, aggregates, and repositories — showing how theoretical design principles produce a practical, robust implementation.
+
+=== Traceability to Lecture Concepts
+[cols="2,4",options="header"]
+|===
+|Lecture Principle |Project Realization
+|Aggregate |`StudentProfile` is the root controlling `Address` updates.
+|Factory |`Address.factory()` enforces invariants before creation.
+|Repository |`StudentProfileRepository` isolates domain from Supabase.
+|Invariants |Validation of non-empty fields and ISO country code.
+|Making Implicit Concepts Explicit |Recognized Address as a hidden concept, now modeled explicitly.
+|===
+
+=== References
+* Schütz-Schmuck, Marko. *Isolating the Domain & Expressing Models in Software* (Lecture Notes, Section 4.3).
+
+#This text is new.#
+#Highlight#
+
 === Life Cycle of Domain Objects
 
 ==== StudentProfile Life Cycle
