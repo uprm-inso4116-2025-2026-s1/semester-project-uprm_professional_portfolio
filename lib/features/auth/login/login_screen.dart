@@ -43,10 +43,10 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 const Spacer(),
                 // Logo and title
-                Icon(
-                  Icons.work,
-                  size: UIConstants.iconXL * 2,
-                  color: theme.colorScheme.primary,
+                Image.asset(
+                  'assets/logo/professional_portfolio_logo.png',
+                  height: 120,
+                  fit: BoxFit.contain,
                 ),
                 const SizedBox(height: UIConstants.spaceLG),
                 Text(
@@ -111,6 +111,52 @@ class _LoginScreenState extends State<LoginScreen> {
                       isLoading: _controller.isLoading,
                     );
                   },
+                ),
+
+                const SizedBox(height: UIConstants.spaceMD),
+                
+                // OR divider
+                Row(
+                  children: [
+                    const Expanded(child: Divider()),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: UIConstants.spaceMD),
+                      child: Text(
+                        'OR',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ),
+                    const Expanded(child: Divider()),
+                  ],
+                ),
+
+                const SizedBox(height: UIConstants.spaceMD),
+
+                // Social sign in buttons
+                CustomButton(
+                  text: 'Sign in with Google',
+                  onPressed: () {
+                    // TODO: Implement Google sign in
+                  },
+                  icon: Image.asset('assets/logo/google_logo.png', height: 24),
+                  backgroundColor: theme.colorScheme.surface,
+                  foregroundColor: theme.colorScheme.onSurface,
+                  side: BorderSide(color: theme.colorScheme.outline),
+                ),
+                
+                const SizedBox(height: UIConstants.spaceMD),
+                
+                CustomButton(
+                  text: 'Sign in with LinkedIn',
+                  onPressed: () {
+                    // TODO: Implement LinkedIn sign in
+                  },
+                  icon: Image.asset('assets/logo/linkedin_logo.png', height: 24),
+                  backgroundColor: theme.colorScheme.surface,
+                  foregroundColor: theme.colorScheme.onSurface,
+                  side: BorderSide(color: theme.colorScheme.outline),
                 ),
 
                 const SizedBox(height: UIConstants.spaceLG),

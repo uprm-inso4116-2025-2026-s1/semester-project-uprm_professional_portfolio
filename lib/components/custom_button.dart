@@ -10,6 +10,8 @@ class CustomButton extends StatelessWidget {
   final Widget? icon;
   final Color? backgroundColor;
   final Color? textColor;
+  final Color? foregroundColor;
+  final BorderSide? side;
   final double? width;
   final double? height;
 
@@ -22,6 +24,8 @@ class CustomButton extends StatelessWidget {
     this.icon,
     this.backgroundColor,
     this.textColor,
+    this.foregroundColor,
+    this.side,
     this.width,
     this.height,
   });
@@ -39,8 +43,8 @@ class CustomButton extends StatelessWidget {
               icon: _buildIcon(),
               label: _buildLabel(),
               style: OutlinedButton.styleFrom(
-                foregroundColor: textColor ?? theme.colorScheme.primary,
-                side: BorderSide(
+                foregroundColor: foregroundColor ?? textColor ?? theme.colorScheme.primary,
+                side: side ?? BorderSide(
                   color: backgroundColor ?? theme.colorScheme.primary,
                 ),
                 shape: RoundedRectangleBorder(
@@ -54,7 +58,8 @@ class CustomButton extends StatelessWidget {
               label: _buildLabel(),
               style: ElevatedButton.styleFrom(
                 backgroundColor: backgroundColor ?? theme.colorScheme.primary,
-                foregroundColor: textColor ?? theme.colorScheme.onPrimary,
+                foregroundColor: foregroundColor ?? textColor ?? theme.colorScheme.onPrimary,
+                side: side,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(UIConstants.radiusMD),
                 ),
