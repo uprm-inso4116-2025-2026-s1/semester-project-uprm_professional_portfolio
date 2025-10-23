@@ -1,4 +1,4 @@
-import 'services/chat_service.dart';
+import '../lib/services/chat_service.dart';
 
 void main() {
   final chat = ChatService();
