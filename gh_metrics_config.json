@@ -1,26 +1,26 @@
 {
   "version": "2.0",
-  "projectName": "College Toolbox",
-  "managers": ["Poggecci", "Schutz"],
+  "projectName": "UPRM_Professional_Portfolio",
+  "managers": ["julivivas", "JRRR0912", "Kay9876"],
   "milestones": {
     "Milestone #1": {
-      "startDate": "2024-01-15",
-      "endDate": "2024-02-09",
+      "startDate": "2025-08-25",
+      "endDate": "2025-09-19",
       "projectedGroupGrade": 100.0
     },
     "Milestone #2": {
-      "startDate": "2024-02-12",
-      "endDate": "2024-03-08",
+      "startDate": "2025-09-22",
+      "endDate": "2025-10-24",
       "projectedGroupGrade": 100.0
     },
     "Milestone #3": {
-      "startDate": "2024-03-11",
-      "endDate": "2024-04-05",
+      "startDate": "2025-10-27",
+      "endDate": "2025-11-28",
       "projectedGroupGrade": 100.0
     }
   },
   "lectureTopicTaskQuota": 4,
   "countOpenIssues": false,
   "sprints": 2,
-  "minTasksPerSprint": 1,
+  "minTasksPerSprint": 1
 }
