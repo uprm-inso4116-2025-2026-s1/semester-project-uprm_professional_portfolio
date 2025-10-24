@@ -2350,26 +2350,26 @@ This task fully embodies the lecture’s intent — expressing the domain throug
 * Schütz-Schmuck, Marko. *Isolating the Domain & Expressing Models in Software* (Lecture Notes, Section 4.3).
 #This text is new.#
 
-==== Lecture Topic Task — Factory Design for Match Creation
+==== #Lecture Topic Task — Factory Design for Match Creation
 :author: Kiara N. Pérez Rivera
 
 [NOTE]
 Objective: Implement and document a `MatchFactory` that creates valid `Match` domain objects, enforcing invariants and preventing duplicates while providing a clear, testable construction boundary for the rest of the system.
 
-=== Rationale: why a factory for Matches?
+=== #Rationale: why a factory for Matches?
 
 - Centralized validation: all rules that decide whether a Match can be created (valid identities, eligibility, no conflicting matches) live in one place.
 - Encapsulation of creation rules: higher-level components don't need to know the details of ID generation, timestamping, or duplicate checks.
 - Maintainability: new rules (e.g., eligibility windows, verification status) are applied in the factory without changing callers.
 - Traceability: the factory can attach creation metadata (actor, timestamp, rationale) to the created object for audit and debugging.
 
-=== Design contract (short)
+=== #Design contract (short)
 
 - Inputs: a `Student` instance and a `Recruiter` instance (domain entities), optional metadata (source, context).
 - Outputs: `Result<Match>` — success with a `Match` object or failure with a typed error (ValidationError, DuplicateMatchError, AuthorizationError).
 - Error modes: invalid/malformed entities, duplicates, domain guards (e.g., recruiter not active), persistence failures delegated to repositories.
 
-=== MatchFactory responsibilities
+=== #MatchFactory responsibilities
 
 1. Validate both participants are valid domain entities (non-null, correct type, active state).
 2. Ensure no existing confirmed or pending Match conflicts (duplicate prevention).
@@ -2377,7 +2377,7 @@ Objective: Implement and document a `MatchFactory` that creates valid `Match` do
 4. Attach provenance metadata (createdBy, createdAt, source) to the Match.
 5. Return a clear Result type to the caller with success or an explanation of failure.
 
-=== Example Dart fragment 
+=== #Example Dart fragment 
 
 [source,dart]
 ----
@@ -2418,7 +2418,7 @@ class MatchFactory {
 
 Notes: The fragment uses a `Result<T>` wrapper for explicit success/failure handling and a `MatchRepository` to check duplicates and persist matches; this keeps persistence concerns out of the factory logic while allowing the factory to consult repositories as needed.
 
-=== UML / Class diagram (ASCII)
+=== #UML / Class diagram (ASCII)
 
 [source]
 ----
@@ -2438,22 +2438,22 @@ Notes: The fragment uses a `Result<T>` wrapper for explicit success/failure hand
   Legend: "<>-" association shows Match references the Student and Recruiter by id.
 ----
 
-=== Enforcing edge cases
+=== #Enforcing edge cases
 
 - Null or incomplete entities: factory refuses and returns ValidationError.
 - Inactive accounts: factory refuses to create matches for suspended or unverified participants.
 - Duplicate attempts: repository-level `existsBetween` prevents duplicate creation; the factory returns DuplicateMatchError.
 - Race conditions: callers should either rely on a transactional repository that enforces uniqueness at the DB level.
 
-=== Traceability and logging
+=== #Traceability and logging
 
 The factory should optionally emit a log event every time it creates or rejects a Match. The log includes the requested participants, the outcome, the reason (if rejected), and a timestamp. This supports audit requirements described in the Domain Requirements section.
 
-=== Integration with Section 2.3.1 guidelines
+=== #Integration with Section 2.3.1 guidelines
 
 The `MatchFactory` follows the Selected Fragments of Implementation approach by providing a clear domain-level API (factory method), keeping persistence behind a repository, and presenting a small set of method signatures that higher layers use. It avoids leaking technical details like SQL or UUID algorithms to callers.
 
-=== Diagrammatic example: sequence (createMatch)
+=== #Diagrammatic example: sequence (createMatch)
 
 [source]
 ----
@@ -2468,8 +2468,6 @@ else
 end
 ----
 
-#This text is new.#
-#This text is new.#
 #Highlight#
 
 === Life Cycle of Domain Objects
