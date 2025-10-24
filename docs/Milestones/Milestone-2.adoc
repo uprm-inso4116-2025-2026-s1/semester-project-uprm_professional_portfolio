@@ -2090,6 +2090,7 @@ image::..\Images\StudentProfile.png[StudentProfile Lifecycle Diagram]
 === Refactoring Towards Deeper Insight and Breakthroughs
 
 ==== #Discovery Journal:#
+:author: Alexa M. Zaragoza Torres
 
 [NOTE]
 ====
