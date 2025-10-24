@@ -1776,13 +1776,25 @@ The requirements ensure that all contributors can work effectively while keeping
 #This visualization complements the subsequent implementation fragments by illustrating how user-facing features are realized through coordinated service logic and database operations, ensuring alignment between system behavior and architectural design.#
 
 image::../Images/functionality-flow.svg[Functionality Flow, align=center, pdfwidth=90%]
-
 #_Figure 7. Functionality Flow Diagram illustrating the end-to-end process from user interactions to backend persistence._#
 
 #The diagram clarifies how user interactions are processed across the system’s layers.  
 For example, when a user performs a “Like” action, the event triggers the `SwipeService`, which validates and records the swipe, checks for mutual matches, and—if both users liked each other—creates a new `Connection` entity in the `Matches` table.#
 
 #This flow contextualizes the domain-centric method signatures presented in the next section, showing how each function contributes to the overall behavior of the system.#
+
+image::../Images/jobseeker-flows.svg[Jobseeker Flow, align=center, pdfwidth=90%]
+#_Figure 8. Jobseeker flows diagram showing jobseeker interactions (search, view jobs, apply, save, follow-up) and how those actions map to backend services such as profile updates, application repository writes, and notification triggers._#
+
+image::../Images/recruiter-flows.svg[Recruiter Flow, align=center, pdfwidth=90%]
+#_Figure 9. Recruiter flows diagram illustrating recruiter workflows (post job, screen applicants, schedule interviews, take notes), ATS interactions, prescreen operations, and note persistence in repositories._#
+
+image::../Images/student-flows.svg[Student Flow, align=center, pdfwidth=90%]
+#_Figure 10. Student flows diagram capturing student-specific steps including event check-in, resume tailoring, booth pitch, informal networking, and multichannel application submission, mapped to system events and follow-up operations._#
+
+image::../Images/database-schema.svg[Database Schema, align=center, pdfwidth=90%]
+#_Figure 11. Database schema diagram (ER) showing core domain tables — users, student_profiles, programs, program_applications, mentor_assignments, matches, conversations, messages, conversation_participants, feedback, audit_logs, companies, jobs, and job_applications — with primary keys, foreign keys, relationships, and key indices used for deduplication, matching, and conversation threading._#
+
 
 ==== Selected Fragments of the Implementation
 
