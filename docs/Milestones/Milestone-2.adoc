@@ -648,9 +648,6 @@ Authenticates a user's credentials. If successful, returns a session containing 
 * [line-through]#`getUserDeck : UserId -> Deck`  
 Builds a user's deck of profile cards, dynamically generated using the platform's matching algorithm and the user’s past activity and preferences.#
 
-
-
-
 #This section describes the key operations that define the system's behavior. Each function signature is presented with its conceptual explanation.#
 
 #`Function: Future<ProfileCard?> getNextProfile(String userId)`#
@@ -706,8 +703,6 @@ The function takes the current state of the recruiter, the candidate in question
 #4. Establish Connection: The frontend, upon receiving the Match, calls `createConnection(match)` to create a persistent Connection between the two parties, which is the conceptual establishConnection domain action.#
 
 #5. Communication: The recruiter now uses `sendMessage("connection_xyz", "recruiter_123", "Welcome to our talent pool!")` to initiate contact within the sanctioned context of the new connection.#
-
-
 
 === Requirements
 
@@ -2115,7 +2110,7 @@ The Discovery Journal captures the domain insights uncovered through refactoring
 This Discovery Journal records key domain insights and refactors that, during development, improved the clarity, consistency, and expressiveness of our domain model.
 
 [discrete]
-=== Entry 1: Address as immutable value object
+===== #Entry 1: Address as immutable value object#
 - Context/Problem: Student profiles were storing address fields individually, leading to inconsistent validation and duplicate address logic across forms.
 - Domain Insight: Address is a value object in our domain—immutable, self-validating, and enforcing ISO-3166 alpha‑2 country codes.
 - Change Applied: Implemented Address VO (factory validation and normalization) and embedded it in StudentProfile with Supabase persistence and RLS.
@@ -2124,7 +2119,7 @@ This Discovery Journal records key domain insights and refactors that, during de
 - Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/commit/cc540adb17bdfc56002f46ce6c89411821d15366
 
 [discrete]
-=== Entry 2: Chat service contract aligned across layers
+===== #Entry 2: Chat service contract aligned across layers#
 - Context/Problem: Message shape differed between in‑memory ChatService and Supabase-backed service, causing mismatches when switching implementations.
 - Domain Insight: Message is a core domain concept; its shape must be stable across persistence to avoid leaking infrastructure details.
 - Change Applied: Unified ChatMessage model and added explicit mapping in ChatServiceSupabase (body → text, server timestamps, null checks) with integration test.
@@ -2133,7 +2128,7 @@ This Discovery Journal records key domain insights and refactors that, during de
 - Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/commit/506e7b568736c0d7acfbf4c52bba0e2f85676e7c
 
 [discrete]
-=== Entry 3: Conversation model clarified
+===== #Entry 3: Conversation model clarified#
 - Context/Problem: It was unclear how Conversations should manage messages and expose read-only history.
 - Domain Insight: Conversation aggregates Messages for two parties and should expose an immutable view of its timeline while providing controlled mutation methods.
 - Change Applied: Defined Conversation with participants, add/remove message operations, and unmodifiable messages getter; set expectations for ordering.
@@ -2142,7 +2137,7 @@ This Discovery Journal records key domain insights and refactors that, during de
 - Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/189
 
 [discrete]
-=== Entry 4: Matches UI expresses decision actions
+===== #Entry 4: Matches UI expresses decision actions#
 - Context/Problem: Recruiters lacked a focused place to accept/skip/star potential Candidates; information needed to be scoped to matching decisions.
 - Domain Insight: A Match is a triage view over a Candidate; the decision surface should present only fields relevant to matching.
 - Change Applied: Implemented Matches screen with accept/skip/star actions and a domain-specific info dialog for Candidate context.
@@ -2151,7 +2146,7 @@ This Discovery Journal records key domain insights and refactors that, during de
 - Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/commit/b7ddec4f2ee30d2c71c4f8ed47b8f00520a34c4f
 
 [discrete]
-=== Entry 5: Authentication behind a clean boundary
+===== #Entry 5: Authentication behind a clean boundary#
 - Context/Problem: Moving from mock auth to Supabase risked coupling UI/controllers to provider details.
 - Domain Insight: Identity is cross-cutting; the domain User should be provider-agnostic and accessed via an interface.
 - Change Applied: Integrated Supabase Auth while preserving existing controllers and routing guard abstraction.
@@ -2160,7 +2155,7 @@ This Discovery Journal records key domain insights and refactors that, during de
 - Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/commit/dc9007c14e6ab86f53db8f3ae7e09682c461f8e0
 
 [discrete]
-=== Entry 6: Matches workflow merged as feature module
+===== #Entry 6: Matches workflow merged as feature module#
 - Context/Problem: Recruiters lacked a consistent triage workflow for Candidate evaluation; actions were not standardized across the app.
 - Domain Insight: Match is a dedicated workflow where Recruiters make Accept/Skip/Star decisions using a focused, minimal view of the Candidate.
 - Change Applied: Merged the Matches feature with its screen/controllers and standardized decision actions for triage.
@@ -2169,7 +2164,7 @@ This Discovery Journal records key domain insights and refactors that, during de
 - Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/244
 
 [discrete]
-=== Entry 7 — Establish Matches route and assets
+===== #Entry 7: Establish Matches route and assets#
 - Context/Problem: Early prototype lacked a clear navigation entry and domain-scoped UI for the Matches bounded context.
 - Domain Insight: Matches must be a first-class feature area separate from full profiles, exposing only decision-relevant data to Recruiters.
 - Change Applied: Added Matches screen template, route, and assets to anchor subsequent domain behavior (accept/skip/star).
@@ -2178,7 +2173,7 @@ This Discovery Journal records key domain insights and refactors that, during de
 - Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/238
 
 [discrete]
-=== Entry 8: Supabase chat: fetch/send Message through clean API
+===== #Entry 8: Supabase chat: fetch/send Message through clean API#
 - Context/Problem: Messaging relied on local mocks; moving to Supabase risked leaking database schema (body vs text, timestamps) into domain code.
 - Domain Insight: Message behavior belongs to the Communication context and should be accessed through a stable service API.
 - Change Applied: Implemented fetch/send operations in ChatServiceSupabase with mapping and server-issued timestamps; wired to domain-facing service.
@@ -2187,7 +2182,7 @@ This Discovery Journal records key domain insights and refactors that, during de
 - Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/234
 
 [discrete]
-=== Entry 9: Supabase integration with router auth guard
+===== #Entry 9: Supabase integration with router auth guard#
 - Context/Problem: Introducing real authentication threatened to tangle infrastructure concerns inside feature UIs.
 - Domain Insight: Authentication sits at the boundary; domain features (Matches, Messages) should depend only on an abstract session.
 - Change Applied: Integrated Supabase within app initialization and go_router guard, leaving domain models/controller contracts intact.
@@ -2196,13 +2191,15 @@ This Discovery Journal records key domain insights and refactors that, during de
 - Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/225
 
 [discrete]
-=== Entry 10: Message model consistency and JSON contract
+===== #Entry 10: Message model consistency and JSON contract#
 - Context/Problem: Inconsistent constructors and JSON mapping led to fragile Message parsing and coupling to storage.
 - Domain Insight: Message is a simple domain object—immutable data with explicit toJson/fromJson independent of any database.
 - Change Applied: Normalized Message model with constructor first, clear fields, and symmetrical JSON methods; tightened toString for debugging.
 - Impact: Fewer parsing errors, clearer tests, and stable interface for Conversation and Chat services.
 - Author/Date: PR merged by Julian Vivas — 2025-10-17
 - Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/188
+
+
 
 === Making Implicit Concepts Explicit
 === Supple Design
@@ -2227,8 +2224,8 @@ This Discovery Journal records key domain insights and refactors that, during de
 | Modified
 
 | Alexa M. Zaragoza
-| 4.2.1, 2.2.1, 2.1.4, 4.14.1
-|Added, Modified, Modified, Added.
+| 4.2.1, 2.2.1, 2.1.4, 4.6.1
+|Added, Modified, Modified.
 
 | Heribiell A. Rodríguez Cruz
 | 2.1.2, 2.2.2
