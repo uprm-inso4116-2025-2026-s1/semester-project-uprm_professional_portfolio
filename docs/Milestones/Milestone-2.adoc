@@ -217,14 +217,24 @@ NOTE: This is an unprocessed collection of notes, quotes, and observations from 
 
 ==== Terminology
 
+[NOTE]
+====
+Each term below is derived from raw observations in the Domain Rough Sketch (2.1.1) and refined through concept analysis. Terms are presented with their classification (entity, actor, event, etc.), domain scope, and traceability to source observations. The derivation of each term is explicitly shown through annotations linking back to specific observations, quotes, and patterns from the rough sketch.
+
+This structured approach ensures transparency in how our domain vocabulary emerged from real-world observations rather than being imposed artificially. When new terms are needed, they should follow this same pattern of clear derivation from documented domain phenomena.
+====
+
 *Applicant* :: (entity, domain)
 A person, usually a student or recent graduate, pursuing professional chances. Candidates strive to highlight their abilities and credentials via their portfolios.
+[.small]#_Derived from: "Students often rely on school provided career services for resume templates"; "Student: 'I applied through Handshake, LinkedIn, and the company website'"_#
 
 *Employer* :: (entity, domain)
 An organization that owns openings and ultimately employs candidates. Multiple recruiters may represent the same employer during sourcing and selection.
+[.small]#_Derived from: "Recruiter: 'We usually contact students weeks later'"; multiple references to company and employer context_#
 
 *Recruiter* :: (actor, domain)
 A hiring professional acting on behalf of an employer to discover, evaluate, and engage candidates. A candidate may interact with several recruiters for the same employer.
+[.small]#_Derived from: "We meet hundreds of students in a single afternoon"; "Some recruiters only target juniors and seniors"; "Recruiters: 'We prefer quick ways to identify students with the right skills'"_#
 
 *Portfolio* :: (entity, domain)
 A collection of an applicant’s work, projects, and achievements. Portfolios provide recruiters with evidence of professional skills.
@@ -237,9 +247,11 @@ An educational or professional credential (e.g., degree, certification) that ind
 
 *Work Modality* :: (entity, domain)
 The way in which work is performed, such as on site, remote, or hybrid.
+[.small]#_Derived from: Students value flexibility in work arrangements; need for early expectation alignment on work modality_#
 
 *Compensation Range* :: (attribute, domain)
 The expected or offered salary **plus applicable benefits** (e.g., equity/options, health plan, stipends, shuttle/transport, on-site meals). Considered between applicant and employer.
+[.small]#_Derived from: "Early expectation alignment on role scope, compensation range, work modality, and timeline"; need for transparency in total compensation_#
 
 *Location* :: (attribute, domain)
 The geographic context for a role or event (e.g., city/region/country) or “remote-eligible,” used for discovery and filtering.
@@ -255,9 +267,12 @@ The relationship established upon mutual interest. Day-to-day interaction typica
 
 *First Conversation* :: (event, domain)
 The initial professional interaction after a confirmed connection, typically between an applicant and a **recruiter**; it may still be considered as leading to a connection with the **employer**.
+[.small]#_Derived from: "Student: 'I'm nervous approaching a recruiter if I don't already know about the company'"; importance of structured initial interactions_#
+
 
 *Interview Modality* :: (taxonomy, domain)
 The manner in which an interview is conducted (e.g., in-person, virtual). Serves as the parent concept for specific interview types.
+[.small]#_Derived from: "Job fairs are often loud, crowded, chaotic"; need for flexible interaction formats_#
 
 *Validity Period* :: (attribute, domain)
 The time window during which an offer remains actionable before it expires.
@@ -276,21 +291,27 @@ The applicant’s explicit decision not to proceed under the current offer.
 
 *Ghosting* :: (behavior, domain)
 The act of ceasing communication without notice, leading to inefficiency in the recruitment process.
+[.small]#_Derived from: "Student: 'I never know if recruiters actually looked at my resume or if it went into a pile'"; lack of feedback and communication_#
 
 *Identity Assurance* :: (behavior, domain)
 The process of verifying that participants are authentic and represent legitimate individuals.
+[.small]#_Derived from: Need for "trust factor" mentioned by recruiters; importance of verified connections_#
 
 *Recruitment Event* :: (entity, domain)
 A scheduled occasion, such as a job fair or networking session, where applicants and employers directly engage.
+[.small]#_Derived from: Multiple references to job fairs; "At the job fair, I stood in line 40 minutes just to hand over my resume"_#
 
 *Expectation Alignment* :: (behavior, domain)
 The process of clarifying and agreeing on key role aspects, including scope, compensation, timeline, and modality.
+[.small]#_Derived from: "Recruiters say a lot of students come unprepared, don't know what positions are open"; need for upfront clarity_#
 
 *Trust and Safety* :: (behavior, domain)
 The assurance that professional interactions occur under respectful conduct, secure data handling, and clear reporting mechanisms.
+[.small]#_Derived from: Recruiters mentioning "trust factor" with known candidates; need for safe, professional interactions_#
 
 *Feedback* :: (event, domain)
 Information shared between employer and applicant regarding application status, interest, or evaluation, enabling transparency.
+[.small]#_Derived from: "Student: 'I wish I knew immediately if I had a chance instead of waiting months'"; need for timely updates_#
 
 *User* :: (technical/authentication, domain)
 An authenticated account in the system. Each User is typed as either Candidate (e.g., Student) or Recruiter; avoid using “User” to describe domain roles.
@@ -309,12 +330,15 @@ A Recruiter’s profile including employer association, role/title, sectors, loc
 
 *Profile Card* :: (ui artifact, domain)
 Condensed, swipeable representation of a Profile shown in the Discovery Feed.
+[.small]#_Derived from: "Recruiters: 'We prefer quick ways to identify students with the right skills'"; need for efficient profile scanning_#
 
 *Discovery Feed* :: (experience, domain)
 A personalized deck of Profile Cards presented for evaluation.
+[.small]#_Derived from: "After a while, names and faces blur together"; need for structured, paced discovery_#
 
 *Swipe* :: (action, domain)
 The primary gesture to evaluate a Profile Card. Right-swipe = Like; left-swipe = Pass.
+[.small]#_Derived from: "Students compare the process to 'speed dating'"; need for quick, clear interest signals_#
 
 *Like* :: (action, domain)
 An expression of interest on a Profile Card (right-swipe). Stored by the system for Match evaluation.
@@ -327,12 +351,15 @@ Created only when both sides have explicitly liked each other’s Profile Cards 
 
 *Message* :: (entity/action, domain)
 A communication exchanged only when a valid Connection exists (or explicit permission).
+[.small]#_Derived from: "Informal hallway conversations sometimes lead to opportunities"; need for structured yet natural communication_#
 
 *Opening (Job Opening)* :: (entity, domain)
 A role posted by an Employer with explicit Requirements, Location, Work Modality, Compensation Range, and Start Date.
+[.small]#_Derived from: "Recruiters say a lot of students come unprepared, don't know what positions are open"; need for clear role definition_#
 
 *Requirements* :: (structure, domain)
 Must-have and nice-to-have criteria for an Opening (e.g., skills, eligibility, language, authorization). Used to assess Eligibility.
+[.small]#_Derived from: Recruiter notes like "Has Python", "Strong communication", "Not ready"; need for structured evaluation criteria_#
 
 *Eligibility* :: (assessment, domain)
 Whether a Candidate meets the Requirements of an Opening (meets / partially meets / does not meet).
@@ -358,7 +385,7 @@ Exposure level of a StudentProfile: Public (searchable), By Match (visible only 
 *Session* :: (technical, domain)
 The authenticated runtime context for a User. Authorizes actions (swipes, messages, RSVPs).
 
-
+[line-through]#
 ==== Domain Terminology in Relation to Domain Rough Sketch
 
 * Recruiter: (Actor) A user who represents a company or organization and uses the platform to discover and evaluate potential candidates. This term was refined from the rough concept of employer to specify the human actor, distinct from the company entity itself.
@@ -397,7 +424,7 @@ Profile exposure setting for a StudentProfile:
 A rule requiring a Recruiter/Employer to satisfy verification checks before certain actions (e.g., messaging, event hosting).
 * Invariant: A rule that must always hold at the model boundary (e.g., no duplicate Recruiter–Student Match pairs).
 * Factory: A creation mechanism that enforces Invariants when instantiating entities (e.g., MatchFactory ensures valid parties and uniqueness).
-
+#
 
 ==== Narrative
 [.line-through]
@@ -2519,8 +2546,8 @@ This Discovery Journal records key domain insights and refactors that, during de
 | Added
 
 | Kiara N. Perez
-| 1.3.2
-| Modified
+| 1.3.2, 2.1.2
+| Modified, Modified
 
 | Alexa M. Zaragoza
 | 4.2.1, 2.2.1, 2.1.4, 4.6.1
