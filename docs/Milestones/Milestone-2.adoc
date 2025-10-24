@@ -459,6 +459,7 @@ The domain covers how recruiters discover candidates, evaluate evidence of fit, 
 [discrete]
 === Key entities and relationships
 
+[discrete]
 ==== Module Organization (Lecture Topic Task: Modules for Profile and Matching)
 
 To improve maintainability, domain clarity, as well as alignment with the principles of Domain Driven Design, the system has been organized into two primary modules: **Profile** and **Matching**. These modules group related classes and behaviors together, each with a clearly defined responsibility within the application domain.
