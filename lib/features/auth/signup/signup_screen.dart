@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../components/custom_button.dart';
 import '../../../components/custom_text_field.dart';
@@ -6,7 +7,7 @@ import '../../../components/role_selection_card.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/constants/ui_constants.dart';
 import '../../../core/utils/validators.dart';
-import 'signup_controller.dart';
+import '../../../core/cubits/auth/auth_cubit.dart';
 
 // Signup screen with role selection
 class SignupScreen extends StatefulWidget {
@@ -22,7 +23,6 @@ class _SignupScreenState extends State<SignupScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  final _controller = SignupController();
 
   String? _selectedRole;
 
@@ -156,16 +156,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: UIConstants.spaceLG),
 
-                // Sign up button
-                ListenableBuilder(
-                  listenable: _controller,
-                  builder: (context, _) {
-                    return CustomButton(
-                      text: 'Create Account',
-                      onPressed: _handleSignup,
-                      isLoading: _controller.isLoading,
-                    );
-                  },
+                // Next button
+                CustomButton(
+                  text: 'Next',
+                  onPressed: _handleNext,
                 ),
 
                 const SizedBox(height: UIConstants.spaceLG),
@@ -194,7 +188,7 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Future<void> _handleSignup() async {
+  void _handleNext() async {
     // Validate role selection
     if (_selectedRole == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -208,28 +202,20 @@ class _SignupScreenState extends State<SignupScreen> {
 
     if (!_formKey.currentState!.validate()) return;
 
-    final result = await _controller.signUp(
-      email: _emailController.text.trim(),
-      password: _passwordController.text,
-      fullName: _nameController.text.trim(),
-      role: _selectedRole!,
-    );
+    // Create user account using AuthCubit
+    await context.read<AuthCubit>().signUp(
+          _emailController.text.trim(),
+          _passwordController.text,
+          _nameController.text.trim(),
+          _selectedRole!,
+        );
 
     if (mounted) {
-      if (result.success) {
-        // Navigate to profile setup based on role
-        if (_selectedRole == AppConstants.recruiterRole) {
-          context.go(AppConstants.recruiterProfileRoute);
-        } else {
-          await context.push(AppConstants.jobseekerProfileRoute);
-        }
+      // Navigate to profile form based on role
+      if (_selectedRole == AppConstants.recruiterRole) {
+        context.go(AppConstants.recruiterProfileRoute);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(result.error ?? 'Sign up failed'),
-            backgroundColor: Theme.of(context).colorScheme.error,
-          ),
-        );
+        context.go(AppConstants.jobseekerProfileRoute);
       }
     }
   }

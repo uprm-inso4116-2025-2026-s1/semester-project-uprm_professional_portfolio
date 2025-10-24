@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../core/state/app_state.dart';
-import '../core/state/selection_state.dart';
 
 class RoleBadge extends StatelessWidget {
   const RoleBadge({super.key});

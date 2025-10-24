@@ -8,7 +8,6 @@ plugins {
 android {
     namespace = "com.uprm.portfolio.uprm_professional_portfolio"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../components/custom_button.dart';
 import '../../../components/custom_text_field.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/constants/ui_constants.dart';
 import '../../../core/utils/validators.dart';
-import 'login_controller.dart';
+import '../../../core/cubits/auth/auth_cubit.dart';
+import '../../../core/cubits/auth/auth_state.dart';
 
 // Login screen
 class LoginScreen extends StatefulWidget {
@@ -26,8 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  final _controller = LoginController();
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -37,10 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: UIConstants.spaceLG,
-                  vertical: UIConstants.spaceSM,
-                ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: UIConstants.spaceLG,
+              vertical: UIConstants.spaceSM,
+            ),
             child: Container(
               constraints: BoxConstraints(minHeight: 400), // Ensures layout
               child: Form(
@@ -120,25 +120,37 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: UIConstants.spaceLG),
 
                     // Login button
-                    ListenableBuilder(
-                      listenable: _controller,
-                      builder: (context, _) {
+                    BlocConsumer<AuthCubit, AuthState>(
+                      listener: (context, state) {
+                        if (state is AuthError) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(state.message),
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.error,
+                            ),
+                          );
+                        }
+                        // Successful login is handled by the router's redirect.
+                      },
+                      builder: (context, state) {
                         return CustomButton(
                           text: 'Sign In',
                           onPressed: _handleLogin,
-                          isLoading: _controller.isLoading,
+                          isLoading: state is AuthLoading,
                         );
                       },
                     ),
 
                     const SizedBox(height: UIConstants.spaceMD),
-                    
+
                     // OR divider
                     Row(
                       children: [
                         const Expanded(child: Divider()),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: UIConstants.spaceMD),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: UIConstants.spaceMD),
                           child: Text(
                             'OR',
                             style: theme.textTheme.bodyMedium?.copyWith(
@@ -158,24 +170,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         // TODO: Implement Google sign in
                       },
-                      icon: Image.asset('assets/logo/google_logo.png', height: 24),
+                      icon: Image.asset('assets/logo/google_logo.png',
+                          height: 24),
                       backgroundColor: theme.colorScheme.primary,
                       foregroundColor: theme.colorScheme.onPrimary,
                     ),
-                    
+
                     const SizedBox(height: UIConstants.spaceMD),
-                    
+
                     CustomButton(
                       text: 'Sign in with LinkedIn',
                       onPressed: () {
                         // TODO: Implement LinkedIn sign in
                       },
-                      icon: Image.asset('assets/logo/linkedin_logo.jpg', height: 24),
+                      icon: Image.asset('assets/logo/linkedin_logo.jpg',
+                          height: 24),
                       backgroundColor: theme.colorScheme.primary,
                       foregroundColor: theme.colorScheme.onPrimary,
                     ),
 
-                        const SizedBox(height: UIConstants.spaceMD),
+                    const SizedBox(height: UIConstants.spaceMD),
 
                     // Sign up link
                     Row(
@@ -203,27 +217,13 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<void> _handleLogin() async {
+  void _handleLogin() {
     if (!_formKey.currentState!.validate()) return;
 
-    final result = await _controller.login(
-      _emailController.text.trim(),
-      _passwordController.text,
-    );
-
-    if (mounted) {
-      if (result.success) {
-        // Navigate based on user role
-        // TODO: Get actual user role from result
-        context.go('/dashboard'); // This will be implemented later
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(result.error ?? 'Login failed'),
-            backgroundColor: Theme.of(context).colorScheme.error,
-          ),
+    // Use AuthCubit to login
+    context.read<AuthCubit>().login(
+          _emailController.text.trim(),
+          _passwordController.text,
         );
-      }
-    }
   }
 }
