@@ -1877,6 +1877,17 @@ Lastly, the internal system state must be updated to reflect a user's swipe acti
 **Rationale and Validation**
 The requirements ensure that all contributors can work effectively while keeping compatibility with the targeted platforms. Minimum specifications guarantee accessibility across the team, while recommended specifications support smoother emulator performance and integration with cloud services. Each requirement is measurable (e.g., OS versions, RAM, network speed) and traceable to the technologies already adopted by the project.#
 
+== #Log Book#
+
+[cols="3,^2,5",options="header",]
+|===
+| #Name# | #Section# | #Added/Modified#
+
+| #Fernando Castro Cancel#
+| #2.2.3, 2.2.4, 2.2.5#
+| #The previous flowing text has been replaced with individual, structured requirements (DR001-DR029, IR001-IR010, MR001-MR014) in a table format, each including a unique ID, description, linked User Stories/Epics, and Verification Tests for traceability.#
+
+|===
 
 === Implementation
 
@@ -1909,11 +1920,14 @@ image::../Images/database-schema.svg[Database Schema, align=center, pdfwidth=90%
 
 ==== Selected Fragments of the Implementation
 
-The implementation fragments presented here illustrate how the proposed system realizes its core concept-rofiles, swiping, matching, messaging, and event participatio-ithin the domain of student-recruiter interactions. They are not exhaustive; instead, they show how selected components are translated into concrete structures and operations.
+#The implementation fragments presented here illustrate how the proposed system realizes its core concepts—profiles, swiping, matching, messaging, and event participation—within the domain of student-recruiter interactions. They are not exhaustive; instead, they show how selected components are translated into concrete structures and operations, maintaining a clear separation between the core domain concepts and their presentation layer realizations.#
+
+[line-through]#The implementation fragments presented here illustrate how the proposed system realizes its core concept-rofiles, swiping, matching, messaging, and event participatio-ithin the domain of student-recruiter interactions. They are not exhaustive; instead, they show how selected components are translated into concrete structures and operations.#
 
 ===== Domain-Centric Function Signatures
+#Domain-Centric Function SignaturesIn Flutter/Dart, we express domain contracts through method signatures and service interfaces. These serve as contracts between the UI layer, application logic, and backend services. The functions below operate on the $\mathbf{Profile}$ entity, which represents the core data, not on the presentation $\mathbf{ProfileCard}$ widget.#
 
-In Flutter/Dart, we express domain contracts through method signatures and service interfaces. These serve as contracts between the UI layer, application logic, and backend services.
+[line-through]#In Flutter/Dart, we express domain contracts through method signatures and service interfaces. These serve as contracts between the UI layer, application logic, and backend services.#
 
 ```dart
 // Fetch the next profile card for a user’s deck
@@ -1936,7 +1950,9 @@ Each function encodes a clear business rule. For example, `processSwipe` ensures
 
 ===== User Interface Complement
 
-A conceptual *Profile Card* widget in Flutter may look like this. This shows how domain concepts (like `ProfileCard`) translate directly into Flutter widgets.:
+#A conceptual $\mathbf{ProfileCard}$ widget in Flutter may look like this. This shows how the domain concept ($\mathbf{Profile}$) is passed to a $\mathbf{presentation-layer}$ widget ($\mathbf{ProfileCard}$) for display and interaction. The widget itself belongs to the UI, but it depends on the domain's $\mathbf{Profile}$ data structure.#
+
+[line-through]#A conceptual *Profile Card* widget in Flutter may look like this. This shows how domain concepts (like `ProfileCard`) translate directly into Flutter widgets.:#
 
 ```dart
 class ProfileCard extends StatelessWidget {
@@ -1976,6 +1992,17 @@ class ProfileCard extends StatelessWidget {
 }
 ```
 
+== #Log Book#
+
+[cols="3,^2,5",options="header",]
+|===
+| #Name# | #Section# | #Added/Modified#
+
+| #Fernando Castro Cancel#
+| #2.3.2. Selected Fragments of the Implementation#
+| #Modified text and comments to clearly distinguish the **Domain Concept (Profile)** from the **Presentation Layer Element (ProfileCard)**, addressing professor feedback.#
+
+|===
 
 == Analytic Part
 
