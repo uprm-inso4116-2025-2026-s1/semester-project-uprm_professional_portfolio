@@ -30,6 +30,7 @@ dependencies:
   # Image handling
   image_picker: ^1.1.2
   cached_network_image: ^3.3.1
+  supabase_flutter: ^2.5.6
   
   # Utilities
   intl: ^0.19.0
