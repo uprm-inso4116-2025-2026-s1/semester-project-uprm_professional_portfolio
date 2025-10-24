@@ -2,10 +2,12 @@
 Second Milestone - Software Design - INSO 4117
 Prof. Marko Schütz-Schmuck 
 :doctype: book
+:includedir: ../Images
 :toc:
 :sectnums:
 
-===== Notation for Changes
+[discrete]
+== Notation for Changes
 [cols="3,2,5",options="header"]
 |===
 | Symbol | Function | Example
@@ -497,15 +499,11 @@ This narrative ties the abstract model to observable work. The multiplicities cl
 * **Expected outcome/postcondition:** Candidates learn about openings and plan attendance or apply online +
 * **Reference to Sketch:** Job fairs; desire to pre-screen before the fair
 
----
-
 .Candidate just arrived and checked in to event
 * **Triggered by:** Candidate or Student +
 * **Immediate response:** Candidate registers and receives a map and agenda +
 * **Expected outcome/postcondition:** Candidate can approach booths and recruiters +
 * **Reference to Sketch:** Loud, crowded, and chaotic fair environment
-
----
 
 .Queue now formed in front of a booth
 * **Triggered by:** Candidates +
@@ -513,15 +511,11 @@ This narrative ties the abstract model to observable work. The multiplicities cl
 * **Expected outcome/postcondition:** Long wait times and short interactions +
 * **Reference to Sketch:** Reports of waiting up to forty minutes. "I stood in line 40 minutes just to hand over my resume."
 
----
-
 .Recruiter just solicited introduction
 * **Triggered by:** Recruiter +
 * **Immediate response:** Candidate delivers a 30–60 second elevator pitch; recruiter asks quick questions +
 * **Expected outcome/postcondition:** Superficial first impression; rushed evaluation +
 * **Reference to Sketch:** “Speed dating” analogy; recruiter and candidate stress
-
----
 
 .Resume or portfolio is being handed over
 * **Triggered by:** Candidate +
@@ -529,15 +523,11 @@ This narrative ties the abstract model to observable work. The multiplicities cl
 * **Expected outcome/postcondition:** Document enters a pile or list and may lose visibility +
 * **Reference to Sketch:** Concern that resumes are not reviewed
 
----
-
 .Recruiter recording notes
 * **Triggered by:** Recruiter +
 * **Immediate response:** Recruiter writes short tags such as “has Python” or “not ready” +
 * **Expected outcome/postcondition:** Notes linked to contact for later review +
 * **Reference to Sketch:** Spreadsheets used for quick note taking
-
----
 
 .Informal hallway or meetup conversation occurred
 * **Triggered by:** Candidate and Recruiter +
@@ -545,15 +535,11 @@ This narrative ties the abstract model to observable work. The multiplicities cl
 * **Expected outcome/postcondition:** New lead or opportunity may emerge +
 * **Reference to Sketch:** Informal interactions valued more than booth chats
 
----
-
 .Application has been submitted through multiple portals
 * **Triggered by:** Candidate +
 * **Immediate response:** Candidate uploads resume to Handshake, LinkedIn, and company website or submits via referral +
 * **Expected outcome/postcondition:** Duplicate entries for the same profile; confusion about visibility +
 * **Reference to Sketch:** Uncertainty about whether multichannel applications are reviewed. "Did they even see my application?"
-
----
 
 .Pre-screen just completed
 * **Triggered by:** Recruiter or System +
@@ -561,15 +547,11 @@ This narrative ties the abstract model to observable work. The multiplicities cl
 * **Expected outcome/postcondition:** Candidate marked eligible or ruled out based on preset rules +
 * **Reference to Sketch:** Desire for quick identification of fit candidates
 
----
-
 .Invitation or follow-up has been delayed
 * **Triggered by:** Recruiter +
 * **Immediate response:** Recruiter contacts candidate weeks later +
 * **Expected outcome/postcondition:** Candidate may have lost interest or accepted another offer +
 * **Reference to Sketch:** Late outreach leads to attrition
-
----
 
 .Decision to stop sourcing was just made
 * **Triggered by:** Recruiter +
@@ -577,15 +559,11 @@ This narrative ties the abstract model to observable work. The multiplicities cl
 * **Expected outcome/postcondition:** Window for new applicants narrows; reduced diversity of options +
 * **Reference to Sketch:** Search ends once early candidates meet expectations. “If the first batch looks good, we stop looking.”
 
----
-
 .Known talent has been rehired
 * **Triggered by:** Recruiter +
 * **Immediate response:** Recruiter prioritizes former interns or previous employees +
 * **Expected outcome/postcondition:** Faster hiring due to established trust +
 * **Reference to Sketch:** "Trust factor" in re-hiring interns
-
----
 
 .Swag or promotional material was handed out
 * **Triggered by:** Recruiter +
@@ -606,56 +584,37 @@ Institutions and systems announce recruiting events, register candidate check-in
 *Third parties* +  
 Third-party actors such as referees or background-check providers submit references, return verification results, and confirm candidate details.
 
+---
+
 ===== Behaviors
 
 .**Candidate engagement and application behavior**
-This behavior encompasses the end-to-end process through which a candidate interacts with the recruiting process. It begins when the recruiting event is announced and the candidate adjusts their resume and portfolio to match desired roles (action). Upon arrival, the candidate checks in (event) and approaches booths to deliver a brief introduction (action). They hand over a resume (event) and often follow up by submitting applications through multiple portals (action). After the event, they may send follow-up messages or withdraw applications (action). These linked steps form a behavioral arc that involves preparation, event participation, and post-event actions. +
- +  
+This behavior encompasses the end-to-end process through which a candidate interacts with the recruiting process. It begins when the recruiting event is announced and the candidate adjusts their resume and portfolio to match desired roles (action). Upon arrival, the candidate checks in (event) and approaches booths to deliver a brief introduction (action). They hand over a resume (event) and often follow up by submitting applications through multiple portals (action). After the event, they may send follow-up messages or withdraw applications (action). These linked steps form a behavioral arc that involves preparation, event participation, and post-event actions. +  
 *Reference to Sketch:* Students prepare portfolios, deliver pitches, hand over resumes, and apply across multiple systems. +
 
----
-
 .**Recruiter sourcing and screening behavior**
-This behavior represents how recruiters identify, evaluate, and narrow candidates. It starts when a recruiter defines a role and publishes an opening (action), triggering the recruiting event (event). Recruiters then attend, solicit introductions (action), and record notes (action) immediately after brief exchanges (event). They apply prescreen heuristics to sort through candidates (action) and may eventually decide to stop sourcing (action/event). +
- +  
+This behavior represents how recruiters identify, evaluate, and narrow candidates. It starts when a recruiter defines a role and publishes an opening (action), triggering the recruiting event (event). Recruiters then attend, solicit introductions (action), and record notes (action) immediately after brief exchanges (event). They apply prescreen heuristics to sort through candidates (action) and may eventually decide to stop sourcing (action/event). + 
 *Reference to Sketch:* Recruiters rely on heuristics, jot notes on spreadsheets, and often end sourcing once a candidate seems sufficient. +
-
----
 
 .**Multichannel application handling and consolidation**
 This behavior involves the candidate’s repeated submissions across different systems and the institution’s attempts to merge those inputs. A candidate submits multiple applications through various portals (event/action). The system removes the duplicates of these entries (action) and links records for traceability (action), often applying prescreening automatically (event). +   
- +
 *Reference to Sketch:* Candidates apply via Handshake, LinkedIn, and company sites, causing redundant records and recruiter uncertainty. +
-
----
 
 .**Communication delay leading to attrition**
 This behavior captures what happens when outreach is delayed. Recruiters queue candidates for later contact (action), resulting in delayed invitations or follow-ups (event). Once contacted, some candidates withdraw or accept other offers (event/action). +    
- +
 *Reference to Sketch:* Recruiters contact students weeks later, by which time many are unavailable. +
-
----
 
 .**Informal networking conversion behavior**
 This behavior occurs when informal, unplanned exchanges result in hiring outcomes. An informal hallway conversation happens (event), followed by a recruiter or candidate initiating a focused follow-up (action) and logging or scheduling an interview (action). +    
- +
 *Reference to Sketch:* Informal conversations often produce stronger opportunities than planned booth exchanges. +
-
----
 
 .**Brand recall and reengagement through giveaways**
 This behavior connects marketing actions to later candidate responses. Recruiters distribute promotional materials or swag (action/event), after which candidates recall the brand and reengage during outreach (event/action). +    
- +
 *Reference to Sketch:* Students remember companies through giveaways, which enhances follow-up engagement. +
-
----
 
 .**Rehiring based on prior trust**
 This behavior involves drawing from known, trusted candidates. Systems maintain records of past interns or employees (action), enabling quick rehire decisions (event/action) and onboarding (action). + 
- + 
 *Reference to Sketch:* Recruiters often rehire previous interns due to established trust and reduced uncertainty. +
-
----
 
 ==== Function Signatures
 
@@ -1704,14 +1663,14 @@ Verification ensures that the documentation is internally consistent and traceab
 === Effective Modeling
 === Communication and the Use of Language
 
-==== #Lecture Topic Task — Knowledge Crunching for Recruiter Needs#
+==== #Knowledge Crunching for Recruiter Needs#
 :author: Alexa M. Zaragoza Torres
 
 [NOTE]
 Objective: Understand what recruiters actually need from messaging and notifications to guide near-term design/implementation.
 
 [discrete]
-=== One-Page Interview Guide
+===== #One-Page Interview Guide#
 * Which events are immediate vs batch later? Give concrete examples.
 * During quiet hours, what must still break through (by role/stage)?
 * Preferred channel per event (push, in-app, email, SMS opt-in) and why.
@@ -1726,7 +1685,7 @@ Objective: Understand what recruiters actually need from messaging and notificat
 * One thing current tools get wrong about notifications—and how to fix it.
 
 [discrete]
-=== Interviews
+===== #Interviews#
 
 *Interview 01:*
 Mid-market Tech Recruiter · Date: 2025-10-05 · Mode: phone (28 min) · Region: urban + suburban sites · Anonymized
@@ -1810,7 +1769,7 @@ Agency Recruiter (multi-timezone) · Date: 2025-10-06 · Mode: video (28 min) ·
 
 &#160;
 [discrete]
-=== Synthesis
+===== #Synthesis#
 
 *_What recruiters actually need from chat/notifications?_*
 
@@ -1824,7 +1783,7 @@ Agency Recruiter (multi-timezone) · Date: 2025-10-06 · Mode: video (28 min) ·
 * Outcomes: fewer no-shows, faster time-to-respond, clear audit of what alerted whom and why.
 
 [discrete]
-==== Event Taxonomy & Matrix
+===== Event Taxonomy & Matrix
 [cols="2,2,1,1,2,3",options="header"]
 |===
 |Event |Actor |When |Priority |Channel |Deep Link
@@ -1842,9 +1801,9 @@ Agency Recruiter (multi-timezone) · Date: 2025-10-06 · Mode: video (28 min) ·
 &#160;
 
 [discrete]
-
-=== Prioritization
-==== Must
+===== #Prioritization#
+[discrete]
+===== Must
 * Policy engine for urgency & quiet hours (thread/role aware)
 * Reliable deep links (interview/offer/note anchors)
 * RSVP + calendar integration
@@ -1853,25 +1812,25 @@ Agency Recruiter (multi-timezone) · Date: 2025-10-06 · Mode: video (28 min) ·
 * Internal @mentions with anchors
 
 [discrete]
-==== Should
+===== Should
 * Opt-in delivery receipts and SLA badges
 * Candidate quiet hours and consent per channel
 * Role-based overrides for urgent events
 
 [discrete]
-==== Could
+===== Could
 * Stage-aware bundling of notifications
 * Intent/sentiment hints in threads
 
 [discrete]
-==== Won’t (now)
+===== Won’t (now)
 * Cross-org notification analytics
 
 [discrete]
-=== Implementable Requirements
+===== #Implementable Requirements#
 
 [discrete]
-==== R1 — Policy Engine for Urgency & Quiet Hours
+====== R1 — Policy Engine for Urgency & Quiet Hours
 [source,gherkin]
 ----
 Feature: Notification policy engine
@@ -1891,7 +1850,7 @@ Scenario: Non-urgent updates during quiet hours are batched
 ----
 
 [discrete]
-==== R2 — Interview RSVP + Calendar Deep Link
+====== R2 — Interview RSVP + Calendar Deep Link
 [source,gherkin]
 ----
 Feature: RSVP and calendar
@@ -1905,7 +1864,7 @@ Scenario: Candidate receives invite
 ----
 
 [discrete]
-==== R3 — Daily Digest at 07:30 Local
+====== R3 — Daily Digest at 07:30 Local
 [source,gherkin]
 ----
 Feature: Morning digest
@@ -1918,7 +1877,7 @@ Scenario: Recruiter starts day
 ----
 
 [discrete]
-==== R4 — Auto-Nudge After Silence (48h/96h)
+====== R4 — Auto-Nudge After Silence (48h/96h)
 [source,gherkin]
 ----
 Feature: Auto follow-up
@@ -1936,7 +1895,7 @@ Scenario: At-risk at 96h
 ----
 
 [discrete]
-==== R5 — Thread-Level Mute/Snooze
+====== R5 — Thread-Level Mute/Snooze
 [source,gherkin]
 ----
 Feature: Snooze thread
@@ -1948,7 +1907,7 @@ Scenario: Snooze until tomorrow 08:00
 ----
 
 [discrete]
-==== R6 — Internal @Mentions with Anchors
+====== R6 — Internal @Mentions with Anchors
 [source,gherkin]
 ----
 Feature: Internal mentions
@@ -1960,7 +1919,7 @@ Scenario: Mention hiring manager
 ----
 
 [discrete]
-==== R7 — Delivery Receipts + SLA Badges (opt-in)
+====== R7 — Delivery Receipts + SLA Badges (opt-in)
 [source,gherkin]
 ----
 Feature: Delivery receipts and SLA
@@ -1972,7 +1931,7 @@ Scenario: SLA risk after threshold
 ----
 
 [discrete]
-==== Traceability — Pain → Event → Requirement:
+===== #Traceability — Pain → Event → Requirement:#
 [cols="3,3,1",options="header"]
 |===
 |Pain Point |Event(s) |Requirement(s)
@@ -1986,7 +1945,7 @@ Scenario: SLA risk after threshold
 |===
 
 [discrete]
-=== References
+===== #References#
 
 LinkedIn. (n.d.). Alerts and notifications. Recruiter Help. https://www.linkedin.com/help/recruiter/topic/a100022 
 
@@ -2004,23 +1963,21 @@ Indeed for Employers. (2024, November 4). 6 texting and chatting rules with cand
 
 === Isolating the Domain & Expressing Models in Software
 
-==== Lecture Topic Task — Modeling the Address as a Value Object
+==== #Modeling the Address as a Value Object#
 :author: Carlos J. Pepín Delgado
-
-#Highlight#
 
 [NOTE]
 Objective: Apply Section 4.3 (Isolating the Domain & Expressing Models in Software) by refactoring the `StudentProfile` aggregate to include `Address` as an immutable Value Object. This isolates the domain model, enforces invariants at construction, and maintains persistence independence through a repository layer.
 
-=== Topic Overview
+===== #Topic Overview#
 Section 4.3 emphasizes modeling the domain in code by identifying **entities**, **value objects**, and **aggregates** that mirror real-world concepts. Entities are defined by identity, while value objects are defined solely by their attributes and must remain immutable. The lecture also introduced factories and repositories as tools to keep domain logic clean and separated from technical infrastructure.
 
-=== Application in the Project
+===== #Application in the Project#
 In the Professional Portfolio System, the `StudentProfile` aggregate initially scattered raw address fields (`street`, `city`, `postal_code`, etc.), which led to duplicated logic and weak cohesion. Through knowledge-crunching and discussion, this revealed an *implicit concept* — the Address itself. The team made it explicit as a dedicated `Address` Value Object embedded within the `StudentProfile` aggregate root.
 
 The `StudentProfileRepository` mediates between the domain and Supabase, exposing methods in terms of domain concepts (`getById`, `updateAddress`) rather than SQL statements. This structure follows the Dependency Inversion Principle, allowing the domain to remain pure while infrastructure adapts around it.
 
-=== Implementation Summary
+===== #Implementation Summary#
 * **Aggregate Definition:** `StudentProfile` acts as the aggregate root, controlling all access and updates to its internal `Address` object.  
 * **Factory Construction:** `Address` uses a factory constructor that validates input and enforces domain rules before instance creation.  
 * **Value Object Semantics:** Two `Address` instances with the same attribute values are equal; all fields are `final`, ensuring immutability.  
@@ -2029,7 +1986,7 @@ The `StudentProfileRepository` mediates between the domain and Supabase, exposin
   `address_line1`, `address_line2`, `address_city`, `address_region`, `address_postal_code`, and `address_country_code`.  
   A constraint ensures the `country_code` is always a two-letter uppercase ISO-3166 value.  
 
-=== Invariants and Guards
+===== #Invariants and Guards#
 The following invariants must hold within the `Address` Value Object:
 * `line1`, `city`, and `postalCode` cannot be empty.  
 * `countryCode` must match `/^[A-Z]{2}$/`.  
@@ -2039,7 +1996,7 @@ The following invariants must hold within the `Address` Value Object:
 Validation occurs at the boundary—user input is verified before `Address` construction to ensure all invariants hold.  
 Profiles may temporarily lack an address (e.g., new user); null updates are intentionally supported to clear address data safely.
 
-=== Testing & Verification
+===== #Testing & Verification#
 A live Supabase integration test demonstrated:
 . The user authenticated and updated their own `StudentProfile` with a valid `Address`.  
 . The repository persisted and retrieved the same value object correctly.  
@@ -2048,7 +2005,7 @@ A live Supabase integration test demonstrated:
 
 All checks passed, confirming domain integrity, immutability, and persistence consistency.
 
-=== Outcome and Reflection
+===== #Outcome and Reflection#
 Refactoring `Address` as a Value Object achieved:
 * **Isolation of the Domain:** Address logic resides solely in the model; database details are hidden behind the repository.  
 * **Cohesion and Clarity:** Related primitives unified under one explicit concept.  
@@ -2057,7 +2014,7 @@ Refactoring `Address` as a Value Object achieved:
 
 This task fully embodies the lecture’s intent — expressing the domain through explicit modeling, factories, aggregates, and repositories — showing how theoretical design principles produce a practical, robust implementation.
 
-=== Traceability to Lecture Concepts
+===== #Traceability to Lecture Concepts#
 [cols="2,4",options="header"]
 |===
 |Lecture Principle |Project Realization
@@ -2068,82 +2025,80 @@ This task fully embodies the lecture’s intent — expressing the domain throug
 |Making Implicit Concepts Explicit |Recognized Address as a hidden concept, now modeled explicitly.
 |===
 
-=== References
+===== #References#
 * Schütz-Schmuck, Marko. *Isolating the Domain & Expressing Models in Software* (Lecture Notes, Section 4.3).
 
-#This text is new.#
-#Highlight#
 
 === Life Cycle of Domain Objects
 
-==== StudentProfile Life Cycle
+==== #StudentProfile Life Cycle#
 
-#The `StudentProfile` domain object represents a student within the system. Its lifecycle captures all possible states from creation to permanent deletion, including intermediate states such as active use and temporary archival. Understanding this lifecycle is critical to maintain data integrity, support aggregate consistency, and comply with domain rules.#
+The `StudentProfile` domain object represents a student within the system. Its lifecycle captures all possible states from creation to permanent deletion, including intermediate states such as active use and temporary archival. Understanding this lifecycle is critical to maintain data integrity, support aggregate consistency, and comply with domain rules.
 
-===== Lifecycle States
+===== #Lifecycle States#
 
-* #**Creation**: triggered when a student registers or the system instantiates a profile; initial validation and default values are assigned#  
-  - #event: `StudentRegistered`#  
-  - #outcome: profile moves to **Active** after successful validation#  
+* **Creation**: triggered when a student registers or the system instantiates a profile; initial validation and default values are assigned 
+  - event: `StudentRegistered`
+  - outcome: profile moves to **Active** after successful validation 
 
-* #**Active**: default operational state of the profile; student can update personal information, add experiences, adjust visibility; interacts with other aggregates (e.g., enrollments, submissions)#  
-  - #events: `ProfileUpdated`, `ExperienceAdded`, `VisibilityChanged`#  
+* **Active**: default operational state of the profile; student can update personal information, add experiences, adjust visibility; interacts with other aggregates (e.g., enrollments, submissions) 
+  - events: `ProfileUpdated`, `ExperienceAdded`, `VisibilityChanged` 
 
-* #**Archived**: temporary deactivation due to inactivity, graduation, or administrative action#  
-  - #profile becomes read-only#  
-  - #guard: only profiles meeting archival criteria can be archived#  
-  - #event: `ProfileArchived`#  
-  - #reactivation: `ProfileReactivated` moves profile back to **Active**#  
+* **Archived**: temporary deactivation due to inactivity, graduation, or administrative action  
+  - profile becomes read-only
+  - guard: only profiles meeting archival criteria can be archived 
+  - event: `ProfileArchived` 
+  - reactivation: `ProfileReactivated` moves profile back to **Active**
 
-* #**Deletion**: permanent removal from the system; ensures compliance and data integrity; may cascade to related aggregates (enrollments, submissions)#  
-  - #guard: only authorized or archived profiles may be deleted#  
-  - #event: `ProfileDeleted`#  
+* **Deletion**: permanent removal from the system; ensures compliance and data integrity; may cascade to related aggregates (enrollments, submissions)  
+  - guard: only authorized or archived profiles may be deleted  
+  - event: `ProfileDeleted`  
 
-===== State Transitions
+===== #State Transitions#
 
-#Transitions are implied within the state descriptions and governed by events and guard conditions. Explicit state changes include:#  
+Transitions are implied within the state descriptions and governed by events and guard conditions. Explicit state changes include:  
 
-- #Creation → Active: triggered by `StudentRegistered` and validation#  
-- #Active → Archived: triggered by `ProfileArchived` when archival criteria are met#  
-- #Archived → Active: triggered by `ProfileReactivated`#  
-- #Active/Archived → Deletion: triggered by `ProfileDeleted` when authorized#  
+- Creation → Active: triggered by `StudentRegistered` and validation  
+- Active → Archived: triggered by `ProfileArchived` when archival criteria are met
+- Archived → Active: triggered by `ProfileReactivated`
+- Active/Archived → Deletion: triggered by `ProfileDeleted` when authorized  
 
 image::..\Images\StudentProfile.png[StudentProfile Lifecycle Diagram]
 
-===== Aggregate Deletion Rules
+===== #Aggregate Deletion Rules#
 
-#The deletion of a `StudentProfile` must adhere to strict rules to maintain **aggregate consistency**, ensure **data integrity**, and comply with **domain policies**. The following rules apply:#
+The deletion of a `StudentProfile` must adhere to strict rules to maintain **aggregate consistency**, ensure **data integrity**, and comply with **domain policies**. The following rules apply:
 
-* #**Authorization Requirement**#  
-  - #A profile can only be deleted if it is either archived or explicitly authorized for deletion by an administrator.#  
-  - #Active profiles cannot be deleted without explicit authorization.#  
+* **Authorization Requirement**  
+  - A profile can only be deleted if it is either archived or explicitly authorized for deletion by an administrator.  
+  - Active profiles cannot be deleted without explicit authorization.
 
-* #**Cascading Deletions**#  
-  - #Deleting a `StudentProfile` may require cascading deletion or modification of related aggregates:#  
-    - #**Enrollments:** Any active or historical enrollments linked to the student must be removed or anonymized.#  
-    - #**Submissions/Assignments:** Student submissions may need to be archived, anonymized, or deleted according to retention policies.#  
-    - #**Notifications/Logs:** Events related to the profile should remain in the audit trail but must be decoupled from personally identifiable information.#  
+* **Cascading Deletions** 
+  - Deleting a `StudentProfile` may require cascading deletion or modification of related aggregates:
+    - **Enrollments:** Any active or historical enrollments linked to the student must be removed or anonymized.  
+    - **Submissions/Assignments:** Student submissions may need to be archived, anonymized, or deleted according to retention policies.
+    - **Notifications/Logs:** Events related to the profile should remain in the audit trail but must be decoupled from personally identifiable information. 
 
-* #**Validation Checks**#  
-  - #Before deletion, the system must validate:#  
-    *** #That no critical dependencies remain in other aggregates (e.g., group projects, team memberships).#  
-    *** #That deletion will not violate invariants of related domain objects.#  
+* **Validation Checks** 
+  - Before deletion, the system must validate:  
+    *** That no critical dependencies remain in other aggregates (e.g., group projects, team memberships).
+    *** That deletion will not violate invariants of related domain objects.
 
-* #**Compliance and Audit**#  
-  - #All deletion events must be logged with timestamp, actor, and reason for deletion.#  
-  - #Logs must be immutable and stored according to institutional compliance requirements.#  
-  - #This ensures traceability and supports future audits or investigations.#  
+* **Compliance and Audit**
+  - All deletion events must be logged with timestamp, actor, and reason for deletion.
+  - Logs must be immutable and stored according to institutional compliance requirements.
+  - This ensures traceability and supports future audits or investigations.
 
-* #**Reversibility**#  
-  - #Once deletion is executed, it is permanent.#  
-  - #If recovery is required, it must rely on backups or archived snapshots, not the active database.#  
+* **Reversibility**  
+  - Once deletion is executed, it is permanent.  
+  - If recovery is required, it must rely on backups or archived snapshots, not the active database.  
 
-* #**Notification**#  
-  - #Dependent aggregates or stakeholders (e.g., course instructors, admin systems) may receive notifications when a profile is deleted, ensuring all systems maintain consistent state.#  
+* **Notification**  
+  - Dependent aggregates or stakeholders (e.g., course instructors, admin systems) may receive notifications when a profile is deleted, ensuring all systems maintain consistent state. 
 
-* #**Guard Clauses**#  
-  - #Deletion is prevented if any of the above rules are violated.#  
-  - #Only profiles satisfying all deletion conditions are allowed to transition into the `Deletion` state.#
+* **Guard Clauses**
+  - Deletion is prevented if any of the above rules are violated. 
+  - Only profiles satisfying all deletion conditions are allowed to transition into the `Deletion` state.
 
 
 === Using the Language
@@ -2276,21 +2231,20 @@ This Discovery Journal records key domain insights and refactors that, during de
 |Added, Modified, Modified, Added.
 
 | Heribiell A. Rodríguez Cruz
-| 2.1.2 Terminology
+| 2.1.2, 2.2.2
+| Modified, Added
+
+| Pedro Rodriguez Velez
+| 1.6, 2.1.6
+| Modified, Added
+
+| Carlos J. Pepín Delgado
+| 4.3.1
+| Added
+
+| Samarys Barreiro Melendez
+| 2.1.5
 | Modified
-
-| Heribiell A. Rodríguez Cruz
-| 2.2.2 Personas
-| Modified, Added
-
-| Pedro Rodriguez Velez
-| 1.6 Derived Goals
-| Modified, Added
-
-| Pedro Rodriguez Velez
-| 2.1.6 Function Signatures
-| Modified, Added
-
 
 |===
 '''
