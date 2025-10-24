@@ -459,6 +459,55 @@ The domain covers how recruiters discover candidates, evaluate evidence of fit, 
 [discrete]
 === Key entities and relationships
 
+==== Module Organization (Lecture Topic Task: Modules for Profile and Matching)
+
+To improve maintainability, domain clarity, as well as alignment with the principles of Domain Driven Design, the system has been organized into two primary modules: **Profile** and **Matching**. These modules group related classes and behaviors together, each with a clearly defined responsibility within the application domain.
+
+.Profile Module
+This module encapsulates all functionality related to user identity and profile management. It defines how both students and recruiters represent themselves within the system and provides mechanisms for storing, displaying, and updating profile data.
+
+**Included Classes:**
+`StudentProfile` `RecruiterProfile` `Resume` `MediaUpload` `ProfileController`
+
+**Core Responsibilities:**
+
+- Handle the creation, modification, and persistence of profile data for all users.
+- Manage resume and media uploads associated with each profile.  
+- Ensure that user information is stored and retrieved consistently across the application.  
+- Provide limited, read only access to profile data through a defined interface, `IProfileReader`, for external modules such as Matching.
+
+The Profile module acts as the source of truth for user related data and serves as an independent subsystem that can evolve without affecting other parts of the domain.
+
+.Matching Module
+The Matching module defines the behavior that connects students and recruiters through an intelligent matching process. It consumes data from the Profile module to perform its operations but maintains its own internal logic and data flow.
+
+**Included Classes:**
+`Match` `MatchService` `MatchingPolicy` `RecommendationEngine`
+
+**Core Responsibilities:**
+
+- Execute the matching algorithm that pairs students with recruiters based on skill, preference, and availability criteria.  
+- Manage match creation, updates, and persistence.  
+- Notify users when a match occurs and handle match related interactions.  
+- Implement and refine matching policies that determine how compatibility is calculated.
+
+The Matching module does not modify or persist profile data directly. Instead, it retrieves read only information from the Profile module through the `IProfileReader` interface to maintain a clean separation of concerns.
+
+.Module Boundaries and Dependency Flow
+To maintain loose coupling and modularity, the dependency flow between modules follows a one directional structure:  
+Profile → exposes → IProfileReader, while Matching → uses → IProfileReader.  
+
+This ensures that the Matching module depends only on the data abstractions provided by Profile, while Profile remains independent of Matching. As a result, changes in the matching logic do not affect the internal behavior of the Profile module.
+
+.Benefits of Modular Design
+This modular separation strengthens system scalability and future adaptability. For example:  
+
+- The Profile module can evolve to include new profile types or attributes without affecting matching logic.  
+- The Matching module can introduce new algorithms or policies without impacting profile management.  
+- Code review and testing processes become simpler due to clearer ownership boundaries.  
+
+Through this structure, the system adheres to the principles of high cohesion and low coupling, making sure that each part of the domain remains understandable, testable, and independently maintainable.
+
 |===
 | Relationship | Multiplicity | Notes
 
