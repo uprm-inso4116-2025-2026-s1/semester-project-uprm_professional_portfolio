@@ -24,26 +24,22 @@ jobs:
         with:
           ruby-version: '3.2'
 
-      - name: Install Asciidoctor PDF
+      - name: Install Asciidoctor PDF and dependencies
         run: |
           gem install asciidoctor-pdf --no-document
-          gem install rouge --no-document # for syntax highlighting
+          gem install rouge --no-document       # for syntax highlighting
           gem install asciidoctor-diagram --no-document # for diagrams
-          
+
       - name: Convert AsciiDoc to PDF
         run: |
-          mkdir -p docs/pdf
-          # Find all .adoc files recursively
-          find docs -type f -name "*.adoc" -print0 | while IFS= read -r -d '' file; do
-            # Extract the relative path after 'docs/' and replace slashes with '-'
-            relative_path="${file#docs/}"
-            pdf_name=$(echo "$relative_path" | tr '/' '-' | sed 's/\.adoc$/.pdf/')
-            echo "Converting \"$file\" -> docs/pdf/${pdf_name}"
-            asciidoctor-pdf "$file" -o "docs/pdf/${pdf_name}"
+          mkdir -p build/pdf
+          for file in $(find docs -name "*.adoc"); do
+            filename=$(basename "$file" .adoc)
+            asciidoctor-pdf "$file" -o "build/pdf/${filename}.pdf"
           done
 
       - name: Upload PDFs as artifacts
         uses: actions/upload-artifact@v4
         with:
           name: docs-pdf
-          path: docs/pdf/
+          path: build/pdf

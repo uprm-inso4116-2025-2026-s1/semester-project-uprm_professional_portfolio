@@ -1,0 +1,157 @@
+= GUIDELINES AND ADVICE ON THE PROJECT DOCUMENTATION
+Second Milestone
+Marko Schütz-Schmuck
+
+These guidelines should be used to evaluate each project's
+submission. The whole project is still in process, so we do not need to
+see any type of _completeness_. However, we do want to see some progress
+(not necessarily the same amount) on each of those aspects. The
+guidelines and examples are more detailed than what would easily fit
+into the format of rubrics, so the guidelines are stated separately and
+the rubrics then are generic.
+
+• Changes to the previous submission must be clearly visible. Use a
+  different background color, change bars in the page margin, or other
+  ways to clearly indicate the changes.
+• The log book gives an overview of the changes (but not the full
+  changed content) since the last submission.
+• The actual changes, new developments, etc are integrated into the
+  overall document.
+• All the criteria where the previous submission did not follow the
+  guidelines have been improved.
+• Any additions and changes follow the guidelines already established
+  for the proposal submission.
+• Progress in the implementation has been made: there are completed
+  features that are implemented end-to-end and that have a high value to
+  the users. The completion of the feature is evidenced by passing
+  acceptance/end-to-end tests.
+• Progress has been made in all phases of development: domain
+  description, requirements prescription, design, …
+
+• Application of topics, techniques, tools, methods, … from the
+  lectures:
+
+== The following rubrics will have a higher weight than those above.
+
+  • *define/identify aggregates*
+
+- The team identifies and defines at least one aggregate consisting of
+multiple objects with one aggregate root. The aggregate captures a
+conceptual whole and the objects inside the aggregate boundary make
+sense as separate concepts on the one hand while justifiably
+belonging inside the aggregate boundary. The team uses the aggregate
+correctly: e.g. all access to inner objects is through the root
+object, the functions on the root object ensure the invariants,…
+
+  • *factories*
+
+- The team provides at least one example of the application of
+factories. For example, they might initially expose the directly the
+constructors of different sub-classes of some super-class. But then
+they decide that the construction should be hosted in a separate
+factory class with an API providing entry points behind which
+complex choices are made as to which concrete object to instantiate.
+
+  • *repositories*
+
+- The team uses repositories to expose an interface providing
+persistence related functions in terms of the domain and/or the
+application layer.
+
+  • *invariants*
+
+- The team states at least one non-trivial invariant of an aggregate.
+They state where the invariant might be violated temporarily and
+where it will be reestablished.
+
+  • *making implicit concepts explicit*
+
+- The team describes at least three examples of how they started with
+an understanding of the domain which they later found had a hidden
+concept and after some discussion they found the missing concept and
+made it explicit. They describe how this changes the ubiquitous
+language of their project.
+
+
+== General comments on the submission
+
+- Software design is INSO 4117.
+
+- The synopsis should, very briefly, touch on all the things that the project will have to do. This includes e.g. requirements engineering, implementation, etc. etc.
+
+- I think your derived goals are very much in line with the primary goals. For example, usability can be seen as just a trait of how you achieve your primary goal. Another perspective: could you think of a project that pursues the derived goal without going after your (current) primary goal?
+
+- Your domain rough sketch is quite good! The sentences are maybe still a bit too abstracted. You could additionally go into some more detail. "At the job fair, I stood in line 40 minutes just to hand over my résumé." would that really be all the student had told us about? And if that would have been all, then we would ask for more detail. Even if some of the questions that we ask do not bring us immediately usable knowledge: do you remember the company where the line was that long? Did you have a chance to speak to a recruiter from that company? Was that line particularly long or were the lines at all the other companies just as long? What did you do is pass that time? Was this a recent job fair or one that happened sometime ago? A statement like "Job fairs are often loud, crowded, chaotic → recruiters and students both stressed." seems already conceptualized, it does not seem raw and it seems that something much more specific was said, by student as well as recruiter, from which you abstracted this. Maybe the student said something like "at last year's job fair, I was wearing a new pair of shoes that I had bought just for the job fair. I still would have had to break them in, but decided to wear them anyway. On the day of the job fair, I had my regular schedule, with one class before noon and 3 classes in the afternoon. I wasn't sure which ones I could maybe skip... On that day I went in the morning before my first class and visited the booths of Google and Pratts & Whitney, then I want to my class in the Stefani building. During that class I already started to feel the right shoe hurting at the heel. Then, when I went back after that morning class it was really, really crowded and in the push-and-shove another student stepped on my right foot. I said something to her, but it was so loud that talking was difficult at best. Etc. etc. etc." I think you get the point here. Go over the other statements as well and ask yourselves if they are already summaries/abstractions of much more specific stories/scenarios that are actually behind them.
+
+- It might be necessary to separate the employer and the recruiter. An employer might have many recruiters all working for them at the same time and even when someone gets hired by an employer they might have dealt with only one of the recruiters. During the hiring process one might deal with several recruiters from the same employer, but in the end the employment is with that single employer. Is the first conversation something that should be considered as happening between an applicant and the employer or between an applicant and a recruiter? Even if that would be considered as between the applicant and the recruiter, the resulting connection could still be considered as between the applicant and the employer (with the recruiter representing the employer).
+
+- Does/should your compensation range be an umbrella term also for all benefits like on site food, company shares/options, shuttle services, etc.?
+
+- If you're talking about domain terminology and domain rough sketch, then there's no space for "user".
+
+- The point in the guidelines that's titled "Domain Terminology in Relation to Domain Rough Sketch" is NOT supposed to be a section heading. As a matter of fact, all the titles of the guidelines just are points to consider when evaluating, but do not necessarily translate to section headings. This particular point from the guidelines is to remind you that there's a very specific way by which we start with the rough sketch, go through concept analysis, and come up with a domain terminology that we can then use for the domain description/narrative.
+
+- You list work modality in the terminology, but location is not a term that's defined there. Same for start date.
+
+- The topic of location actually seems more important: what if a candidate wants to consider only offers from select locations?
+
+- Is there a parent concept that covers in-person interviews and virtual interviews? Interview modality?
+
+- Validity period has to be defined.
+
+- Similarly, clarifications and adjustments need to be defined.
+
+- Accept/decline are also not defined.
+
+- There are also many aspects that might need to be further explored: what if a candidate accepts an offer after the deadline? Is it possible that there is an mistake in the deadline stated in the offer, could that deadline be stated for a date that's too early and the recruiter really wanted a deadline much later?
+
+- If you include "applications" as an object between candidates and openings, then there's a one-to-many relationship between candidate and application and a one-to-many relationship between opening and application.
+
+- Even though we do want to use the abstractions found in the concept formation when we narrate the domain, we also want to use some of the raw statements gathered through domain acquisition to give concrete examples for the general statements.
+
+- Events, actions, and behaviors are just kinds of phenomena/concepts as are entities. There is no reason to treat them in a separate section, separate from the entities. While sometimes we feel that something is obviously an entity and not e.g. a operation, there are many cases where that distinction is not so obvious. For example, in a banking system, we can think of the operation "to transfer" from one account to another, but we might also think of the "transfer" as intangible entities. In the former view we might then want "transfer logs" where we log the events that were triggered by the operation and the latter view we might want a "transfer repository" that makes the transfer entities persistent. Whichever way we look at it: all the different phenomena or concepts belong together in the same section. The point in the guidelines is just a reminder not to think of only the entities, but to also consider the other kinds of phenomena/concepts.
+
+- The table view for the events is not a good fit, they would be better represented in list slots:
+Recruiting event announced or openings published
+triggered by: Recruiter, University, or Organizer
+Immediate responses:  Recruiter defines roles and requirements; the organizer or university disseminates the information
+expected outcome/postcondion: Candidates learn about opportunities and plan attendance or apply online
+reference to Sketch: job fairs; desire to pre-screen before the fair
+
+- Make sure to distinguish events by the use of language. You do this already for many of them: good! But for some you do not and immediately there's doubt. For example, "brief booth interaction" could be all kinds of concept: entity, action, even behavior. If you're after the event that triggers the candidate to give a brief pitch about themselves, then the event could be "recruiter solicited introduction" or something along these lines. The use of past participle greatly helps in bringing out the character that something has just ended. To underline the RECENCY add a "just": "recruiter just solicited introduction".
+
+- The first action that you list, the one you call "candidate", I'd rather consider to be a behavior, since it's a sequence of actions and events. The same goes for the other actions that you list.
+
+- Quite a few of the items that you have under behaviors do not qualify as such according to our understanding of the term. For example, in "Stopping after the first promising group. When the initial cohort seems sufficient, active sourcing pauses. The window for new applicants narrows and the range of options can shrink." it's not clear how this is a behavior, what are the component actions from the domain that make up this behavior and what are the interspersed events from the domain. If something is a behavior, we want to justify classifying it as such by showing the actions and the events that we see as its constituents.
+
+- The function signatures are abstractions of the operations/actions showing only the types of parameters and the types of results that an action/operation produces. By themselves, they are insufficient to tell us much about the actions/operations. They only unfold their usefulness in conjunction with the descriptions of these same actions/operations. That's why each function signature should be placed together with the description of that function/operation. This point on the guidelines is just in there to remind students not to forget about the signatures.
+
+- On the function "getNextProfile : UserId → Option ProfileCard" you supply only a UserId. The name seems to hint at an identifier only that needs to be looked up in some form of registry. But the function according to its signature does not have access to any such registry. The description says that it returns None if the deck is empty, but most likely you mean "if there are no more cards in the deck". Also, you might want to think about the functions that exist at the different levels of abstraction. The card mechanism with its swiping is user interface-oriented, but conceptually what's going on? A recruiter is expressing interest or lack of interest. So, the conceptual function, the domain function, would be what... "judge" or "match" or...? What would a function "judge" have to have access to? What would a function "judge" produce as its output? As usual there are many ways to view this. One way would be that for every recruiter we keep a collection of candidates that the recruiter is interested in and we could take the stance that the recruiter would not exist without candidates to be interested in and that therefore it's okay to make the recruiter depend on the candidate object. Then we could say that "judge"ing changes the recruiter object and that therefore recruiter is (part of) the result type. From the perspective of the recruiter, a candidate might go through states: "undecided/unknown", "not interested", "interested", "invited", "offer made", etc., but whether or not these are actually the right states is for you to decide. If we assume that we have such a state from the perspective of the recruiter, we could capture it in a type CandidateStage or some such. We might then want the function "judge" to get the candidate, the recruiter, and the CandidateStage as parameters and to have the recruiter as the result (assuming again that we can see the candidates with their stage from a recruiter). However, following this route we might find that some actions from the domain are not very naturally expressed. For example, to represent the domain action of dismissing a candidate internally we'd say "judge (promisingStudent, experiencedRecruiter, NotInterested)" where it might seem for natural to say "dismiss (experiencedRecruiter, promisingStudent)". So, more thought is needed here. Just now is occurred to me that the dismissal is with respect to a specific position/opening and so that would have to go into the function as well.
+
+- As a kind of verification, consider some execution scenarios that could arise using the function signatures. For example, try to describe conceptually the receipt of a resume for a candidate by the recruiter and subsequent actions.
+
+- The epics that you list are just the titles of the features that you describe below. More work needed here.
+
+- Give more background on your personas. They only start developing their value on your project, if everyone on the team can say their name and the other person immediately has a clear understanding of all the traits that the persona represents. For this to work, the persona has to come alive, it has to have characteristics that make it a lively person. If you only consider aspects that relate to the use of the application then the persona will not become lively, vivid,... Instead, describe the persona, so that you can imagine it would be a family member, or a good friend.
+
+- The requirements have to be stated as individual requirements. Collecting them into sections or paragraphs of flowing text is not such a good idea. We need to be able to identify each of the requirements individually, best by an ID that we give that requirement like DR167 for a domain requirement or MR72 for a machine requirement. Also, we want to refer up to some user stories to justify the requirement and give a list of tests that are part of our implementation that together cover the requirement. So, I single requirement might need to have more space than what it would get if it were only a sentence in flowing text.
+
+- If "user" can be candidate or recruiter then getNextProfile should not have userId as its parameter type: what does it mean to call this function for a userId of a recruiter? But also consider comments further up on function signatures.
+
+- I do not think that profile card is actually a concept from the domain, to me it seems that profile as a collection interests, experiences, certifications, etc. is a concept from the domain, but profile card might belong to the presentation layer or maybe partly to the application layer.
+
+- "business logic for swiping, matching, and event handling." I'd say "swiping" is definitely not part of the business logic. Event handling might be, depending on what exactly you understand by it. "Matching" has the strongest connection to the domain of the three.
+
+- To argue that a service has a single responsibility we consider on behalf of who or what it might need to change. Take your services and go through them. What might cause the functionality that the deck service provides to change? The answer depends on how you specifically conceive of the functionality of the deck service. This would be the place to document that aspect of your understanding.
+
+- You make some claims in the open/closed principle section, but you do not give any rationale for these. How would such an extension impact the implementation? When you make such claims you need to substantiate them, to make it plausible that what you say is thought through.
+
+The same is true for the Liskov substitution principle.
+
+- Ah, I now see that you have some examples to make the claims more plausible: good.
+
+- The concept formation process that you apply seems quite right, my only concern is that you are starting with statements that are already too far abstracted.
+
+- Ah, here you have a clear distinction that you do not have further up between the recruiter and the employer. Make it consistent.
+
+- Of course, scenario walkthroughs are a good tool to use for validation, but the scenario that you show here is still very abstract. If you make it more specific there's a better chance that the conversation with stakeholders will bring up additional insights. Try, e.g., "Abdul is a 5th year student who is currently in his last semester of studies. This semester he is taking the capstone course, thermodynamics, and pottery 2. He already has started talking to several companies and has also interned in previous semesters. His profile up to now does not list the capstone project's topic and he decides that it should. His capstone project aims at giving brew masters a tool to predict the pleasantness of the resulting beer from variation of the brewing parameters. Corey is a recruiter for Lilly. She lets all the soon-to-be graduates be listed and sees Abdul's profile. The position which she has to fill has to do be industrial process control and she thinks that there might be some experience from the capstone that could carry over. So, she swipes to indicate interest." Your stakeholders might then come up with additional feature ideas, questions that you have not previously thought about, etc. all this is gold!
