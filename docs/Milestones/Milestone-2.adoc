@@ -659,74 +659,74 @@ This behavior involves drawing from known, trusted candidates. Systems maintain 
 
 ==== Function Signatures
 
-[line-through]#The system's core domain logic is defined by a set of function signatures that outline operations, inputs, outputs, and potential failure states. At its foundation, user interaction is governed by swiping and matching mechanics.
+[line-through]#The system's core domain logic is defined by a set of function signatures that outline operations, inputs, outputs, and potential failure states. At its foundation, user interaction is governed by swiping and matching mechanics.#
 
-* `getNextProfile : UserId -> Option ProfileCard`  
-  Fetches the next profile card from a user's personalized deck. Returns `None` if the deck is empty.
+* [line-through]#`getNextProfile : UserId -> Option ProfileCard`  #
+  [line-through]#Fetches the next profile card from a user's personalized deck. Returns `None` if the deck is empty.#
 
-* `processSwipe : UserId >< ProfileId >< SwipeDirection -> Result<Unit, Error>`  
-  Records a swipe (Like or Pass) for a given profile. Returns a result indicating success or an error.
+* [line-through]#`processSwipe : UserId >< ProfileId >< SwipeDirection -> Result<Unit, Error>`#  
+  [line-through]#Records a swipe (Like or Pass) for a given profile. Returns a result indicating success or an error.#
 
-* `checkForMatch : UserId >< ProfileId -> Option Match`  
-  Determines whether a swipe action resulted in a mutual Like, returning a `Match` if successful.
+* [line-through]#`checkForMatch : UserId >< ProfileId -> Option Match`  #
+ [line-through]# Determines whether a swipe action resulted in a mutual Like, returning a `Match` if successful.#
 
-Once a successful Match is established, profile and connection management functions handle communication setup:
+[line-through]#Once a successful Match is established, profile and connection management functions handle communication setup:#
 
-* `createConnection : Match -> Connection`  
-  Creates a persistent connection between two matched users, establishing a channel for communication.
+* [line-through]#`createConnection : Match -> Connection`  #
+  [line-through]#Creates a persistent connection between two matched users, establishing a channel for communication.#
 
-* `sendMessage : ConnectionId >< UserId >< MessageContent -> Result<Message, Error>`  
-  Sends a message within a connection. Returns the message if successful, or an error for invalid requests.
+* [line-through]#`sendMessage : ConnectionId >< UserId >< MessageContent -> Result<Message, Error>`  #
+  [line-through]#Sends a message within a connection. Returns the message if successful, or an error for invalid requests.#
 
-* `getProfile : UserId -> Result<Profile, Error>`  
-  Retrieves a full user profile (as opposed to the condensed profile card), with permission checks applied.
+* [line-through]#`getProfile : UserId -> Result<Profile, Error>`  #
+  [line-through]#Retrieves a full user profile (as opposed to the condensed profile card), with permission checks applied.#
 
-Session and state management functions ensure authentication and preparation of user data:
+[line-through]#Session and state management functions ensure authentication and preparation of user data:#
 
-* `initializeUserSession : UserCredentials -> Result<UserSession, Error>`  
-  Authenticates a user's credentials. If successful, returns a session containing identity and role.
+* [line-through]#`initializeUserSession : UserCredentials -> Result<UserSession, Error>`  #
+  [line-through]#Authenticates a user's credentials. If successful, returns a session containing identity and role.#
 
-* `getUserDeck : UserId -> Deck`  
-  Builds a user's deck of profile cards, dynamically generated using the platform's matching algorithm and the user’s past activity and preferences.#[line-through]
+* [line-through]#`getUserDeck : UserId -> Deck`  #
+  [line-through]#Builds a user's deck of profile cards, dynamically generated using the platform's matching algorithm and the user’s past activity and preferences.#
 
 
 
 
 #This section describes the key operations that define the system's behavior. Each function signature is presented with its conceptual explanation.#
 
-#Function: Future<ProfileCard?> getNextProfile(String userId)#
+#`Function: Future<ProfileCard?> getNextProfile(String userId)`#
 
 * #This function fetches the next profile card from a user's personalized deck. The deck is dynamically generated based on if  the user is a Candidate or Recruiter, their preferences, and active job openings. For a recruiter, this returns a CandidateCard; for a candidate, a JobCard. The function returns null when the current deck is exhausted, signaling there are no more profiles to review. This is a more abstract function.#
 
 #Function: Future<Result<void>> processSwipe(String userId, String profileId, SwipeDirection direction)#
 
-#* This operation records a user's initial evaluation of a profile. Conceptually, a "Like" corresponds to the domain action of judging a profile as Interested, while a "Pass" corresponds to NotInterested. This function serves as the UI trigger that would typically invoke the domain-level judge or dismiss functions in the backend, persisting the user's intent. It returns a Result type to handle potential errors, such as trying to swipe on an invalid profile.#
+* #This operation records a user's initial evaluation of a profile. Conceptually, a "Like" corresponds to the domain action of judging a profile as Interested, while a "Pass" corresponds to NotInterested. This function serves as the UI trigger that would typically invoke the domain-level judge or dismiss functions in the backend, persisting the user's intent. It returns a Result type to handle potential errors, such as trying to swipe on an invalid profile.#
 
 #Function: Future<Match?> checkForMatch(String userId, String profileId)#
 
-#* Following a "Like" action, this function checks for mutual interest. It is the procedural counterpart to the declarative domain rule embodied in checkForMutualInterest. It queries the system state to determine if the profile the user just liked has also already liked them back (or their company/job posting). It returns a Match object upon this condition being met, otherwise null.#
+* #Following a "Like" action, this function checks for mutual interest. It is the procedural counterpart to the declarative domain rule embodied in checkForMutualInterest. It queries the system state to determine if the profile the user just liked has also already liked them back (or their company/job posting). It returns a Match object upon this condition being met, otherwise null.#
 
 #Domain Function: judge(recruiter: Recruiter, candidate: Candidate, stage: CandidateStage) → Recruiter#
 
-#* This is the pure domain abstraction for the evaluation process. It models the recruiter's action of classifying a candidate into a specific evaluative state. The CandidateStage is a central domain type representing this progression:
+* #This is the pure domain abstraction for the evaluation process. It models the recruiter's action of classifying a candidate into a specific evaluative state. The CandidateStage is a central domain type representing this progression:
 CandidateStage = { Undecided, NotInterested, Interested, Invited, OfferMade }
 The function takes the current state of the recruiter, the candidate in question, and the new stage, and returns an updated Recruiter entity.#
 
 #Domain Function: dismiss(recruiter: Recruiter, candidate: Candidate, position: JobOpening) → Recruiter#
 
-#*This function is a more specific form of judge, representing the domain action of a recruiter explicitly rejecting a candidate for a particular job opening. It is semantically clearer than judge(..., NotInterested) when the context of the specific position is important.#
+* #This function is a more specific form of judge, representing the domain action of a recruiter explicitly rejecting a candidate for a particular job opening. It is semantically clearer than judge(..., NotInterested) when the context of the specific position is important.#
 
 #Function: Future<Connection> createConnection(Match match)#
 
-#* This function is called after a Match is found. It creates a persistent Connection entity, which serves as the shared context for all future one-to-one interactions between the matched users. This entity houses the chat history and connection metadata, formally establishing the communication channel.#
+* #This function is called after a Match is found. It creates a persistent Connection entity, which serves as the shared context for all future one-to-one interactions between the matched users. This entity houses the chat history and connection metadata, formally establishing the communication channel.#
 
 #Function: Future<Result<Message>> sendMessage(String connectionId, String userId, String content)#
 
-#* This operation allows a user to send a message within an established connection. It requires the specific connectionId to ensure the message is part of the correct conversation thread. It performs permissions checks and returns a Message entity on success, or an error for invalid requests.#
+* #This operation allows a user to send a message within an established connection. It requires the specific connectionId to ensure the message is part of the correct conversation thread. It performs permissions checks and returns a Message entity on success, or an error for invalid requests.#
 
 #Domain Function: establishConnection(match: Match) → Connection#
 
-#* This is the conceptual model for the createConnection function. It represents the creation of a Connection as a direct consequence of a successful Match in the domain.#
+* #This is the conceptual model for the createConnection function. It represents the creation of a Connection as a direct consequence of a successful Match in the domain.#
 
 #Function: Future<Result<UserSession>> initializeUserSession(UserCredentials credentials)#
 
@@ -744,7 +744,7 @@ The function takes the current state of the recruiter, the candidate in question
 
 #3. Check for Match: The system now calls checkForMatch("recruiter_123", "candidate_abc"). It discovers that candidate_abc had already "liked" a job opening from recruiter_123's company. Consequently, a Match object is returned.#
 
-# 4. Establish Connection: The frontend, upon receiving the Match, calls createConnection(match) to create a persistent Connection between the two parties, which is the conceptual establishConnection domain action.#
+#4. Establish Connection: The frontend, upon receiving the Match, calls createConnection(match) to create a persistent Connection between the two parties, which is the conceptual establishConnection domain action.#
 
 #5. Communication: The recruiter now uses sendMessage("connection_xyz", "recruiter_123", "Welcome to our talent pool!") to initiate contact within the sanctioned context of the new connection.#
 
