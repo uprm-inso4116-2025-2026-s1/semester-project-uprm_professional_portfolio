@@ -2262,6 +2262,20 @@ Indeed for Employers. (2024, November 4). 6 texting and chatting rules with cand
 
 04CommunicationAndTheUseOfLanguage.pdf — Ubiquitous Language; aligning terms across interviews, requirements, and data/model.
 
+==== Minimal vs Enriched UML
+:author: Horeb Cotto
+
+
+
+image::../Images/Itinerary.of.recruiter.scenario.jpg[Itinerary, align=center, pdfwidth=90%]
+#_Figure 12. Itinerary of recruiter scenario showing the various stages and interactions involved in the recruitment process._#
+
+
+image::../Images/UML.match.entity.diagram.jpg[UML, align=center, pdfwidth=90%]
+#_Figure 13. UML diagram showing the entities involved in the matching process between recruiters and students._#
+
+
+
 === Isolating the Domain & Expressing Models in Software
 ==== #Domain Rules in Domain Layer#
 :author: Juan R. Rivera Rodriguez
