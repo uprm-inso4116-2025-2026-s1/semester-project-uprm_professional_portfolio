@@ -34,10 +34,8 @@ dependencies:
   # Utilities
   intl: ^0.19.0
   uuid: ^4.4.0
-
-  supabase_flutter: ^2.6.0
-  flutter_dotenv: ^5.1.0
-
+  file_picker: ^10.3.3
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -52,7 +50,11 @@ flutter:
     - .env
 
   # Assets
-  # assets:
+  assets:
+    - assets/logo/professional_portfolio_logo.png
+    - assets/logo/google_logo.png
+    - assets/logo/linkedin_logo.jpg
+    - assets/logo/professional_portfolio_logo_with_txt.png
   #   - images/
   #   - icons/
 

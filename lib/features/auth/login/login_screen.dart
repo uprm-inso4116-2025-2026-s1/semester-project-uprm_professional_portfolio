@@ -19,8 +19,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _controller = LoginController();
-
   @override
   void dispose() {
     _emailController.dispose();
@@ -28,112 +26,176 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  final _controller = LoginController();
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(UIConstants.spaceLG),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Spacer(),
-                // Logo and title
-                Icon(
-                  Icons.work,
-                  size: UIConstants.iconXL * 2,
-                  color: theme.colorScheme.primary,
+        child: SingleChildScrollView(
+          child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: UIConstants.spaceLG,
+                  vertical: UIConstants.spaceSM,
                 ),
-                const SizedBox(height: UIConstants.spaceLG),
-                Text(
-                  'Welcome Back',
-                  style: theme.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: UIConstants.spaceMD),
-                Text(
-                  'Sign in to continue to UPRM Professional Portfolio',
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: UIConstants.spaceXXL),
-
-                // Email field
-                CustomTextField(
-                  label: 'Email',
-                  hint: 'Enter your email',
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  validator: Validators.validateEmail,
-                  prefixIcon: const Icon(Icons.email_outlined),
-                ),
-                const SizedBox(height: UIConstants.spaceLG),
-
-                // Password field
-                CustomTextField(
-                  label: 'Password',
-                  hint: 'Enter your password',
-                  controller: _passwordController,
-                  obscureText: true,
-                  validator: (value) =>
-                      Validators.validateRequired(value, 'Password'),
-                  prefixIcon: const Icon(Icons.lock_outlined),
-                ),
-                const SizedBox(height: UIConstants.spaceMD),
-
-                // Forgot password
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      // TODO: Implement forgot password
-                    },
-                    child: const Text('Forgot Password?'),
-                  ),
-                ),
-                const SizedBox(height: UIConstants.spaceLG),
-
-                // Login button
-                ListenableBuilder(
-                  listenable: _controller,
-                  builder: (context, _) {
-                    return CustomButton(
-                      text: 'Sign In',
-                      onPressed: _handleLogin,
-                      isLoading: _controller.isLoading,
-                    );
-                  },
-                ),
-
-                const SizedBox(height: UIConstants.spaceLG),
-
-                // Sign up link
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            child: Container(
+              constraints: BoxConstraints(minHeight: 400), // Ensures layout
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      'Don\'t have an account? ',
-                      style: theme.textTheme.bodyMedium,
+                    const SizedBox(height: UIConstants.spaceXL),
+                    // Logo with 'Sign In:' overlaid near the bottom
+                    SizedBox(
+                      height: 220,
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Image.asset(
+                              'assets/logo/professional_portfolio_logo_with_txt.png',
+                              height: 200,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: Center(
+                              child: Text(
+                                'Sign In:',
+                                style: theme.textTheme.headlineLarge?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        context.go(AppConstants.signupRoute);
+
+                    const SizedBox(height: UIConstants.spaceXXL),
+
+                    // Email field
+                    CustomTextField(
+                      label: 'Email',
+                      hint: 'Enter your email',
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: Validators.validateEmail,
+                      prefixIcon: const Icon(Icons.email_outlined),
+                    ),
+                    const SizedBox(height: UIConstants.spaceLG),
+
+                    // Password field
+                    CustomTextField(
+                      label: 'Password',
+                      hint: 'Enter your password',
+                      controller: _passwordController,
+                      obscureText: true,
+                      validator: (value) =>
+                          Validators.validateRequired(value, 'Password'),
+                      prefixIcon: const Icon(Icons.lock_outlined),
+                    ),
+                    const SizedBox(height: UIConstants.spaceMD),
+
+                    // Forgot password
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {
+                          // TODO: Implement forgot password
+                        },
+                        child: const Text('Forgot Password?'),
+                      ),
+                    ),
+                    const SizedBox(height: UIConstants.spaceLG),
+
+                    // Login button
+                    ListenableBuilder(
+                      listenable: _controller,
+                      builder: (context, _) {
+                        return CustomButton(
+                          text: 'Sign In',
+                          onPressed: _handleLogin,
+                          isLoading: _controller.isLoading,
+                        );
                       },
-                      child: const Text('Sign Up'),
+                    ),
+
+                    const SizedBox(height: UIConstants.spaceMD),
+                    
+                    // OR divider
+                    Row(
+                      children: [
+                        const Expanded(child: Divider()),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: UIConstants.spaceMD),
+                          child: Text(
+                            'OR',
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                        const Expanded(child: Divider()),
+                      ],
+                    ),
+
+                    const SizedBox(height: UIConstants.spaceMD),
+
+                    // Social sign in buttons
+                    CustomButton(
+                      text: 'Sign in with Google',
+                      onPressed: () {
+                        // TODO: Implement Google sign in
+                      },
+                      icon: Image.asset('assets/logo/google_logo.png', height: 24),
+                      backgroundColor: theme.colorScheme.primary,
+                      foregroundColor: theme.colorScheme.onPrimary,
+                    ),
+                    
+                    const SizedBox(height: UIConstants.spaceMD),
+                    
+                    CustomButton(
+                      text: 'Sign in with LinkedIn',
+                      onPressed: () {
+                        // TODO: Implement LinkedIn sign in
+                      },
+                      icon: Image.asset('assets/logo/linkedin_logo.jpg', height: 24),
+                      backgroundColor: theme.colorScheme.primary,
+                      foregroundColor: theme.colorScheme.onPrimary,
+                    ),
+
+                        const SizedBox(height: UIConstants.spaceMD),
+
+                    // Sign up link
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Don\'t have an account? ',
+                          style: theme.textTheme.bodyMedium,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            context.go(AppConstants.signupRoute);
+                          },
+                          child: const Text('Sign Up'),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-
-                const Spacer(),
-              ],
+              ),
             ),
           ),
         ),
