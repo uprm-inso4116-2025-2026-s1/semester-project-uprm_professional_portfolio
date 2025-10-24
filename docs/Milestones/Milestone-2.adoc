@@ -1935,9 +1935,8 @@ Verification ensures that the documentation is internally consistent and traceab
 
 == Specific Class Topics
 
-=== Effective Modeling
-=== Communication and the Use of Language
 
+=== Communication and the Use of Language
 ==== #Knowledge Crunching for Recruiter Needs#
 :author: Alexa M. Zaragoza Torres
 
@@ -2673,8 +2672,6 @@ The deletion of a `StudentProfile` must adhere to strict rules to maintain **agg
   - Deletion is prevented if any of the above rules are violated. 
   - Only profiles satisfying all deletion conditions are allowed to transition into the `Deletion` state.
 
-
-=== Using the Language
 === Refactoring Towards Deeper Insight and Breakthroughs
 
 ==== #Discovery Journal:#
@@ -2779,12 +2776,7 @@ This Discovery Journal records key domain insights and refactors that, during de
 
 
 
-=== Making Implicit Concepts Explicit
-=== Supple Design
-=== Applying Analysis Patterns
-=== Relating Design Patterns to the Model
-=== Strategic Design
-=== Maintaining Model Integrity
+
 
 
 == Log Book
