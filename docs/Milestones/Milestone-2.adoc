@@ -2098,6 +2098,17 @@ Indeed for Employers. (2024, November 4). 6 texting and chatting rules with cand
 04CommunicationAndTheUseOfLanguage.pdf — Ubiquitous Language; aligning terms across interviews, requirements, and data/model.
 
 === Isolating the Domain & Expressing Models in Software
+==== Domain Rules in Domain Layer
+:author: Juan R. Rivera Rodriguez
+
+[NOTE]
+Objective: Ensure all business rules are well established and available for developers to refer to and for potential clients to review.
+
+=== #Matching Policy#
+For a Match to occur between a Recruiter and a Student, there must first be a similarity between the Student's skillset and a Recruiter's JobOpening. If these skills are close enough, each user will have more chances to see each other in the App, and they can each accept or decline each other. If both users accept each other, a Match occurs, and they may begin interacting with each other via messages.
+
+=== #User Interactions#
+If a Match occurs, a Recruiter and a Student will begin direct contact through the App's messaging feature. Afterwards, they may arrange meetings and interviews by utilizing external tools to our App, such as Microsoft Teams, Zoom, In Person meetings, etc.
 
 ==== #Modeling the Address as a Value Object#
 :author: Carlos J. Pepín Delgado
