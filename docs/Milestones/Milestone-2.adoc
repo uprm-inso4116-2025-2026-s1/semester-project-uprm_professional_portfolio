@@ -1719,6 +1719,21 @@ The requirements ensure that all contributors can work effectively while keeping
 
 === Implementation
 
+==== Functionality Flow Diagram
+
+#Before diving into the implementation fragments, it is useful to visualize the overall functionality flow of the Professional Portfolio system. The following diagram shows how the main user interactions—such as authentication, profile management, swiping, and messaging—trigger backend processes and data persistence operations.#
+
+#This visualization complements the subsequent implementation fragments by illustrating how user-facing features are realized through coordinated service logic and database operations, ensuring alignment between system behavior and architectural design.#
+
+image::../Images/functionality-flow.svg[Functionality Flow, align=center, pdfwidth=90%]
+
+#_Figure 7. Functionality Flow Diagram illustrating the end-to-end process from user interactions to backend persistence._#
+
+#The diagram clarifies how user interactions are processed across the system’s layers.  
+For example, when a user performs a “Like” action, the event triggers the `SwipeService`, which validates and records the swipe, checks for mutual matches, and—if both users liked each other—creates a new `Connection` entity in the `Matches` table.#
+
+#This flow contextualizes the domain-centric method signatures presented in the next section, showing how each function contributes to the overall behavior of the system.#
+
 ==== Selected Fragments of the Implementation
 
 The implementation fragments presented here illustrate how the proposed system realizes its core concept-rofiles, swiping, matching, messaging, and event participatio-ithin the domain of student-recruiter interactions. They are not exhaustive; instead, they show how selected components are translated into concrete structures and operations.
@@ -2551,7 +2566,7 @@ This Discovery Journal records key domain insights and refactors that, during de
 
 | Alexa M. Zaragoza
 | 4.2.1, 2.2.1, 2.1.4, 4.6.1
-|Added, Modified, Modified.
+| Added, Modified, Modified.
 
 | Heribiell A. Rodríguez Cruz
 | 2.1.2, 2.2.2
@@ -2569,5 +2584,8 @@ This Discovery Journal records key domain insights and refactors that, during de
 | 2.1.5
 | Modified
 
+| Diego A. Pérez Gandarillas**
+| 2.3.1
+| Added
 |===
 '''
