@@ -618,35 +618,95 @@ This behavior involves drawing from known, trusted candidates. Systems maintain 
 
 ==== Function Signatures
 
-The system's core domain logic is defined by a set of function signatures that outline operations, inputs, outputs, and potential failure states. At its foundation, user interaction is governed by swiping and matching mechanics.
+[line-through]#The system's core domain logic is defined by a set of function signatures that outline operations, inputs, outputs, and potential failure states. At its foundation, user interaction is governed by swiping and matching mechanics.#
 
-* `getNextProfile : UserId -> Option ProfileCard`  
-  Fetches the next profile card from a user's personalized deck. Returns `None` if the deck is empty.
+* [line-through]#`getNextProfile : UserId -> Option ProfileCard`  
+Fetches the next profile card from a user's personalized deck. Returns `None` if the deck is empty.#
 
-* `processSwipe : UserId >< ProfileId >< SwipeDirection -> Result<Unit, Error>`  
-  Records a swipe (Like or Pass) for a given profile. Returns a result indicating success or an error.
+* [line-through]#`processSwipe : UserId >< ProfileId >< SwipeDirection -> Result<Unit, Error>`
+ Records a swipe (Like or Pass) for a given profile. Returns a result indicating success or an error.#
 
-* `checkForMatch : UserId >< ProfileId -> Option Match`  
-  Determines whether a swipe action resulted in a mutual Like, returning a `Match` if successful.
+* [line-through]#`checkForMatch : UserId >< ProfileId -> Option Match`  
+  Determines whether a swipe action resulted in a mutual Like, returning a `Match` if successful.#
 
-Once a successful Match is established, profile and connection management functions handle communication setup:
+[line-through]#Once a successful Match is established, profile and connection management functions handle communication setup:#
 
-* `createConnection : Match -> Connection`  
-  Creates a persistent connection between two matched users, establishing a channel for communication.
+* [line-through]#`createConnection : Match -> Connection`  
+  Creates a persistent connection between two matched users, establishing a channel for communication.#
 
-* `sendMessage : ConnectionId >< UserId >< MessageContent -> Result<Message, Error>`  
-  Sends a message within a connection. Returns the message if successful, or an error for invalid requests.
+* [line-through]#`sendMessage : ConnectionId >< UserId >< MessageContent -> Result<Message, Error>`  
+  [line-through]#Sends a message within a connection. Returns the message if successful, or an error for invalid requests.#
 
-* `getProfile : UserId -> Result<Profile, Error>`  
-  Retrieves a full user profile (as opposed to the condensed profile card), with permission checks applied.
+* [line-through]#`getProfile : UserId -> Result<Profile, Error>`  
+Retrieves a full user profile (as opposed to the condensed profile card), with permission checks applied.#
 
-Session and state management functions ensure authentication and preparation of user data:
+[line-through]#Session and state management functions ensure authentication and preparation of user data:#
 
-* `initializeUserSession : UserCredentials -> Result<UserSession, Error>`  
-  Authenticates a user's credentials. If successful, returns a session containing identity and role.
+* [line-through]#`initializeUserSession : UserCredentials -> Result<UserSession, Error>`  
+Authenticates a user's credentials. If successful, returns a session containing identity and role.#
 
-* `getUserDeck : UserId -> Deck`  
-  Builds a user's deck of profile cards, dynamically generated using the platform's matching algorithm and the user’s past activity and preferences.
+* [line-through]#`getUserDeck : UserId -> Deck`  
+Builds a user's deck of profile cards, dynamically generated using the platform's matching algorithm and the user’s past activity and preferences.#
+
+
+
+
+#This section describes the key operations that define the system's behavior. Each function signature is presented with its conceptual explanation.#
+
+#`Function: Future<ProfileCard?> getNextProfile(String userId)`#
+
+* #This function fetches the next profile card from a user's personalized deck. The deck is dynamically generated based on if  the user is a Candidate or Recruiter, their preferences, and active job openings. For a recruiter, this returns a `CandidateCard`; for a candidate, a JobCard. The function returns null when the current deck is exhausted, signaling there are no more profiles to review. This is a more abstract function.#
+
+#`Function: Future<Result<void>> processSwipe(String userId, String profileId, SwipeDirection direction)`#
+
+* #This operation records a user's initial evaluation of a profile. Conceptually, a "Like" corresponds to the domain action of judging a profile as Interested, while a "Pass" corresponds to NotInterested. This function serves as the UI trigger that would typically invoke the domain-level judge or dismiss functions in the backend, persisting the user's intent. It returns a Result type to handle potential errors, such as trying to swipe on an invalid profile.#
+
+#`Function: Future<Match?> checkForMatch(String userId, String profileId)`#
+
+* #Following a "Like" action, this function checks for mutual interest. It is the procedural counterpart to the declarative domain rule embodied in `checkForMutualInterest`. It queries the system state to determine if the profile the user just liked has also already liked them back. It returns a Match object upon this condition being met, otherwise null.#
+
+#`Domain Function: judge(recruiter: Recruiter, candidate: Candidate, stage: CandidateStage) → Recruiter`#
+
+* #This is the pure domain abstraction for the evaluation process. It models the recruiter's action of classifying a candidate into a specific evaluative state. The CandidateStage is a central domain type representing this progression:
+`CandidateStage = { Undecided, NotInterested, Interested, Invited, OfferMade }`
+The function takes the current state of the recruiter, the candidate in question, and the new stage, and returns an updated Recruiter entity.#
+
+#`Domain Function: dismiss(recruiter: Recruiter, candidate: Candidate, position: JobOpening) → Recruiter`#
+
+* #This function is a more specific form of judge, representing the domain action of a recruiter explicitly rejecting a candidate for a particular job opening. It is semantically clearer than `judge(..., NotInterested)` when the context of the specific position is important.#
+
+#`Function: Future<Connection> createConnection(Match match)`#
+
+* #This function is called after a Match is found. It creates a persistent Connection entity, which serves as the shared context for all future one-to-one interactions between the matched users. This entity houses the chat history and connection metadata, formally establishing the communication channel.#
+
+#`Function: Future<Result<Message>> sendMessage(String connectionId, String userId, String content)`#
+
+* #This operation allows a user to send a message within an established connection. It requires the specific connectionId to ensure the message is part of the correct conversation thread. It performs permissions checks and returns a Message entity on success, or an error for invalid requests.#
+
+#`Domain Function: establishConnection(match: Match) → Connection`#
+
+* #This is the conceptual model for the createConnection function. It represents the creation of a Connection as a direct consequence of a successful Match in the domain.#
+
+#`Function: Future<Result<UserSession>> initializeUserSession(UserCredentials credentials)`#
+
+* #This function authenticates a user based on their credentials. Upon success, it returns a UserSession entity containing the user's identity and role, which is necessary for authorizing subsequent operations. A failure result indicates invalid authentication.#
+
+#`Function: Future<Result<Profile>> getFullProfile(String userId, String requesterId)`#
+
+* #This retrieves a user's complete profile. Crucially, it incorporates a domain-level permission check: the requesterId parameter is used to enforce business rules about who is allowed to see which parts of a profile. This is a more nuanced and secure domain concept than a simple data fetch.#
+
+#Scenario: A Recruiter Reviews a Candidate#
+
+#1. Fetch Profile: The recruiter's app calls `getNextProfile("recruiter_123")`. The system returns a CandidateCard for candidate_abc.#
+
+#2. Express Interest: The recruiter swipes right (Like). The app calls processSwipe("recruiter_123", "candidate_abc", SwipeDirection.like). Internally, this likely triggers a backend service that executes the domain action judge(recruiter_123, candidate_abc, Interested).#
+
+#3. Check for Match: The system now calls `checkForMatch("recruiter_123", "candidate_abc")`. It discovers that candidate_abc had already "liked" a job opening from recruiter_123's company. Consequently, a Match object is returned.#
+
+#4. Establish Connection: The frontend, upon receiving the Match, calls `createConnection(match)` to create a persistent Connection between the two parties, which is the conceptual establishConnection domain action.#
+
+#5. Communication: The recruiter now uses `sendMessage("connection_xyz", "recruiter_123", "Welcome to our talent pool!")` to initiate contact within the sanctioned context of the new connection.#
+
 
 
 === Requirements
@@ -2043,6 +2103,107 @@ The deletion of a `StudentProfile` must adhere to strict rules to maintain **agg
 
 === Using the Language
 === Refactoring Towards Deeper Insight and Breakthroughs
+
+==== #Discovery Journal:#
+:author: Alexa M. Zaragoza Torres
+
+[NOTE]
+====
+The Discovery Journal captures the domain insights uncovered through refactoring, documenting how each change led to a deeper understanding of the model and improved its expressiveness.
+====
+
+This Discovery Journal records key domain insights and refactors that, during development, improved the clarity, consistency, and expressiveness of our domain model.
+
+[discrete]
+=== Entry 1: Address as immutable value object
+- Context/Problem: Student profiles were storing address fields individually, leading to inconsistent validation and duplicate address logic across forms.
+- Domain Insight: Address is a value object in our domain—immutable, self-validating, and enforcing ISO-3166 alpha‑2 country codes.
+- Change Applied: Implemented Address VO (factory validation and normalization) and embedded it in StudentProfile with Supabase persistence and RLS.
+- Impact: Single source of truth for address rules; fewer bugs and simpler forms within the Candidate/Student Profile context.
+- Author/Date: Carlos Pepín — 2025-10-23
+- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/commit/cc540adb17bdfc56002f46ce6c89411821d15366
+
+[discrete]
+=== Entry 2: Chat service contract aligned across layers
+- Context/Problem: Message shape differed between in‑memory ChatService and Supabase-backed service, causing mismatches when switching implementations.
+- Domain Insight: Message is a core domain concept; its shape must be stable across persistence to avoid leaking infrastructure details.
+- Change Applied: Unified ChatMessage model and added explicit mapping in ChatServiceSupabase (body → text, server timestamps, null checks) with integration test.
+- Impact: Reliable Message send/fetch for Recruiter↔Candidate conversations and easier future refactors.
+- Author/Date: Carlos Pepín — 2025-10-18
+- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/commit/506e7b568736c0d7acfbf4c52bba0e2f85676e7c
+
+[discrete]
+=== Entry 3: Conversation model clarified
+- Context/Problem: It was unclear how Conversations should manage messages and expose read-only history.
+- Domain Insight: Conversation aggregates Messages for two parties and should expose an immutable view of its timeline while providing controlled mutation methods.
+- Change Applied: Defined Conversation with participants, add/remove message operations, and unmodifiable messages getter; set expectations for ordering.
+- Impact: Cleaner boundaries for the Messaging context and predictable UI rendering for Recruiter and Candidate threads.
+- Author/Date: PR merged by Julian Vivas — 2025-10-16
+- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/189
+
+[discrete]
+=== Entry 4: Matches UI expresses decision actions
+- Context/Problem: Recruiters lacked a focused place to accept/skip/star potential Candidates; information needed to be scoped to matching decisions.
+- Domain Insight: A Match is a triage view over a Candidate; the decision surface should present only fields relevant to matching.
+- Change Applied: Implemented Matches screen with accept/skip/star actions and a domain-specific info dialog for Candidate context.
+- Impact: Supports Recruiter decision flow and sets the stage for persisting Match decisions.
+- Author/Date: Samarys — 2025-10-23
+- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/commit/b7ddec4f2ee30d2c71c4f8ed47b8f00520a34c4f
+
+[discrete]
+=== Entry 5: Authentication behind a clean boundary
+- Context/Problem: Moving from mock auth to Supabase risked coupling UI/controllers to provider details.
+- Domain Insight: Identity is cross-cutting; the domain User should be provider-agnostic and accessed via an interface.
+- Change Applied: Integrated Supabase Auth while preserving existing controllers and routing guard abstraction.
+- Impact: Real login/signup with minimal churn to domain code; Messages and Matches now attach to authenticated users safely.
+- Author/Date: Carlos Pepín — 2025-10-18
+- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/commit/dc9007c14e6ab86f53db8f3ae7e09682c461f8e0
+
+[discrete]
+=== Entry 6: Matches workflow merged as feature module
+- Context/Problem: Recruiters lacked a consistent triage workflow for Candidate evaluation; actions were not standardized across the app.
+- Domain Insight: Match is a dedicated workflow where Recruiters make Accept/Skip/Star decisions using a focused, minimal view of the Candidate.
+- Change Applied: Merged the Matches feature with its screen/controllers and standardized decision actions for triage.
+- Impact: Cohesive Recruiter experience and a clear place in the model for Match decisions to evolve toward persistence.
+- Author/Date: Julian Vivas — 2025-10-23
+- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/244
+
+[discrete]
+=== Entry 7 — Establish Matches route and assets
+- Context/Problem: Early prototype lacked a clear navigation entry and domain-scoped UI for the Matches bounded context.
+- Domain Insight: Matches must be a first-class feature area separate from full profiles, exposing only decision-relevant data to Recruiters.
+- Change Applied: Added Matches screen template, route, and assets to anchor subsequent domain behavior (accept/skip/star).
+- Impact: Unblocked iteration on Recruiter triage and aligned ubiquitous language around "Match" across code and UI.
+- Author/Date: Julian Vivas — 2025-10-22
+- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/238
+
+[discrete]
+=== Entry 8: Supabase chat: fetch/send Message through clean API
+- Context/Problem: Messaging relied on local mocks; moving to Supabase risked leaking database schema (body vs text, timestamps) into domain code.
+- Domain Insight: Message behavior belongs to the Communication context and should be accessed through a stable service API.
+- Change Applied: Implemented fetch/send operations in ChatServiceSupabase with mapping and server-issued timestamps; wired to domain-facing service.
+- Impact: Recruiter–Candidate conversations can move between mock and live backends without touching UI/domain code.
+- Author/Date: PR merged by Julian Vivas — 2025-10-19
+- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/234
+
+[discrete]
+=== Entry 9: Supabase integration with router auth guard
+- Context/Problem: Introducing real authentication threatened to tangle infrastructure concerns inside feature UIs.
+- Domain Insight: Authentication sits at the boundary; domain features (Matches, Messages) should depend only on an abstract session.
+- Change Applied: Integrated Supabase within app initialization and go_router guard, leaving domain models/controller contracts intact.
+- Impact: Recruiter and Candidate sessions protect routes without leaking provider specifics into the domain.
+- Author/Date: PR merged by Julian Vivas — 2025-10-17
+- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/225
+
+[discrete]
+=== Entry 10: Message model consistency and JSON contract
+- Context/Problem: Inconsistent constructors and JSON mapping led to fragile Message parsing and coupling to storage.
+- Domain Insight: Message is a simple domain object—immutable data with explicit toJson/fromJson independent of any database.
+- Change Applied: Normalized Message model with constructor first, clear fields, and symmetrical JSON methods; tightened toString for debugging.
+- Impact: Fewer parsing errors, clearer tests, and stable interface for Conversation and Chat services.
+- Author/Date: PR merged by Julian Vivas — 2025-10-17
+- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/188
+
 === Making Implicit Concepts Explicit
 === Supple Design
 === Applying Analysis Patterns
@@ -2066,15 +2227,15 @@ The deletion of a `StudentProfile` must adhere to strict rules to maintain **agg
 | Modified
 
 | Alexa M. Zaragoza
-| 4.2.1, 2.2.1, 2.1.4
-|Added, Modified, Modified.
+| 4.2.1, 2.2.1, 2.1.4, 4.14.1
+|Added, Modified, Modified, Added.
 
 | Heribiell A. Rodríguez Cruz
 | 2.1.2, 2.2.2
 | Modified, Added
 
 | Pedro Rodriguez Velez
-| 1.6
+| 1.6, 2.1.6
 | Modified, Added
 
 | Carlos J. Pepín Delgado
