@@ -1644,6 +1644,8 @@ Verification ensures that the documentation is internally consistent and traceab
 === Effective Modeling
 === Communication and the Use of Language
 
+# In the enriched model the operation of accepting or swiping right to allow communication between recruiter and job seeker from the perspective of the recruiter, with the assumption that job seekers have accepted or “swiped right” a job or program that this recruiter manages/is a mentor of. It is decomposed into the layers that are used in the order they are used by the system. It shows 2 user scenarios, one were the connection is available and access to the database is possible in the moment it is requested or “happy path” and another when the access is not possible at that moment which makes the system look for a backup or cache of the matches that could have been retrieved in a previous fetch and if that also fails it will store the user interaction to update database with the accept flag for the role of the current user on the corresponding user of opposite role #
+
 ==== #Lecture Topic Task — Knowledge Crunching for Recruiter Needs#
 :author: Alexa M. Zaragoza Torres
 
