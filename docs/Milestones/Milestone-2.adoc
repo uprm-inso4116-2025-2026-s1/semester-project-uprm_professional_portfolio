@@ -124,7 +124,7 @@ We propose a three-part design focused on a personalized, efficient, and high-qu
 
 Once users are onboarded, the swiping mechanism would enhance the core matching process by moving beyond a simple binary decision. This means creating carefully designed cards that act as a information display. The profiles can have an simple view and a more detailed view. The key to this design is a hierarchy that is informed by user research and which surfaces key decision making data relevant to the user directly in the swiping interface to maximize informed matches without causing overload.
 
-Finally, to ensure connections are meaningful and productive, the mutual match connection and messaging gateway would unlock only after both parties have shown interest. Afterwards, the system would immediately facilitate the first message and it could include some kind of icebreaker or customizable openers. Furthermore, a dedicated inbox to keep users organized, allow for easy profile review, and potentially integrate scheduling tools, transforming a simple match into a genuine gateway to opportunity.
+Finally, to ensure connections are meaningful and productive, the mutual Match connection and messaging gateway would unlock only after both parties have shown interest. Afterwards, the system would immediately facilitate the first message and it could include some kind of icebreaker or customizable openers. Furthermore, a dedicated inbox to keep users organized, allow for easy profile review, and potentially integrate scheduling tools, transforming a simple Match into a genuine gateway to opportunity.
 
 
 === Scope, Span, and Synopsis
@@ -138,22 +138,22 @@ The project's scope is to develop a mobile application aimed at improving the co
 
 * Requirements Engineering: Define system requirements to enable students to showcase their skills, qualifications, portfolios, and preferences dynamically. Recruiters will also be able to display what their company is offering and looking for. Requirements will focus on improving job placement rates, event attendance, and reducing the time spent in the recruitment process. These requirements will be refined continuously using direct feedback from both students and recruiters.
 
-* Software Architecture: The architecture will feature a mobile front-end with a Tinder-like swiping system, real-time notifications, and event integration. The back-end will connect with job boards, applicant tracking systems, career services, and on-campus event data to strengthen student-recruiter engagement.
+* Software Architecture: The architecture will feature a mobile front-end with a swipe-based matching system, real-time notifications, and event integration. The back-end will connect with job boards, applicant tracking systems, career services, and on-campus event data to strengthen student-recruiter engagement.
 
 * Software Design Process: The project will follow an iterative design and development process, beginning with a pilot test to evaluate performance and identify areas of improvement. User feedback will drive optimization of the user interface, swiping experience, and the matching algorithm.
 
 ===== Span
 The project's span is focused on creating a scalable and user-friendly solution that streamlines the student-recruiter connection process. The app is designed to support efficient matching, real-time communication, and event integration.
 
-* Specifics of the System: Students can create detailed profiles including videos, portfolios, and soft skills. Recruiters will also create company profiles that highlight roles, culture, and expectations. When both parties swipe right, they are notified of a match and can begin communicating via chat or set up interviews. The app will also notify students about campus events that involve companies they have swiped right on, even if a match has not occurred.
+* Specifics of the System: Students can create detailed profiles including videos, portfolios, and soft skills. Recruiters will also create company profiles that highlight roles, culture, and expectations. When both parties swipe right, they are notified of a Match and can begin communicating via chat or set up interviews. The app will also notify students about campus events that involve companies they have swiped right on, even if a Match has not occurred.
 
 * Target Audience and Expansion: The initial span of the project involves a pilot test with a defined user base of students and recruiters. Expansion will include partnerships with recruiters, direct marketing to universities, and support for on-campus career fairs. Over time, the platform will expand to larger student and recruiter networks beyond the initial pilot.
 
-* Methodology and Maintenance: The project will adopt an iterative methodology with regular update cycles guided by new technology trends and continuous user feedback. Effectiveness will be tracked through key metrics such as app usage frequency, match success rate, recruiter follow-up rate, event attendance, and user satisfaction. The cycle of feedback, optimization and scaling will ensure the app remains relevant and impactful.
+* Methodology and Maintenance: The project will adopt an iterative methodology with regular update cycles guided by new technology trends and continuous user feedback. Effectiveness will be tracked through key metrics such as app usage frequency, Match success rate, recruiter follow-up rate, event attendance, and user satisfaction. The cycle of feedback, optimization and scaling will ensure the app remains relevant and impactful.
 
 ==== Synopsis
 
-[line-through]#The project aims to develop a mobile application that revolutionizes the way students and recruiters connect by addressing the inefficiencies and impersonal nature of traditional job search methods. By leveraging a swiping feature, similar to popular dating apps, the platform will facilitate dynamic and real-time interactions between students showcasing their skills and recruiters highlighting their opportunities. The app will integrate with existing job boards and career services, providing a seamless experience that enhances visibility, engagement, and mutual interest. Through iterative design, user feedback, and continuous optimization, the project seeks to create a scalable solution that improves job placement rates and reduces recruitment time and effort.#
+#The project aims to develop a mobile application that revolutionizes the way students and recruiters connect by addressing the inefficiencies and impersonal nature of traditional job search methods. By leveraging a swiping feature, similar to popular dating apps, the platform will facilitate dynamic and real-time interactions between students showcasing their skills and recruiters highlighting their opportunities. The app will integrate with existing job boards and career services, providing a seamless experience that enhances visibility, engagement, and mutual interest. Through iterative design, user feedback, and continuous optimization, the project seeks to create a scalable solution that improves job placement rates and reduces recruitment time and effort.#
 
 [.underline]#The project aims to develop a mobile application that modernizes how students and recruiters connect by addressing the inefficiencies of traditional job search methods.# #It uses a swiping-based interface to enable dynamic and real time engagement between students presenting their qualifications and recruiters offering opportunities.# [.underline]#Throughout its lifecycle, the project will progress through several key phases: requirements engineering to define user and system needs, software architecture and design to establish the platform’s structure, implementation of both front-end and back-end components, and systematic testing and validation to ensure reliability and usability.# #An iterative approach will be adopted, allowing feedback to refine requirements and improve design over time. The final goal is to deliver a scalable and efficient application that enhances job placement success, fosters meaningful recruiter to student connections, and maintains user centered quality across all development stages.#
 
@@ -167,13 +167,23 @@ Projects are successful when coding is supported by planning, communication, and
 * Project management and communication establish the general structure that ties everything together during this milestone. Setting clear milestone goals, assigning responsibilities, and documenting meeting outcomes help the team stay organized and avoid confusion. Regular communication ensures that issues are identified and addressed early, while planning for security, privacy, and future phases prepares the project for ongoing development. By combining documentation, early planning for testing and version control, and strong management practices with the coding that will follow, the team lays the foundation for a successful project.
 
 === Derived Goals
-The project’s goals go beyond building an app, focusing on connecting students and recruiters effectively while guiding team efforts and decisions.
+[.line-through]#The project’s goals go beyond building an app, focusing on connecting students and recruiters effectively while guiding team efforts and decisions.#
 
-* From the current situation, needs, and proposed scope, several goals appear that extend beyond simply building a mobile application. First, the project aims to create a system that improves the connection between students and recruiters by promoting mutual interest, transparent communication, and efficient matching. Students should be empowered to present their skills, interests, and career aspirations in a way that recruiters can trust and evaluate fairly, while recruiters should be able to quickly identify candidates that align with both role requirements and company culture.
+[.line-through]#* From the current situation, needs, and proposed scope, several goals appear that extend beyond simply building a mobile application. First, the project aims to create a system that improves the connection between students and recruiters by promoting mutual interest, transparent communication, and efficient matching. Students should be empowered to present their skills, interests, and career aspirations in a way that recruiters can trust and evaluate fairly, while recruiters should be able to quickly identify candidates that align with both role requirements and company culture.#
 
-* In addition to these user-focused objectives, the project seeks to ensure usability, maintainability, and adaptability. The system should be easy to use and flexible, so it can improve based on user feedback and grow from a small pilot group to a wider audience. Security and privacy are also central goals, ensuring identity assurance, safe communication, and control over personal and company data.
+[line-through]#* In addition to these user-focused objectives, the project seeks to ensure usability, maintainability, and adaptability. The system should be easy to use and flexible, so it can improve based on user feedback and grow from a small pilot group to a wider audience. Security and privacy are also central goals, ensuring identity assurance, safe communication, and control over personal and company data.#
 
-* Finally, internal team goals include ensuring collaboration, clear documentation, and structured processes for version control, testing, and requirements management. By clearly following these internal practices, the team can stay coordinated, reduce errors, and build a solid base for sustained success as development progresses, and the platform grows.
+[line-through]#* Finally, internal team goals include ensuring collaboration, clear documentation, and structured processes for version control, testing, and requirements management. By clearly following these internal practices, the team can stay coordinated, reduce errors, and build a solid base for sustained success as development progresses, and the platform grows.#
+
+#A key outcome of this project is the emergence of several derived goals that extend beyond the primary function of matching recruiters and job seekers. These goals leverage the platform's unique data and position to create secondary, significant value.#
+
+#One major derived goal is the generation of actionable market intelligence. The matching process naturally produces a rich stream of data on skills, salaries, and hiring trends. By systematically learning from this data, the platform can provide a "Career GPS" for job seekers, offering personalized guidance on skill gaps, real-time salary benchmarking, and potential career trajectories. For recruiters, this intelligence enables strategic talent acquisition by identifying hidden talent pools, providing competitive benchmarking on metrics like time-to-hire, and predicting emerging skill demands. This transforms the platform from a simple transactional tool into an indispensable, intelligent partner for all users, with the data also serving as a critical feedback loop for the platform's own strategic development and product roadmap.#
+
+#A second derived goal involves creating a dynamic bridge between education and industry. The data generated provides a real-time map of the skills employers need versus the skills candidates possess. This allows the platform to become a vital feedback mechanism for universities and bootcamps, helping them validate and modernize their curricula to close specific skills gaps, such as a lack of training in high-demand tools like Docker. For students, it empowers informed educational investment by highlighting which courses and skills will most effectively increase their employability. On a broader scale, this data can fuel regional economic development by helping cities identify critical talent shortages and create targeted workforce programs, ultimately building a stronger, more aligned local economy.#
+
+#Finally, a crucial derived goal is to transform the job search from a black box into a guided journey for the candidate. The platform can leverage its collective data to demystify the process, providing unprecedented transparency. This includes empowering job seekers with data-backed salary insights that illuminate how specific skills impact pay, enabling confident negotiation. It also involves providing a realistic "mirror" to the market, showing candidates exactly how their profile measures up and pinpointing specific areas for improvement. By offering a "pulse" on typical hiring timelines and illuminating common career progression paths, the platform reduces the anxiety and uncertainty of job hunting. This shifts its value proposition from merely finding a job to becoming a trusted advisor for managing an entire career, thereby building immense user loyalty and trust.#
+
+
 
 == Descriptive Part
 
@@ -307,7 +317,7 @@ A personalized deck of Profile Cards presented for evaluation.
 The primary gesture to evaluate a Profile Card. Right-swipe = Like; left-swipe = Pass.
 
 *Like* :: (action, domain)
-An expression of interest on a Profile Card (right-swipe). Stored by the system for match evaluation.
+An expression of interest on a Profile Card (right-swipe). Stored by the system for Match evaluation.
 
 *Pass* :: (action, domain)
 A dismissal on a Profile Card (left-swipe). Removes the card from the current session.
@@ -354,10 +364,10 @@ The authenticated runtime context for a User. Authorizes actions (swipes, messag
 * Recruiter: (Actor) A user who represents a company or organization and uses the platform to discover and evaluate potential candidates. This term was refined from the rough concept of employer to specify the human actor, distinct from the company entity itself.
 * Candidate: (Actor) A user who is seeking professional opportunities and uses the platform to discover companies and recruiters by reviewing recruiter profiles. This term should be revised as a candidate alludes to the user's primary role once a connection is made.
 * Profile: The core digital representation of a user within the system. It is categorized as either a candidate profile or a recruiter profile containing corresponding relevant information.
-* Swipe: The primary gesture of evaluation. A right swipe indicates a like or expression of interest, and a left swipe indicates a Pass, which indicates a dismissal. This defines the core action of the system, removing ambiguity from the informal "Tinder-like" description.
+* Swipe: The primary gesture of evaluation. A right swipe indicates a Like or expression of interest, and a left swipe indicates a Pass, which indicates a dismissal. This defines the core action of the system, removing ambiguity from the informal "Tinder-like" description.
 * Profile Card: The user interface component that presents a condensed view of a Profile within the feed for the purpose of being swiped on. This term distinguishes the interactive element from the full Profile data structure.
 * Match: A domain event that occurs only when two users have mutually Liked each other's profile cards.
-* Connection: The persistent relationship state between two users that is established upon a match. This term defines the context in which messaging and further interaction can occur. Moving beyond the transient event of the match itself.
+* Connection: The persistent relationship state between two users that is established upon a Match. This term defines the context in which messaging and further interaction can occur. Moving beyond the transient event of the Match itself.
 * Discovery Feed: The main application view where a user is presented with a “deck” of profile cards to evaluate. This term provides a specific name for the core screen, derived from its purpose.
 
 * Student: A person currently enrolled at a university/college. In our domain, every Student is a Candidate, but not every Candidate is a Student. We use **Student** when context involves campus events, student portfolios, or coursework.
@@ -620,12 +630,12 @@ The system's core domain logic is defined by a set of function signatures that o
   Fetches the next profile card from a user's personalized deck. Returns `None` if the deck is empty.
 
 * `processSwipe : UserId >< ProfileId >< SwipeDirection -> Result<Unit, Error>`  
-  Records a swipe (like or pass) for a given profile. Returns a result indicating success or an error.
+  Records a swipe (Like or Pass) for a given profile. Returns a result indicating success or an error.
 
 * `checkForMatch : UserId >< ProfileId -> Option Match`  
-  Determines whether a swipe action resulted in a mutual like, returning a `Match` if successful.
+  Determines whether a swipe action resulted in a mutual Like, returning a `Match` if successful.
 
-Once a successful match is established, profile and connection management functions handle communication setup:
+Once a successful Match is established, profile and connection management functions handle communication setup:
 
 * `createConnection : Match -> Connection`  
   Creates a persistent connection between two matched users, establishing a channel for communication.
@@ -647,8 +657,120 @@ Session and state management functions ensure authentication and preparation of 
 
 === Requirements
 
-==== [.underline]#User Stories, Epics, Features#
+[line-through]#User Stories, Epics, Features#
 
+[line-through]#This section outlines the experience our platform aims to provide for people seeking opportunities and for the organizations hiring them. We present the product in three layers short narrative user stories, the broader areas of value they belong to (epics), and the capabilities that bring those areas to life (features).#
+
+[line-through]#===== User stories#
+
+[line-through]#• _As a candidate, I want to create my profile with my background and skills so that recruiters can quickly assess my fit._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#I'm signed in# | [line-through]#I complete required fields and save# | [line-through]#My profile is published#
+| [line-through]#Required info is missing# | [line-through]#I try to publish# | [line-through]#I’m shown exactly which fields to complete#
+|===
+
+[line-through]#• _As a candidate, I want to add portfolio items (PDF or public URLs) so that my work is easy to review._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#A valid file/URL# | [line-through]#I upload# | [line-through]#The item appears in a gallery I can reorder#
+| [line-through]#An unsupported type/size# | [line-through]#I upload# | [line-through]#I see an error listing allowed types and max size#
+|===
+
+[line-through]#• _As a candidate, I want to choose my profile visibility (public / by Match / private) so that I control my exposure._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#"Private" visibility# | [line-through]#Recruiters search# | [line-through]#My profile does not appear in results#
+| [line-through]#"By Match" visibility# | [line-through]#A mutual Match occurs# | [line-through]#My profile becomes visible to the matched party#
+| [line-through]#"Public" visibility# | [line-through]#Recruiters search# | [line-through]#My profile can appear in recruiter results#
+|===
+
+[line-through]#• _As a recruiter, I want to publish a simple company page so that candidates understand who we are and our roles._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#Logo, short description, sectors, and location are provided# | [line-through]#I publish# | [line-through]#The company page is visible to candidates#
+| [line-through]#Required info is incomplete# | [line-through]#I attempt to publish# | [line-through]#I’m prompted to complete the missing fields#
+|===
+
+[line-through]#• _As a recruiter, I want to filter candidates by skills, role interest and availability so that I can shortlist relevant profiles._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#Combined filters# | [line-through]#I search# | [line-through]#Results highlight matched terms#
+| [line-through]#Sample data under normal conditions# | [line-through]#I search# | Results load in ~2 seconds (p95)#
+|===
+
+[line-through]#• _As a candidate, I want to express interest with a quick like or pass so that I can move fast through options._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#A profile is shown# | [line-through]#I press Like# | [line-through]#My interest is stored#
+| [line-through]#A profile is shown# | [line-through]#I press Pass# | [line-through]#That profile does not appear again in the current session#
+|===
+
+[line-through]#• _As a user (candidate or recruiter), I want to be notified when there’s a mutual like so that we can start a conversation.#
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#Both sides liked each other# | [line-through]#The system detects a mutual Like# | [line-through]#A chat thread opens and an in-app notification is sent#
+|===
+
+[line-through]#• _As a matched user, I want to exchange messages so that we can coordinate next steps._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#A Match chat is open# | [line-through]#I send a message# | [line-through]#The recipient receives it near real time and I see sent/read states#
+| [line-through]#I have blocked the other party# | [line-through]#They try to message me# | [line-through]#The message is not sent and I receive no notification#
+|===
+
+[line-through]#• _As a user, I want to report or block a profile so that I feel safe using the platform._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#I submit a report# |-| [line-through]#A moderation case is created for review#
+| [line-through]#I block a profile# |-| [line-through]#It no longer appears in my experience and cannot open new chats#
+|===
+
+[line-through]#• _As a candidate, I want to see upcoming recruiting events and RSVP so that I don’t miss opportunities._#
+
+[line-through]#**Acceptance criteria:**#
+[cols="1,1,2",options="header,autowidth"]
+|===
+| [line-through]#Given# | [line-through]#When# | [line-through]#Then#
+| [line-through]#I RSVP to an event# | [line-through]#The event is 24h away# | [line-through]#An in-app reminder is delivered#
+| [line-through]#The events feed is available# |-| [line-through]#Items are ordered by date and show title, location, and registration/RSVP#
+|===
+
+[line-through]#===== Epics#
+[line-through]#- Candidate Profile and Portfolio
+- Recruiter Discovery and Search
+- Matching and Messaging
+- Events and Notifications
+- Safety and Moderation#
+
+==== User Stories, Epics, Features
 [NOTE]
 This subsection defines the product scope from a user-value perspective. It organizes the solution into Epics that capture high-level goals and Features that realize those goals in the system.
 
@@ -768,7 +890,7 @@ _"As a candidate, I want to choose my profile visibility so that I control my ex
 |===
 |Given |When |Then
 |Visibility is set to “Private”. |Recruiters search. |The profile does not appear in results.
-|Visibility is set to “Match-only”. |A mutual match occurs. |The profile becomes visible to the matched party.
+|Visibility is set to “Match-only”. |A mutual Match occurs. |The profile becomes visible to the matched party.
 |Visibility is set to “Public”. |Recruiters search. |The profile can appear in results.
 |===
 
@@ -847,13 +969,13 @@ _"As a recruiter, I want to filter candidates by skills, role interest, and avai
 
 *Goal:* Move from interest to conversation quickly.
 
-*Problem/value:* Both parties need a fast way to express interest, form a mutual match, and start secure conversations.
+*Problem/value:* Both parties need a fast way to express interest, form a mutual Match, and start secure conversations.
 
 *Features (F3):*  
 
-- F3.1 Like and pass interactions: Users can register quick likes or passes on presented profiles. 
+- F3.1 Like and Pass interactions: Users can register quick likes or passes on presented profiles. 
 
-- F3.2 Mutual match and notification: The system detects mutual interest and triggers an in-app notification that opens a chat.  
+- F3.2 Mutual Match and notification: The system detects mutual interest and triggers an in-app notification that opens a chat.  
 
 - F3.3 One-to-one chat: Matched users can exchange messages with delivery and read states.
 
@@ -895,7 +1017,7 @@ _"As a matched user, I want to exchange messages so that next steps can be coord
 [cols="1,1,2",options="header,autowidth"]
 |===
 |Given |When |Then
-|A match chat is open. |A message is sent. |The recipient receives it near real time; the sender sees sent and read states.
+|A Match chat is open. |A message is sent. |The recipient receives it near real time; the sender sees sent and read states.
 |The other party is blocked. |They attempt to send a message. |The message is not delivered and no notification is generated.
 |===
 
@@ -1029,7 +1151,7 @@ _"As a user, I want to block a profile so that it no longer appears or can initi
 
 The personas below represent our core user segments and ground the scope of this product. For each persona we outline goals, pains, typical behaviors, and accessibility needs, and we link them to the stories, epics, and features defined in 2.2.1. We’ll reference these personas by name during planning and reviews to keep decisions concrete and tied to user value.
 
-.María “New Grad” Rivera — University candidate (mobile-first)
+.María “New Grad” Rivera — University Candidate (mobile-first)
 [cols="1,3"]
 |===
 |Snapshot|Loves hackathon weekends and cafés near campus; anxious about first-job search but optimistic.
@@ -1047,7 +1169,7 @@ The personas below represent our core user segments and ground the scope of this
 |Quote|"I want to upload the essentials and start exploring without oversharing."
 |===
 
-.Luis “Switcher” Santiago — Career-transition candidate (privacy-first)
+.Luis “Switcher” Santiago — Career-transition Candidate (privacy-first)
 [cols="1,3"]
 |===
 |Snapshot|Careful planner changing lanes into QA; values control and signal quality over volume.
@@ -1055,12 +1177,12 @@ The personas below represent our core user segments and ground the scope of this
 |Motivations|Show real, verifiable skills without broadcasting a job search to current contacts.
 |Hobbies|Keyboard mods, bug-bash meetups, journaling progress.
 |Tech Setup|Desktop first; tracks opportunities in spreadsheets.
-|Relationship to App|Prefers “visibility by match”; wants strong filters and concise profile previews.
+|Relationship to App|Prefers “visibility by Match”; wants strong filters and concise profile previews.
 |Goals|Import/organize history; highlight skills; appear in relevant searches without going fully public.
 |Pains|Lack of control over who sees his profile; imprecise recruiter filters.
-|Behavior|Logs in a few times per week; replies only when there’s a real match.
+|Behavior|Logs in a few times per week; replies only when there’s a real Match.
 |Accessibility|Desktop-oriented; concise summaries.
-|Related Stories|Choose visibility (private/by-match/public); Profile & portfolio; 1:1 messaging.
+|Related Stories|Choose visibility (private/by-Match/public); Profile & portfolio; 1:1 messaging.
 |Epics|Candidate Profile & Portfolio; Matching & Messaging; Safety & Moderation.
 |Quote|"I want to be visible only to people who truly match with me."
 |===
@@ -1083,7 +1205,7 @@ The personas below represent our core user segments and ground the scope of this
 |Quote|"I need ten viable profiles in minutes and a way to nurture them to interview."
 |===
 
-.Jorge “HR Generalist” Ortiz — SMB recruiter (speed & safety)
+.Jorge “HR Generalist” Ortiz — SMB Recruiter (speed & safety)
 [cols="1,3"]
 |===
 |Snapshot|Wears many hats; wants quick, safe conversations that don’t waste cycles.
@@ -1100,7 +1222,7 @@ The personas below represent our core user segments and ground the scope of this
 |Quote|"Give me a reliable shortlist and a clear conversation; the rest is noise."
 |===
 
-.Ana “Safe User” Lozada - Safety-focused candidate (safety-first)
+.Ana “Safe User” Lozada - Safety-focused Candidate (safety-first)
 [cols="1,3"]
 |===
 |Snapshot|Cautious first-timer; wants control and predictable notifications.
@@ -1118,12 +1240,12 @@ The personas below represent our core user segments and ground the scope of this
 |Quote|"I want to feel in control and safe at all times."
 |===
 
-.Mina “International Grad” Shah - International candidate (compliance-first)
+.Mina “International Grad” Shah - International Candidate (compliance-first)
 [cols="1,3"]
 |===
 |Snapshot|International MS grad navigating visas and time zones; needs clarity and eligibility signals.
 |Profile|24, MS in Data Science, international student; lives off-campus; phone for browsing, laptop for uploads.
-|Goals|Visa-friendly profile & portfolio; appear in searches filtered by skills, location, and authorization; timely match notifications; RSVP and reminders; safe messaging.
+|Goals|Visa-friendly profile & portfolio; appear in searches filtered by skills, location, and authorization; timely Match notifications; RSVP and reminders; safe messaging.
 |Pains|Ambiguous job location and start date; unclear offer validity; outreach without consent; slow search; duplicate event notices.
 |Behavior|Curates projects weekly; short-burst swipes; evening chats; shortlists companies; RSVPs to virtual events.
 |Accessibility|Clear copy on compensation (salary + benefits), readable tables, timezone-aware reminders.
@@ -1150,14 +1272,14 @@ The personas below represent our core user segments and ground the scope of this
 
 ==== Domain Requirements
 
-The system must uniquely identify every candidate, every recruiter, every employer, and every event organizer, while distinguishing natural persons from institutional profiles when the entity is a company or an organizer, and it must record the role performed by each entity in every interaction together with the time and the context of that role. The system must represent every opening with explicit requirements including minimum experience, qualifications, certifications, languages, legal authorizations, work modality, location, compensation range, and start date, must record the number of positions available for each opening, must link every opening to its responsible employer, and must allow requirement updates while preserving a complete history of changes. The system must represent each candidate profile with education, work history, competencies, certifications, portfolios, and verifiable references, must allow attaching documents to the profile preserving issue date, validity, and verification status, and must record candidate preferences such as areas of interest, desired location, and work modality. The system must represent recruiting events with name, organizer, venue, agenda, date, and capacity, must represent company booths or tables within each event and their relation to the promoted openings, must register attendance and arrival of candidates and recruiters, and must enforce registration rules and capacity limits defined by the organizer. The system must model queues in front of booths or tables preserving a first come first served order, must allow limiting the duration of each turn, must register the closure of each turn by staff, and must prevent assigning turns that exceed the declared capacity of a booth or of a time block. The system must allow candidates and recruiters to express interest in openings or in profiles and must record when the expression is reciprocal, must create a match when both sides express positive interest and must preserve the date and the context of that event, must allow recruiters to define shortlisting criteria based on requirements and evidence and must register the decision with its justification, and must allow candidates to withdraw their interest and update any pending matches. The system must represent availability of candidates and recruiters through calendars and time blocks, must schedule interviews only on valid matches, must prevent double booking of the same block, and must register interview outcomes with clear states such as continues in process, rejected, or offer extended together with the date and the responsible party. The system must allow message exchanges between candidate and recruiter only when there is a valid match or an explicit permission from the candidate, must register candidate consent for sharing information with an employer or with an organizer, and must allow revocation of that consent. The system must compute and display the degree of requirement fulfillment for each candidate with categories such as meets, partially meets, or does not meet, must prevent practices that alter queue order without a rule defined by the event such as priority for confirmed appointments, and must keep an auditable record of shortlisting and rejection decisions together with their criteria. The system must notify candidates and recruiters when a match is created, when an interview is confirmed, and when changes to opening requirements affect eligibility, and it must notify candidates about recruiting events related to employers or openings in which they have shown interest. The system must record domain metrics such as match rate, queue waiting time, average turn duration, follow up rate after matches, and event attendance, and it must support funnel analysis from expression of interest to offer extended in order to identify bottlenecks. The system must prevent the creation of matches when any party does not exist or when the opening is closed, must keep the link between every document and the identity of the person or the entity that provided it together with its validation status, and must preserve the full state history of each opening and of each candidacy from origin to closure.
+The system must uniquely identify every candidate, every recruiter, every employer, and every event organizer, while distinguishing natural persons from institutional profiles when the entity is a company or an organizer, and it must record the role performed by each entity in every interaction together with the time and the context of that role. The system must represent every opening with explicit requirements including minimum experience, qualifications, certifications, languages, legal authorizations, work modality, location, compensation range, and start date, must record the number of positions available for each opening, must link every opening to its responsible employer, and must allow requirement updates while preserving a complete history of changes. The system must represent each candidate profile with education, work history, competencies, certifications, portfolios, and verifiable references, must allow attaching documents to the profile preserving issue date, validity, and verification status, and must record candidate preferences such as areas of interest, desired location, and work modality. The system must represent recruiting events with name, organizer, venue, agenda, date, and capacity, must represent company booths or tables within each event and their relation to the promoted openings, must register attendance and arrival of candidates and recruiters, and must enforce registration rules and capacity limits defined by the organizer. The system must model queues in front of booths or tables preserving a first come first served order, must allow limiting the duration of each turn, must register the closure of each turn by staff, and must prevent assigning turns that exceed the declared capacity of a booth or of a time block. The system must allow candidates and recruiters to express interest in openings or in profiles and must record when the expression is reciprocal, must create a Match when both sides express positive interest and must preserve the date and the context of that event, must allow recruiters to define shortlisting criteria based on requirements and evidence and must register the decision with its justification, and must allow candidates to withdraw their interest and update any pending Matches. The system must represent availability of candidates and recruiters through calendars and time blocks, must schedule interviews only on valid Matches, must prevent double booking of the same block, and must register interview outcomes with clear states such as continues in process, rejected, or offer extended together with the date and the responsible party. The system must allow message exchanges between candidate and recruiter only when there is a valid Match or an explicit permission from the candidate, must register candidate consent for sharing information with an employer or with an organizer, and must allow revocation of that consent. The system must compute and display the degree of requirement fulfillment for each candidate with categories such as meets, partially meets, or does not meet, must prevent practices that alter queue order without a rule defined by the event such as priority for confirmed appointments, and must keep an auditable record of shortlisting and rejection decisions together with their criteria. The system must notify candidates and recruiters when a Match is created, when an interview is confirmed, and when changes to opening requirements affect eligibility, and it must notify candidates about recruiting events related to employers or openings in which they have shown interest. The system must record domain metrics such as Match rate, queue waiting time, average turn duration, follow up rate after Matches, and event attendance, and it must support funnel analysis from expression of interest to offer extended in order to identify bottlenecks. The system must prevent the creation of Matches when any party does not exist or when the opening is closed, must keep the link between every document and the identity of the person or the entity that provided it together with its validation status, and must preserve the full state history of each opening and of each candidacy from origin to closure.
 
 ==== Interface Requirements
 
 The first requirement is that the system must provide a means for a new user identifying as a recruiter to initialize their internal recruiter profile representation. This initialization shall be performed by the recruiter via a structured form presented during the registration process. The form must include fields to capture the shared phenomena of company name, professional email address, and job role. The initialisation process shall include a validation step where a confirmation email is sent to the provided professional email address. The internal profile representation shall not be considered active until this validation is complete.
 
 Secondly, the system must provide a means to update the internal representation of a student's skills when these phenomena change in the domain such as adding new projects. The student shall be able to initiate an update via an edit profile screen. The system shall provide input fields and controls to allow the student to modify their skill set. The internal representation shall be updated immediately upon the student saving the changes.
-The next requirement is that the internal event of a match must be communicated to the involved users to reflect this new shared state in the domain. The system shall present a visual notification to both users immediately upon the match being recorded in the system. This interface must provide a clear indication of who the match is with and shall include a prominent means to initiate communication, thereby enabling the next domain action.
+The next requirement is that the internal event of a Match must be communicated to the involved users to reflect this new shared state in the domain. The system shall present a visual notification to both users immediately upon the Match being recorded in the system. This interface must provide a clear indication of who the Match is with and shall include a prominent means to initiate communication, thereby enabling the next domain action.
 
 The system must provide a means for an authorized recruiter to correct the internal representation of their company's information if it was initially entered incorrectly or becomes outdated. Recruiters shall have access to a company profile management screen. This interface shall allow them to edit fields such as company description and website URL. The system shall log all such changes. The company name field shall be immutable through this interface after the initial validation to ensure traceability. Changes to the company name must be handled by a separate administrative process to maintain data integrity.
 
@@ -1237,17 +1359,17 @@ Future<ProfileCard?> getNextProfile(String userId);
 // Record a swipe action, either Like or Pass
 Future<Result<void>> processSwipe(String userId, String profileId, SwipeDirection direction);
 
-// Determine if a mutual like exists
+// Determine if a mutual Like exists
 Future<Match?> checkForMatch(String userId, String profileId);
 
-// Create a persistent connection once a match occurs
+// Create a persistent connection once a Match occurs
 Future<Connection> createConnection(Match match);
 
-// Exchange a message between two matched users
+// Exchange a message between two Matched users
 Future<Result<Message>> sendMessage(String connectionId, String userId, String content);
 ```
 
-Each function encodes a clear business rule. For example, `processSwipe` ensures that only valid swipe actions are stored, while `checkForMatch` guards the creation of matches until both parties express interest.
+Each function encodes a clear business rule. For example, `processSwipe` ensures that only valid swipe actions are stored, while `checkForMatch` guards the creation of Matches until both parties express interest.
 
 ===== User Interface Complement
 
@@ -1297,7 +1419,7 @@ At the *software architecture* level, the system is divided into three main comp
 
 . *Mobile Frontend (Flutter)* - Handles profile cards, swiping, and messaging.
 . *Application Backend* - Contains the business logic for swiping, matching, and event handling.
-. *Data Layer* - Manages persistence of profiles, swipes, matches, and messages.
+. *Data Layer* - Manages persistence of profiles, swipes, Matches, and messages.
 
 At the *software design* level, these components are realized through service classes and repositories. 
 To ensure scalability and maintainability, the design applies the *SOLID principles*:
@@ -1306,7 +1428,7 @@ To ensure scalability and maintainability, the design applies the *SOLID princip
 Each service has one responsibility:  
 
 * *Deck Service* → Builds personalized decks and presents the next profile card.  
-* *Swipe Service* → Processes swipe gestures and evaluates potential matches.  
+* *Swipe Service* → Processes swipe gestures and evaluates potential Matches.  
 * *Connection Service* → Manages new connections, messaging, and communication channels.  
 * *Profile Service* → Retrieves detailed profile information.  
 * *Session Service* → Handles authentication and user session management.  
@@ -1320,7 +1442,7 @@ Business rules can be extended without modifying existing code.
 ===== 3. Liskov Substitution Principle (LSP)
 Services can be swapped with alternatives that share the same behavior.  
 
-* Different matching strategies (e.g., mutual likes, weighted scoring) can replace one another without breaking the system.  
+* Different matching strategies (e.g., mutual Likes, weighted scoring) can replace one another without breaking the system.  
 * Notification services (push, email, SMS) can be substituted transparently.  
 
 ===== 4. Interface Segregation Principle (ISP)
@@ -1403,7 +1525,7 @@ We systematically reviewed the rough sketch, highlighting recurring themes, term
 
 *Profile*: Résumés, portfolios, and company descriptions are generalized as "profiles", structured representations of actors in the domain. We distinguish between candidate and recruiter profiles.
 
-*Match and Connection*: Mutual interest is abstracted as a "match." If acted upon, this becomes a "connection", a persistent relationship enabling further interaction.
+*Match and Connection*: Mutual interest is abstracted as a "Match." If acted upon, this becomes a "connection", a persistent relationship enabling further interaction.
 
 *Discovery Feed*: Reviewing multiple candidates or companies is generalized as a "discovery feed," the set of profiles available for evaluation.
 
@@ -1418,13 +1540,13 @@ We systematically reviewed the rough sketch, highlighting recurring themes, term
 - The term "candidate" is used broadly to mean any job seeker, regardless of experience.
 - "Recruiter" refers specifically to the human actor representing an employer, not the company itself.
 - "Profile card" is distinguished from "profile" as the interactive, condensed representation used in the discovery process.
-- "Match" is an event, while "connection" is a state that persists after a match.
+- "Match" is an event, while "connection" is a state that persists after a Match.
 
 ==== Relationships and Abstractions
 
 - Candidates build and share their profiles, skills, and qualifications with recruiters.
 - Recruiters evaluate candidates based on these profiles, often within the context of an event.
-- When mutual interest is signaled, a match is formed, which can become a connection.
+- When mutual interest is signaled, a Match is formed, which can become a connection.
 - Connections enable further actions, such as messaging or scheduling interviews.
 - Events provide the environment where many of these interactions are initiated.
 - Record keeping and note taking support making decisions and memory throughout the process.
@@ -1787,78 +1909,142 @@ Indeed for Employers. (2024, November 4). 6 texting and chatting rules with cand
 
 === Isolating the Domain & Expressing Models in Software
 
-==== Minimal vs Enriched UML
+==== #Modeling the Address as a Value Object#
+:author: Carlos J. Pepín Delgado
+
+[NOTE]
+Objective: Apply Section 4.3 (Isolating the Domain & Expressing Models in Software) by refactoring the `StudentProfile` aggregate to include `Address` as an immutable Value Object. This isolates the domain model, enforces invariants at construction, and maintains persistence independence through a repository layer.
+
+===== #Topic Overview#
+Section 4.3 emphasizes modeling the domain in code by identifying **entities**, **value objects**, and **aggregates** that mirror real-world concepts. Entities are defined by identity, while value objects are defined solely by their attributes and must remain immutable. The lecture also introduced factories and repositories as tools to keep domain logic clean and separated from technical infrastructure.
+
+===== #Application in the Project#
+In the Professional Portfolio System, the `StudentProfile` aggregate initially scattered raw address fields (`street`, `city`, `postal_code`, etc.), which led to duplicated logic and weak cohesion. Through knowledge-crunching and discussion, this revealed an *implicit concept* — the Address itself. The team made it explicit as a dedicated `Address` Value Object embedded within the `StudentProfile` aggregate root.
+
+The `StudentProfileRepository` mediates between the domain and Supabase, exposing methods in terms of domain concepts (`getById`, `updateAddress`) rather than SQL statements. This structure follows the Dependency Inversion Principle, allowing the domain to remain pure while infrastructure adapts around it.
+
+===== #Implementation Summary#
+* **Aggregate Definition:** `StudentProfile` acts as the aggregate root, controlling all access and updates to its internal `Address` object.  
+* **Factory Construction:** `Address` uses a factory constructor that validates input and enforces domain rules before instance creation.  
+* **Value Object Semantics:** Two `Address` instances with the same attribute values are equal; all fields are `final`, ensuring immutability.  
+* **Repository Abstraction:** `StudentProfileRepository` translates between database rows and domain models (`_rowToAddress`, `_addressParams`) to maintain separation of concerns.  
+* **Persistence Shape:** Six flat columns were added to `student_profiles` for address data:  
+  `address_line1`, `address_line2`, `address_city`, `address_region`, `address_postal_code`, and `address_country_code`.  
+  A constraint ensures the `country_code` is always a two-letter uppercase ISO-3166 value.  
+
+===== #Invariants and Guards#
+The following invariants must hold within the `Address` Value Object:
+* `line1`, `city`, and `postalCode` cannot be empty.  
+* `countryCode` must match `/^[A-Z]{2}$/`.  
+* All string values are normalized (trimmed, single spaces).  
+* Once created, an `Address` cannot be mutated; changes require a new instance.
+
+Validation occurs at the boundary—user input is verified before `Address` construction to ensure all invariants hold.  
+Profiles may temporarily lack an address (e.g., new user); null updates are intentionally supported to clear address data safely.
+
+===== #Testing & Verification#
+A live Supabase integration test demonstrated:
+. The user authenticated and updated their own `StudentProfile` with a valid `Address`.  
+. The repository persisted and retrieved the same value object correctly.  
+. Null updates safely cleared all address columns.  
+. Row-Level Security (RLS) correctly restricted updates to the profile owner.
+
+All checks passed, confirming domain integrity, immutability, and persistence consistency.
+
+===== #Outcome and Reflection#
+Refactoring `Address` as a Value Object achieved:
+* **Isolation of the Domain:** Address logic resides solely in the model; database details are hidden behind the repository.  
+* **Cohesion and Clarity:** Related primitives unified under one explicit concept.  
+* **Data Integrity:** Invariants enforce correctness at creation time.  
+* **Expressive Model:** Code now mirrors the domain language (“profile has an address”) rather than database fields.  
+
+This task fully embodies the lecture’s intent — expressing the domain through explicit modeling, factories, aggregates, and repositories — showing how theoretical design principles produce a practical, robust implementation.
+
+===== #Traceability to Lecture Concepts#
+[cols="2,4",options="header"]
+|===
+|Lecture Principle |Project Realization
+|Aggregate |`StudentProfile` is the root controlling `Address` updates.
+|Factory |`Address.factory()` enforces invariants before creation.
+|Repository |`StudentProfileRepository` isolates domain from Supabase.
+|Invariants |Validation of non-empty fields and ISO country code.
+|Making Implicit Concepts Explicit |Recognized Address as a hidden concept, now modeled explicitly.
+|===
+
+===== #References#
+* Schütz-Schmuck, Marko. *Isolating the Domain & Expressing Models in Software* (Lecture Notes, Section 4.3).
+
 
 === Life Cycle of Domain Objects
 
 ==== #StudentProfile Life Cycle#
 
-#The `StudentProfile` domain object represents a student within the system. Its lifecycle captures all possible states from creation to permanent deletion, including intermediate states such as active use and temporary archival. Understanding this lifecycle is critical to maintain data integrity, support aggregate consistency, and comply with domain rules.#
+The `StudentProfile` domain object represents a student within the system. Its lifecycle captures all possible states from creation to permanent deletion, including intermediate states such as active use and temporary archival. Understanding this lifecycle is critical to maintain data integrity, support aggregate consistency, and comply with domain rules.
 
-===== Lifecycle States
+===== #Lifecycle States#
 
-* #**Creation**: triggered when a student registers or the system instantiates a profile; initial validation and default values are assigned#  
-  - #event: `StudentRegistered`#  
-  - #outcome: profile moves to **Active** after successful validation#  
+* **Creation**: triggered when a student registers or the system instantiates a profile; initial validation and default values are assigned 
+  - event: `StudentRegistered`
+  - outcome: profile moves to **Active** after successful validation 
 
-* #**Active**: default operational state of the profile; student can update personal information, add experiences, adjust visibility; interacts with other aggregates (e.g., enrollments, submissions)#  
-  - #events: `ProfileUpdated`, `ExperienceAdded`, `VisibilityChanged`#  
+* **Active**: default operational state of the profile; student can update personal information, add experiences, adjust visibility; interacts with other aggregates (e.g., enrollments, submissions) 
+  - events: `ProfileUpdated`, `ExperienceAdded`, `VisibilityChanged` 
 
-* #**Archived**: temporary deactivation due to inactivity, graduation, or administrative action#  
-  - #profile becomes read-only#  
-  - #guard: only profiles meeting archival criteria can be archived#  
-  - #event: `ProfileArchived`#  
-  - #reactivation: `ProfileReactivated` moves profile back to **Active**#  
+* **Archived**: temporary deactivation due to inactivity, graduation, or administrative action  
+  - profile becomes read-only
+  - guard: only profiles meeting archival criteria can be archived 
+  - event: `ProfileArchived` 
+  - reactivation: `ProfileReactivated` moves profile back to **Active**
 
-* #**Deletion**: permanent removal from the system; ensures compliance and data integrity; may cascade to related aggregates (enrollments, submissions)#  
-  - #guard: only authorized or archived profiles may be deleted#  
-  - #event: `ProfileDeleted`#  
+* **Deletion**: permanent removal from the system; ensures compliance and data integrity; may cascade to related aggregates (enrollments, submissions)  
+  - guard: only authorized or archived profiles may be deleted  
+  - event: `ProfileDeleted`  
 
-===== State Transitions
+===== #State Transitions#
 
-#Transitions are implied within the state descriptions and governed by events and guard conditions. Explicit state changes include:#  
+Transitions are implied within the state descriptions and governed by events and guard conditions. Explicit state changes include:  
 
-- #Creation → Active: triggered by `StudentRegistered` and validation#  
-- #Active → Archived: triggered by `ProfileArchived` when archival criteria are met#  
-- #Archived → Active: triggered by `ProfileReactivated`#  
-- #Active/Archived → Deletion: triggered by `ProfileDeleted` when authorized#  
+- Creation → Active: triggered by `StudentRegistered` and validation  
+- Active → Archived: triggered by `ProfileArchived` when archival criteria are met
+- Archived → Active: triggered by `ProfileReactivated`
+- Active/Archived → Deletion: triggered by `ProfileDeleted` when authorized  
 
 image::..\Images\StudentProfile.png[StudentProfile Lifecycle Diagram]
 
-===== Aggregate Deletion Rules
+===== #Aggregate Deletion Rules#
 
-#The deletion of a `StudentProfile` must adhere to strict rules to maintain **aggregate consistency**, ensure **data integrity**, and comply with **domain policies**. The following rules apply:#
+The deletion of a `StudentProfile` must adhere to strict rules to maintain **aggregate consistency**, ensure **data integrity**, and comply with **domain policies**. The following rules apply:
 
-* #**Authorization Requirement**#  
-  - #A profile can only be deleted if it is either archived or explicitly authorized for deletion by an administrator.#  
-  - #Active profiles cannot be deleted without explicit authorization.#  
+* **Authorization Requirement**  
+  - A profile can only be deleted if it is either archived or explicitly authorized for deletion by an administrator.  
+  - Active profiles cannot be deleted without explicit authorization.
 
-* #**Cascading Deletions**#  
-  - #Deleting a `StudentProfile` may require cascading deletion or modification of related aggregates:#  
-    - #**Enrollments:** Any active or historical enrollments linked to the student must be removed or anonymized.#  
-    - #**Submissions/Assignments:** Student submissions may need to be archived, anonymized, or deleted according to retention policies.#  
-    - #**Notifications/Logs:** Events related to the profile should remain in the audit trail but must be decoupled from personally identifiable information.#  
+* **Cascading Deletions** 
+  - Deleting a `StudentProfile` may require cascading deletion or modification of related aggregates:
+    - **Enrollments:** Any active or historical enrollments linked to the student must be removed or anonymized.  
+    - **Submissions/Assignments:** Student submissions may need to be archived, anonymized, or deleted according to retention policies.
+    - **Notifications/Logs:** Events related to the profile should remain in the audit trail but must be decoupled from personally identifiable information. 
 
-* #**Validation Checks**#  
-  - #Before deletion, the system must validate:#  
-    *** #That no critical dependencies remain in other aggregates (e.g., group projects, team memberships).#  
-    *** #That deletion will not violate invariants of related domain objects.#  
+* **Validation Checks** 
+  - Before deletion, the system must validate:  
+    *** That no critical dependencies remain in other aggregates (e.g., group projects, team memberships).
+    *** That deletion will not violate invariants of related domain objects.
 
-* #**Compliance and Audit**#  
-  - #All deletion events must be logged with timestamp, actor, and reason for deletion.#  
-  - #Logs must be immutable and stored according to institutional compliance requirements.#  
-  - #This ensures traceability and supports future audits or investigations.#  
+* **Compliance and Audit**
+  - All deletion events must be logged with timestamp, actor, and reason for deletion.
+  - Logs must be immutable and stored according to institutional compliance requirements.
+  - This ensures traceability and supports future audits or investigations.
 
-* #**Reversibility**#  
-  - #Once deletion is executed, it is permanent.#  
-  - #If recovery is required, it must rely on backups or archived snapshots, not the active database.#  
+* **Reversibility**  
+  - Once deletion is executed, it is permanent.  
+  - If recovery is required, it must rely on backups or archived snapshots, not the active database.  
 
-* #**Notification**#  
-  - #Dependent aggregates or stakeholders (e.g., course instructors, admin systems) may receive notifications when a profile is deleted, ensuring all systems maintain consistent state.#  
+* **Notification**  
+  - Dependent aggregates or stakeholders (e.g., course instructors, admin systems) may receive notifications when a profile is deleted, ensuring all systems maintain consistent state. 
 
-* #**Guard Clauses**#  
-  - #Deletion is prevented if any of the above rules are violated.#  
-  - #Only profiles satisfying all deletion conditions are allowed to transition into the `Deletion` state.#
+* **Guard Clauses**
+  - Deletion is prevented if any of the above rules are violated. 
+  - Only profiles satisfying all deletion conditions are allowed to transition into the `Deletion` state.
 
 
 === Using the Language
@@ -1891,7 +2077,19 @@ image::..\Images\StudentProfile.png[StudentProfile Lifecycle Diagram]
 
 | Heribiell A. Rodríguez Cruz
 | 2.1.2, 2.2.2
+| Modified
+
+| Heribiell A. Rodríguez Cruz
+| 2.1.2, 2.2.2
 | Modified, Added
+
+| Pedro Rodriguez Velez
+| 1.6
+| Modified, Added
+
+| Carlos J. Pepín Delgado
+| 4.3.1
+| Added
 
 
 |===
