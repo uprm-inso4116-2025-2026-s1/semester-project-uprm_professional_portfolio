@@ -2071,10 +2071,6 @@ The deletion of a `StudentProfile` must adhere to strict rules to maintain **agg
 
 | Heribiell A. Rodríguez Cruz
 | 2.1.2, 2.2.2
-| Modified
-
-| Heribiell A. Rodríguez Cruz
-| 2.1.2, 2.2.2
 | Modified, Added
 
 | Pedro Rodriguez Velez
