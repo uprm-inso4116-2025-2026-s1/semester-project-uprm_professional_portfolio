@@ -3001,8 +3001,8 @@ This Discovery Journal records key domain insights and refactors that, during de
 | Name | Section | Added/Modified
 
 | Jean P. I. Sanchez
-| 5., 4.4.1.
-| Added
+| 5., 4.4.1., 3.2.1.
+| Added, Modified
 
 | Kiara N. Perez
 | 1.3.2, 4.3, 2.1.2
@@ -3010,7 +3010,7 @@ This Discovery Journal records key domain insights and refactors that, during de
 
 | Alexa M. Zaragoza
 | 4.2.1, 2.2.1, 2.1.4, 4.6.1
-| Added, Modified, Modified.
+| Added, Modified
 
 | Heribiell A. Rodríguez Cruz
 | 2.1.2, 2.2.2
