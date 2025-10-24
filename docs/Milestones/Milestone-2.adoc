@@ -1697,74 +1697,185 @@ The personas below represent our core user segments and ground the scope of this
 
 ==== Domain Requirements
 
-The system must uniquely identify every candidate, every recruiter, every employer, and every event organizer, while distinguishing natural persons from institutional profiles when the entity is a company or an organizer, and it must record the role performed by each entity in every interaction together with the time and the context of that role. The system must represent every opening with explicit requirements including minimum experience, qualifications, certifications, languages, legal authorizations, work modality, location, compensation range, and start date, must record the number of positions available for each opening, must link every opening to its responsible employer, and must allow requirement updates while preserving a complete history of changes. The system must represent each candidate profile with education, work history, competencies, certifications, portfolios, and verifiable references, must allow attaching documents to the profile preserving issue date, validity, and verification status, and must record candidate preferences such as areas of interest, desired location, and work modality. The system must represent recruiting events with name, organizer, venue, agenda, date, and capacity, must represent company booths or tables within each event and their relation to the promoted openings, must register attendance and arrival of candidates and recruiters, and must enforce registration rules and capacity limits defined by the organizer. The system must model queues in front of booths or tables preserving a first come first served order, must allow limiting the duration of each turn, must register the closure of each turn by staff, and must prevent assigning turns that exceed the declared capacity of a booth or of a time block. The system must allow candidates and recruiters to express interest in openings or in profiles and must record when the expression is reciprocal, must create a Match when both sides express positive interest and must preserve the date and the context of that event, must allow recruiters to define shortlisting criteria based on requirements and evidence and must register the decision with its justification, and must allow candidates to withdraw their interest and update any pending Matches. The system must represent availability of candidates and recruiters through calendars and time blocks, must schedule interviews only on valid Matches, must prevent double booking of the same block, and must register interview outcomes with clear states such as continues in process, rejected, or offer extended together with the date and the responsible party. The system must allow message exchanges between candidate and recruiter only when there is a valid Match or an explicit permission from the candidate, must register candidate consent for sharing information with an employer or with an organizer, and must allow revocation of that consent. The system must compute and display the degree of requirement fulfillment for each candidate with categories such as meets, partially meets, or does not meet, must prevent practices that alter queue order without a rule defined by the event such as priority for confirmed appointments, and must keep an auditable record of shortlisting and rejection decisions together with their criteria. The system must notify candidates and recruiters when a Match is created, when an interview is confirmed, and when changes to opening requirements affect eligibility, and it must notify candidates about recruiting events related to employers or openings in which they have shown interest. The system must record domain metrics such as Match rate, queue waiting time, average turn duration, follow up rate after Matches, and event attendance, and it must support funnel analysis from expression of interest to offer extended in order to identify bottlenecks. The system must prevent the creation of Matches when any party does not exist or when the opening is closed, must keep the link between every document and the identity of the person or the entity that provided it together with its validation status, and must preserve the full state history of each opening and of each candidacy from origin to closure.
+#The domain requirements are the fundamental rules and constraints of the problem space, independent of the software implementation.#
+
+[cols="1,4,2,2", options="header"] 
+|=== 
+| #ID# | #Description# | #Linked User Stories/Epics# | #Verification Tests#
+
+| #DR001# | #The system must uniquely identify every candidate, recruiter, employer, and event organizer, distinguishing natural persons from institutional profiles.# | #US-Auth-001: Register as Candidate, US-Auth-002: Register as Recruiter# | #T-DB-001, T-API-001#
+
+| #DR002# | #The system must record the role performed by each entity in every interaction, along with the time and context of that role.# | #US-Interaction-001: Express Interest, US-Interaction-002: Create Match# | #T-Log-001, T-DB-002#
+
+| #DR003# | #The system must represent every opening with explicit requirements (min. experience, qualifications, certifications, languages, legal authorizations, work modality, location, compensation range, and start date).# | #Epic-JobMgmt# | #T-API-002, T-UI-001#
+
+| #DR004# | #The system must record the number of positions available for each opening and link every opening to its responsible employer.# | #US-Recruiter-001: Post New Opening# | #T-DB-003, T-API-003#
+
+| #DR005# | #The system must allow requirement updates for an opening while preserving a complete history of changes.# | #US-Recruiter-002: Update Opening# | #T-Audit-001#
+
+| #DR006# | #The system must represent each candidate profile with education, work history, competencies, certifications, portfolios, and verifiable references.# | #Epic-ProfileMgmt# | #T-DB-004#
+
+| #DR007# | #The system must allow attaching documents to the profile, preserving issue date, validity, and verification status.# | #US-Candidate-001: Upload Resume# | #T-File-001#
+
+| #DR008# | #The system must record candidate preferences such as areas of interest, desired location, and work modality.# | #US-Candidate-002: Set Preferences# | #T-DB-005#
+
+| #DR009# | #The system must represent recruiting events with name, organizer, venue, agenda, date, and capacity, and represent company booths/tables.# | #Epic-EventMgmt# | #T-DB-006, T-API-004#
+
+| #DR010# | #The system must register attendance and arrival of candidates and recruiters, and enforce registration rules and capacity limits.# | #US-Event-001: Check-in at Event# | #T-Event-001, T-API-005#
+
+| #DR011# | #The system must model queues in front of booths/tables preserving a first-come, first-served order.# | #Epic-QueueMgmt# | #T-Queue-001#
+
+| #DR012# | #The system must allow limiting the duration of each turn, register the closure of each turn, and prevent assigning turns that exceed declared capacity.# | #US-Event-002: Manage Queue# | #T-Queue-002#
+
+| #DR013# | #The system must allow candidates and recruiters to express interest in openings or profiles and record reciprocal expressions.# | #US-Interaction-001: Express Interest# | #T-API-006#
+
+| #DR014# | #The system must create a Match when both sides express positive interest, preserving the date and context of that event.# | #US-Interaction-002: Create Match# | #T-Match-001#
+
+| #DR015# | #The system must allow recruiters to define shortlisting criteria and register the decision with its justification.# | #US-Recruiter-003: Shortlist Candidate# | #T-API-007#
+
+| #DR016# | #The system must allow candidates to withdraw their interest and update any pending Matches.# | #US-Candidate-003: Withdraw Interest# | #T-Match-002#
+
+| #DR017# | #The system must represent availability of candidates and recruiters through calendars and time blocks.# | #Epic-Scheduling# | #T-DB-007#
+
+| #DR018# | #The system must schedule interviews only on valid Matches, prevent double booking, and register interview outcomes with clear states (continues, rejected, offer extended) and date/responsible party.# | #US-Scheduling-001: Book Interview# | #T-Schedule-001#
+
+| #DR019# | #The system must allow message exchanges between candidate and recruiter only when there is a valid Match or explicit candidate permission.# | #US-Communication-001: Send Message# | #T-Comm-001#
+
+| #DR020# | #The system must register candidate consent for sharing information with an employer or organizer and allow revocation of that consent.# | #US-Candidate-004: Manage Consent# | #T-DB-008#
+
+| #DR021# | #The system must compute and display the degree of requirement fulfillment for each candidate (meets, partially meets, does not meet).# | #US-Recruiter-004: View Match Score# | #T-Algo-001#
+
+| #DR022# | #The system must prevent practices that alter queue order without a rule defined by the event (e.g., priority for confirmed appointments).# | #T-Queue-003, T-Security-001#
+
+| #DR023# | #The system must keep an auditable record of shortlisting and rejection decisions, together with their criteria.# | #T-Audit-002#
+
+| #DR024# | #The system must notify candidates and recruiters when a Match is created, an interview is confirmed, or when changes to opening requirements affect eligibility.# | #US-Notification-001# | #T-Notif-001#
+
+| #DR025# | #The system must notify candidates about recruiting events related to employers or openings in which they have shown interest.# | #US-Notification-002# | #T-Notif-002#
+
+| #DR026# | #The system must record domain metrics (Match rate, queue waiting time, average turn duration, follow-up rate, event attendance) and support funnel analysis from expression of interest to offer extended.# | #Epic-Reporting# | #T-Metric-001#
+
+| #DR027# | #The system must prevent the creation of Matches when any party does not exist or when the opening is closed.# | #T-API-008, T-Security-002#
+
+| #DR028# | #The system must keep the link between every document and the identity of the person/entity that provided it, together with its validation status.# | #T-File-002#
+
+| #DR029# | #The system must preserve the full state history of each opening and each candidacy from origin to closure.# | #T-Audit-003# 
+|===
+
+[line-through]#The system must uniquely identify every candidate, every recruiter, every employer, and every event organizer, while distinguishing natural persons from institutional profiles when the entity is a company or an organizer, and it must record the role performed by each entity in every interaction together with the time and the context of that role. The system must represent every opening with explicit requirements including minimum experience, qualifications, certifications, languages, legal authorizations, work modality, location, compensation range, and start date, must record the number of positions available for each opening, must link every opening to its responsible employer, and must allow requirement updates while preserving a complete history of changes. The system must represent each candidate profile with education, work history, competencies, certifications, portfolios, and verifiable references, must allow attaching documents to the profile preserving issue date, validity, and verification status, and must record candidate preferences such as areas of interest, desired location, and work modality. The system must represent recruiting events with name, organizer, venue, agenda, date, and capacity, must represent company booths or tables within each event and their relation to the promoted openings, must register attendance and arrival of candidates and recruiters, and must enforce registration rules and capacity limits defined by the organizer. The system must model queues in front of booths or tables preserving a first come first served order, must allow limiting the duration of each turn, must register the closure of each turn by staff, and must prevent assigning turns that exceed the declared capacity of a booth or of a time block. The system must allow candidates and recruiters to express interest in openings or in profiles and must record when the expression is reciprocal, must create a Match when both sides express positive interest and must preserve the date and the context of that event, must allow recruiters to define shortlisting criteria based on requirements and evidence and must register the decision with its justification, and must allow candidates to withdraw their interest and update any pending Matches. The system must represent availability of candidates and recruiters through calendars and time blocks, must schedule interviews only on valid Matches, must prevent double booking of the same block, and must register interview outcomes with clear states such as continues in process, rejected, or offer extended together with the date and the responsible party. The system must allow message exchanges between candidate and recruiter only when there is a valid Match or an explicit permission from the candidate, must register candidate consent for sharing information with an employer or with an organizer, and must allow revocation of that consent. The system must compute and display the degree of requirement fulfillment for each candidate with categories such as meets, partially meets, or does not meet, must prevent practices that alter queue order without a rule defined by the event such as priority for confirmed appointments, and must keep an auditable record of shortlisting and rejection decisions together with their criteria. The system must notify candidates and recruiters when a Match is created, when an interview is confirmed, and when changes to opening requirements affect eligibility, and it must notify candidates about recruiting events related to employers or openings in which they have shown interest. The system must record domain metrics such as Match rate, queue waiting time, average turn duration, follow up rate after Matches, and event attendance, and it must support funnel analysis from expression of interest to offer extended in order to identify bottlenecks. The system must prevent the creation of Matches when any party does not exist or when the opening is closed, must keep the link between every document and the identity of the person or the entity that provided it together with its validation status, and must preserve the full state history of each opening and of each candidacy from origin to closure.#
 
 ==== Interface Requirements
 
-The first requirement is that the system must provide a means for a new user identifying as a recruiter to initialize their internal recruiter profile representation. This initialization shall be performed by the recruiter via a structured form presented during the registration process. The form must include fields to capture the shared phenomena of company name, professional email address, and job role. The initialisation process shall include a validation step where a confirmation email is sent to the provided professional email address. The internal profile representation shall not be considered active until this validation is complete.
+#Interface requirements specify the user-facing aspects of the system.#
 
+[cols="1,4,2,2", options="header"] 
+|=== 
+| #ID# | #Description# | #Linked User Stories/Epics# | #Verification Tests#
+
+| #IR001# | #The system must provide a structured form during registration for new recruiters to initialize their profile (capturing company name, professional email, and job role).# | #US-Auth-002: Register as Recruiter# | #T-UI-010, T-FE-001#
+
+| #IR002# | #The initialization process must include a validation step where a confirmation email is sent, and the internal profile must not be active until validation is complete.# | #T-BE-001, T-Email-001#
+
+| #IR003# | #The system must provide an edit profile screen for students to update their skills/competencies (e.g., adding new projects).# | #US-Candidate-005: Update Skills# | #T-UI-011#
+
+| #IR004# | #The internal skill representation must be updated immediately upon the student saving the changes.# | #T-BE-002#
+
+| #IR005# | #The system must present a visual notification to both users immediately upon a Match being recorded.# | #US-Notification-001# | #T-UI-012, T-Notif-003#
+
+| #IR006# | #The Match notification interface must clearly indicate who the Match is with and include a prominent means to initiate communication.# | #T-UI-013#
+
+| #IR007# | #The system must provide a company profile management screen for authorized recruiters to correct company information (e.g., description, website URL).# | #US-Recruiter-005: Update Company Info# | #T-UI-014#
+
+| #IR008# | #The system must log all changes made via the company profile management screen.# | #T-Log-002#
+
+| #IR009# | #The company name field shall be immutable through the company profile management screen after initial validation; changes must be handled by a separate administrative process.# | #T-FE-002, T-Security-003#
+
+| #IR010# | #The system must update the internal state immediately to reflect a user's swipe action on a profile card (recording the decision and removing the card). No explicit save/confirm action is required.# | #US-Interaction-001: Express Interest# | #T-FE-003# 
+|===
+
+
+[line-through]#The first requirement is that the system must provide a means for a new user identifying as a recruiter to initialize their internal recruiter profile representation. This initialization shall be performed by the recruiter via a structured form presented during the registration process. The form must include fields to capture the shared phenomena of company name, professional email address, and job role. The initialisation process shall include a validation step where a confirmation email is sent to the provided professional email address. The internal profile representation shall not be considered active until this validation is complete.
 Secondly, the system must provide a means to update the internal representation of a student's skills when these phenomena change in the domain such as adding new projects. The student shall be able to initiate an update via an edit profile screen. The system shall provide input fields and controls to allow the student to modify their skill set. The internal representation shall be updated immediately upon the student saving the changes.
 The next requirement is that the internal event of a Match must be communicated to the involved users to reflect this new shared state in the domain. The system shall present a visual notification to both users immediately upon the Match being recorded in the system. This interface must provide a clear indication of who the Match is with and shall include a prominent means to initiate communication, thereby enabling the next domain action.
-
 The system must provide a means for an authorized recruiter to correct the internal representation of their company's information if it was initially entered incorrectly or becomes outdated. Recruiters shall have access to a company profile management screen. This interface shall allow them to edit fields such as company description and website URL. The system shall log all such changes. The company name field shall be immutable through this interface after the initial validation to ensure traceability. Changes to the company name must be handled by a separate administrative process to maintain data integrity.
-
-Lastly, the internal system state must be updated to reflect a user's swipe action on a profile card. The user's gesture shall be the sole initiating action. The system shall immediately update the internal state to record this decision and remove the presented profile card from the user's current deck. No explicit save or confirm action is required; the gesture itself is the interface event.
+Lastly, the internal system state must be updated to reflect a user's swipe action on a profile card. The user's gesture shall be the sole initiating action. The system shall immediately update the internal state to record this decision and remove the presented profile card from the user's current deck. No explicit save or confirm action is required; the gesture itself is the interface event.#
 
 
 ==== Machine Requirements
 
-This section specifies the hardware, software, and environmental requirements to develop, test, and deploy the Professional Portfolio application. These requirements are tailored to the technologies chosen for the project: Flutter/Dart for the mobile frontend, cloud services (Firebase, AWS, or Azure) for backend support, and SQLite for local storage.
+#Machine requirements specify the hardware, software, and environment needed for development, testing, and deployment.#
 
+[cols="1,4,2,2", options="header"] 
+|=== 
+| #ID# | #Description# | #Linked User Stories/Epics# | #Verification Tests#
+
+| #MR001# | #Developer Workstations must meet a minimum specification of Dual-core processor (Intel i5/AMD equivalent), 8 GB RAM, and 256 GB SSD.# | #Epic-DevSetup# | #T-Env-001#
+
+| #MR002# | #Mobile Devices for Testing must include Android devices running Android 10.0+ with at least 3 GB RAM and iOS devices running iOS 15+ (e.g., iPhone 11 or newer).# | #Epic-Testing# | #T-Env-002#
+
+| #MR003# | #Servers / Cloud Hosting must meet a minimum specification of 2 vCPUs, 4 GB RAM, and 50 GB storage.# | #Epic-Deployment# | #T-Env-003#
+
+| #MR004# | #The Flutter SDK (latest stable release) and Dart SDK (bundled with Flutter) must be used for development.# | #T-Tool-001#
+
+| #MR005# | #Android Studio and Xcode must be used for builds and emulators/simulators.# | #T-Tool-002#
+
+| #MR006# | #Git and GitHub must be used for version control and collaboration.# | #T-Tool-003#
+
+| #MR007# | #SQLite must be used for local offline storage.# | #T-DB-009#
+
+| #MR008# | #Firebase, AWS, or Azure must be used for authentication, notifications, and backend integration.# | #T-API-009#
+
+| #MR009# | #Developer machines must run Windows 10/11 or macOS Monterey+.# | #T-Env-004#
+
+| #MR010# | #The application must be deployed to targets running Android 10+ and iOS 15+.# | #T-Env-005#
+
+| #MR011# | #A stable broadband connection (≥10 Mbps) must be available for syncing and testing cloud services.# | #T-Env-006#
+
+| #MR012# | #All client-server communication must use HTTPS.# | #T-Security-004#
+
+| #MR013# | #Developers must test on both Android and iOS environments.# | #T-Test-001#
+
+| #MR014# | #The application must comply with Google Play Store and Apple App Store distribution guidelines.# | #T-Compliance-001# 
+|===
+
+[line-through]#This section specifies the hardware, software, and environmental requirements to develop, test, and deploy the Professional Portfolio application. These requirements are tailored to the technologies chosen for the project: Flutter/Dart for the mobile frontend, cloud services (Firebase, AWS, or Azure) for backend support, and SQLite for local storage.
 **Hardware Requirements**
-
 *Developer Workstations*  
   - Minimum: Dual-core processor (Intel i5/AMD equivalent), 8 GB RAM, 256 GB SSD.  
   - Recommended: Quad-core processor, 16 GB RAM, 512 GB SSD.  
-
 *Mobile Devices for Testing*  
   - Android: Devices running Android 10.0+ with at least 3 GB RAM.  
   - iOS: Devices running iOS 15+ (e.g., iPhone 11 or newer).  
-
 *Servers / Cloud Hosting*  
   - Minimum: 2 vCPUs, 4 GB RAM, 50 GB storage.  
   - Recommended: 4 vCPUs, 8 GB RAM, 100 GB storage with autoscaling enabled on cloud platforms.
-
 **Software Requirements**
-
 *Development Tools*  
   - Flutter SDK (latest stable release).  
   - Dart SDK (bundled with Flutter).  
   - Android Studio for Android builds and emulators.  
   - Xcode for iOS builds and testing.  
   - Git and GitHub for version control and collaboration.  
-
 *Programming Environment*  
   - Dart as the primary programming language.  
   - Flutter framework for cross-platform UI and logic.  
   - Emulator/simulator tools for Android and iOS.  
-
 *Database and Services*  
   - SQLite for local offline storage.  
   - Firebase, AWS, or Azure for authentication, notifications, and backend integration.
-
 **Environmental Requirements**
-
 *Operating Systems*  
   - Developer machines: Windows 10/11 or macOS Monterey+.  
   - Deployment targets: Android 10+ and iOS 15+.  
-
 *Network*  
   - Stable broadband connection (≥10 Mbps) for syncing repositories, package downloads, and testing cloud-based services.  
   - All client-server communication must use HTTPS.  
-
 *Other Constraints*  
   - Developers must test on both Android and iOS environments.  
   - Compliance with Google Play Store and Apple App Store distribution guidelines.  
   - External dependencies must be compatible with the current Flutter LTS release.  
-
 **Rationale and Validation**
-
-The requirements ensure that all contributors can work effectively while keeping compatibility with the targeted platforms. Minimum specifications guarantee accessibility across the team, while recommended specifications support smoother emulator performance and integration with cloud services. Each requirement is measurable (e.g., OS versions, RAM, network speed) and traceable to the technologies already adopted by the project.
+The requirements ensure that all contributors can work effectively while keeping compatibility with the targeted platforms. Minimum specifications guarantee accessibility across the team, while recommended specifications support smoother emulator performance and integration with cloud services. Each requirement is measurable (e.g., OS versions, RAM, network speed) and traceable to the technologies already adopted by the project.#
 
 
 === Implementation
