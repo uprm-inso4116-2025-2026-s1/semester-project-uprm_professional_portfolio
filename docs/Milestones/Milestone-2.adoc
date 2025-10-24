@@ -491,7 +491,95 @@ This narrative ties the abstract model to observable work. The multiplicities cl
 
 ==== Events, Actions, and Behaviors
 
+[.line-through]
+
 ===== Events
+
+[%autowidth.stretch,options="header"]
+|===
+|Event |Who/What triggers it |Immediate responses |Expected outcome/postcondition |Anchor to Sketch
+
+|Recruiting event announced or openings published
+|Recruiter, University, or Organizer
+|Recruiter defines roles and requirements; the organizer or university disseminates the information
+|Candidates learn about opportunities and plan attendance or apply online
+|Job fairs; desire to pre-screen before the fair
+
+|Arrival and check-in at the event such as a campus fair, industry fair, or meetup
+|Candidate or Student
+|Candidate registers and receives the map and agenda
+|Candidate is able to approach booths and tables
+|Fairs are loud, crowded, and chaotic
+
+|Queue formed in front of a booth or table
+|Candidates
+|Candidate waits; staff organizes the line
+|Long wait times and very short turns
+|Reports of waiting up to forty minutes
+
+|Brief booth interaction / quick pitch
+|Candidate and Recruiter
+|Candidate delivers a 30 to 60 second elevator pitch; recruiter asks quick questions
+|Initial and superficial evaluation
+|Interactions resemble speed dating and create stress on both sides
+
+|Resume or portfolio handoff, physical or digital
+|Candidate
+|Candidate hands over the résumé or portfolio; recruiter receives and sorts it
+|The document enters a pile or list and may lose visibility
+|Concern that résumés are not actually reviewed
+
+|Recruiter note taking
+|Recruiter
+|Recruiter records short notes and tags on paper or in a spreadsheet, for example: has Python; not ready
+|Notes are linked to the contact for later review
+|Many recruiters rely on spreadsheets for quick notes
+
+|Informal hallway or meetup conversation
+|Candidate and Recruiter
+|They meet away from the booth and talk informally
+|May create a lead or opportunity
+|Informal conversations sometimes lead to opportunities
+
+|Application submitted through multiple portals or via referral
+|Candidate
+|Candidate applies through Handshake, LinkedIn, the company website, or by referral
+|Parallel entries for the same profile
+|Uncertainty about whether multichannel applications are reviewed
+
+|Pre-screen or quick sift
+|Recruiter or System
+|Recruiter uses heuristics such as year, visible skills, and seniority; the system applies rules
+|Candidate is marked preliminarily eligible or ruled out by a documented rule
+|Preference for quick identification of fit and targeting juniors or seniors
+
+|Delayed invitation or follow up
+|Recruiter
+|Recruiter contacts candidates weeks later
+|Some candidates are no longer available or interested
+|Late outreach leads to loss of interest
+
+|Decision to stop sourcing
+|Recruiter
+|Recruiter stops the search when the first batch looks good
+|The window for new applicants narrows
+|Search ends once early candidates meet expectations
+
+|Rehire of known talent such as former interns
+|Recruiter
+|Recruiter prioritizes known profiles
+|Faster hiring due to a trust factor
+|Rehiring former interns is common
+
+|Swag or promotional material handed out
+|Recruiter
+|Recruiter distributes swag
+|Improves employer brand recall
+|Candidates often remember the company by the swag
+|===
+---
+
+===== #Events#
 
 .Recruiting event announced or openings published
 * **Triggered by:** Recruiter, University, or Organizer +
@@ -575,46 +663,99 @@ This narrative ties the abstract model to observable work. The multiplicities cl
 
 ===== Actions
 
+[.line-through]
+*Candidate.*  
+Before showing up, the candidate tunes the résumé and, if applicable, the professional portfolio to the role and researches the company. When it is their turn, they deliver a brief elevator pitch, hand over a résumé, and ask specific questions. In parallel, they submit applications through one or more platforms and keep a courteous follow up thread by email or LinkedIn. If responses stall or plans change, they may withdraw or pause the application.
+
 *Recruiter* +  
+[.underline] 
 Recruiters define roles and specify requirements, publish openings, and schedule participation in recruiting events. They post and update job details across platforms such as Handshake, LinkedIn, or internal company sites. During and after events, they record short observations about candidates and apply prescreening heuristics based on visible skills, year, or seniority. Recruiters also send invitations to interview, issue follow-up messages, and decide whether to pause or stop active sourcing once a satisfactory pool has been reached.
 
 *System/Institution* +  
+[.underline] 
 Institutions and systems announce recruiting events, register candidate check-ins, and collect and store application records. They perform deduplication of multichannel entries, apply automated prescreening filters, and maintain versioning for traceability and compliance.
 
 *Third parties* +  
+[.underline] 
 Third-party actors such as referees or background-check providers submit references, return verification results, and confirm candidate details.
 
 ---
 
 ===== Behaviors
 
-.**Candidate engagement and application behavior**
+[.line-through]
+*In person recruiting flow.*  
+The process moves from announcement to attendance, then queuing, a brief conversation at the booth, and follow up. Noise, crowding, and time pressure push interactions toward quick impressions and coarse screening. Soft skills are hard to judge in under a minute.
+
+.**#Candidate engagement and application behavior#**
 This behavior encompasses the end-to-end process through which a candidate interacts with the recruiting process. It begins when the recruiting event is announced and the candidate adjusts their resume and portfolio to match desired roles (action). Upon arrival, the candidate checks in (event) and approaches booths to deliver a brief introduction (action). They hand over a resume (event) and often follow up by submitting applications through multiple portals (action). After the event, they may send follow-up messages or withdraw applications (action). These linked steps form a behavioral arc that involves preparation, event participation, and post-event actions. +  
 *Reference to Sketch:* Students prepare portfolios, deliver pitches, hand over resumes, and apply across multiple systems. +
 
+[.line-through]
+*Fast screening and prioritization.*  
+To manage volume, recruiters rely on simple heuristics such as year, visible skills, and seniority, as well as rule based filters. Throughput improves, but the risk of overlooking strong profiles increases.
+
+[.underline]
 .**Recruiter sourcing and screening behavior**
 This behavior represents how recruiters identify, evaluate, and narrow candidates. It starts when a recruiter defines a role and publishes an opening (action), triggering the recruiting event (event). Recruiters then attend, solicit introductions (action), and record notes (action) immediately after brief exchanges (event). They apply prescreen heuristics to sort through candidates (action) and may eventually decide to stop sourcing (action/event). + 
 *Reference to Sketch:* Recruiters rely on heuristics, jot notes on spreadsheets, and often end sourcing once a candidate seems sufficient. +
 
+[.line-through]
+*Multichannel applications and unclear status.*  
+Candidates often apply through several portals and by referral. Without a single source of truth, duplicate records and uncertain statuses appear, which confuses both sides and slows review.
+
+[.underline]
 .**Multichannel application handling and consolidation**
 This behavior involves the candidate’s repeated submissions across different systems and the institution’s attempts to merge those inputs. A candidate submits multiple applications through various portals (event/action). The system removes the duplicates of these entries (action) and links records for traceability (action), often applying prescreening automatically (event). +   
 *Reference to Sketch:* Candidates apply via Handshake, LinkedIn, and company sites, causing redundant records and recruiter uncertainty. +
 
+[.line-through]
+*Stopping after the first promising group.*  
+When the initial cohort seems sufficient, active sourcing pauses. The window for new applicants narrows and the range of options can shrink.
+
+[.line-through]
+*Communication delay and attrition.*  
+If outreach arrives weeks after the first contact, interest declines and other processes advance. Early signals and timely touchpoints reduce drop off.
+
+[.underline]
 .**Communication delay leading to attrition**
 This behavior captures what happens when outreach is delayed. Recruiters queue candidates for later contact (action), resulting in delayed invitations or follow-ups (event). Once contacted, some candidates withdraw or accept other offers (event/action). +    
 *Reference to Sketch:* Recruiters contact students weeks later, by which time many are unavailable. +
 
+[.line-through]
+*Uneven candidate preparation.*  
+Some arrive with generic résumés or limited knowledge of the company, while others attend mainly to practice and build confidence. The level of preparation shapes the quality of the pitch and the impression left.
+
+[.line-through]
+*Informal networking that converts well.*  
+Unplanned conversations away from the booth allow calmer and more genuine exchanges that sometimes outperform the formal interaction.
+
+[.underline]
 .**Informal networking conversion behavior**
 This behavior occurs when informal, unplanned exchanges result in hiring outcomes. An informal hallway conversation happens (event), followed by a recruiter or candidate initiating a focused follow-up (action) and logging or scheduling an interview (action). +    
 *Reference to Sketch:* Informal conversations often produce stronger opportunities than planned booth exchanges. +
 
-.**Brand recall and reengagement through giveaways**
-This behavior connects marketing actions to later candidate responses. Recruiters distribute promotional materials or swag (action/event), after which candidates recall the brand and reengage during outreach (event/action). +    
-*Reference to Sketch:* Students remember companies through giveaways, which enhances follow-up engagement. +
+[.line-through]
+*Notes as the memory of the process.*  
+With many brief encounters, concise notes and tags become essential to remember people and make decisions. Consistent record keeping improves later review and shortlist quality.
 
+[.line-through]
+*Rehiring based on trust.*  
+People already known to the team, such as former interns, are often prioritized because their performance is validated. Time to hire shortens and uncertainty decreases compared with external candidates.
+
+[.underline]
 .**Rehiring based on prior trust**
 This behavior involves drawing from known, trusted candidates. Systems maintain records of past interns or employees (action), enabling quick rehire decisions (event/action) and onboarding (action). + 
 *Reference to Sketch:* Recruiters often rehire previous interns due to established trust and reduced uncertainty. +
+
+[.line-through]
+*Brand recall from presence and giveaways.*  
+A well run booth and thoughtful materials strengthen memory of the employer and help reengage candidates after the event.
+
+[.underline]
+.**Brand recall and reengagement through giveaways**
+This behavior connects marketing actions to later candidate responses. Recruiters distribute promotional materials or swag (action/event), after which candidates recall the brand and reengage during outreach (event/action). +    
+*Reference to Sketch:* Students remember companies through giveaways, which enhances follow-up engagement. +
 
 ==== Function Signatures
 
