@@ -2083,6 +2083,9 @@ image::..\Images\StudentProfile.png[StudentProfile Lifecycle Diagram]
 | 1.6 Derived Goals
 | Modified, Added
 
+| Samarys Barreiro Melendez
+| 2.1.5
+| Modified
 
 |===
 '''
