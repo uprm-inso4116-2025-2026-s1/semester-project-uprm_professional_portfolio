@@ -1788,102 +1788,6 @@ class ProfileCard extends StatelessWidget {
 }
 ```
 
-==== SOLID-Oriented Software Design
-
-At the *software architecture* level, the system is divided into three main components:
-
-. *Mobile Frontend (Flutter)* - Handles profile cards, swiping, and messaging.
-. *Application Backend* - Contains the business logic for swiping, matching, and event handling.
-. *Data Layer* - Manages persistence of profiles, swipes, Matches, and messages.
-
-At the *software design* level, these components are realized through service classes and repositories. 
-To ensure scalability and maintainability, the design applies the *SOLID principles*:
-
-===== 1. Single Responsibility Principle (SRP)
-Each service has one responsibility:  
-
-* *Deck Service* → Builds personalized decks and presents the next profile card.  
-* *Swipe Service* → Processes swipe gestures and evaluates potential Matches.  
-* *Connection Service* → Manages new connections, messaging, and communication channels.  
-* *Profile Service* → Retrieves detailed profile information.  
-* *Session Service* → Handles authentication and user session management.  
-
-===== 2. Open/Closed Principle (OCP)
-Business rules can be extended without modifying existing code.  
-
-* The deck generation algorithm can switch strategies (e.g., location-based, interest-based) without altering the service itself.  
-* New swipe actions such as “Super Like” can be added without changing the base swipe logic.  
-
-===== 3. Liskov Substitution Principle (LSP)
-Services can be swapped with alternatives that share the same behavior.  
-
-* Different matching strategies (e.g., mutual Likes, weighted scoring) can replace one another without breaking the system.  
-* Notification services (push, email, SMS) can be substituted transparently.  
-
-===== 4. Interface Segregation Principle (ISP)
-Clients depend only on the operations they use.  
-
-* Messaging relies solely on a lightweight *Message Sender* interface, without being tied to connection logic.  
-* Profile data access is split between read and write operations to avoid unnecessary coupling.  
-
-===== 5. Dependency Inversion Principle (DIP)
-High-level modules depend on abstractions, not low-level implementations.  
-
-* Services depend on repositories and strategies rather than direct database queries.  
-* Dependency injection makes it possible to swap data stores or notification channels at runtime.  
-
-
-
-====== Example: Swiping and Matching Flow
-
-```dart
-class MatchingService {
-  final SwipeRepository swipeRepository;
-  final ConnectionService connectionService;
-
-  MatchingService(this.swipeRepository, this.connectionService);
-
-  Future<Result<void>> processSwipe(
-      String userId, String profileId, SwipeDirection direction) async {
-    await swipeRepository.save(userId, profileId, direction);
-
-    if (direction == SwipeDirection.like) {
-      final match = await checkForMatch(userId, profileId);
-      if (match != null) {
-        await connectionService.createConnection(match);
-      }
-    }
-    return Result.success(null);
-  }
-}
-```
-
-This applies the **Single Responsibility Principle (SRP)**: the service only coordinates swiping logic and delegates persistence/connection creation to other components.
-
-
-
-====== Example: Event RSVP Flow
-
-```dart
-Future<Result<Attendance>> rsvpEvent(String userId, String eventId) async {
-  if (await eventRepository.hasCapacity(eventId)) {
-    final attendance = Attendance(userId: userId, eventId: eventId, confirmed: true);
-    await eventRepository.saveAttendance(attendance);
-    return Result.success(attendance);
-  }
-  return Result.failure(CapacityReachedError());
-}
-```
-
-This demonstrates the **Open/Closed Principle (OCP)**: RSVP logic can be extended (e.g., add waitlists) without changing its core behavior.
-
-
-
-
-
-
-
-
 
 == Analytic Part
 
@@ -2348,28 +2252,27 @@ This task fully embodies the lecture’s intent — expressing the domain throug
 
 ===== #References#
 * Schütz-Schmuck, Marko. *Isolating the Domain & Expressing Models in Software* (Lecture Notes, Section 4.3).
-#This text is new.#
 
-==== #Lecture Topic Task — Factory Design for Match Creation
+==== #Factory Design for Match Creation#
 :author: Kiara N. Pérez Rivera
 
 [NOTE]
 Objective: Implement and document a `MatchFactory` that creates valid `Match` domain objects, enforcing invariants and preventing duplicates while providing a clear, testable construction boundary for the rest of the system.
 
-=== #Rationale: why a factory for Matches?
+===== #Rationale: why a factory for Matches?#
 
 - Centralized validation: all rules that decide whether a Match can be created (valid identities, eligibility, no conflicting matches) live in one place.
 - Encapsulation of creation rules: higher-level components don't need to know the details of ID generation, timestamping, or duplicate checks.
 - Maintainability: new rules (e.g., eligibility windows, verification status) are applied in the factory without changing callers.
 - Traceability: the factory can attach creation metadata (actor, timestamp, rationale) to the created object for audit and debugging.
 
-=== #Design contract (short)
+===== #Design contract (short)#
 
 - Inputs: a `Student` instance and a `Recruiter` instance (domain entities), optional metadata (source, context).
 - Outputs: `Result<Match>` — success with a `Match` object or failure with a typed error (ValidationError, DuplicateMatchError, AuthorizationError).
 - Error modes: invalid/malformed entities, duplicates, domain guards (e.g., recruiter not active), persistence failures delegated to repositories.
 
-=== #MatchFactory responsibilities
+===== #MatchFactory responsibilities#
 
 1. Validate both participants are valid domain entities (non-null, correct type, active state).
 2. Ensure no existing confirmed or pending Match conflicts (duplicate prevention).
@@ -2377,7 +2280,7 @@ Objective: Implement and document a `MatchFactory` that creates valid `Match` do
 4. Attach provenance metadata (createdBy, createdAt, source) to the Match.
 5. Return a clear Result type to the caller with success or an explanation of failure.
 
-=== #Example Dart fragment 
+====== #Example Dart fragment# 
 
 [source,dart]
 ----
@@ -2418,7 +2321,7 @@ class MatchFactory {
 
 Notes: The fragment uses a `Result<T>` wrapper for explicit success/failure handling and a `MatchRepository` to check duplicates and persist matches; this keeps persistence concerns out of the factory logic while allowing the factory to consult repositories as needed.
 
-=== #UML / Class diagram (ASCII)
+===== #UML / Class diagram (ASCII)#
 
 [source]
 ----
@@ -2438,22 +2341,22 @@ Notes: The fragment uses a `Result<T>` wrapper for explicit success/failure hand
   Legend: "<>-" association shows Match references the Student and Recruiter by id.
 ----
 
-=== #Enforcing edge cases
+===== #Enforcing edge cases#
 
 - Null or incomplete entities: factory refuses and returns ValidationError.
 - Inactive accounts: factory refuses to create matches for suspended or unverified participants.
 - Duplicate attempts: repository-level `existsBetween` prevents duplicate creation; the factory returns DuplicateMatchError.
 - Race conditions: callers should either rely on a transactional repository that enforces uniqueness at the DB level.
 
-=== #Traceability and logging
+===== #Traceability and logging#
 
 The factory should optionally emit a log event every time it creates or rejects a Match. The log includes the requested participants, the outcome, the reason (if rejected), and a timestamp. This supports audit requirements described in the Domain Requirements section.
 
-=== #Integration with Section 2.3.1 guidelines
+===== #Integration with Section 2.3.1 guidelines#
 
 The `MatchFactory` follows the Selected Fragments of Implementation approach by providing a clear domain-level API (factory method), keeping persistence behind a repository, and presenting a small set of method signatures that higher layers use. It avoids leaking technical details like SQL or UUID algorithms to callers.
 
-=== #Diagrammatic example: sequence (createMatch)
+===== #Diagrammatic example: sequence (createMatch)#
 
 [source]
 ----
@@ -2468,7 +2371,186 @@ else
 end
 ----
 
-#Highlight#
+==== SOLID-Oriented Software Design
+
+At the *software architecture* level, the system is divided into three main components:
+
+. *Mobile Frontend (Flutter)* - Handles profile cards, swiping, and messaging.
+. *Application Backend* - Contains the business logic for swiping, matching, and event handling.
+. *Data Layer* - Manages persistence of profiles, swipes, Matches, and messages.
+
+At the *software design* level, these components are realized through service classes and repositories. 
+To ensure scalability and maintainability, the design applies the *SOLID principles*:
+
+===== Single Responsibility Principle (SRP)
+
+Each service is designed with a **single responsibility**, defined by *the reason it may need to change*.  
+This principle ensures isolation between business rules and user interaction mechanisms.
+
+[cols="2,3,5",options="header"]
+|===
+| Service | Domain or Application | Reason for Change (Responsibility)
+
+| `MatchingService`
+| Domain
+| **event:** `MatchingRuleUpdated`  
+**guard:** Only changes when business criteria or scoring logic evolve.  
+**outcome:** Adjusts how candidates and employers are matched based on updated domain rules.
+
+| `RecruiterService`
+| Domain
+| **event:** `RecruiterWorkflowModified`  
+**guard:** Changes when recruitment workflows, job posting policies, or recruiter permissions evolve.  
+**outcome:** Updates internal procedures for managing candidate pools or posting jobs.
+
+| `EmployerService`
+| Domain
+| **event:** `HiringProcessRedefined`  
+**guard:** Only evolves when employer evaluation rules or job offer lifecycles are modified.  
+**outcome:** Ensures the hiring flow remains compliant with domain-driven rules.
+
+| `DeckService`
+| Application
+| **event:** `SwipeGestureUpdated`  
+**guard:** Changes when UI/UX interaction logic (e.g., animations or gesture thresholds) is modified.  
+**outcome:** Affects visual representation and swipe mechanics, not core business logic.  
+**note:** *Swiping is presentation logic, not business logic.*
+
+| `EventDispatcher`
+| Application
+| **event:** `EventRoutingChanged`  
+**guard:** Changes when event propagation or inter-service communication models are redefined.  
+**outcome:** Updates internal event broadcasting and subscription mechanisms.
+|===
+
+**Summary:**  
+Domain services evolve only when business policies change, while application services evolve with framework or presentation adjustments.  
+This clear separation strengthens maintainability and aligns each module’s purpose with its lifecycle of change.
+
+
+
+===== Open/Closed Principle (OCP)
+
+The system is **open for extension** but **closed for modification**, meaning new features can be added without altering existing code.  
+This is achieved through abstraction and dependency injection.
+
+*Examples and Rationale:*
+
+- **Extension 1: Matching Algorithms**  
+  **event:** `NewAlgorithmIntroduced`  
+  **guard:** Implementations must conform to the `MatchingAlgorithm` interface.  
+  **outcome:** `AIMatchingAlgorithm` can be added without modifying `MatchingService`.  
+  **impact:** Existing matching logic remains stable and unaffected.
+
+- **Extension 2: Deck Presentation**  
+  **event:** `SwipeAnimationAdded`  
+  **guard:** UI changes do not affect business logic.  
+  **outcome:** `DeckService` accepts a new animation strategy injected at runtime.  
+  **impact:** Domain layer remains isolated from visual logic.
+
+These cases demonstrate how extensions are contained within the relevant layer, avoiding ripple effects and reinforcing architectural stability.
+
+
+
+===== Liskov Substitution Principle (LSP)
+
+Subtypes and implementations can substitute their base types without altering system behavior or violating domain expectations.
+
+*Examples:*
+
+- **User Role Substitution**  
+  **base type:** `UserProfile`  
+  **derived types:** `Recruiter`, `Employer`  
+  **guard:** Both maintain consistent interface contracts (`requestMatch()`, `updateProfile()`), differing only in context.  
+  **outcome:** Either can be used interchangeably in services expecting `UserProfile`, maintaining functional consistency.
+
+- **Algorithm Substitution**  
+  **base type:** `MatchingAlgorithm`  
+  **derived types:** `BasicMatchingAlgorithm`, `AIMatchingAlgorithm`  
+  **guard:** All must produce a `MatchResult` structure with consistent semantics.  
+  **outcome:** Switching between algorithms does not require code changes in the `MatchingService`.  
+  **impact:** Reinforces predictability and polymorphic behavior.
+
+By preserving substitutability, the design remains flexible without compromising domain integrity.
+
+
+
+===== Interface Segregation Principle (ISP)
+
+Interfaces are **focused, purpose-driven, and minimal**.  
+This ensures clients depend only on the behaviors they actually use, avoiding “fat interfaces.”
+
+*Examples:*
+
+- `MatchEvaluator` → Defines only scoring operations.  
+- `CandidateDataProvider` → Handles only data retrieval for profiles.  
+- `NotificationSender` → Responsible solely for delivering user notifications.
+
+**guard:** Adding new methods requires creating a new interface, not modifying existing ones.  
+**outcome:** Improves cohesion and testability by isolating roles per interface.
+
+
+
+===== Dependency Inversion Principle (DIP)
+
+High-level modules depend on abstractions, not concrete implementations.  
+This design reduces coupling and increases flexibility when integrating new components.
+
+*Examples:*
+
+- **Dependency 1:** `MatchingService` depends on the abstraction `MatchingAlgorithm`, not its specific implementation.  
+  **event:** `AlgorithmInjected`  
+  **outcome:** Enables dynamic substitution (e.g., rule-based or AI-based strategies).
+
+- **Dependency 2:** Application controllers depend on abstract domain interfaces rather than framework classes.  
+  **guard:** Domain layer remains independent of external frameworks.  
+  **outcome:** Domain logic can be tested or reused outside of any specific UI technology.
+
+This inversion enforces stable architectural boundaries and supports long-term system evolution.
+
+
+====== Example: Swiping and Matching Flow
+
+```dart
+class MatchingService {
+  final SwipeRepository swipeRepository;
+  final ConnectionService connectionService;
+
+  MatchingService(this.swipeRepository, this.connectionService);
+
+  Future<Result<void>> processSwipe(
+      String userId, String profileId, SwipeDirection direction) async {
+    await swipeRepository.save(userId, profileId, direction);
+
+    if (direction == SwipeDirection.like) {
+      final match = await checkForMatch(userId, profileId);
+      if (match != null) {
+        await connectionService.createConnection(match);
+      }
+    }
+    return Result.success(null);
+  }
+}
+```
+
+This applies the **Single Responsibility Principle (SRP)**: the service only coordinates swiping logic and delegates persistence/connection creation to other components.
+
+
+
+====== Example: Event RSVP Flow
+
+```dart
+Future<Result<Attendance>> rsvpEvent(String userId, String eventId) async {
+  if (await eventRepository.hasCapacity(eventId)) {
+    final attendance = Attendance(userId: userId, eventId: eventId, confirmed: true);
+    await eventRepository.saveAttendance(attendance);
+    return Result.success(attendance);
+  }
+  return Result.failure(CapacityReachedError());
+}
+```
+
+This demonstrates the **Open/Closed Principle (OCP)**: RSVP logic can be extended (e.g., add waitlists) without changing its core behavior.
 
 === Life Cycle of Domain Objects
 
@@ -2687,6 +2769,10 @@ This Discovery Journal records key domain insights and refactors that, during de
 
 | Samarys Barreiro Melendez
 | 2.1.5
+| Modified
+
+| Julian Vivas
+| 4.3.3
 | Modified
 
 |===
