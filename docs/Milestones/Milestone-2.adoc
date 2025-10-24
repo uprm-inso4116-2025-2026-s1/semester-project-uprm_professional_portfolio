@@ -2032,21 +2032,73 @@ The purpose of this section is to document how the team will validate and verify
 * **Verification**: ensuring that the documentation is internally consistent, complete, and aligned with the project’s goals.
 
 ==== Validation Strategy
-Validation activities focus on comparing our assumptions and requirements against real-world practices in recruiting and hiring.
+Validation activities focus on ensuring that our assumptions, workflows, and requirements accurately reflect real-world recruiting, mentoring, and hiring practices. Rather than relying solely on abstract flows, this section grounds validation through concrete, scenario-based walkthroughs involving realistic personas and contexts.  
 
 * **Literature and Online References**  
-  We reviewed external sources to validate that our domain concepts are realistic:  
-  - National Association of Colleges and Employers (NACE) reports show that **over 80% of employers review student portfolios or online profiles during hiring**.  
-  - LinkedIn’s Global Talent Trends indicate recruiters prioritize **skills, experiences, and project showcases** when evaluating candidates.  
-  - University career center guidelines (e.g., UC Berkeley Career Center) recommend portfolios to include **projects, reflections, and artifacts**, supporting our profile/portfolio requirements.  
+Foundational validation draws from established data and professional frameworks:  
+- The *National Association of Colleges and Employers (NACE)* reports that **over 80% of employers evaluate student portfolios or online profiles as part of their screening process**.  
+- *LinkedIn’s Global Talent Trends* emphasize that **skills, projects, and practical experiences** now outweigh traditional credentials.  
+- *University career centers* (e.g., UC Berkeley, Purdue, UPRM) encourage students to include **artifacts, capstone projects, and self-assessments** in their portfolios, aligning with our design decisions for portfolio sections and recruiter search filters.  
 
-* **Scenario Walkthroughs (Planned)**  
-  We drafted sample scenarios to test the plausibility of requirements:  
-  - *Example*: “Student uploads a project to their portfolio. Recruiter filters by skill and reviews the project before deciding to Like or Pass.”  
-  These walkthroughs will be refined with feedback once pilot users are available.
+* **Scenario Walkthroughs (Concrete Personas for Validation)**  
+Early walkthroughs were initially too abstract, which limited the kind of stakeholder insights we could extract.  
+The updated validation strategy introduces **detailed, narrative-driven personas** that simulate realistic interactions between users and the system. These narratives promote richer discussions with stakeholders by presenting grounded, relatable contexts.  
 
-* **Stakeholder Proxies**  
-  Since direct recruiter interviews have not yet been conducted, validation relies on **career center publications** and **industry surveys** as proxies for stakeholder expectations. Later stages will replace proxies with real recruiter and student feedback.
+[discrete]
+===== #Scenario 1: Abdul (Student) and Corey (Recruiter) — Capstone Connection#
+Abdul is a 5th-year Mechanical Engineering student finishing his final semester. He is taking *Thermodynamics*, *Pottery II*, and the *Capstone Design* course.  
+His capstone project, *“Predicting Beer Pleasantness from Brewing Parameters,”* leverages data modeling and process optimization — experience relevant to industrial process control.  
+
+Corey is a recruiter for *Lilly*, seeking candidates for a process control engineering position. Using the Professional Portfolio platform, Corey filters candidates by “data analysis” and “process modeling.” Abdul’s profile appears, but his capstone project is missing.  
+Abdul updates his profile, adding a brief description and project artifacts. Once saved, the system automatically updates search indices. Corey’s filter now surfaces his profile again, and she swipes right to indicate interest.  
+
+**Validation Points:**  
+- Tests whether **profile updates** propagate correctly to recruiter searches.  
+- Validates **event-driven refresh triggers** in recruiter dashboards.  
+- Checks whether **project tagging and search weighting** align with recruiter expectations.  
+- Reveals potential enhancement: recruiter alerts for updated profiles that match their saved filters.
+
+[discrete]
+===== #Scenario 2: Aisha (Mentor) and Daniel (Student) — Mentorship Match Validation#
+Aisha is a volunteer mentor from the tech industry who joined the platform through a university partnership. She specifies her domain as “data science and product analytics.”  
+Daniel, a computer engineering student, signs up for mentoring. He lists his interests as “AI systems,” “data visualization,” and “career readiness.”  
+
+The system’s mentor matching service pairs them based on overlapping interests. During the first meeting, Daniel mentions wanting to add his internship project portfolio. Aisha advises him to include visualizations of his code metrics. Later, Daniel updates his portfolio accordingly.  
+
+**Validation Points:**  
+- Confirms **mentor matching criteria** reflect relevant skill intersections.  
+- Tests **feedback loops** where mentors influence students’ portfolio enrichment.  
+- Surfaces design opportunities for **mentor notes or endorsement badges** to appear on student profiles.
+
+[discrete]
+===== #Scenario 3: Rafael (Recruiter) — Shortlisting and Feedback Integration#
+Rafael is a recruiter from a mid-sized design firm reviewing candidates for UX positions.  
+He uses the filtering tool to shortlist candidates by “portfolio completeness > 80%” and “projects with client collaboration.” He finds Emma’s profile and likes her work but notices missing context for one project. He leaves structured feedback through the recruiter interface, suggesting more detail on design impact.  
+
+A few days later, Emma edits her project entry, expanding her case study. The system notifies Rafael that an update was made.  
+This re-engagement loop allows him to reopen her profile and mark it as “ready for review.”  
+
+**Validation Points:**  
+- Tests **feedback submission and notification logic** between recruiters and students.  
+- Validates **recruiter engagement retention** through automatic follow-ups.  
+- Identifies possible feature expansion for **feedback analytics dashboards**.
+
+[discrete]
+===== #Scenario 4: Lucia (Career Advisor) — Oversight and Data Consistency#
+Lucia, a career center advisor, monitors how active recruiters interact with student portfolios. She notices inconsistent data entry (some portfolios lack tags).  
+She requests that the platform provide a “data completeness report” per department.  
+The request leads to the idea of integrating a **Portfolio Health Metric** — a completeness score visible to both students and advisors.  
+
+**Validation Points:**  
+- Ensures **role-based access control** allows advisors to view, not alter, student data.  
+- Encourages new features that support **data quality monitoring** for institutional users.  
+
+* **Stakeholder Proxies and Next Steps**  
+Until direct recruiter and mentor interviews begin, **career center advisors** and **industry-aligned professors** serve as proxies for validation. These personas, rooted in observed academic and recruitment contexts, will evolve as we collect field data from pilot users.  
+Future steps include:  
+- Conducting **cognitive walkthroughs** with recruiters and students to validate UI intuitiveness.  
+- Running **A/B tests** on search filters and project visibility ranking.  
+- Integrating qualitative feedback into the next iteration of **matching and notification workflows**.  
 
 
 ==== Verification Strategy
