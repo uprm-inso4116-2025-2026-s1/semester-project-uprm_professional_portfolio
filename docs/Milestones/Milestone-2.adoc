@@ -2089,12 +2089,12 @@ image::..\Images\StudentProfile.png[StudentProfile Lifecycle Diagram]
 === Using the Language
 === Refactoring Towards Deeper Insight and Breakthroughs
 
+==== #Discovery Journal:#
+
 [NOTE]
 ====
 The Discovery Journal captures the domain insights uncovered through refactoring, documenting how each change led to a deeper understanding of the model and improved its expressiveness.
 ====
-
-==== Discovery Journal:
 
 This Discovery Journal records key domain insights and refactors that, during development, improved the clarity, consistency, and expressiveness of our domain model.
 
