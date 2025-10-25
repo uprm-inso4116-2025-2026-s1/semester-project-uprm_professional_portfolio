@@ -267,6 +267,49 @@ Later, I realized that the quieter booths in the back actually had time to talk.
 On the other side, recruiters tell us they want better visibility into who’s coming — maybe an advance roster of students and their profiles.”  
 → *Observation:* Advisors recognize preparation asymmetry; opportunities for platform pre-matching.
 
+
+#Note: This is an unprocessed collection of raw notes, direct quotes, and observational fragments from the domain of student-recruiter interactions at job fairs. The details are specific and situational to preserve the authenticity of the experiences.#
+
+#On Waiting and Physical Discomfort:#
+
+*#A sophomore CS major recounted: "At the Fall '23 fair, the line for Lockheed Martin snaked from their booth all the way to the main entrance. I stood there for 43 minutes, according to my phone. My backpack was heavy with resumes, and I was shifting my weight from one foot to the other the whole time. When I finally got to the front, the recruiter just said, 'Just drop it in the pile,' and pointed to a stack of about 200 identical black-and-white resumes. That was it."#
+
+*#Another student shared: "I wore new heels for the Spring career fair. By 11 AM, I had blisters on both heels. I remember leaning against a pillar near the IBM booth, trying to take some weight off my feet while I waited, and I could feel the blister on my right heel pop. I had to limp through the rest of my conversations."#
+
+#On Recruiter Overload and Memory:#
+
+*#A tech recruiter from a large bank confessed during a debrief: "Yesterday, from 10 AM to 4 PM, I spoke to over 300 students. I started with a notepad, but by 1 PM, my notes were just illegible scribbles. I met a student named 'David' who had an impressive robotics project. I wrote 'David - robotics' on my hand. By 3 PM, I had sweated through it, and the ink was smudged. I couldn't tell you which David he was now."#
+
+*#Another recruiter mentioned: "We used a shared spreadsheet. My colleague's note for one student just said, 'Red shirt, asked about Python.' We spent 10 minutes the next day trying to remember which of the fifty 'red shirts' that was."#
+
+#On Application Anxiety:#
+
+*#A graduating senior expressed frustration: "I applied to Raytheon through Handshake in September. In October, I saw they were at the fair, so I went to their booth and mentioned I had applied. The recruiter smiled and said, 'Great, the team will review it.' It's now November. My Handshake still says 'Application Submitted.' I have no idea if a human has even seen my name."#
+
+#On Preparation and Missed Opportunities:#
+
+*#A recruiter from a manufacturing company recalled: "A student came up to our booth, grabbed a pen, and then asked, 'So, what does your company do?' I gave him my standard spiel, but I had just finished a fantastic conversation with a student who had quoted our latest earnings report. Who do you think I remembered?"#
+
+*#A freshman biology student said: "I walked past the Tesla booth three times. They looked so busy and important. I had researched them, but I was too nervous to go up because I didn't have a perfectly crafted 'pitch.' I ended up just leaving."#
+
+#On the Environment and Chaos:#
+
+*#A student's observation: "The main hall was so loud you had to shout to be heard. I was trying to talk to a recruiter from Cisco, and someone bumped into my back, making me spill my coffee all over my folder. The recruiter was nice about it, but I was so flustered I completely blanked on what I wanted to say."#
+
+*#A recruiter's note: "The air conditioning broke around 1 PM. By 2:30, the venue was sweltering. We were all sweating, the students were fanning themselves with brochures, and you could just feel the energy drain from the room. The conversations became much shorter and more rushed."#
+
+#On Tactics and Shortcuts:#
+
+*#A savvy junior explained his strategy: "I don't even bother with the big companies anymore. I go straight to the smaller booths in the corners. Last year, I had a 20-minute conversation with a startup founder, and he interviewed me on the spot. At the Amazon booth, I got 90 seconds."#
+
+*#A recruiter from an aerospace firm admitted: "My manager told me to focus on juniors for internships and seniors for full-time roles. I consciously avoid making eye contact with students who look too young. It sounds harsh, but we have limited time."#
+
+#On Immediate Feedback and Closure:#
+
+*#A student's wish: "After I talk to a recruiter, I spend the next two months checking my email every hour. I wish there was a light that just turned green if they were interested or red if they weren't, right after the conversation. The waiting is the worst part."#
+
+*#A recruiter's pressure: "My VP emailed me at 3 PM during the fair asking, 'How many hires?' By 4 PM, I had collected 25 'promising' resumes. I told my team to pack up. We had what we needed, so we left, even though there was still an hour left and a line of students waiting."#
+
 ==== Terminology
 
 [NOTE]
@@ -1929,6 +1972,17 @@ Lastly, the internal system state must be updated to reflect a user's swipe acti
 **Rationale and Validation**
 The requirements ensure that all contributors can work effectively while keeping compatibility with the targeted platforms. Minimum specifications guarantee accessibility across the team, while recommended specifications support smoother emulator performance and integration with cloud services. Each requirement is measurable (e.g., OS versions, RAM, network speed) and traceable to the technologies already adopted by the project.#
 
+== #Log Book#
+
+[cols="3,^2,5",options="header",]
+|===
+| #Name# | #Section# | #Added/Modified#
+
+| #Fernando Castro Cancel#
+| #2.2.3, 2.2.4, 2.2.5#
+| #The previous flowing text has been replaced with individual, structured requirements (DR001-DR029, IR001-IR010, MR001-MR014) in a table format, each including a unique ID, description, linked User Stories/Epics, and Verification Tests for traceability.#
+
+|===
 
 === Implementation
 
@@ -1961,11 +2015,14 @@ image::../Images/database-schema.svg[Database Schema, align=center, pdfwidth=90%
 
 ==== Selected Fragments of the Implementation
 
-The implementation fragments presented here illustrate how the proposed system realizes its core concept-rofiles, swiping, matching, messaging, and event participatio-ithin the domain of student-recruiter interactions. They are not exhaustive; instead, they show how selected components are translated into concrete structures and operations.
+#The implementation fragments presented here illustrate how the proposed system realizes its core concepts—profiles, swiping, matching, messaging, and event participation—within the domain of student-recruiter interactions. They are not exhaustive; instead, they show how selected components are translated into concrete structures and operations, maintaining a clear separation between the core domain concepts and their presentation layer realizations.#
+
+[line-through]#The implementation fragments presented here illustrate how the proposed system realizes its core concept-rofiles, swiping, matching, messaging, and event participatio-ithin the domain of student-recruiter interactions. They are not exhaustive; instead, they show how selected components are translated into concrete structures and operations.#
 
 ===== Domain-Centric Function Signatures
+#Domain-Centric Function SignaturesIn Flutter/Dart, we express domain contracts through method signatures and service interfaces. These serve as contracts between the UI layer, application logic, and backend services. The functions below operate on the $\mathbf{Profile}$ entity, which represents the core data, not on the presentation $\mathbf{ProfileCard}$ widget.#
 
-In Flutter/Dart, we express domain contracts through method signatures and service interfaces. These serve as contracts between the UI layer, application logic, and backend services.
+[line-through]#In Flutter/Dart, we express domain contracts through method signatures and service interfaces. These serve as contracts between the UI layer, application logic, and backend services.#
 
 ```dart
 // Fetch the next profile card for a user’s deck
@@ -1988,7 +2045,9 @@ Each function encodes a clear business rule. For example, `processSwipe` ensures
 
 ===== User Interface Complement
 
-A conceptual *Profile Card* widget in Flutter may look like this. This shows how domain concepts (like `ProfileCard`) translate directly into Flutter widgets.:
+#A conceptual $\mathbf{ProfileCard}$ widget in Flutter may look like this. This shows how the domain concept ($\mathbf{Profile}$) is passed to a $\mathbf{presentation-layer}$ widget ($\mathbf{ProfileCard}$) for display and interaction. The widget itself belongs to the UI, but it depends on the domain's $\mathbf{Profile}$ data structure.#
+
+[line-through]#A conceptual *Profile Card* widget in Flutter may look like this. This shows how domain concepts (like `ProfileCard`) translate directly into Flutter widgets.:#
 
 ```dart
 class ProfileCard extends StatelessWidget {
@@ -2028,6 +2087,17 @@ class ProfileCard extends StatelessWidget {
 }
 ```
 
+== #Log Book#
+
+[cols="3,^2,5",options="header",]
+|===
+| #Name# | #Section# | #Added/Modified#
+
+| #Fernando Castro Cancel#
+| #2.3.2. Selected Fragments of the Implementation#
+| #Modified text and comments to clearly distinguish the **Domain Concept (Profile)** from the **Presentation Layer Element (ProfileCard)**, addressing professor feedback.#
+
+|===
 
 == Analytic Part
 

@@ -1,0 +1,61 @@
+name: uprm_professional_portfolio
+description: "A Flutter application for UPRM Professional Portfolio - Tinder-style matching platform for students and recruiters."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Supabase  
+  supabase_flutter: ^2.5.7
+
+  # Router
+  go_router: ^14.2.7
+  
+  # State management
+  provider: ^6.1.2
+  
+  # HTTP requests
+  http: ^1.2.2
+  dio: ^5.4.3+1
+  
+  # Local storage
+  shared_preferences: ^2.2.3
+  
+  # UI components
+  cupertino_icons: ^1.0.6
+  
+  # Image handling
+  image_picker: ^1.1.2
+  cached_network_image: ^3.3.1
+  
+  # Utilities
+  intl: ^0.19.0
+  uuid: ^4.4.0
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Assets
+  # assets:
+  #   - images/
+  #   - icons/
+
+  # Fonts
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic

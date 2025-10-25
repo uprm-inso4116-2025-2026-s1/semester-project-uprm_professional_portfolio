@@ -1,0 +1,44 @@
+//////////////////////////////////////////////////////////
+// ERD — Users · Jobs · Companies · Applications (M1)
+//////////////////////////////////////////////////////////
+
++-------------+              +-----------------+
+|   users     |              |   companies     |
++-------------+              +-----------------+
+| id [PK]     |              | id [PK]         |
+| email (U)   |              | name (U)        |
+| full_name   |              | website         |
+| created_at  |              | created_at      |
++-------------+              +-----------------+
+       |                              |
+       |                              | 1
+       | 1                            v
+       v                      +---------------+
++------------------+           |     jobs      |
+|  applications    |<----------|---------------|
++------------------+           | id [PK]       |
+| id [PK]          |           | company_id FK |
+| user_id [FK]     |           | title         |
+| job_id  [FK]     |           | description   |
+| status           |           | location      |
+| applied_at       |           | created_at    |
++------------------+           +---------------+
+   ^       ^
+   |       |
+   |       | *
+   | 1     |
+   |       |
+   |   +---+
+   |   |
+   v   |
++-------------+
+|   users     |
++-------------+
+
+//////////////////////////////////////////////////////////
+// Relationships
+//////////////////////////////////////////////////////////
+// companies.id     -> jobs.company_id        (1:N)
+// users.id         -> applications.user_id   (1:N)
+// jobs.id          -> applications.job_id    (1:N)
+// users <-> jobs via applications (N:M)
