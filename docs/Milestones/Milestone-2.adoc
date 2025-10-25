@@ -193,27 +193,79 @@ Projects are successful when coding is supported by planning, communication, and
 
 NOTE: This is an unprocessed collection of notes, quotes, and observations from the domain (student-recruiter interactions). 
 
-- Student: "At the job fair, I stood in line 40 minutes just to hand over my resume."
-- Recruiter: "We meet hundreds of students in a single afternoon. After a while, names and faces blur together."
-- Some recruiters use spreadsheets during the fair to jot notes about students: "Has Python," "Strong communication," "Not ready."
-- Student frustration: "I never know if recruiters actually looked at my resume or if it went into a pile."
-- Recruiter: "We usually contact students weeks later, but many either lose interest or already have offers by then."
-- Students often rely on school provided career services for resume templates, but recruiters say they "all look the same."
-- Recruiters: "We prefer quick ways to identify students with the right skills rather than going resume by resume."
-- Informal hallway conversations sometimes lead to opportunities, students value those more than formal booths.
-- Some recruiters only target juniors and seniors, ignoring freshmen.
-- Student: "I’m nervous approaching a recruiter if I don’t already know about the company."
-- Recruiters say a lot of students come unprepared, don’t know what positions are open.
-- Student: "I applied through Handshake, LinkedIn, and the company website. Did they even see my application?"
-- Recruiter: "We’re under pressure to find talent quickly. If the first batch of candidates looks good, we stop looking."
-- Some recruiters mention re-hiring interns they already know -> "trust factor."
-- Students compare the process to "speed dating", due to quick, superficial interactions.
-- Recruiters complain they can’t gauge "soft skills" (teamwork, communication) in the short job fair chats.
-- Student: "I wish I knew immediately if I had a chance instead of waiting months."
-- Job fairs are often loud, crowded, chaotic -> recruiters and students both stressed.
-- Some recruiters hand out swag -> students often remember the company by this.
-- Students sometimes attend fairs "just to practice talking" rather than actually seeking jobs.
-- Recruiters: "We’d like to pre screen students before the fair to save time."
+*Student (Abdul, Mechanical Engineering senior)*:  
+“At last year’s fall job fair, I stood in line almost 40 minutes just to hand my résumé to a recruiter from Pratt & Whitney.  
+The line wrapped around the Student Center atrium — people were sweating, holding folders, and trying to look composed.  
+When I finally got to the table, the recruiter just smiled, took my résumé, and said they’d be in touch. I wasn’t sure if she’d even remember me by the end of the day.”  
+→ *Observation:* Waiting fatigue, impersonal exchanges, uncertainty about follow-up.
+
+*Recruiter (Corey, Lilly Pharmaceuticals)*:  
+“We meet hundreds of students in just a few hours. By the end of the day, names and faces blur together.  
+I jot quick notes on sticky labels: ‘Python — confident’, ‘Good communicator’, or sometimes just a checkmark.  
+Later, when reviewing, I can’t always recall which student said what.”  
+→ *Observation:* Recruiters rely on quick, shorthand impressions; limited retention of individual details.
+
+*Student (Maria, Computer Engineering junior)*:  
+“This year I wore new shoes — bad idea. I had a class right before the fair and another right after, so I kept rushing back and forth between buildings.  
+By the time I came back to the fair after my thermodynamics class, it was packed. I could barely hear anything; someone even stepped on my heel while I tried to talk to a recruiter from Google.  
+It’s so loud you have to almost shout to be heard.”  
+→ *Observation:* Physical fatigue and environmental noise affect both comfort and communication quality.
+
+*Recruiter (Daniel, local tech startup)*:  
+“By noon, my voice is gone. I try to smile and look engaged, but it’s hard to remember each student’s story.  
+We keep a spreadsheet open on the booth laptop — name, major, key skills — just enough to remember who’s who.  
+If a student brings something visual, like a project or a QR code to their portfolio, it really helps.”  
+→ *Observation:* Recruiters value portfolio evidence over résumé lines; digital aids improve recall.
+
+*Student (Lina, Electrical Engineering sophomore)*:  
+“I applied on Handshake, then on LinkedIn, and again on the company website. I never knew if anyone actually saw it.  
+After two months, no one replied, and I started to wonder if my applications were just getting lost somewhere.”  
+→ *Observation:* Lack of transparency in the post-fair pipeline; unclear feedback loop between applicant systems.
+
+*Recruiter (Rafael, mid-sized design firm)*:  
+“We usually contact students weeks later, but by then many already accepted other offers or stopped checking their student email.  
+If the first batch of candidates looks good, we stop looking. There’s just too little time.”  
+→ *Observation:* Recruiting process favors early applicants; short attention window post-fair.
+
+*Student (Jorge, freshman)*:  
+“I was nervous to talk to recruiters because I didn’t even know what their companies did.  
+Some just told me, ‘come back next year when you have more experience.’  
+I mostly went this year just to practice — to get used to talking.”  
+→ *Observation:* Early-year students attend fairs for exposure rather than placement; recruiters focus on upperclassmen.
+
+*Recruiter (Helen, aerospace company)*:  
+“A lot of students come unprepared — they don’t know which positions are open, or what our company even does.  
+We’d love to pre-screen them, maybe through a short survey or a skill-based filter before the fair starts.”  
+→ *Observation:* Recruiters express need for pre-fair filtering and digital preparation workflows.
+
+*Student (Emilio, Software Engineering senior)*:  
+“The fair feels like speed dating — you only get two minutes to impress, then they move on.  
+It’s hard to show personality or teamwork skills when the line behind you is ten people long.”  
+→ *Observation:* Limited interaction window leads to superficial evaluation; “soft skills” remain under-assessed.
+
+*Recruiter (Isabel, consulting firm)*:  
+“We hand out branded tote bags and pens — it’s funny, but sometimes that’s what students remember us by.  
+When I reach out later, they’ll reply ‘Oh, you were the ones with the blue water bottles!’”  
+→ *Observation:* Brand association through physical tokens enhances recall; small sensory cues matter.
+
+*Student (Arjun, Industrial Engineering senior)*:  
+“I wish I knew right away if I had a chance instead of waiting months. After the fair, you check your email every day, but mostly nothing happens.”  
+→ *Observation:* Desire for instant or early feedback mechanisms post-interaction.
+
+*Recruiter (Paula, tech recruiter)*:  
+“We often rehire interns we already know. There’s trust there — we’ve seen their work.  
+That’s why sometimes new applicants don’t get the same attention.”  
+→ *Observation:* Prior familiarity skews fairness; existing relationships heavily influence hiring behavior.
+
+*Student (Elena, Business Administration major)*:  
+“The fairs are always packed — the noise, the pushing, it’s chaotic. I tried to ask a recruiter a question, but they just handed me a flyer and moved on.  
+Later, I realized that the quieter booths in the back actually had time to talk.”  
+→ *Observation:* Spatial arrangement and booth placement affect engagement quality.
+
+*Career Advisor (Lucia, UPRM)*:  
+“We encourage students to bring a ‘target list’ of companies, but many still wander without a plan.  
+On the other side, recruiters tell us they want better visibility into who’s coming — maybe an advance roster of students and their profiles.”  
+→ *Observation:* Advisors recognize preparation asymmetry; opportunities for platform pre-matching.
 
 ==== Terminology
 
@@ -1894,13 +1946,13 @@ For example, when a user performs a “Like” action, the event triggers the `S
 
 #This flow contextualizes the domain-centric method signatures presented in the next section, showing how each function contributes to the overall behavior of the system.#
 
-image::../Images/jobseeker-flows.svg[Jobseeker Flow, align=center, pdfwidth=90%]
+image::../Images/jobseeker-flows.svg[Jobseeker Flow, align=center, pdfwidth=50%]
 #_Figure 8. Jobseeker flows diagram showing jobseeker interactions (search, view jobs, apply, save, follow-up) and how those actions map to backend services such as profile updates, application repository writes, and notification triggers._#
 
-image::../Images/recruiter-flows.svg[Recruiter Flow, align=center, pdfwidth=90%]
+image::../Images/recruiter-flows.svg[Recruiter Flow, align=center, pdfwidth=50%]
 #_Figure 9. Recruiter flows diagram illustrating recruiter workflows (post job, screen applicants, schedule interviews, take notes), ATS interactions, prescreen operations, and note persistence in repositories._#
 
-image::../Images/student-flows.svg[Student Flow, align=center, pdfwidth=90%]
+image::../Images/student-flows.svg[Student Flow, align=center, pdfwidth=50%]
 #_Figure 10. Student flows diagram capturing student-specific steps including event check-in, resume tailoring, booth pitch, informal networking, and multichannel application submission, mapped to system events and follow-up operations._#
 
 image::../Images/database-schema.svg[Database Schema, align=center, pdfwidth=90%]
@@ -3017,7 +3069,7 @@ This Discovery Journal records key domain insights and refactors that, during de
 | Modified, Added
 
 | Pedro Rodriguez Velez
-| 1.6, 2.1.6
+| 1.5, 2.1.6
 | Modified, Added
 
 | Carlos J. Pepín Delgado
