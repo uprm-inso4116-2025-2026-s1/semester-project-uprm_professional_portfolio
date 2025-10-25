@@ -438,7 +438,7 @@ Exposure level of a StudentProfile: Public (searchable), By Match (visible only 
 *Session* :: (technical, domain)
 The authenticated runtime context for a User. Authorizes actions (swipes, messages, RSVPs).
 
-[line-through]#
+[.line-through]
 ==== Domain Terminology in Relation to Domain Rough Sketch
 
 * Recruiter: (Actor) A user who represents a company or organization and uses the platform to discover and evaluate potential candidates. This term was refined from the rough concept of employer to specify the human actor, distinct from the company entity itself.
@@ -477,7 +477,7 @@ Profile exposure setting for a StudentProfile:
 A rule requiring a Recruiter/Employer to satisfy verification checks before certain actions (e.g., messaging, event hosting).
 * Invariant: A rule that must always hold at the model boundary (e.g., no duplicate Recruiter–Student Match pairs).
 * Factory: A creation mechanism that enforces Invariants when instantiating entities (e.g., MatchFactory ensures valid parties and uniqueness).
-#
+
 
 ==== Narrative
 [.line-through]
