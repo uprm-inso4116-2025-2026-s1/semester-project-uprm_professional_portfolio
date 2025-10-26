@@ -58,7 +58,9 @@ flutter:
     - assets/logo/professional_portfolio_logo_with_txt.png
   #   - images/
   #   - icons/
-    - .env
+  # Note: .env is optional - only needed for Supabase configuration
+  # Uncomment the line below if you have a .env file with Supabase credentials
+  # - .env
 
 
   # Fonts
