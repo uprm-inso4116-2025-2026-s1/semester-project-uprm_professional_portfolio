@@ -13,14 +13,14 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Try to load .env if it exists, but don't fail if it doesn't
-  try {
-    await dotenv.load(fileName: ".env");
-  } on Exception {
-    debugPrint(
-        '⚠️ .env file not found - running without environment configuration');
-  }
+  // try {
+  //   await dotenv.load(fileName: ".env");
+  // } on Exception {
+  //   debugPrint(
+  //       '⚠️ .env file not found - running without environment configuration');
+  // }
 
-  await SupabaseService.init();
+  // await SupabaseService.init();
   runApp(const MyApp());
 }
 
