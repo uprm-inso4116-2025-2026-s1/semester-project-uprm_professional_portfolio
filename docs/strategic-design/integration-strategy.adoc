@@ -1,0 +1,240 @@
+= Integration Strategy: Profile ↔ Matching
+:revnumber: 1.0
+:revdate: 2025-10-24
+:toc: left
+:sectnums:
+
+== Summary
+This document defines how the **Profile** (owner of user data: skills, preferences, availability) integrates with **Matching** (owner of compatibility scores and rankings). We adopt a **Translation Layer (Anti-Corruption Layer), asynchronous and event-driven** approach to reduce coupling, preserve domain integrity, and support independent evolution of both subsystems.
+
+== Goals & Non-Goals
+*Goals*
+- Minimize coupling between Profile and Matching.
+- Keep models independent per DDD bounded contexts.
+- Support eventual consistency with clear recovery paths and observability.
+- Enable evolution of schemas without breaking consumers.
+
+*Non-Goals*
+- Real-time, strongly consistent reads across contexts.
+- Tight coupling via shared ORM models or database tables.
+
+== Integration Problems We Must Avoid
+- Leaky models: Matching reusing Profile’s internal classes.
+- Tight coupling: Breaking changes in Profile forcing Matching releases.
+- Inconsistent data: Race conditions when profiles update frequently.
+- Opaque failures: No traceability across contexts.
+
+== Options Considered
+
+=== 1) Shared Kernel
+*What it is*: Share a subset of domain model (types, value objects) across Profile and Matching.
+
+*Pros*
+- Simplifies initial integration.
+- Single canonical types reduce mapping code.
+
+*Cons*
+- High coupling: shared types force synchronized releases.
+- Difficult schema evolution; migration overhead.
+- Cross-team coordination tax.
+
+*When it fits*
+- Same team, same repo, low volatility domains.
+- Not recommended here.
+
+=== 2) Translation Layer (Chosen)
+*What it is*: Dedicated anti-corruption layer that maps Profile events/DTOs to Matching commands/events. Events flow asynchronously; Matching keeps its own model.
+
+*Pros*
+- Low coupling, preserves model autonomy.
+- Backward compatibility via mappers and versioned contracts.
+- Clear testing seams (contract tests, mapper tests).
+- Good balance of flexibility and simplicity.
+
+*Cons*
+- Requires mapper code and event infrastructure.
+- Eventual consistency (needs UX/ops clarity).
+
+*When it fits*
+- Independent teams/roadmaps, evolving schemas, clear bounded contexts.
+
+=== 3) Bounded Context Separation (Hard Isolation)
+*What it is*: Full service isolation with only public APIs/events, no shared code.
+
+*Pros*
+- Strongest autonomy and encapsulation.
+- Scales with org growth.
+
+*Cons*
+- More infra and operational complexity (versioning, retries, DLQs).
+- Eventual consistency everywhere.
+
+*When it fits*
+- Large orgs or high-change domains. Overkill for our current scope.
+
+== Decision
+We choose **Translation Layer – asynchronous, event-driven** with versioned contracts and an anti-corruption layer at Matching’s boundary.
+
+*Rationale*:
+- Maintains autonomy of Profile and Matching models.
+- Minimizes coupling and synchronized releases.
+- Provides simple evolution via mappers and versioned events.
+- Offers observability and reliability with retries, DLQ, idempotency.
+
+== High-Level Design
+
+=== Event Flow (ASCII)
+[source,plaintext]
+----
++-----------+          +------------------------+         +-----------+
+|  Profile  |  emits   |  Events Bus/Topic(s)   |  pulls  | Matching  |
+|  Context  |--------->|  profile.events.*      |-------> | Context   |
++-----------+          +------------------------+         +-----------+
+                                                              ^
+                                                              |
+                                  +---------------------+     |
+                                  | Translation Layer   |<----+
+                                  | (Anti-Corruption)   |
+                                  | - schema mapping    |
+                                  | - version routing   |
+                                  | - idempotency guard |
+                                  +---------------------+
+----
+
+=== Sequence (Profile update → recalc)
+[source,plaintext]
+----
+ProfileService        EventBus           ACL/Translator           MatchingService
+     |                   |                     |                         |
+     |--ProfileUpdated-->+                     |                         |
+     |                   |== deliver ==>       |                         |
+     |                   |-------------------->| map v1->vCurrent        |
+     |                   |                     | build Recalc command    |
+     |                   |                     |----RecalcProfile------->|
+     |                   |                     |                         | recompute + persist
+     |                   |                     |<---Ack / metrics--------|
+----
+
+=== Contracts (versioned)
+Example events (Profile is source of truth):
+[source,json]
+----
+{
+  "eventId": "uuid",
+  "version": 1,
+  "occurredAt": "2025-10-24T12:34:56Z",
+  "profileId": "user_123",
+  "changes": {
+    "skills": ["dart","flutter","security"],
+    "availability": "UTC-4|evenings"
+  }
+}
+----
+
+Translator emits internal command for Matching:
+[source,json]
+----
+{
+  "commandId": "uuid",
+  "profileRef": "user_123",
+  "sourceEventId": "uuid",
+  "readModel": {
+    "skills": ["dart","flutter","security"],
+    "availability": "UTC-4|evenings"
+  }
+}
+----
+
+=== Translation Layer Responsibilities
+
+* Schema mapping: `profile.events.*` → `matching.commands.*`.
+* Version routing: Support `v1`, `v2` with fallback/upgrade mappers.
+* Idempotency: Deduplicate by `eventId` (store processed ids).
+* Resiliency: Retries with exponential backoff; poison events → DLQ.
+* Observability: Add `traceId`, `profileId`, delivery latency, mapper errors.
+
+== Data Ownership & Boundaries
+
+* Profile owns: identity, skills, preferences, availability.
+* Matching owns: ranking, compatibility scores, internal features.
+* No direct DB access across contexts; no shared ORM entities.
+
+== Failure Modes & Mitigations
+
+| Failure                               | Mitigation                                                                    |
+|---------------------------------------|-------------------------------------------------------------------------------|
+| Event loss / at-least-once redelivery | Idempotency on `eventId`; message ordering not assumed.                       |
+| Breaking schema change in Profile     | Versioned topics (`v2`), dual-publish during migration, mapper supports both. |
+| Translator outage                     | Queue buffers; deploy HA replica; backpressure alerts.                        |
+| Matching down                         | Retry with backoff; DLQ on max retries; SLO alerts.                           |
+| Clock skew / stale timestamps         | Trust `occurredAt` from source; compare against last-processed watermark.     |
+
+== Fallback & Recovery
+
+* Read-through fallback: If Matching detects a missing or stale projection for a profile, it performs a direct read API to Profile (`GET /profiles/{id}`) and then schedules a background reconciliation.
+* Rebuild: Matching can trigger a projection rebuild from a checkpoint by re-consuming events (or via a backfill topic).
+
+== Observability
+
+* Metrics: `events_received_total`, `map_failures_total`, `processing_latency_ms`, `retry_count`, `dlq_count`.
+* Logs: Include `traceId`, `eventId`, `profileId`, `version`.
+* Tracing: Propagate `traceId` from Profile → Bus → Translator → Matching.
+
+== Testing Strategy
+
+=== Contract Tests
+
+* Validate that `profile.events.v{n}` payloads map to valid `matching.commands` under the translator.
+* Backward compatibility tests for `v1` when `v2` is introduced.
+
+=== Idempotency & Ordering
+
+* Replay duplicate events; verify single application (event store of processed ids).
+* Shuffle delivery order; ensure Matching produces consistent end state.
+
+=== Fallback API
+
+* Simulate missing projection; Matching calls Profile API and reconciles.
+* Chaos test: deny-list event bus temporarily; verify fallback preserves UX.
+
+=== Reliability
+
+* Inject transient failures to translator; verify retries, backoff, DLQ behavior.
+* Track metrics and alerts thresholds (lag, retries, DLQ).
+
+== Tooling (Tech-Agnostic Examples)
+
+* Event bus: Kafka / RabbitMQ / SQS / PubSub.
+* Translator: lightweight service (e.g., Node/TS, Kotlin, Go, Dart) deployed alongside Matching.
+* API fallback: REST/JSON over HTTPS with `traceId` header.
+
+== Risks & Mitigations
+
+* Eventual consistency surprises → Clear UX states (“Updating profile… may take a few seconds”), doc SLAs.
+* Schema drift → Contract versioning + mapper tests + release checklist.
+* Hidden coupling via DTOs → Keep translator as the only mapping point; no shared domain classes.
+
+== DDD Alignment
+
+* Profile and Matching are separate **Bounded Contexts**.
+* Translator is an **Anti-Corruption Layer** protecting Matching’s model.
+* Ubiquitous language preserved per context; integration at boundaries via events/commands.
+
+== Adoption Plan
+
+1. Define and publish `profile.events.v1` (schemas + examples).
+2. Implement Translator (mapping, idempotency store, metrics).
+3. Enable Matching to consume `matching.commands.recalc-profile`.
+4. Add fallback API path in Matching.
+5. Ship dashboards/alerts (lag, retries, DLQ).
+6. Run end-to-end test plan; document SLAs; enable feature flag.
+
+== Appendix: Simple ASCII Flow (Update Skills)
+[source,plaintext]
+----
+Profile(User updates) -> emit ProfileUpdated(v1)
+      \
+       -> EventBus -> Translator map(v1->current)
+                         \
+                          -> Matching RecalcProfile -> New Rankings
+----
