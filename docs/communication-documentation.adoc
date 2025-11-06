@@ -1,0 +1,236 @@
+= Team Contributions Summary
+:toc:
+:sectnums:
+
+== Alexa M. Zaragoza Torres (alexamzt)
+=== #101: Communication and the Use of Language: Modeling Out Loud for Swipe Flow
+*Status:* Closed | *Urgency:* 5 | *Difficulty:* 4  
+
+Define the full swipe → match → chat flow, listing all actors and services.  
+Establish preconditions (authentication, visible profiles) and main rules: reciprocal right-swipe, single active match, chat only after confirmation, reliable notifications, unmatch/report options, and idempotent operations.
+
+
+=== #226: Discovery Journal
+*Status:* Closed | *Urgency:* 4 | *Difficulty:* 3  
+
+Create a lightweight, searchable journal to record domain insights with context, change, and business impact.  
+Use ubiquitous language and link at least three of five entries to commits for traceability.
+
+
+=== #121: Knowledge Crunching for Recruiter Needs
+*Status:* Closed | *Urgency:* 6 | *Difficulty:* 5  
+
+Conduct recruiter research via interviews or desk studies.  
+Synthesize findings into a Jobs-To-Be-Done analysis, an event/channel matrix, and a MoSCoW-prioritized list of 5–7 requirements ready for implementation.
+
+
+=== #119: Research: Enabling Seamless Notifications in Flutter (Supabase Integration)
+*Status:* Closed | *Urgency:* 6 | *Difficulty:* 5  
+
+Produce a research packet on implementing real-time push and in-app notifications using Flutter and Supabase.  
+Include notification events, payloads, Android/iOS setup checklists, data/token security, main risks with mitigations, and a weighted recommendation based on official sources.
+
+
+=== #120: Research: Data Privacy Compliance
+*Status:* Closed | *Urgency:* 5 | *Difficulty:* 5  
+
+Identify data privacy laws relevant to messaging and notifications.  
+Map data flows, specify compliance checks (lawful basis, minimization, retention, user rights, transfers, breach response), and support findings with authoritative regulations.
+
+
+=== #155: Documentation Improvements (Tracking Issue)
+*Status:* Open | *Urgency:* 3 | *Difficulty:* 3  
+
+Coordinate all documentation updates for Milestone 2 across Sections 1–3.  
+Ensure consistency in synopsis, terminology, narratives, user stories, requirements, SOLID principles, and validation strategy.  
+Use AsciiDoc change marks and log all edits in the documentation logbook.
+
+
+=== #161: Sub-Section Revision: Narrative (2.1.4)
+*Status:* Closed | *Urgency:* 3 | *Difficulty:* 4  
+
+Revise the domain narrative by combining abstract concepts with concrete examples.  
+Clarify relationships, edge cases, and ensure internal consistency with related sections using AsciiDoc formatting.
+
+
+=== #164: Sub-Section Revision: User Stories, Epics, and Features (2.2.1)
+*Status:* Closed | *Urgency:* 3 | *Difficulty:* 3  
+
+Refactor the section to clearly separate Epics, Features, and User Stories (“As a…, I want…, so that…”).  
+Ensure traceability from user stories → features → requirements and maintain proper AsciiDoc formatting.
+
+
+=== #227: Continuous Refactoring Log
+*Status:* Closed | *Urgency:* 5 | *Difficulty:* 4  
+
+Maintain a living log documenting refactorings that clarify and deepen the domain model.  
+Each entry includes a trigger, domain insight, performed refactor, and resulting invariants.  
+At least five dated entries are required, two linking to updated diagrams or docs, with CI validation for all referenced changes.
+
+
+
+== Carlos Pepin (carlospepin23)
+=== #228: Model Address as a Value Object and Integrate into StudentProfile 
+*Status:* Closed | *Urgency:* 4 | *Difficulty:* 4  
+
+This issue required modeling “Address” as a Value Object within the StudentProfile aggregate to improve domain integrity and consistency.  
+Instead of using separate primitive fields (street, city, zip, etc.), the task created a cohesive, immutable Address object with value-based equality.  
+The change replaced the old address fields in StudentProfile with the new Address Value Object and updated DTOs and persistence mappings for compatibility.  
+
+
+
+== Diego Pérez (diegoperez16)
+=== #94: Aggregate Deletion Rules
+*Status:* Closed | *Urgency:* 5  |  *Difficulty:* 5 
+
+Ensured cascade deletion for `StudentProfile`, removing related `Match`, `Application`, and `MentorAssignment` records to prevent orphan data.  
+Used database `ON DELETE CASCADE`, excluded `AuditLog` and `Feedback` for accountability, and added safeguards to avoid bulk deletions.  
+Tested with unit/integration cases; schema updates fully documented.
+
+
+=== #145: Research: Building 1-on-1 Communication Systems
+*Status:* Closed | *Urgency:* 4  |  *Difficulty:* 4
+
+Researched best practices for real-time, secure 1-on-1 chats.  
+Compared architectures (client-server vs P2P), WebSockets vs polling, delivery guarantees, E2EE, message storage, presence/typing, and scaling.  
+Delivered 6–8 actionable recommendations with open-source references.
+
+
+=== #146: Research: Building Group Chat Communication Systems
+*Status:* Closed | *Urgency:* 4  |  *Difficulty:* 4
+
+Explored scalable group chat design: socket rooms, threads, message history, role/permission management, moderation, and UI responsiveness.  
+Addressed sync consistency, throttling, pagination, mentions, and rate-limiting.  
+Produced 6–10 applicable best practices with references to production systems.
+
+
+=== #176: Diagram Functionality Flow Implementation in Documentation
+*Status:* Closed | *Urgency:* 3  |  *Difficulty:* 5  
+
+Integrated clear system flow diagrams (SVG/PDF) into Milestone 2 docs to show main user→system→database interactions.  
+Used UML/flowchart notation to complement narrative architecture.  
+Ensured diagrams were scalable, referenced in AsciiDoc, and logged in the documentation change record.
+
+
+=== #144: Weekly Report #5
+*Status:* Closed | *Urgency:* 10  |  *Difficulty:* 10 
+
+Summarized weekly progress: theme toggle, preference persistence, dark mode detection, multi-device testing, accessibility compliance, and documentation updates.  
+Used for tracking, accountability, and identifying blockers.
+
+
+=== #199: Milestone #2 Presentation
+*Status:* Closed | *Urgency:* 10  |  *Difficulty:* 4 
+
+Coordinated final milestone presentation summarizing completed achievements: matching algorithm, Supabase integration with Flutter, role-specific account flows, and documentation improvements.  
+Each lead contributed quantifiable outcomes.
+
+
+=== #192: Weekly Report #6
+*Status:* Closed | *Urgency:* 10  |  *Difficulty:* 4 
+
+Tracked ongoing dark mode implementation and testing across devices.  
+Confirmed accessibility standards compliance and updated developer documentation for UI consistency.
+
+
+=== #193 – Weekly Report #7
+*Status:* Closed | *Urgency:* 10  |  *Difficulty:* 4
+
+Final weekly milestone report confirming task completion: dark mode, preference persistence, system detection, testing, and documentation finalized for Milestone 3 transition.
+
+=== #216: Explore Prior Art for Modeling
+*Status:* Open | *Urgency:* 5  |  *Difficulty:* 5  
+
+Research existing modeling methodologies from academia and industry.  
+Summarize at least three distinct approaches, tools, or frameworks relevant to the project.  
+Provide proper APA/IEEE citations and connect findings to project modeling needs.
+
+
+=== #262: Milestone #3 Presentation
+*Status:* Open | *Urgency:* 6  |  *Difficulty:* 5
+
+Coordinate Milestone 3 presentation summarizing major work: matching logic, Supabase+Flutter integration, user-type flows, and documentation updates.  
+Ensure measurable outcomes are showcased to stakeholders.
+
+
+=== #263: Weekly Report #1
+*Status:* Open | *Urgency:* 9  |  *Difficulty:* 4
+
+Start of Milestone 3 reporting cycle.  
+Recorded work on theme toggles, dark mode preference persistence, testing, accessibility, and documentation progress.
+
+
+=== #264: Weekly Report #2
+*Status:* Open | *Urgency:* 9  |  *Difficulty:* 4 
+
+Continued progress report focusing on dark mode, preference storage, testing consistency, accessibility compliance, and updated documentation.
+
+
+=== #265: Weekly Report #3
+*Status:* Open | *Urgency:* 9  |  *Difficulty:* 4
+
+Maintained consistent tracking of theme/dark mode improvements, device testing, accessibility verification, and developer documentation updates.
+
+
+=== #266: Weekly Report #4
+*Status:* Open | *Urgency:* 9  |  *Difficulty:* 4 
+
+Midpoint milestone report: validated ongoing theme switching, persistence, testing, and accessibility research.  
+Documentation maintained up to date.
+
+
+=== #267: Weekly Report #5
+*Status:* Open | *Urgency:* 9  |  *Difficulty:* 4  
+
+Final Milestone 3 report summarizing completion of dark mode features, device testing, and documentation.  
+Serves as transition checkpoint to upcoming project activities.
+
+
+== Osvaldo (Osvaldoo1414)
+
+=== #118: LTT 26: Identify Naïve vs Deep Models
+*Status:* Closed | *Urgency:* 5  |  *Difficulty:* 5
+
+Analyzed the domain model to distinguish between superficial (“naïve”) and meaningful (“deep”) concepts that improve student–recruiter matching.  
+Highlighted weak elements (e.g., photos, bios) versus deeper constructs (skills, eligibility, recruiter rules).  
+Produced `/docs/modeling/deep-model-review.adoc` comparing naïve vs deep elements, identifying bounded contexts, defining core domains, and proposing metrics for meaningful matching.  
+Delivered table, glossary, risks, and refinement recommendations aligned with DDD.
+
+
+=== #116: Research: Group Chat vs. One-on-One Communication Best Practices
+*Status:* Closed |  *Urgency:* 6  |  *Difficulty:* 5
+
+Researched when to use group chat versus private one-on-one messaging for effective team collaboration.  
+Outlined benefits, drawbacks, and suitable scenarios for each mode (e.g., brainstorming vs performance feedback).  
+Developed clear communication guidelines covering tone, etiquette, and tool usage for hybrid teams.  
+Deliverable: concise, easy-to-apply best practices promoting balance, transparency, and focus.
+
+=== #215: Define Integration Strategy between Profile and Matching Subsystems
+*Status:* Closed |  *Urgency:* 6  |  *Difficulty:* 6
+
+Designed and documented the integration strategy linking `Profile` and `Matching` subsystems to avoid inconsistency and tight coupling.  
+Evaluated three options—Shared Kernel, Translation Layer, and Bounded Context Separation—and selected an **event-driven Translation Layer**.  
+Created `/docs/strategic-design/integration-strategy.adoc` detailing rationale, ASCII diagrams, risks, mitigations, and test plan.  
+Validated through simulated Profile updates triggering Matching events with idempotent handling and observability metrics.  
+Aligned with DDD principles for clear bounded contexts and reliable subsystem coordination.
+
+== Yandré Caban (yandrecaban)
+
+=== #180: Design Chat Screen Layout – UX Planning
+*Status:* Closed | *Urgency:* 4  |  *Difficulty:* 4 
+
+Designed the structural layout and user interaction flow for the chat screen in the messaging module.  
+Defined key interface areas: header (user/group name, status, navigation), scrollable message list, and input bar.  
+Ensured proper spacing, contrast, and accessibility compliance.  
+Delivered responsive mockups in Figma for both empty and populated chat states.  
+Validated layout with developers for technical feasibility and design-system alignment.  
+
+
+=== #136 – Figma Design for Messaging Interface
+*Status:* Closed | *Urgency:* 5  |  *Difficulty:* 6
+
+Created full Figma wireframes and high-fidelity screens for the entire messaging module.  
+Included chat list, one-on-one chat window, and message state variations (sent, delivered, read).  
+Ensured accessibility (WCAG compliance), scalability, and consistency with brand design.  
+Delivered a clickable prototype demonstrating navigation and message flow.  
+Documented all layout specs—colors, spacing, typography, and icons—for smooth developer handoff.  
