@@ -186,7 +186,7 @@ Final Milestone 3 report summarizing completion of dark mode features, device te
 Serves as transition checkpoint to upcoming project activities.
 
 
-== Osvaldo (Osvaldoo1414)
+== Osvaldo Figueroa(Osvaldoo1414)
 
 === #118: LTT 26: Identify Naïve vs Deep Models
 *Status:* Closed | *Urgency:* 5  |  *Difficulty:* 5
