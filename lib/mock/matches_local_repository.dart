@@ -1,7 +1,7 @@
 // Local Repositories for jobseeker and recruiters
 
 //Defining skills from issue #125
-//Technical skills added for reference
+//Technical skills added for reference to create the repositories
 const List<String>  technical_skills =['SQL', 'MySQL', 'Python', 'Java', 'C++', 'C#','HTML & CSS',
 'React.js', 'GitHub', 'VS Code', 'PyCharm', 'Figma', 'Postman', 'Firebase','Dart', 'Flutter', 'AWS'
 ,'Tableau', 'Node.js', 'Express.js'];
