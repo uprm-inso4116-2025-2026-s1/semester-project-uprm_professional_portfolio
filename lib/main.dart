@@ -7,6 +7,7 @@ import 'core/theme/app_theme.dart';
 import 'core/cubits/auth/auth_cubit.dart';
 import 'core/services/supabase_service.dart';
 import 'core/services/storage_service.dart';
+import 'core/services/auth_service.dart'; // Add this import
 import 'components/role_badge.dart';
 
 Future<void> main() async {
@@ -29,9 +30,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Create StorageService and AuthCubit
+    // Create both services
     final storageService = StorageService();
-    final authCubit = AuthCubit(storageService);
+    final authService = AuthService(); // Create AuthService instance
+    final authCubit = AuthCubit(storageService, authService); // Pass both parameters
 
     return BlocProvider(
       create: (_) => authCubit..checkAuthStatus(),

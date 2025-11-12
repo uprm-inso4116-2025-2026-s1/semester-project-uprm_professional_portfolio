@@ -1,37 +1,86 @@
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import '../../models/user.dart' as app_models;
 import '../constants/app_constants.dart';
-import '../../models/user.dart';
 
-// Authentication service for handling login/signup
+class AuthResult {
+  final bool success;
+  final String? error;
+
+  AuthResult({required this.success, this.error});
+}
+
 class AuthService {
-  static final AuthService _instance = AuthService._internal();
-  factory AuthService() => _instance;
-  AuthService._internal();
+  final SupabaseClient _supabase = Supabase.instance.client;
 
-  User? _currentUser;
+  app_models.User? get currentUser {
+    final user = _supabase.auth.currentUser;
+    if (user == null) return null;
+    
+    return app_models.User(
+      id: user.id,
+      email: user.email!,
+      fullName: user.userMetadata?['full_name'] ?? 'User',
+      role: user.userMetadata?['role'] ?? AppConstants.jobseekerRole,
+      createdAt: DateTime.now(),
+    );
+  }
 
-  // Current user getter
-  User? get currentUser => _currentUser;
+  bool get isLoggedIn => _supabase.auth.currentUser != null;
 
-  // Check if user is logged in
-  bool get isLoggedIn => _currentUser != null;
+  // Existing email/password signup
+  Future<AuthResult> signUp({
+    required String email,
+    required String password,
+    required String fullName,
+    required String role,
+  }) async {
+    try {
+      final AuthResponse response = await _supabase.auth.signUp(
+        email: email,
+        password: password,
+        data: {
+          'full_name': fullName,
+          'role': role,
+        },
+      );
+
+      if (response.user != null) {
+        return AuthResult(success: true);
+      } else {
+        return AuthResult(
+          success: false,
+          error: 'Signup failed. Please try again.',
+        );
+      }
+    } on AuthException catch (e) {
+      return AuthResult(success: false, error: e.message);
+    } catch (e) {
+      return AuthResult(
+        success: false,
+        error: 'An unexpected error occurred: ${e.toString()}',
+      );
+    }
+  }
 
   // Login method
   Future<AuthResult> login(String email, String password) async {
     try {
-      // TODO: Implement actual API call
-      await Future<void>.delayed(
-          const Duration(seconds: 2)); // Simulate API call
-
-      // Mock successful login
-      _currentUser = User(
-        id: 'mock-id',
+      final AuthResponse response = await _supabase.auth.signInWithPassword(
         email: email,
-        fullName: 'Mock User',
-        role: AppConstants.jobseekerRole,
-        createdAt: DateTime.now(),
+        password: password,
       );
 
-      return AuthResult(success: true);
+      if (response.user != null) {
+        return AuthResult(success: true);
+      } else {
+        return AuthResult(
+          success: false,
+          error: 'Login failed. Please try again.',
+        );
+      }
+    } on AuthException catch (e) {
+      return AuthResult(success: false, error: e.message);
     } catch (e) {
       return AuthResult(
         success: false,
@@ -40,53 +89,87 @@ class AuthService {
     }
   }
 
-  // Sign up method
-  Future<AuthResult> signUp({
-    required String email,
-    required String password,
-    required String fullName,
-    required String role,
+  // OAuth Sign In - UPDATED with correct method signature
+  Future<AuthResult> signInWithOAuth({
+    required String provider,
+    String? role,
   }) async {
     try {
-      // TODO: Implement actual API call
-      await Future<void>.delayed(
-          const Duration(seconds: 2)); // Simulate API call
+      OAuthProvider oauthProvider;
+    
+      switch (provider.toLowerCase()) {
+        case 'google':
+          oauthProvider = OAuthProvider.google;
+          break;
+        case 'linkedin':
+          oauthProvider = OAuthProvider.linkedin;
+          break;
+        default:
+          return AuthResult(success: false, error: 'Unsupported OAuth provider');
+      }
 
-      // Mock successful signup
-      _currentUser = User(
-        id: 'mock-id',
-        email: email,
-        fullName: fullName,
-        role: role,
-        createdAt: DateTime.now(),
+      await _supabase.auth.signInWithOAuth(
+        oauthProvider,
+        redirectTo: kIsWeb ? null : 'your-app-scheme://login-callback',
       );
 
       return AuthResult(success: true);
+    } on AuthException catch (e) {
+      return AuthResult(success: false, error: e.message);
     } catch (e) {
       return AuthResult(
         success: false,
-        error: 'Sign up failed: ${e.toString()}',
+        error: 'OAuth sign in failed: ${e.toString()}',
+      );
+    }
+  }
+
+  // Link existing account with OAuth provider - REMOVED for now
+  // The linkWithOAuth method doesn't exist in current Supabase version
+  Future<AuthResult> linkAccountWithOAuth(String provider) async {
+    // This feature is not available in current Supabase Flutter SDK
+    return AuthResult(
+      success: false,
+      error: 'Account linking is not currently supported',
+    );
+  }
+
+  // Alternative: Update user data instead
+  Future<AuthResult> updateUserData(Map<String, dynamic> data) async {
+    try {
+      final response = await _supabase.auth.updateUser(
+        UserAttributes(data: data),
+      );
+
+      if (response.user != null) {
+        return AuthResult(success: true);
+      } else {
+        return AuthResult(
+          success: false,
+          error: 'Failed to update user data',
+        );
+      }
+    } on AuthException catch (e) {
+      return AuthResult(success: false, error: e.message);
+    } catch (e) {
+      return AuthResult(
+        success: false,
+        error: 'Failed to update user data: ${e.toString()}',
       );
     }
   }
 
   // Logout method
   Future<void> logout() async {
-    _currentUser = null;
-    // TODO: Clear stored tokens/preferences
+    await _supabase.auth.signOut();
   }
 
   // Check authentication status
   Future<bool> checkAuthStatus() async {
-    // TODO: Check stored tokens and validate
-    return _currentUser != null;
+    final session = _supabase.auth.currentSession;
+    return session != null;
   }
-}
 
-// Auth result class
-class AuthResult {
-  final bool success;
-  final String? error;
-
-  AuthResult({required this.success, this.error});
+  // Get auth state changes stream
+  Stream<AuthState> get authStateChanges => _supabase.auth.onAuthStateChange;
 }
