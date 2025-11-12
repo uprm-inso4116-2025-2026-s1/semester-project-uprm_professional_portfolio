@@ -1,0 +1,611 @@
+= Milestone 2 Completion Report
+Team UPRM Professional Portfolio
+:toc:
+:toc-title: Table of Contents
+:sectnums:
+:icons: font
+:source-highlighter: highlightjs
+
+== Executive Summary
+
+During Sprint 2 (Milestone 2), the team successfully implemented a **fully functional authentication system** including UI design, state management, local data persistence, and complete user flows. This goes beyond the initial scope of UI-only implementation.
+
+*Status:* ✅ **COMPLETE** + Additional Backend Features
+
+*Completion Date:* October 24, 2025
+
+== Delivered Features
+
+=== 1. User Interface Components
+
+==== 1.1 Authentication Screens
+[cols="1,3,1"]
+|===
+|Screen |Features |Status
+
+|*Login Screen*
+a|
+* Email and password input fields
+* Form validation (email format, required fields)
+* "Forgot Password" link (UI only)
+* Social login buttons (Google, LinkedIn) - UI only
+* "Sign Up" navigation link
+* Loading states with spinner
+* Error messages via SnackBar
+|✅ Complete
+
+|*Signup Screen*
+a|
+* Role selection (Job Seeker vs Recruiter)
+* Name, email, password fields
+* Password confirmation
+* Form validation (name, email format, password strength, password match)
+* Terms & conditions notice
+* "Sign In" navigation link
+* "Next" button workflow
+|✅ Complete
+
+|*Welcome Screen*
+a|
+* Success message with user name
+* Role badge display
+* "Let's get you networking!" message
+* "Get Started" button → Settings tab
+* Success icon
+|✅ Complete
+|===
+
+==== 1.2 Profile Screens
+[cols="1,3,1"]
+|===
+|Screen |Features |Status
+
+|*Recruiter Profile*
+a|
+* Company name (required)
+* Job title (required)
+* Company website (optional, URL validation)
+* Bio (optional)
+* Location (optional)
+* Phone number (optional)
+* Industries selection (optional)
+* "Create Account" button
+* Form validation
+* Loading state while data loads
+* Data persistence to local storage
+|✅ Complete
+
+|*Job Seeker Profile*
+a|
+* Full name
+* Professional title
+* Skills
+* Education
+* Experience
+* Portfolio links
+* "Create Account" button
+* Form validation
+* Loading state while data loads
+* Data persistence to local storage
+|✅ Complete
+|===
+
+==== 1.3 Main Application Screens
+[cols="1,3,1"]
+|===
+|Screen |Features |Status
+
+|*Settings Screen*
+a|
+* User profile header (avatar, name, email, role badge)
+* Profile tile → navigates to profile edit
+* Logout button with confirmation dialog
+* Clean, organized layout
+|✅ Complete
+
+|*Main Screen*
+a|
+* Bottom navigation (Dashboard, Settings)
+* Tab-based navigation
+* Support for query parameters (tab selection)
+|✅ Complete
+
+|*Dashboard Screen*
+|Placeholder for future job listings
+|🔄 Pending (Milestone 3)
+|===
+
+=== 2. State Management (Flutter Bloc)
+
+==== 2.1 AuthCubit Implementation
+[source,dart]
+----
+// lib/core/cubits/auth/auth_cubit.dart
+class AuthCubit extends Cubit<AuthState> {
+  final StorageService _storageService;
+  
+  // Methods implemented:
+  - checkAuthStatus()     // Load user on app start
+  - login(email, password) // Verify credentials
+  - signUp(...)           // Create new account
+  - logout()              // Clear session
+  - updateUser(user)      // Update user info
+}
+----
+
+*Features:*
+
+* ✅ Authentication state management
+* ✅ User session handling
+* ✅ Automatic state updates
+* ✅ Error handling and reporting
+
+==== 2.2 Authentication States
+[source,dart]
+----
+// lib/core/cubits/auth/auth_state.dart
+sealed class AuthState extends Equatable {
+  - AuthInitial       // App starting up
+  - AuthLoading       // Processing auth action
+  - AuthAuthenticated // User logged in
+  - AuthUnauthenticated // User not logged in
+  - AuthError         // Auth failed with message
+}
+----
+
+=== 3. Data Persistence Layer
+
+==== 3.1 StorageService Implementation
+[source,dart]
+----
+// lib/core/services/storage_service.dart
+class StorageService {
+  // User session management
+  - saveUser(User)
+  - getUser() → User?
+  - clearUser()
+  
+  // Credential storage (local authentication)
+  - saveCredentials(email, password, user)
+  - verifyCredentials(email, password) → User?
+  
+  // Profile data persistence
+  - saveRecruiterProfile(RecruiterProfile)
+  - getRecruiterProfile() → RecruiterProfile?
+  - saveJobSeekerProfile(JobSeekerProfile)
+  - getJobSeekerProfile() → JobSeekerProfile?
+  - clearProfiles()
+}
+----
+
+*Storage Keys:*
+
+* `current_user` - Active session user
+* `is_logged_in` - Login status flag
+* `user_credentials` - Email → {password, userData} mapping
+* `recruiter_profile` - Recruiter profile JSON
+* `jobseeker_profile` - Job seeker profile JSON
+
+*Technology:* SharedPreferences (Flutter package)
+
+=== 4. Routing & Navigation
+
+==== 4.1 GoRouter Configuration
+[source,dart]
+----
+// lib/routes/app_router.dart
+Routes implemented:
+- /login              → LoginScreen
+- /signup             → SignupScreen
+- /recruiter-profile  → RecruiterProfileScreen
+- /jobseeker-profile  → JobSeekerProfileScreen
+- /welcome            → WelcomeScreen
+- /main?tab=0         → MainScreen (Dashboard)
+- /main?tab=1         → MainScreen (Settings)
+----
+
+==== 4.2 Auth Guards & Redirects
+*Logic:*
+
+* Unauthenticated users → Redirect to Login
+* Authenticated users on Login/Signup → Redirect to Main
+* Allow access to Profile and Welcome routes for authenticated users during signup flow
+* Preserve navigation state during authentication
+
+=== 5. User Flows
+
+==== 5.1 Signup Flow
+[plantuml]
+----
+@startuml
+start
+:User opens app;
+:Navigate to Signup;
+:Select role (Job Seeker/Recruiter);
+:Enter name, email, password;
+:Click "Next";
+:AuthCubit.signUp();
+:Save credentials to storage;
+:Navigate to Profile Form;
+:Fill profile information;
+:Click "Create Account";
+:Save profile to storage;
+:Navigate to Welcome Screen;
+:Click "Get Started";
+:Navigate to Settings Tab;
+stop
+@enduml
+----
+
+*Steps:*
+
+1. User selects role on Signup Screen
+2. Enters personal information
+3. Clicks "Next" button
+4. `AuthCubit.signUp()` creates account and saves credentials
+5. Navigates to appropriate profile form (Recruiter/Job Seeker)
+6. User fills profile information
+7. Clicks "Create Account" button
+8. Profile saved to local storage
+9. Navigates to Welcome Screen
+10. User clicks "Get Started"
+11. Navigates to Settings tab in Main Screen
+
+==== 5.2 Login Flow
+[plantuml]
+----
+@startuml
+start
+:User on Login Screen;
+:Enter email & password;
+:Click "Sign In";
+:AuthCubit.login();
+if (Credentials valid?) then (yes)
+  :Load user data;
+  :Navigate to Main Screen;
+  :User can access Settings;
+  :User can edit Profile;
+else (no)
+  :Show error SnackBar;
+  :Remain on Login Screen;
+endif
+stop
+@enduml
+----
+
+*Steps:*
+
+1. User enters email and password
+2. Clicks "Sign In" button
+3. `AuthCubit.login()` verifies credentials via `StorageService.verifyCredentials()`
+4. If valid: User logged in, navigates to Main Screen
+5. If invalid: Error SnackBar shown, remains on Login Screen
+
+==== 5.3 Logout Flow
+*Steps:*
+
+1. User in Settings Screen
+2. Clicks "Logout" button
+3. Confirmation dialog appears
+4. User confirms logout
+5. `AuthCubit.logout()` clears session
+6. **Credentials preserved** in storage for re-login
+7. Navigate back to Login Screen
+8. User can log in again with saved credentials
+
+=== 6. Data Models
+
+==== 6.1 User Model
+[source,dart]
+----
+// lib/models/user.dart
+class User extends Equatable {
+  final String id;
+  final String email;
+  final String fullName;
+  final String role;  // 'recruiter' or 'jobseeker'
+  final DateTime createdAt;
+  
+  // JSON serialization
+  factory User.fromJson(Map<String, dynamic> json)
+  Map<String, dynamic> toJson()
+}
+----
+
+==== 6.2 RecruiterProfile Model
+[source,dart]
+----
+// lib/models/recruiter_profile.dart
+class RecruiterProfile extends Equatable {
+  final String id;
+  final String userId;
+  final String companyName;      // Required
+  final String jobTitle;          // Required
+  final String? companyWebsite;   // Optional
+  final String? bio;              // Optional
+  final String? location;         // Optional
+  final String? phoneNumber;      // Optional
+  final List<String> industries;  // Optional
+  final DateTime createdAt;
+  final DateTime? updatedAt;
+  
+  // JSON serialization
+  factory RecruiterProfile.fromJson(Map<String, dynamic> json)
+  Map<String, dynamic> toJson()
+}
+----
+
+==== 6.3 JobSeekerProfile Model
+[source,dart]
+----
+// lib/models/jobseeker_profile.dart
+class JobSeekerProfile extends Equatable {
+  final String id;
+  final String userId;
+  final String? professionalTitle;
+  final String? bio;
+  final List<String> skills;
+  final String? education;
+  final String? experience;
+  final String? portfolioUrl;
+  final DateTime createdAt;
+  final DateTime? updatedAt;
+  
+  // JSON serialization
+  factory JobSeekerProfile.fromJson(Map<String, dynamic> json)
+  Map<String, dynamic> toJson()
+}
+----
+
+=== 7. Reusable Components
+
+==== 7.1 CustomButton
+*Features:*
+
+* Elevated or Outlined style
+* Loading state with spinner
+* Icon support
+* Customizable colors
+* Full width by default
+
+==== 7.2 CustomTextField
+*Features:*
+
+* Label and hint text
+* Validation support
+* Obscure text (for passwords)
+* Prefix icon
+* Keyboard type configuration
+
+==== 7.3 RoleSelectionCard
+*Features:*
+
+* Title and description
+* Icon display
+* Selected state indicator
+* Tap handler
+
+==== 7.4 RoleBadge
+*Features:*
+
+* Color-coded by role
+* Rounded pill design
+* Clean typography
+
+== Technical Implementation Details
+
+=== Architecture Pattern
+
+*Pattern:* **BLoC (Business Logic Component)** with **Repository Pattern**
+
+[plantuml]
+----
+@startuml
+package "Presentation Layer" {
+  [LoginScreen]
+  [SignupScreen]
+  [ProfileScreens]
+  [SettingsScreen]
+}
+
+package "State Management" {
+  [AuthCubit]
+  [AuthState]
+}
+
+package "Data Layer" {
+  [StorageService]
+  [SharedPreferences]
+}
+
+package "Domain Layer" {
+  [User Model]
+  [Profile Models]
+}
+
+[LoginScreen] --> [AuthCubit]
+[SignupScreen] --> [AuthCubit]
+[ProfileScreens] --> [StorageService]
+[SettingsScreen] --> [AuthCubit]
+
+[AuthCubit] --> [StorageService]
+[AuthCubit] --> [AuthState]
+
+[StorageService] --> [SharedPreferences]
+[StorageService] --> [User Model]
+[StorageService] --> [Profile Models]
+
+@enduml
+----
+
+=== Dependencies
+
+[source,yaml]
+----
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.6        # State management
+  equatable: ^2.0.5            # Value equality
+  go_router: ^14.6.2           # Navigation
+  shared_preferences: ^2.2.3   # Local storage
+  flutter_dotenv: ^5.1.0       # Environment config
+  supabase_flutter: ^2.7.0     # Database (not yet integrated)
+----
+
+=== Code Quality
+
+* ✅ Null safety enabled
+* ✅ Proper error handling
+* ✅ Loading states throughout
+* ✅ Form validation
+* ✅ Clean architecture separation
+* ✅ Reusable components
+* ✅ Consistent naming conventions
+
+== Known Limitations & Future Work
+
+=== Current Limitations
+
+[cols="2,3,1"]
+|===
+|Limitation |Description |Priority
+
+|*Local Storage Only*
+|Data stored in SharedPreferences, not synced to cloud
+|🔴 High
+
+|*No Password Encryption*
+|Passwords stored in plain text locally (temporary solution)
+|🔴 High
+
+|*Mock User IDs*
+|Using 'temp' and 'temp-user' for IDs
+|🟡 Medium
+
+|*No Profile Images*
+|Profile pictures not implemented
+|🟡 Medium
+
+|*Social Login UI Only*
+|Google/LinkedIn buttons present but non-functional
+|🟢 Low
+
+|*No Forgot Password*
+|Feature not implemented
+|🟢 Low
+|===
+
+=== Milestone 3 Requirements
+
+==== Team A - Backend Integration
+
+1. **Supabase Integration**
+   * Set up Supabase project
+   * Implement authentication using Supabase Auth
+   * Replace local storage with Supabase database calls
+   * Implement real-time synchronization
+
+2. **Database Schema**
+   * Create users table
+   * Create recruiter_profiles table
+   * Create jobseeker_profiles table
+   * Set up relationships and constraints
+   * Implement Row Level Security (RLS)
+
+3. **API Integration**
+   * Update `AuthCubit` to use Supabase API
+   * Update `StorageService` to use Supabase queries
+   * Implement error handling for network issues
+   * Add retry logic for failed requests
+
+4. **Security Enhancements**
+   * Implement password hashing
+   * Add JWT token management
+   * Implement refresh token logic
+   * Add session expiration handling
+
+==== Team B - UI Enhancement & Features
+
+1. **UI Polish**
+   * Match Figma prototype colors and spacing
+   * Refine typography
+   * Add animations and transitions
+   * Improve accessibility
+
+2. **Dashboard Implementation**
+   * Job listings view (for job seekers)
+   * Applicant management (for recruiters)
+   * Search and filter functionality
+   * Sorting options
+
+3. **Job Posting**
+   * Create job posting form (recruiters)
+   * Job details screen
+   * Application submission (job seekers)
+   * Application tracking
+
+4. **Profile Enhancements**
+   * Profile image upload
+   * Image cropping/resizing
+   * Resume upload (job seekers)
+   * Company logo upload (recruiters)
+
+== Testing Strategy
+
+=== Current Testing Status
+
+* ⚠️ Unit tests: Not implemented
+* ⚠️ Widget tests: Not implemented
+* ⚠️ Integration tests: Not implemented
+* ✅ Manual testing: Performed throughout development
+
+=== Recommended Testing for Milestone 3
+
+1. **Unit Tests**
+   * Test `AuthCubit` state transitions
+   * Test `StorageService` methods
+   * Test model serialization/deserialization
+   * Test validators
+
+2. **Widget Tests**
+   * Test each screen renders correctly
+   * Test form validation
+   * Test navigation flows
+   * Test error states
+
+3. **Integration Tests**
+   * Test complete signup flow
+   * Test complete login flow
+   * Test profile creation and editing
+   * Test logout and re-login
+
+== Conclusion
+
+Milestone 2 has been successfully completed with **additional backend functionality** beyond the original scope. The team delivered:
+
+* ✅ Complete UI for all authentication screens
+* ✅ Functional state management with AuthCubit
+* ✅ Local data persistence
+* ✅ Complete user flows (signup, login, logout)
+* ✅ Profile management
+* ✅ Routing and navigation
+* ✅ Form validation and error handling
+
+The foundation is now solid for Milestone 3, where we will:
+
+1. Integrate with Supabase backend
+2. Implement cloud database storage
+3. Add real-time features
+4. Polish UI to match Figma design
+5. Expand functionality (dashboard, job posting, search)
+
+*Next Sprint Start Date:* TBD
+
+*Estimated Completion for Milestone 3:* TBD
+
+---
+
+_Document prepared by: Development Team_
+
+_Last updated: October 24, 2025_

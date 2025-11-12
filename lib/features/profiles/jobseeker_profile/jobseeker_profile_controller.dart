@@ -1,59 +1,202 @@
+import 'dart:async';
+import 'dart:typed_data';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import '../../../models/jobseeker_profile.dart';
 
-// JobSeeker profile controller
+import '/../models/jobseeker_profile.dart';
+
 class JobSeekerProfileController extends ChangeNotifier {
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+  // ---------- Form ----------
+  final formKey = GlobalKey<FormState>();
 
-  JobSeekerProfile? _profile;
-  JobSeekerProfile? get profile => _profile;
+  // ---------- Text Controllers ----------
+  final majorCtrl = TextEditingController();
+  final gradYearCtrl = TextEditingController();
+  final bioCtrl = TextEditingController();
+  final locationCtrl = TextEditingController();
+  final phoneCtrl = TextEditingController();
+  final skillsCtrl = TextEditingController();
+  final interestsCtrl = TextEditingController();
+  final portfolioUrlCtrl = TextEditingController();
+  final linkedinUrlCtrl = TextEditingController();
+  final githubUrlCtrl = TextEditingController();
 
-  // Save job seeker profile
-  Future<bool> saveProfile(JobSeekerProfile profile) async {
-    _setLoading(true);
+  bool isStudent = true;
+  String jobType = 'internship';
+  bool willingToRelocate = false;
 
-    try {
-      // TODO: Implement API call to save profile
-      await Future<void>.delayed(
-          const Duration(seconds: 2)); // Simulate API call
+  // ---------- Resume selection ----------
+  PlatformFile? _resumeFile;
+  Uint8List? resumeBytes;
+  String? resumePath;
+  String? resumeName;
+  bool uploading = false;
 
-      _profile = profile;
-      return true;
-    } catch (e) {
-      return false;
-    } finally {
-      _setLoading(false);
+  // Expose a pretty size string for the UI
+  String? get resumePrettySize {
+    final size = _resumeFile?.size;
+    if (size == null) {
+      return null;
     }
+    final mb = size / (1024 * 1024);
+    if (mb >= 1) {
+      return '${mb.toStringAsFixed(2)} MB';
+    }
+    final kb = size / 1024;
+    return '${kb.toStringAsFixed(0)} KB';
   }
 
-  // Load job seeker profile
-  Future<void> loadProfile(String userId) async {
-    _setLoading(true);
+  // ---------- Validators ----------
+  String? requiredField(String? v) =>
+      (v == null || v.trim().isEmpty) ? 'This field is required' : null;
 
+  String? optionalInt(String? v) {
+    if (v == null || v.trim().isEmpty) return null;
+    return int.tryParse(v.trim()) == null ? 'Enter a valid number' : null;
+  }
+
+  String? optionalUrl(String? v) {
+    if (v == null || v.trim().isEmpty) return null;
+    final u = Uri.tryParse(v.trim());
+    final ok = u != null && (u.scheme == 'http' || u.scheme == 'https') && u.host.isNotEmpty;
+    return ok ? null : 'Enter a valid URL (http/https)';
+  }
+
+  void setIsStudent(bool v) { isStudent = v; notifyListeners(); }
+  void setJobType(String v) { jobType = v; notifyListeners(); }
+  void setWillingToRelocate(bool v) { willingToRelocate = v; notifyListeners(); }
+
+  Future<String?> pickResume() async {
     try {
-      // TODO: Implement API call to load profile
-      await Future<void>.delayed(
-          const Duration(seconds: 1)); // Simulate API call
+      uploading = true; notifyListeners();
 
-      // Mock profile data
-      _profile = JobSeekerProfile(
-        id: 'mock-profile-id',
-        userId: userId,
-        major: 'Computer Science',
-        graduationYear: 2025,
-        isStudent: true,
-        createdAt: DateTime.now(),
+      final result = await FilePicker.platform.pickFiles(
+        allowMultiple: false,
+        withData: kIsWeb, // get bytes on web
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'docx'],
+        dialogTitle: 'Select your resume',
       );
+
+      uploading = false;
+
+      if (result == null || result.files.isEmpty) {
+        notifyListeners();
+        return null; // user cancelled
+      }
+
+      final file = result.files.single;
+
+      // Enforce ≤ 5 MB
+      const maxBytes = 5 * 1024 * 1024;
+      if (file.size > maxBytes) {
+        notifyListeners();
+        return 'Please select a file that is 5 MB or smaller.';
+      }
+
+      _resumeFile = file;
+      resumeName = file.name;
+      resumeBytes = file.bytes;
+      resumePath  = file.path;
+
+      notifyListeners();
+      return null;
     } catch (e) {
-      _profile = null;
-    } finally {
-      _setLoading(false);
+      uploading = false; notifyListeners();
+      return 'Could not open the file picker.';
     }
   }
 
-  void _setLoading(bool value) {
-    _isLoading = value;
+  // ---------- Draft builders ----------
+  Map<String, dynamic> toDraftMap() {
+    List<String> split(String raw) => raw
+        .split(',')
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList();
+    String? nullIfEmpty(String s) => s.trim().isEmpty ? null : s.trim();
+
+    return {
+      'major': nullIfEmpty(majorCtrl.text),
+      'graduation_year': int.tryParse(gradYearCtrl.text.trim()),
+      'bio': nullIfEmpty(bioCtrl.text),
+      'location': nullIfEmpty(locationCtrl.text),
+      'phone_number': nullIfEmpty(phoneCtrl.text),
+      'skills': split(skillsCtrl.text),
+      'interests': split(interestsCtrl.text),
+      'portfolio_url': nullIfEmpty(portfolioUrlCtrl.text),
+      'linkedin_url': nullIfEmpty(linkedinUrlCtrl.text),
+      'github_url': nullIfEmpty(githubUrlCtrl.text),
+      'is_student': isStudent,
+      'job_type': jobType,
+      'willing_to_relocate': willingToRelocate,
+      'resume_url': resumeName == null ? null : 'local://$resumeName',
+    };
+  }
+
+  JobSeekerProfile toModel({required String id, required String userId}) {
+    List<String> split(String raw) => raw
+        .split(',')
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList();
+    String? nullIfEmpty(String s) => s.trim().isEmpty ? null : s.trim();
+
+    return JobSeekerProfile(
+      id: id,
+      userId: userId,
+      major: nullIfEmpty(majorCtrl.text),
+      graduationYear: int.tryParse(gradYearCtrl.text.trim()),
+      bio: nullIfEmpty(bioCtrl.text),
+      location: nullIfEmpty(locationCtrl.text),
+      phoneNumber: nullIfEmpty(phoneCtrl.text),
+      skills: split(skillsCtrl.text),
+      interests: split(interestsCtrl.text),
+      // store the URL you get after uploading in your data layer
+      resumeUrl: resumeName == null ? null : 'local://$resumeName',
+      portfolioUrl: nullIfEmpty(portfolioUrlCtrl.text),
+      linkedInUrl: nullIfEmpty(linkedinUrlCtrl.text),
+      githubUrl: nullIfEmpty(githubUrlCtrl.text),
+      isStudent: isStudent,
+      jobType: jobType,
+      willingToRelocate: willingToRelocate,
+      createdAt: DateTime.now(),
+    );
+  }
+
+  void loadFromModel(JobSeekerProfile m) {
+    majorCtrl.text = m.major ?? '';
+    gradYearCtrl.text = m.graduationYear?.toString() ?? '';
+    bioCtrl.text = m.bio ?? '';
+    locationCtrl.text = m.location ?? '';
+    phoneCtrl.text = m.phoneNumber ?? '';
+    skillsCtrl.text = m.skills.join(', ');
+    interestsCtrl.text = m.interests.join(', ');
+    portfolioUrlCtrl.text = m.portfolioUrl ?? '';
+    linkedinUrlCtrl.text = m.linkedInUrl ?? '';
+    githubUrlCtrl.text = m.githubUrl ?? '';
+    isStudent = m.isStudent;
+    jobType = m.jobType;
+    willingToRelocate = m.willingToRelocate;
+
+    resumeName = m.resumeUrl;
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    majorCtrl.dispose();
+    gradYearCtrl.dispose();
+    bioCtrl.dispose();
+    locationCtrl.dispose();
+    phoneCtrl.dispose();
+    skillsCtrl.dispose();
+    interestsCtrl.dispose();
+    portfolioUrlCtrl.dispose();
+    linkedinUrlCtrl.dispose();
+    githubUrlCtrl.dispose();
+    super.dispose();
   }
 }

@@ -1,14 +1,16 @@
+// Update your existing SignupScreen
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../components/custom_button.dart';
 import '../../../components/custom_text_field.dart';
 import '../../../components/role_selection_card.dart';
+import '../../../components/oauth_button.dart'; // Add this import
 import '../../../core/constants/app_constants.dart';
 import '../../../core/constants/ui_constants.dart';
 import '../../../core/utils/validators.dart';
-import 'signup_controller.dart';
+import '../../../core/cubits/auth/auth_cubit.dart';
 
-// Signup screen with role selection
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -22,9 +24,10 @@ class _SignupScreenState extends State<SignupScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  final _controller = SignupController();
 
   String? _selectedRole;
+  bool _isOAuthLoading = false;
+  String? _currentOAuthProvider;
 
   @override
   void dispose() {
@@ -103,6 +106,28 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: UIConstants.spaceXL),
 
+                // OAuth Section
+                _buildOAuthSection(context),
+                const SizedBox(height: UIConstants.spaceXL),
+
+                // Divider with "or" text
+                Row(
+                  children: [
+                    Expanded(child: Divider(color: theme.colorScheme.outline)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        'or',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ),
+                    Expanded(child: Divider(color: theme.colorScheme.outline)),
+                  ],
+                ),
+                const SizedBox(height: UIConstants.spaceXL),
+
                 // Form fields
                 CustomTextField(
                   label: 'Full Name',
@@ -156,16 +181,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: UIConstants.spaceLG),
 
-                // Sign up button
-                ListenableBuilder(
-                  listenable: _controller,
-                  builder: (context, _) {
-                    return CustomButton(
-                      text: 'Create Account',
-                      onPressed: _handleSignup,
-                      isLoading: _controller.isLoading,
-                    );
-                  },
+                // Next button
+                CustomButton(
+                  text: 'Next',
+                  onPressed: _handleNext,
                 ),
 
                 const SizedBox(height: UIConstants.spaceLG),
@@ -194,8 +213,58 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Future<void> _handleSignup() async {
-    // Validate role selection
+  Widget _buildOAuthSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          'Sign up with',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: UIConstants.spaceMD),
+
+        OAuthButton(
+          provider: 'google',
+          label: 'Continue with Google',
+          icon: Icons.g_mobiledata, // You can use a custom icon here
+          isLoading: _isOAuthLoading && _currentOAuthProvider == 'google',
+          onPressed: () => _handleOAuthSignIn('google'),
+        ),
+        const SizedBox(height: UIConstants.spaceMD),
+
+        OAuthButton(
+          provider: 'linkedin',
+          label: 'Continue with LinkedIn',
+          icon: Icons.work_outline,
+          isLoading: _isOAuthLoading && _currentOAuthProvider == 'linkedin',
+          onPressed: () => _handleOAuthSignIn('linkedin'),
+        ),
+      ],
+    );
+  }
+
+  void _handleOAuthSignIn(String provider) async {
+    if (_selectedRole == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Please select your role before continuing'),
+          backgroundColor: Theme.of(context).colorScheme.error,
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      _isOAuthLoading = true;
+      _currentOAuthProvider = provider;
+    });
+  }
+
+ void _handleNext() async {
+  // Validate role selection
     if (_selectedRole == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -208,28 +277,20 @@ class _SignupScreenState extends State<SignupScreen> {
 
     if (!_formKey.currentState!.validate()) return;
 
-    final result = await _controller.signUp(
-      email: _emailController.text.trim(),
-      password: _passwordController.text,
-      fullName: _nameController.text.trim(),
-      role: _selectedRole!,
-    );
+    // Create user account using AuthCubit
+    await context.read<AuthCubit>().signUp(
+          _emailController.text.trim(),
+          _passwordController.text,
+          _nameController.text.trim(),
+          _selectedRole!,
+        );
 
     if (mounted) {
-      if (result.success) {
-        // Navigate to profile setup based on role
-        if (_selectedRole == AppConstants.recruiterRole) {
-          context.go(AppConstants.recruiterProfileRoute);
-        } else {
-          context.go(AppConstants.jobseekerProfileRoute);
-        }
+      // Navigate to profile form based on role
+      if (_selectedRole == AppConstants.recruiterRole) {
+        context.go(AppConstants.recruiterProfileRoute);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(result.error ?? 'Sign up failed'),
-            backgroundColor: Theme.of(context).colorScheme.error,
-          ),
-        );
+        context.go(AppConstants.jobseekerProfileRoute);
       }
     }
   }

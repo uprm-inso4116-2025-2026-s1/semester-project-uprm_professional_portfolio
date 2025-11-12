@@ -11,6 +11,9 @@ class AppConstants {
   // Routes
   static const String loginRoute = '/login';
   static const String signupRoute = '/signup';
+  static const String welcomeRoute = '/welcome';
+  static const String mainRoute = '/main';
+  static const String settingsRoute = '/settings';
   static const String recruiterProfileRoute = '/recruiter-profile';
   static const String jobseekerProfileRoute = '/jobseeker-profile';
   static const String matchesScreenRoute = '/matches';
