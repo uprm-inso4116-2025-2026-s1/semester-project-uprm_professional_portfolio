@@ -1,0 +1,1000 @@
+= Professional Portfolio Application Proposal 
+First Milestone - Software Design - INSO 4115
+Prof. Marko Schütz-Schmuck 
+:doctype: book
+:toc:
+:sectnums:
+
+== Informative Part
+
+=== Team
+
+For Milestone 1, the team was organized into four functional groups. These are Research, Functionality, Design, and Documentation; plus three Managers. In this context, all team members are considered partners. No external partners have been identified for this milestone; if any arise, their roles and responsibilities will be documented. The lists are presented in alphabetical order and indicate each group’s Team Leader. The Tasks column is reserved for recording completed issues.
+
+===== Managers:
+[cols="3,2,5",options="header"]
+|===
+| Student| GitHub username | Tasks
+| Kaysha L. Pagan López | link:https://github.com/Kay9876[@Kay9876] | 
+| Juan R. Rivera Rodríguez | link:https://github.com/JRRR0912[@JRRR0912] | 
+| Julian A. Vivas Gandarillas | link:https://github.com/julivivas[@julivivas] | 
+|===
+
+===== Design:
+[cols="3,2,5",options="header"]
+|===
+| Student | GitHub username | Tasks
+| Luis J. Cruz Cruz _(Team Leader)_ | link:https://github.com/LuisJCruz[@LuisJCruz] | #4, #16, #45, #69, #76, #98
+| Yandre Cabán Torres | link:https://github.com/YandreCaban[@YandreCaban] | #16, #35, #69, #72
+| Carlos A. Ferrer Hayes | link:https://github.com/CarlosxFerrer[@CarlosxFerrer] | #16, #34, #69, #75
+| Osvaldo F. Figueroa Canino | link:https://github.com/Osvaldoo1414[@Osvaldoo1414] | #16, #36, #60, #62, #69, #71, #91
+| Ariana P. Rodríguez Méndez | link:https://github.com/arianrodz21[@arianrodz21] | #37, #69, #73
+|===
+
+===== Documentation:
+[cols="3,2,5",options="header"]
+|===
+| Student | GitHub username | Tasks
+| Jean P. I. Sánchez Félix _(Team Leader)_ | link:https://github.com/JeanSanchezFelix[@JeanSanchezFelix] | #2, #15, #23, #24, #26, #38, #45, #59, #76, #92, #96, #98
+| Carlos E. Cabán González | link:https://github.com/Carloscaban[@Carloscaban] | #24, #32, #33
+| Jahdiel E. Montero Alicea | link:https://github.com/JadStelar[@JadStelar] | #29, #30, #31, #67
+| Kiara N. Pérez Rivera | link:https://github.com/kiarancole[@kiarancole] | #38, #39, #47, #48, #60, #61, #63, #99
+| Pedro A. Rodríguez Vélez | link:https://github.com/PedroRodz[@PedroRodz] | #13, #14, #24, #26, #28, #38, #39, #41, #49, #52, #53, #57, #82
+| Alexa M. Zaragoza Torres | link:https://github.com/alexamzt[@alexamzt] | #24, #25, #26, #27, #38, #39, #50, #51, #53, #54, #55, #56, #101
+|===
+
+
+===== Functionality:
+[cols="3,2,5",options="header"]
+|===
+| Student | GitHub username | Tasks
+| Diego Pérez Ganradillas _(Team Leader)_ | link:https://github.com/diegoperez16[@diegoperez16] | #17, #18, #21, #45, #65, #76, #78, #93, #94, #98, #103
+| Axel A. Orta Félix | link:https://github.com/Axl47[@Axl47] | #20
+| Carlos Pepin Delgado |  link:https://github.com/carlospepin23[@carlospepin23] | #19, #21, #40, #42, #43, #44, #83, #84
+| Ryan R. Vélez Villarrubia | link:https://github.com/RyanVelez101[@RyanVelez101] | #66, #95
+|===
+
+===== Research:
+[cols="3,2,5",options="header"]
+|===
+| Student | GitHub username | Tasks
+| Horeb Cotto Rosado _(Team Leader)_ | link:https://github.com/horebcotto21[@horebcotto21] | #6, #12, #45, #68, #76, #98
+| Samarys Barreiro Meléndez | link:https://github.com/SamarysB[@SamarysB] | #7, #77
+| Fernando Castro Cancel | link:https://github.com/fernan-castro[@fernan-castro] | #10, #74
+| Abdiel Cotto Claudio | link:https://github.com/abdielcotto[@abdielcotto] | #11, #70
+| Naedra J. Feliciano Agostini | link:https://github.com/Naedra[@Naedra] | #8, #79, #97
+| Heribiell A. Rodríguez Cruz | link:https://github.com/LightPolution[@LightPolution] | #9, #38, #53, #58
+|===
+
+=== Current Situation, Needs, Ideas
+
+==== Current Situation
+
+Moving from school to a job can be tough for grads and companies. Lots of students feel like job hunting is cold and doesn't work well. They send out tons of applications and don't hear back. Forbes Advisor says almost 60% of job seekers feel like companies just disappear on them, which is annoying and makes them worried about their careers. But companies have problems, too. They get flooded with applications for starter jobs, and a lot of people aren't a good match. It takes up a lot of time and money to find the right people. This whole thing is inefficient and doesn't really show when a candidate and a company might actually be a good fit for each other's goals. It can be a pretty bad experience for everyone.
+
+==== Need
+
+Structural friction in early-career recruiting (lack of visibility, opaque communication, and operational overload) 
+reveals needs that belong to domain actors, not to a platform. The needs are outlined below.
+
+===== Applicant / Recent Graduates
+* Be discoverable for roles that truly match skills, interests, eligibility, availability, and location.  
+* Receive timely, transparent feedback about interest and status to reduce ghosting and uncertainty.  
+* Ensure fair access to opportunities and maintain control over privacy when sharing work and personal data.  
+* Obtain guidance to translate coursework, projects, and soft skills into recruiter-trusted signals.  
+
+===== Employers / Recruiters
+* Efficient triage toward candidates who meet must-have criteria and show mutual interest.  
+* Rich, trustworthy evidence of capability and professional culture.  
+* Predictable, compliant communication and scheduling to minimize drop-off and miscommunication.  
+
+===== Cross-Cutting Needs
+* Mutual-interest signaling before deep engagement.  
+* Early expectation alignment on role scope, compensation range, work modality, and timeline.  
+* Low-friction coordination for first conversations and follow-ups.  
+* Trust and safety: identity assurance, respectful conduct, and clear reporting channels.  
+
+===== Project-Internal Enabling Needs
+* A shared domain description and a baseline set of requirements so the team understands needs independently of any system-to-be.  
+* A consistent, ubiquitous language across analysis, design, and code to prevent concept drift.  
+* Plans for requirements, architecture, component design, implementation, and testing to support whatever idea is chosen later.  
+
+
+==== Ideas
+
+We propose a three-part design focused on a personalized, efficient, and high-quality user experience. The foundation of this approach is a onboarding and profile system. The system would create two fundamentally different experiences based on the user, whether they are a recruiter or a candidate. The system will request only the most relevant information for each persona, such as portfolios for students or verifying company details for recruiters. The system will have an interface that avoids clutter and ensures the platform feels built for each user from their very first interaction. Making it easier and more inclusive without replacing the current infrastructure.
+
+Once users are onboarded, the swiping mechanism would enhance the core matching process by moving beyond a simple binary decision. This means creating carefully designed cards that act as a information display. The profiles can have an simple view and a more detailed view. The key to this design is a hierarchy that is informed by user research and which surfaces key decision making data relevant to the user directly in the swiping interface to maximize informed matches without causing overload.
+
+Finally, to ensure connections are meaningful and productive, the mutual match connection and messaging gateway would unlock only after both parties have shown interest. Afterwards, the system would immediately facilitate the first message and it could include some kind of icebreaker or customizable openers. Furthermore, a dedicated inbox to keep users organized, allow for easy profile review, and potentially integrate scheduling tools, transforming a simple match into a genuine gateway to opportunity.
+
+
+=== Scope, Span, and Synopsis
+
+==== Scope and Span
+
+===== Scope
+The project's scope is to develop a mobile application aimed at improving the connection between students and recruiters. The app will address issues with traditional job search platforms and career fairs, which are often impersonal and inefficient, leading to a lack of engagement and missed opportunities. The project will encompass several key areas:
+
+* Domain Engineering: Analyze the current landscape of student-recruiter engagement, identifying pain points in job fairs, static job boards, and passive search platforms. The goal is to create a faster, more efficient, and more engaging way for students and recruiters to connect.
+
+* Requirements Engineering: Define system requirements to enable students to showcase their skills, qualifications, portfolios, and preferences dynamically. Recruiters will also be able to display what their company is offering and looking for. Requirements will focus on improving job placement rates, event attendance, and reducing the time spent in the recruitment process. These requirements will be refined continuously using direct feedback from both students and recruiters.
+
+* Software Architecture: The architecture will feature a mobile front-end with a Tinder-like swiping system, real-time notifications, and event integration. The back-end will connect with job boards, applicant tracking systems, career services, and on-campus event data to strengthen student-recruiter engagement.
+
+* Software Design Process: The project will follow an iterative design and development process, beginning with a pilot test to evaluate performance and identify areas of improvement. User feedback will drive optimization of the user interface, swiping experience, and the matching algorithm.
+
+===== Span
+The project's span is focused on creating a scalable and user-friendly solution that streamlines the student-recruiter connection process. The app is designed to support efficient matching, real-time communication, and event integration.
+
+* Specifics of the System: Students can create detailed profiles including videos, portfolios, and soft skills. Recruiters will also create company profiles that highlight roles, culture, and expectations. When both parties swipe right, they are notified of a match and can begin communicating via chat or set up interviews. The app will also notify students about campus events that involve companies they have swiped right on, even if a match has not occurred.
+
+* Target Audience and Expansion: The initial span of the project involves a pilot test with a defined user base of students and recruiters. Expansion will include partnerships with recruiters, direct marketing to universities, and support for on-campus career fairs. Over time, the platform will expand to larger student and recruiter networks beyond the initial pilot.
+
+* Methodology and Maintenance: The project will adopt an iterative methodology with regular update cycles guided by new technology trends and continuous user feedback. Effectiveness will be tracked through key metrics such as app usage frequency, match success rate, recruiter follow-up rate, event attendance, and user satisfaction. The cycle of feedback, optimization and scaling will ensure the app remains relevant and impactful.
+
+==== Synopsis
+
+The project aims to develop a mobile application that revolutionizes the way students and recruiters connect by addressing the inefficiencies and impersonal nature of traditional job search methods. By leveraging a swiping feature, similar to popular dating apps, the platform will facilitate dynamic and real-time interactions between students showcasing their skills and recruiters highlighting their opportunities. The app will integrate with existing job boards and career services, providing a seamless experience that enhances visibility, engagement, and mutual interest. Through iterative design, user feedback, and continuous optimization, the project seeks to create a scalable solution that improves job placement rates and reduces recruitment time and effort.
+
+=== Other Activities than Just Developing Source Code
+Projects are successful when coding is supported by planning, communication, and documentation. These activities keep the team organized and ready for future development.
+
+* Although source code development is a top priority on this project, its success depends on several activities that extend beyond programming. Documentation plays a crucial role in keeping the project aligned, covering goals, requirements, architectural decisions, and detailed contributions. Well-maintained records make it easier for members to integrate into new teams and ensure stakeholders remain informed about progress, scope, and direction throughout the project.
+
+* While the application is not yet developed enough for full-scale testing, it is still necessary to plan for quality assurance. This involves deciding how unit testing, integration testing, and usability evaluation will eventually be carried out once prototypes and code are available. In parallel, version control practices such as branching strategies, pull requests, and code reviews can already be defined so the team is prepared to manage collaboration effectively when development begins. These preparatory activities set the standard for a structured and reliable workflow.
+
+* Project management and communication establish the general structure that ties everything together during this milestone. Setting clear milestone goals, assigning responsibilities, and documenting meeting outcomes help the team stay organized and avoid confusion. Regular communication ensures that issues are identified and addressed early, while planning for security, privacy, and future phases prepares the project for ongoing development. By combining documentation, early planning for testing and version control, and strong management practices with the coding that will follow, the team lays the foundation for a successful project.
+
+=== Derived Goals
+The project’s goals go beyond building an app, focusing on connecting students and recruiters effectively while guiding team efforts and decisions.
+
+* From the current situation, needs, and proposed scope, several goals appear that extend beyond simply building a mobile application. First, the project aims to create a system that improves the connection between students and recruiters by promoting mutual interest, transparent communication, and efficient matching. Students should be empowered to present their skills, interests, and career aspirations in a way that recruiters can trust and evaluate fairly, while recruiters should be able to quickly identify candidates that align with both role requirements and company culture.
+
+* In addition to these user-focused objectives, the project seeks to ensure usability, maintainability, and adaptability. The system should be easy to use and flexible, so it can improve based on user feedback and grow from a small pilot group to a wider audience. Security and privacy are also central goals, ensuring identity assurance, safe communication, and control over personal and company data.
+
+* Finally, internal team goals include ensuring collaboration, clear documentation, and structured processes for version control, testing, and requirements management. By clearly following these internal practices, the team can stay coordinated, reduce errors, and build a solid base for sustained success as development progresses, and the platform grows.
+
+== Descriptive Part
+
+=== Domain Description
+
+==== Domain Rough Sketch
+
+NOTE: This is an unprocessed collection of notes, quotes, and observations from the domain (student-recruiter interactions). 
+
+- Student: "At the job fair, I stood in line 40 minutes just to hand over my résumé."
+- Recruiter: "We meet hundreds of students in a single afternoon. After a while, names and faces blur together."
+- Some recruiters use spreadsheets during the fair to jot notes about students: "Has Python," "Strong communication," "Not ready."
+- Student frustration: "I never know if recruiters actually looked at my résumé or if it went into a pile."
+- Recruiter: "We usually contact students weeks later, but many either lose interest or already have offers by then."
+- Students often rely on school provided career services for résumé templates, but recruiters say they "all look the same."
+- Recruiters: "We prefer quick ways to identify students with the right skills rather than going résumé by résumé."
+- Informal hallway conversations sometimes lead to opportunities, students value those more than formal booths.
+- Some recruiters only target juniors and seniors, ignoring freshmen.
+- Student: "I’m nervous approaching a recruiter if I don’t already know about the company."
+- Recruiters say a lot of students come unprepared, don’t know what positions are open.
+- Student: "I applied through Handshake, LinkedIn, and the company website. Did they even see my application?"
+- Recruiter: "We’re under pressure to find talent quickly. If the first batch of candidates looks good, we stop looking."
+- Some recruiters mention re-hiring interns they already know -> "trust factor."
+- Students compare the process to "speed dating", due to quick, superficial interactions.
+- Recruiters complain they can’t gauge "soft skills" (teamwork, communication) in the short job fair chats.
+- Student: "I wish I knew immediately if I had a chance instead of waiting months."
+- Job fairs are often loud, crowded, chaotic -> recruiters and students both stressed.
+- Some recruiters hand out swag -> students often remember the company by this.
+- Students sometimes attend fairs "just to practice talking" rather than actually seeking jobs.
+- Recruiters: "We’d like to pre screen students before the fair to save time."
+
+==== Terminology
+
+*Applicant* :: (entity, domain)  
+A person, usually a student or recent graduate, pursuing professional chances. Candidates strive to highlight their abilities and credentials via their portfolios.
+
+*Employer / Recruiter* :: (entity, domain)  
+An organization or hiring professional responsible for filling open job positions. Employers seek evidence of capability and eligibility when evaluating applicants.  
+
+*Portfolio* :: (entity, domain)  
+A collection of an applicant’s work, projects, and achievements. Portfolios provide recruiters with evidence of professional skills.  
+
+*Skill* :: (entity, domain)  
+A demonstrated ability, either technical or interpersonal, that contributes to an applicant’s professional profile.  
+
+*Qualification* :: (entity, domain)  
+An educational or professional credential (e.g., degree, certification) that indicates formal preparation or eligibility.  
+
+*Work Modality* :: (entity, domain)  
+The way in which work is performed, such as on site, remote, or hybrid.  
+
+*Compensation Range* :: (entity, domain)  
+The expected or offered salary associated with a role. Considered between applicant and employer.  
+
+*Mutual Interest Signaling* :: (event, domain)  
+The occurrence of both applicant and employer expressing interest, creating the basis for a potential connection.  
+
+*Connection* :: (entity, domain)  
+The relationship formally established once mutual interest is confirmed between an applicant and an employer.  
+
+*First Conversation* :: (event, domain)  
+The initial professional interaction between an applicant and an employer following a confirmed connection, typically involving clarification of expectations or role details.  
+
+*Ghosting* :: (behavior, domain)  
+The act of ceasing communication without notice, leading to inefficiency in the recruitment process.  
+
+*Identity Assurance* :: (behavior, domain)  
+The process of verifying that participants are authentic and represent legitimate individuals.  
+
+*Recruitment Event* :: (entity, domain)  
+A scheduled occasion, such as a job fair or networking session, where applicants and employers directly engage.  
+
+*Expectation Alignment* :: (behavior, domain)  
+The process of clarifying and agreeing on key role aspects, including scope, compensation, timeline, and modality.  
+
+*Trust and Safety* :: (behavior, domain)  
+The assurance that professional interactions occur under respectful conduct, secure data handling, and clear reporting mechanisms.  
+
+*Feedback* :: (event, domain)  
+Information shared between employer and applicant regarding application status, interest, or evaluation, enabling transparency.  
+
+
+==== Domain Terminology in Relation to Domain Rough Sketch
+
+* Recruiter: (Actor) A user who represents a company or organization and uses the platform to discover and evaluate potential candidates. This term was refined from the rough concept of employer to specify the human actor, distinct from the company entity itself.
+* Candidate: (Actor) A user who is seeking professional opportunities and uses the platform to discover companies and recruiters by reviewing recruiter profiles. This term should be revised as a candidate alludes to the user's primary role once a connection is made.
+* Profile: The core digital representation of a user within the system. It is categorized as either a candidate profile or a recruiter profile containing corresponding relevant information.
+* Swipe: The primary gesture of evaluation. A right swipe indicates a like or expression of interest, and a left swipe indicates a Pass, which indicates a dismissal. This defines the core action of the system, removing ambiguity from the informal "Tinder-like" description.
+* Profile Card: The user interface component that presents a condensed view of a Profile within the feed for the purpose of being swiped on. This term distinguishes the interactive element from the full Profile data structure.
+* Match: A domain event that occurs only when two users have mutually Liked each other's profile cards.
+* Connection: The persistent relationship state between two users that is established upon a match. This term defines the context in which messaging and further interaction can occur. Moving beyond the transient event of the match itself.
+* Discovery Feed: The main application view where a user is presented with a “deck” of profile cards to evaluate. This term provides a specific name for the core screen, derived from its purpose.
+
+* Student: A person currently enrolled at a university/college. In our domain, every Student is a Candidate, but not every Candidate is a Student. We use **Student** when context involves campus events, student portfolios, or coursework.
+* User: A technical/authentication concept. A logged-in account that is either a **Student** or a **Recruiter**. We avoid using “User” to describe domain roles.
+* Employer: The organization that a Recruiter represents. Owns job **Openings** and brand presence. Distinct from the person acting (Recruiter).
+* Company (alias of Employer): The institutional profile representing the Employer in the system (logo, description, sectors, location).
+* StudentProfile: Typed Profile for a Student/Candidate. Contains resume, skills, preferences, visibility settings, and **Portfolio** items.
+* RecruiterProfile: Typed Profile for a Recruiter. Contains company association, role/title, sectors, location, and verification status.
+* Portfolio: Evidence of work attached to a StudentProfile (projects, links, PDFs, media). Supports recruiter evaluation.
+* Event: A scheduled activity relevant to recruiting (career fair, info session, meetup). Used for discovery, RSVP, and attendance tracking.
+* RSVP: An explicit intent to attend an Event. Updates capacity and powers reminders.
+* Notification: A system alert delivered to an account (e.g., Match created, unread Chat, Event reminder).
+* Queue:An ordered waiting line (physical or digital) used to preserve turn order (e.g., at a booth or for processing requests).
+* Opening (Job Opening): A role published by an Employer with defined **Requirements** (must-haves, nice-to-haves), location, modality, and timeline.
+* Requirements: Structured criteria for an Opening (skills, eligibility, language, authorization). Used to assess **Eligibility**.
+* Eligibility: Whether a Student/Candidate meets the defined Requirements of an Opening (meets / partially meets / does not meet).
+* Shortlist: A curated set of Candidates selected by a Recruiter for next steps (review, outreach, interview).
+* Interview: A scheduled conversation between a Recruiter and a Student following a Connection/Shortlist. Must avoid overlapping time blocks.
+* Visibility
+Profile exposure setting for a StudentProfile:
+- **Public** — appears in Recruiter search.
+- **By Match** — visible only to the matched party.
+- **Private** — not discoverable; shared only by explicit action.
+* Identity (UUID): An immutable unique identifier assigned to core entities (Profiles, Matches, Events). Ensures stability across updates and systems.
+* Session: The authenticated runtime context for an account. Authorizes actions (swipes, messages, RSVPs).
+* VerificationPolicy
+A rule requiring a Recruiter/Employer to satisfy verification checks before certain actions (e.g., messaging, event hosting).
+* Invariant: A rule that must always hold at the model boundary (e.g., no duplicate Recruiter–Student Match pairs).
+* Factory: A creation mechanism that enforces Invariants when instantiating entities (e.g., MatchFactory ensures valid parties and uniqueness).
+
+
+==== Narrative
+
+The domain concerns how employers identify, evaluate, and hire talent, and how job seekers explore and compare opportunities. In this context, the term “candidate” is used broadly to mean any person seeking a job, regardless of prior experience or stage of career. The observable world of the domain includes candidates with educational and employment histories, competencies, and preferences; employers with staffing needs and hiring calendars; recruiters who operate search and prioritization criteria; openings defined by requirements, number of positions, and relevant dates; application documents such as résumés, certifications, portfolios, and references; and recruitment events with agendas and limited capacity. Information circulates through common channels such as postings, professional networks, referrals, unions, and agencies, under rules of eligibility and time availability.
+
+A typical cycle begins when an employer defines and disseminates a vacancy with explicit requirements, for example minimum experience, qualifications, licenses or certifications, languages, and legal authorizations, together with job conditions such as work modality, location, reference compensation, and start date. Candidates discover these opportunities, compare requirements to their profile, and express interest. Reciprocally, recruiters may pursue profiles based on observable signals such as track record, achievements, work samples, or references. Eligibility verification precedes any advance. Based on that verification and perceived fit, shortlists are formed and, when appropriate, additional screenings are conducted, including technical or psychometric tests. Interviews are scheduled in non-overlapping time slots, held in person or virtually, and conclude with observations that inform later decisions.
+
+When there is sufficient correspondence between needs and demonstrated capabilities, the employer issues an offer with explicit terms and a validity period. Clarifications or adjustments may follow, after which the candidate accepts or declines within the stated deadline. In parallel, recruitment events concentrate interactions: an audience is convened, capacity is managed, attendance is confirmed, and participation is recorded. From these contacts, new expressions of interest and applications can emerge without a prior formal submission. Relevant information, including requirements, application states, evaluations, schedules, and event capacity, shows varying degrees of structure, which explains asymmetries and information overload on both sides.
+
+The domain is governed by stable rules: each search process ties recruiters to a specific employer; candidates and openings relate in a many-to-many manner through applications; applications do not advance without meeting minimum requirements; no person is assigned to overlapping interviews; attendance at an event consumes available capacity; and offers expire if no response is received within their validity period. Cyclical patterns also exist, with posting and closing windows that shape supply, participation, and acceptance decisions. This description reflects how the labor market operates, independent of any system to be built.
+
+==== Events, Actions, and Behaviors
+
+===== Events
+
+[%autowidth.stretch,options="header"]
+|===
+|Event |Who/What triggers it |Immediate responses |Expected outcome/postcondition |Anchor to Sketch
+
+|Recruiting event announced or openings published
+|Recruiter, University, or Organizer
+|Recruiter defines roles and requirements; the organizer or university disseminates the information
+|Candidates learn about opportunities and plan attendance or apply online
+|Job fairs; desire to pre-screen before the fair
+
+|Arrival and check-in at the event such as a campus fair, industry fair, or meetup
+|Candidate or Student
+|Candidate registers and receives the map and agenda
+|Candidate is able to approach booths and tables
+|Fairs are loud, crowded, and chaotic
+
+|Queue formed in front of a booth or table
+|Candidates
+|Candidate waits; staff organizes the line
+|Long wait times and very short turns
+|Reports of waiting up to forty minutes
+
+|Brief booth interaction / quick pitch
+|Candidate and Recruiter
+|Candidate delivers a 30 to 60 second elevator pitch; recruiter asks quick questions
+|Initial and superficial evaluation
+|Interactions resemble speed dating and create stress on both sides
+
+|Resume or portfolio handoff, physical or digital
+|Candidate
+|Candidate hands over the résumé or portfolio; recruiter receives and sorts it
+|The document enters a pile or list and may lose visibility
+|Concern that résumés are not actually reviewed
+
+|Recruiter note taking
+|Recruiter
+|Recruiter records short notes and tags on paper or in a spreadsheet, for example: has Python; not ready
+|Notes are linked to the contact for later review
+|Many recruiters rely on spreadsheets for quick notes
+
+|Informal hallway or meetup conversation
+|Candidate and Recruiter
+|They meet away from the booth and talk informally
+|May create a lead or opportunity
+|Informal conversations sometimes lead to opportunities
+
+|Application submitted through multiple portals or via referral
+|Candidate
+|Candidate applies through Handshake, LinkedIn, the company website, or by referral
+|Parallel entries for the same profile
+|Uncertainty about whether multichannel applications are reviewed
+
+|Pre-screen or quick sift
+|Recruiter or System
+|Recruiter uses heuristics such as year, visible skills, and seniority; the system applies rules
+|Candidate is marked preliminarily eligible or ruled out by a documented rule
+|Preference for quick identification of fit and targeting juniors or seniors
+
+|Delayed invitation or follow up
+|Recruiter
+|Recruiter contacts candidates weeks later
+|Some candidates are no longer available or interested
+|Late outreach leads to loss of interest
+
+|Decision to stop sourcing
+|Recruiter
+|Recruiter stops the search when the first batch looks good
+|The window for new applicants narrows
+|Search ends once early candidates meet expectations
+
+|Rehire of known talent such as former interns
+|Recruiter
+|Recruiter prioritizes known profiles
+|Faster hiring due to a trust factor
+|Rehiring former interns is common
+
+|Swag or promotional material handed out
+|Recruiter
+|Recruiter distributes swag
+|Improves employer brand recall
+|Candidates often remember the company by the swag
+|===
+
+===== Actions
+
+*Candidate.*  
+Before showing up, the candidate tunes the résumé and, if applicable, the professional portfolio to the role and researches the company. When it is their turn, they deliver a brief elevator pitch, hand over a résumé, and ask specific questions. In parallel, they submit applications through one or more platforms and keep a courteous follow up thread by email or LinkedIn. If responses stall or plans change, they may withdraw or pause the application.
+
+*Recruiter.*  
+The recruiter defines the role, its requirements, and the target audience, whether junior or senior, students or experienced hires. They publish the opening and organize their presence at fairs or meetups. During screening, they jot quick notes and tags about candidates, run prescreens, invite candidates to interviews, and keep communication moving. When the first batch covers the need, sourcing stops. Known talent such as former interns is often prioritized because the risk is lower.
+
+*System/Institution.*  
+Supports communication and record keeping. It announces events and openings, records check-ins, centralizes résumés and applications, deduplicates multichannel entries, and preserves traceability through versioning and logs. It also provides tools for note taking and auditable prescreen rules.
+
+*Third parties.*  
+Referees and background check providers supply information that helps corroborate the hiring decision when appropriate.
+
+===== Behaviors
+
+*In person recruiting flow.*  
+The process moves from announcement to attendance, then queuing, a brief conversation at the booth, and follow up. Noise, crowding, and time pressure push interactions toward quick impressions and coarse screening. Soft skills are hard to judge in under a minute.
+
+*Multichannel applications and unclear status.*  
+Candidates often apply through several portals and by referral. Without a single source of truth, duplicate records and uncertain statuses appear, which confuses both sides and slows review.
+
+*Fast screening and prioritization.*  
+To manage volume, recruiters rely on simple heuristics such as year, visible skills, and seniority, as well as rule based filters. Throughput improves, but the risk of overlooking strong profiles increases.
+
+*Communication delay and attrition.*  
+If outreach arrives weeks after the first contact, interest declines and other processes advance. Early signals and timely touchpoints reduce drop off.
+
+*Stopping after the first promising group.*  
+When the initial cohort seems sufficient, active sourcing pauses. The window for new applicants narrows and the range of options can shrink.
+
+*Rehiring based on trust.*  
+People already known to the team, such as former interns, are often prioritized because their performance is validated. Time to hire shortens and uncertainty decreases compared with external candidates.
+
+*Uneven candidate preparation.*  
+Some arrive with generic résumés or limited knowledge of the company, while others attend mainly to practice and build confidence. The level of preparation shapes the quality of the pitch and the impression left.
+
+*Informal networking that converts well.*  
+Unplanned conversations away from the booth allow calmer and more genuine exchanges that sometimes outperform the formal interaction.
+
+*Notes as the memory of the process.*  
+With many brief encounters, concise notes and tags become essential to remember people and make decisions. Consistent record keeping improves later review and shortlist quality.
+
+*Brand recall from presence and giveaways.*  
+A well run booth and thoughtful materials strengthen memory of the employer and help reengage candidates after the event.
+
+==== Function Signatures
+
+The system's core domain logic is defined by a set of function signatures that outline operations, inputs, outputs, and potential failure states. At its foundation, user interaction is governed by swiping and matching mechanics.
+
+* `getNextProfile : UserId -> Option ProfileCard`  
+  Fetches the next profile card from a user's personalized deck. Returns `None` if the deck is empty.
+
+* `processSwipe : UserId >< ProfileId >< SwipeDirection -> Result<Unit, Error>`  
+  Records a swipe (like or pass) for a given profile. Returns a result indicating success or an error.
+
+* `checkForMatch : UserId >< ProfileId -> Option Match`  
+  Determines whether a swipe action resulted in a mutual like, returning a `Match` if successful.
+
+Once a successful match is established, profile and connection management functions handle communication setup:
+
+* `createConnection : Match -> Connection`  
+  Creates a persistent connection between two matched users, establishing a channel for communication.
+
+* `sendMessage : ConnectionId >< UserId >< MessageContent -> Result<Message, Error>`  
+  Sends a message within a connection. Returns the message if successful, or an error for invalid requests.
+
+* `getProfile : UserId -> Result<Profile, Error>`  
+  Retrieves a full user profile (as opposed to the condensed profile card), with permission checks applied.
+
+Session and state management functions ensure authentication and preparation of user data:
+
+* `initializeUserSession : UserCredentials -> Result<UserSession, Error>`  
+  Authenticates a user's credentials. If successful, returns a session containing identity and role.
+
+* `getUserDeck : UserId -> Deck`  
+  Builds a user's deck of profile cards, dynamically generated using the platform's matching algorithm and the user’s past activity and preferences.
+
+
+=== Requirements
+
+==== User Stories, Epics, Features
+
+This section outlines the experience our platform aims to provide for people seeking opportunities and for the organizations hiring them. We present the product in three layers short narrative user stories, the broader areas of value they belong to (epics), and the capabilities that bring those areas to life (features).
+
+===== User stories
+
+• _As a candidate, I want to create my profile with my background and skills so that recruiters can quickly assess my fit._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| I'm signed in | I complete required fields and save | My profile is published
+| Required info is missing | I try to publish | I’m shown exactly which fields to complete
+|===
+
+• _As a candidate, I want to add portfolio items (PDF or public URLs) so that my work is easy to review._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| A valid file/URL | I upload | The item appears in a gallery I can reorder
+| An unsupported type/size | I upload | I see an error listing allowed types and max size
+|===
+
+• _As a candidate, I want to choose my profile visibility (public / by match / private) so that I control my exposure._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| "Private" visibility | Recruiters search | My profile does not appear in results
+| "By match" visibility | A mutual match occurs | My profile becomes visible to the matched party
+| "Public" visibility | Recruiters search | My profile can appear in recruiter results
+|===
+
+• _As a recruiter, I want to publish a simple company page so that candidates understand who we are and our roles._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| Logo, short description, sectors, and location are provided | I publish | The company page is visible to candidates
+| Required info is incomplete | I attempt to publish | I’m prompted to complete the missing fields
+|===
+
+• _As a recruiter, I want to filter candidates by skills, role interest and availability so that I can shortlist relevant profiles._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| Combined filters | I search | Results highlight matched terms
+| Sample data under normal conditions | I search | Results load in ~2 seconds (p95)
+|===
+
+• _As a candidate, I want to express interest with a quick like or pass so that I can move fast through options._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| A profile is shown | I press Like | My interest is stored
+| A profile is shown | I press Pass | That profile does not appear again in the current session
+|===
+
+• _As a user (candidate or recruiter), I want to be notified when there’s a mutual like so that we can start a conversation._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| Both sides liked each other | The system detects a mutual like | A chat thread opens and an in-app notification is sent
+|===
+
+• _As a matched user, I want to exchange messages so that we can coordinate next steps._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| A match chat is open | I send a message | The recipient receives it near real time and I see sent/read states
+| I have blocked the other party | They try to message me | The message is not sent and I receive no notification
+|===
+
+• _As a user, I want to report or block a profile so that I feel safe using the platform._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| I submit a report |-| A moderation case is created for review
+| I block a profile |-| It no longer appears in my experience and cannot open new chats
+|===
+
+• _As a candidate, I want to see upcoming recruiting events and RSVP so that I don’t miss opportunities._
+
+**Acceptance criteria:**
+[cols="1,1,2",options="header,autowidth"]
+|===
+| Given | When | Then
+| I RSVP to an event | The event is 24h away | An in-app reminder is delivered
+| The events feed is available |-| Items are ordered by date and show title, location, and registration/RSVP
+|===
+
+===== Epics
+- Candidate Profile and Portfolio
+- Recruiter Discovery and Search
+- Matching and Messaging
+- Events and Notifications
+- Safety and Moderation
+
+===== Features
+
+*Candidate Profile and Portfolio:*
+- Create/Edit candidate profile, add portfolio items (PDF/links/video), privacy and visibility controls and profile completeness indicator.
+
+*Recruiter Discovery and Search:*
+- Company page, candidate search with filters and candidate detail view.
+
+*Matching and Messaging:*
+- Like/Pass interactions, mutual match and in-app notification, 1:1 chat and report/Block.
+
+*Events and Notifications:*
+- Events feed, RSVP and Reminder notifications.
+
+*Safety and Moderation:*
+- Submit report, admin review queue and user block/unblock.
+
+
+==== Personas
+
+The personas below represent our core user segments and ground the scope of this product. For each persona we outline goals, pains, typical behaviors, and accessibility needs, and we link them to the stories, epics, and features defined in 2.2.1. We’ll reference these personas by name during planning and reviews to keep decisions concrete and tied to user value.
+
+.María “New Grad” Rivera — University candidate (mobile-first)
+[cols="1,3"]
+|===
+|Profile|22, UPRM (CS). Looking for her first role; phone is the primary device.
+|Goals|Publish a complete profile quickly; showcase a simple portfolio; control visibility; get event reminders.
+|Pains|Long forms; vague errors; unwanted exposure.
+|Behavior|Short sessions; prefers simple actions (Like/Pass).
+|Accessibility|Clear, actionable error messages; low latency on mobile.
+|Related Stories|Create profile; Add portfolio; Choose visibility; Like/Pass; Match notification; 1:1 messaging; Events feed & RSVP.
+|Epics|Candidate Profile & Portfolio; Matching & Messaging; Events & Notifications; Safety & Moderation.
+|Quote|"I want to upload the essentials and start exploring without oversharing."
+|===
+
+.Luis “Switcher” Santiago — Career-transition candidate (privacy-first)
+[cols="1,3"]
+|===
+|Profile|30, IT support background; moving into QA. Prefers “visibility by match.”
+|Goals|Import/organize history; highlight skills; appear in relevant searches without going fully public.
+|Pains|Lack of control over who sees his profile; imprecise recruiter filters.
+|Behavior|Logs in a few times per week; replies only when there’s a real match.
+|Accessibility|Desktop-oriented; concise summaries.
+|Related Stories|Choose visibility (private/by-match/public); Profile & portfolio; 1:1 messaging.
+|Epics|Candidate Profile & Portfolio; Matching & Messaging; Safety & Moderation.
+|Quote|"I want to be visible only to people who truly match with me."
+|===
+
+.Karla “Campus Recruiter” Gómez — Recruiter (events & funnel)
+[cols="1,3"]
+|===
+|Profile|Recruiter at a tech company; manages 3 junior openings; runs campus events.
+|Goals|Publish company page; filter by skills/interest/availability; view candidate detail; manage RSVPs and reminders.
+|Pains|Noisy results; search latency; incomplete candidate info.
+|Behavior|1–2 h desktop sessions; heavy use of combined filters; saves shortlists.
+|Service Level|Search with sample data should load in ~2s (p95).
+|Related Stories|Company page; Search with filters; Results highlight matched terms; Events feed & RSVP; Notifications.
+|Epics|Recruiter Discovery & Search; Events & Notifications.
+|Quote|"I need ten viable profiles in minutes and a way to nurture them to interview."
+|===
+
+.Jorge “HR Generalist” Ortiz — SMB recruiter (speed & safety)
+[cols="1,3"]
+|===
+|Profile|HR at a small company; very limited time; wants quick shortlists.
+|Goals|Filter by skills and availability; chat 1:1; report or block bad behavior.
+|Pains|Incomplete profiles; spam/inappropriate contacts.
+|Behavior|Short work blocks; values online indicators and read receipts.
+|Related Stories|Filter by skills/interest/availability; 1:1 chat with sent/read states; Report/Block.
+|Epics|Recruiter Discovery & Search; Matching & Messaging; Safety & Moderation.
+|Quote|"Give me a reliable shortlist and a clear conversation; the rest is noise."
+|===
+
+.Ana “Safe User” Lozada — Candidate focused on safety
+[cols="1,3"]
+|===
+|Profile|24, first time using a jobs platform; highly concerned about safety.
+|Goals|Block or report profiles; prevent re-appearance after Pass; receive only useful notifications.
+|Pains|Unwanted interactions; intrusive alerts.
+|Behavior|Reviews privacy settings; uses reporting if something feels unsafe.
+|Accessibility|Simple controls for privacy, block, and report.
+|Related Stories|Report/Block; Like/Pass does not re-show in session; Relevant in-app notifications.
+|Epics|Safety & Moderation; Matching & Messaging; Events & Notifications.
+|Quote|"I want to feel in control and safe at all times."
+|===
+
+===== Coverage matrix (personas × epics)
+[cols="1,5*^", options="header"]
+|===
+|Persona |Candidate Profile & Portfolio |Recruiter Discovery & Search |Matching & Messaging |Events & Notifications |Safety & Moderation
+|María (New Grad) |X |  |X |X |X
+|Luis (Switcher)   |X |  |X |  |X
+|Karla (Recruiter) |  |X |  |X | 
+|Jorge (HR Gen.)   |  |X |X |  |X
+|Ana (Safe User)   |  |  |X |X |X
+|===
+
+
+
+==== Domain Requirements
+
+The system must uniquely identify every candidate, every recruiter, every employer, and every event organizer, while distinguishing natural persons from institutional profiles when the entity is a company or an organizer, and it must record the role performed by each entity in every interaction together with the time and the context of that role. The system must represent every opening with explicit requirements including minimum experience, qualifications, certifications, languages, legal authorizations, work modality, location, compensation range, and start date, must record the number of positions available for each opening, must link every opening to its responsible employer, and must allow requirement updates while preserving a complete history of changes. The system must represent each candidate profile with education, work history, competencies, certifications, portfolios, and verifiable references, must allow attaching documents to the profile preserving issue date, validity, and verification status, and must record candidate preferences such as areas of interest, desired location, and work modality. The system must represent recruiting events with name, organizer, venue, agenda, date, and capacity, must represent company booths or tables within each event and their relation to the promoted openings, must register attendance and arrival of candidates and recruiters, and must enforce registration rules and capacity limits defined by the organizer. The system must model queues in front of booths or tables preserving a first come first served order, must allow limiting the duration of each turn, must register the closure of each turn by staff, and must prevent assigning turns that exceed the declared capacity of a booth or of a time block. The system must allow candidates and recruiters to express interest in openings or in profiles and must record when the expression is reciprocal, must create a match when both sides express positive interest and must preserve the date and the context of that event, must allow recruiters to define shortlisting criteria based on requirements and evidence and must register the decision with its justification, and must allow candidates to withdraw their interest and update any pending matches. The system must represent availability of candidates and recruiters through calendars and time blocks, must schedule interviews only on valid matches, must prevent double booking of the same block, and must register interview outcomes with clear states such as continues in process, rejected, or offer extended together with the date and the responsible party. The system must allow message exchanges between candidate and recruiter only when there is a valid match or an explicit permission from the candidate, must register candidate consent for sharing information with an employer or with an organizer, and must allow revocation of that consent. The system must compute and display the degree of requirement fulfillment for each candidate with categories such as meets, partially meets, or does not meet, must prevent practices that alter queue order without a rule defined by the event such as priority for confirmed appointments, and must keep an auditable record of shortlisting and rejection decisions together with their criteria. The system must notify candidates and recruiters when a match is created, when an interview is confirmed, and when changes to opening requirements affect eligibility, and it must notify candidates about recruiting events related to employers or openings in which they have shown interest. The system must record domain metrics such as match rate, queue waiting time, average turn duration, follow up rate after matches, and event attendance, and it must support funnel analysis from expression of interest to offer extended in order to identify bottlenecks. The system must prevent the creation of matches when any party does not exist or when the opening is closed, must keep the link between every document and the identity of the person or the entity that provided it together with its validation status, and must preserve the full state history of each opening and of each candidacy from origin to closure.
+
+==== Interface Requirements
+
+The first requirement is that the system must provide a means for a new user identifying as a recruiter to initialize their internal recruiter profile representation. This initialization shall be performed by the recruiter via a structured form presented during the registration process. The form must include fields to capture the shared phenomena of company name, professional email address, and job role. The initialisation process shall include a validation step where a confirmation email is sent to the provided professional email address. The internal profile representation shall not be considered active until this validation is complete.
+
+Secondly, the system must provide a means to update the internal representation of a student's skills when these phenomena change in the domain such as adding new projects. The student shall be able to initiate an update via an edit profile screen. The system shall provide input fields and controls to allow the student to modify their skill set. The internal representation shall be updated immediately upon the student saving the changes.
+The next requirement is that the internal event of a match must be communicated to the involved users to reflect this new shared state in the domain. The system shall present a visual notification to both users immediately upon the match being recorded in the system. This interface must provide a clear indication of who the match is with and shall include a prominent means to initiate communication, thereby enabling the next domain action.
+
+The system must provide a means for an authorized recruiter to correct the internal representation of their company's information if it was initially entered incorrectly or becomes outdated. Recruiters shall have access to a company profile management screen. This interface shall allow them to edit fields such as company description and website URL. The system shall log all such changes. The company name field shall be immutable through this interface after the initial validation to ensure traceability. Changes to the company name must be handled by a separate administrative process to maintain data integrity.
+
+Lastly, the internal system state must be updated to reflect a user's swipe action on a profile card. The user's gesture shall be the sole initiating action. The system shall immediately update the internal state to record this decision and remove the presented profile card from the user's current deck. No explicit save or confirm action is required; the gesture itself is the interface event.
+
+
+==== Machine Requirements
+
+This section specifies the hardware, software, and environmental requirements to develop, test, and deploy the Professional Portfolio application. These requirements are tailored to the technologies chosen for the project: Flutter/Dart for the mobile frontend, cloud services (Firebase, AWS, or Azure) for backend support, and SQLite for local storage.
+
+**Hardware Requirements**
+
+*Developer Workstations*  
+  - Minimum: Dual-core processor (Intel i5/AMD equivalent), 8 GB RAM, 256 GB SSD.  
+  - Recommended: Quad-core processor, 16 GB RAM, 512 GB SSD.  
+
+*Mobile Devices for Testing*  
+  - Android: Devices running Android 10.0+ with at least 3 GB RAM.  
+  - iOS: Devices running iOS 15+ (e.g., iPhone 11 or newer).  
+
+*Servers / Cloud Hosting*  
+  - Minimum: 2 vCPUs, 4 GB RAM, 50 GB storage.  
+  - Recommended: 4 vCPUs, 8 GB RAM, 100 GB storage with autoscaling enabled on cloud platforms.
+
+**Software Requirements**
+
+*Development Tools*  
+  - Flutter SDK (latest stable release).  
+  - Dart SDK (bundled with Flutter).  
+  - Android Studio for Android builds and emulators.  
+  - Xcode for iOS builds and testing.  
+  - Git and GitHub for version control and collaboration.  
+
+*Programming Environment*  
+  - Dart as the primary programming language.  
+  - Flutter framework for cross-platform UI and logic.  
+  - Emulator/simulator tools for Android and iOS.  
+
+*Database and Services*  
+  - SQLite for local offline storage.  
+  - Firebase, AWS, or Azure for authentication, notifications, and backend integration.
+
+**Environmental Requirements**
+
+*Operating Systems*  
+  - Developer machines: Windows 10/11 or macOS Monterey+.  
+  - Deployment targets: Android 10+ and iOS 15+.  
+
+*Network*  
+  - Stable broadband connection (≥10 Mbps) for syncing repositories, package downloads, and testing cloud-based services.  
+  - All client-server communication must use HTTPS.  
+
+*Other Constraints*  
+  - Developers must test on both Android and iOS environments.  
+  - Compliance with Google Play Store and Apple App Store distribution guidelines.  
+  - External dependencies must be compatible with the current Flutter LTS release.  
+
+**Rationale and Validation**
+
+The requirements ensure that all contributors can work effectively while keeping compatibility with the targeted platforms. Minimum specifications guarantee accessibility across the team, while recommended specifications support smoother emulator performance and integration with cloud services. Each requirement is measurable (e.g., OS versions, RAM, network speed) and traceable to the technologies already adopted by the project.
+
+
+=== Implementation
+
+==== Selected Fragments of the Implementation
+
+The implementation fragments presented here illustrate how the proposed system realizes its core concept-rofiles, swiping, matching, messaging, and event participatio-ithin the domain of student-recruiter interactions. They are not exhaustive; instead, they show how selected components are translated into concrete structures and operations.
+
+===== Domain-Centric Function Signatures
+
+In Flutter/Dart, we express domain contracts through method signatures and service interfaces. These serve as contracts between the UI layer, application logic, and backend services.
+
+```dart
+// Fetch the next profile card for a user’s deck
+Future<ProfileCard?> getNextProfile(String userId);
+
+// Record a swipe action, either Like or Pass
+Future<Result<void>> processSwipe(String userId, String profileId, SwipeDirection direction);
+
+// Determine if a mutual like exists
+Future<Match?> checkForMatch(String userId, String profileId);
+
+// Create a persistent connection once a match occurs
+Future<Connection> createConnection(Match match);
+
+// Exchange a message between two matched users
+Future<Result<Message>> sendMessage(String connectionId, String userId, String content);
+```
+
+Each function encodes a clear business rule. For example, `processSwipe` ensures that only valid swipe actions are stored, while `checkForMatch` guards the creation of matches until both parties express interest.
+
+===== User Interface Complement
+
+A conceptual *Profile Card* widget in Flutter may look like this. This shows how domain concepts (like `ProfileCard`) translate directly into Flutter widgets.:
+
+```dart
+class ProfileCard extends StatelessWidget {
+  final Profile profile;
+  final VoidCallback onLike;
+  final VoidCallback onPass;
+  final VoidCallback onMoreInfo;
+
+  const ProfileCard({
+    required this.profile,
+    required this.onLike,
+    required this.onPass,
+    required this.onMoreInfo,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(12),
+      child: Column(
+        children: [
+          Text(profile.name, style: Theme.of(context).textTheme.headline6),
+          Text(profile.details),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(icon: Icon(Icons.close), onPressed: onPass),
+              IconButton(icon: Icon(Icons.favorite), onPressed: onLike),
+              IconButton(icon: Icon(Icons.info), onPressed: onMoreInfo),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+```
+
+==== SOLID-Oriented Software Design
+
+At the *software architecture* level, the system is divided into three main components:
+
+. *Mobile Frontend (Flutter)* - Handles profile cards, swiping, and messaging.
+. *Application Backend* - Contains the business logic for swiping, matching, and event handling.
+. *Data Layer* - Manages persistence of profiles, swipes, matches, and messages.
+
+At the *software design* level, these components are realized through service classes and repositories. 
+To ensure scalability and maintainability, the design applies the *SOLID principles*:
+
+===== 1. Single Responsibility Principle (SRP)
+Each service has one responsibility:  
+
+* *Deck Service* → Builds personalized decks and presents the next profile card.  
+* *Swipe Service* → Processes swipe gestures and evaluates potential matches.  
+* *Connection Service* → Manages new connections, messaging, and communication channels.  
+* *Profile Service* → Retrieves detailed profile information.  
+* *Session Service* → Handles authentication and user session management.  
+
+===== 2. Open/Closed Principle (OCP)
+Business rules can be extended without modifying existing code.  
+
+* The deck generation algorithm can switch strategies (e.g., location-based, interest-based) without altering the service itself.  
+* New swipe actions such as “Super Like” can be added without changing the base swipe logic.  
+
+===== 3. Liskov Substitution Principle (LSP)
+Services can be swapped with alternatives that share the same behavior.  
+
+* Different matching strategies (e.g., mutual likes, weighted scoring) can replace one another without breaking the system.  
+* Notification services (push, email, SMS) can be substituted transparently.  
+
+===== 4. Interface Segregation Principle (ISP)
+Clients depend only on the operations they use.  
+
+* Messaging relies solely on a lightweight *Message Sender* interface, without being tied to connection logic.  
+* Profile data access is split between read and write operations to avoid unnecessary coupling.  
+
+===== 5. Dependency Inversion Principle (DIP)
+High-level modules depend on abstractions, not low-level implementations.  
+
+* Services depend on repositories and strategies rather than direct database queries.  
+* Dependency injection makes it possible to swap data stores or notification channels at runtime.  
+
+
+
+====== Example: Swiping and Matching Flow
+
+```dart
+class MatchingService {
+  final SwipeRepository swipeRepository;
+  final ConnectionService connectionService;
+
+  MatchingService(this.swipeRepository, this.connectionService);
+
+  Future<Result<void>> processSwipe(
+      String userId, String profileId, SwipeDirection direction) async {
+    await swipeRepository.save(userId, profileId, direction);
+
+    if (direction == SwipeDirection.like) {
+      final match = await checkForMatch(userId, profileId);
+      if (match != null) {
+        await connectionService.createConnection(match);
+      }
+    }
+    return Result.success(null);
+  }
+}
+```
+
+This applies the **Single Responsibility Principle (SRP)**: the service only coordinates swiping logic and delegates persistence/connection creation to other components.
+
+
+
+====== Example: Event RSVP Flow
+
+```dart
+Future<Result<Attendance>> rsvpEvent(String userId, String eventId) async {
+  if (await eventRepository.hasCapacity(eventId)) {
+    final attendance = Attendance(userId: userId, eventId: eventId, confirmed: true);
+    await eventRepository.saveAttendance(attendance);
+    return Result.success(attendance);
+  }
+  return Result.failure(CapacityReachedError());
+}
+```
+
+This demonstrates the **Open/Closed Principle (OCP)**: RSVP logic can be extended (e.g., add waitlists) without changing its core behavior.
+
+
+
+
+
+
+
+
+
+== Analytic Part
+
+=== Concept Analysis
+
+This section refines the raw material from the "Domain Rough Sketch" into a set of domain concepts, abstractions, and relationships, following the guidelines for concept analysis. The process began by reviewing unprocessed notes and quotes, then abstracting recurring ideas into general concepts, clarifying their meaning, and documenting how they relate. This analysis provides a foundation for requirements and system design.
+
+==== Method
+We systematically reviewed the rough sketch, highlighting recurring themes, terms, and pain points. For each, we considered whether it represented a domain concept, event, or behavior, and how it might generalize beyond the specific example. Where terms were ambiguous or used differently by stakeholders, we clarified or resolved them for consistency.
+
+==== Key Concepts Identified
+
+*Queue/Waiting Time*: Multiple students mentioned long waits at job fairs. We abstract this as the concept of a "queue," representing bottlenecks in event based interactions.
+
+*Profile*: Résumés, portfolios, and company descriptions are generalized as "profiles", structured representations of actors in the domain. We distinguish between candidate and recruiter profiles.
+
+*Match and Connection*: Mutual interest is abstracted as a "match." If acted upon, this becomes a "connection", a persistent relationship enabling further interaction.
+
+*Discovery Feed*: Reviewing multiple candidates or companies is generalized as a "discovery feed," the set of profiles available for evaluation.
+
+*Event*: Job fairs, meetups, and interviews are all instances of "events," structuring interactions in time and space.
+
+*Note Taking*: Recruiter's use of spreadsheets and notes is abstracted as "record keeping," essential for memory and making decisions in high volume interactions.
+
+*Application*: Submitting interest through various channels is generalized as an "application," linking candidates to opportunities.
+
+==== Clarifications and Resolutions
+
+- The term "candidate" is used broadly to mean any job seeker, regardless of experience.
+- "Recruiter" refers specifically to the human actor representing an employer, not the company itself.
+- "Profile card" is distinguished from "profile" as the interactive, condensed representation used in the discovery process.
+- "Match" is an event, while "connection" is a state that persists after a match.
+
+==== Relationships and Abstractions
+
+- Candidates build and share their profiles, skills, and qualifications with recruiters.
+- Recruiters evaluate candidates based on these profiles, often within the context of an event.
+- When mutual interest is signaled, a match is formed, which can become a connection.
+- Connections enable further actions, such as messaging or scheduling interviews.
+- Events provide the environment where many of these interactions are initiated.
+- Record keeping and note taking support making decisions and memory throughout the process.
+
+==== Reasoning and Process
+This analysis was grounded in the raw observations and quotes from the rough sketch, ensuring that abstractions are traceable to real domain phenomena. Ambiguities were resolved by referencing both stakeholder language and the needs of the requirements phase. By documenting this process, we ensure that the resulting vocabulary is both consistent and shared across the team.
+
+Through this analysis, the scattered ideas from the descriptive phase are distilled into a structured vocabulary. These concepts and relationships now form a shared foundation for the requirements and system design phases that follow.
+
+
+=== Validation and Verification
+
+The purpose of this section is to document how the team will validate and verify the domain concepts, requirements, and design decisions.
+
+* **Validation**: ensuring that what we documented reflects the real-world domain (student–recruiter interactions, job fairs, portfolio showcases, and online hiring practices).  
+* **Verification**: ensuring that the documentation is internally consistent, complete, and aligned with the project’s goals.
+
+==== Validation Strategy
+Validation activities focus on comparing our assumptions and requirements against real-world practices in recruiting and hiring.
+
+* **Literature and Online References**  
+  We reviewed external sources to validate that our domain concepts are realistic:  
+  - National Association of Colleges and Employers (NACE) reports show that **over 80% of employers review student portfolios or online profiles during hiring**.  
+  - LinkedIn’s Global Talent Trends indicate recruiters prioritize **skills, experiences, and project showcases** when evaluating candidates.  
+  - University career center guidelines (e.g., UC Berkeley Career Center) recommend portfolios to include **projects, reflections, and artifacts**, supporting our profile/portfolio requirements.  
+
+* **Scenario Walkthroughs (Planned)**  
+  We drafted sample scenarios to test the plausibility of requirements:  
+  - *Example*: “Student uploads a project to their portfolio. Recruiter filters by skill and reviews the project before deciding to Like or Pass.”  
+  These walkthroughs will be refined with feedback once pilot users are available.
+
+* **Stakeholder Proxies**  
+  Since direct recruiter interviews have not yet been conducted, validation relies on **career center publications** and **industry surveys** as proxies for stakeholder expectations. Later stages will replace proxies with real recruiter and student feedback.
+
+
+==== Verification Strategy
+Verification ensures that the documentation is internally consistent and traceable across milestones.
+
+* **Peer Reviews (Planned)**  
+  Each section of the documentation (terminology, requirements, narrative) will be reviewed by a different team member. Early reviews already revealed ambiguities between the terms “candidate” and “student,” which were clarified.
+
+* **Checklists**  
+  A milestone-based checklist will be used:  
+  - Every requirement uses only defined terms.  
+  - Requirements map to at least one domain concept.  
+  - No contradictions between terminology and requirements.  
+  - Requirements are measurable and testable (planned for Milestone 2).  
+
+* **Traceability Matrix (Planned)**  
+  A lightweight traceability matrix will link:  
+  - *Requirements → Goals* (does each requirement support at least one documented goal?).  
+  - *Requirements → Terminology* (is consistent terminology used?).  
+
+* **Walkthroughs of Documentation**  
+  We will simulate “reader walkthroughs,” where one team member acts as an external reviewer and checks whether requirements can be traced back to definitions. This approach helps identify undefined or ambiguous terms.

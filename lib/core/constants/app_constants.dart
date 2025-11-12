@@ -16,6 +16,7 @@ class AppConstants {
   static const String settingsRoute = '/settings';
   static const String recruiterProfileRoute = '/recruiter-profile';
   static const String jobseekerProfileRoute = '/jobseeker-profile';
+  static const String matchesScreenRoute = '/matches';
 
   // User Roles
   static const String recruiterRole = 'recruiter';

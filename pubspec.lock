@@ -845,6 +845,10 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.3.20"
+      sha256: "5c8b6c2d89a78f5a1cca70a73d9d5f86c701b36b42f9c9dac7bad592113c28e9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.3.24"
   url_launcher_ios:
     dependency: transitive
     description:
@@ -976,3 +980,5 @@ packages:
 sdks:
   dart: ">=3.8.0-0 <4.0.0"
   flutter: ">=3.29.0"
+  dart: ">=3.9.0 <4.0.0"
+  flutter: ">=3.35.0"
