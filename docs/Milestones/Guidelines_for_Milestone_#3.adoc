@@ -1,0 +1,129 @@
+= GUIDELINES AND ADVICE ON THE PROJECT DOCUMENTATION
+Third Milestone
+Marko Schütz-Schmuck
+
+These guidelines will be used to evaluate each project's submission. The
+whole project has now culminated, so we do want to see some type of
+_completeness_. In terms of features, completeness means that there is a
+minimal collection of features that make the application
+viable. Completeness also refers to the other activities on the project
+(domain description, requirements prescription, software architecture,
+design, testing, …). For example, does the team document the
+requirements of the features that are implemented? Are the phenomena
+from the domain that the requirements refer to fully described? Does the
+team use automated tests for their features? The guidelines and examples
+are more detailed than what would easily fit into the format of rubrics,
+so the guidelines are stated separately and the rubrics then are quite
+generic.
+
+• Changes to the previous submission must be clearly visible. Use a
+different background color, change bars in the page margin, or other
+ways to clearly indicate the changes.
+• The log book gives an overview of the changes (but not the full
+changed content) since the last submission.
+• The actual changes, new developments, etc are integrated into the
+overall document.
+• All the criteria where the previous submission did not follow the
+guidelines have been improved.
+• Any additions and changes follow the guidelines already established
+for the proposal submission.
+• Progress in the implementation has been made: there are completed
+features that are implemented end-to-end and that have a high value to
+the users. The completion of the feature is evidenced by passing
+acceptance/end-to-end tests.
+• Progress has been made in all phases of development: domain
+description, requirements prescription, design, …
+
+• Application of topics, techniques, tools, methods, … from the
+lectures:
+
+**The following rubrics will have a higher weight than those above.
+**
+Be sure to read this generic instruction part several times:
+Application of a topic, techniques, tools, methods,… means showing the
+initial situation before that application, showing how and why the
+technique can be applied maybe discussing different options. Then
+applying the technique, pattern, tool…, presenting the result, and
+explaining the improvement to the previous version.
+
+• Specification pattern
+
+** The team shows examples of the use of the specification
+pattern. This could be for validation, for selection, and/or for
+generation. An example in the super-market domain could be the
+specification of reorders. Different items could have different
+rules for reordering (needs refrigeration, seasonal item, special
+offer,…). In this example we can of course imagine that an item has
+several of the tags. The specification would be the
+"reorderSpecification" and different instances would cover different
+combinations of item properties.
+
+
+• Strategy pattern
+
+** The team shows examples in which they use the strategy pattern. An
+example of application of the strategy pattern in a system for freight
+logistics could be as follows: we could have a routing service class
+and when a instance of the routing service is created we supply a
+"measure". The measure hosts the functionality of measuring and
+different implementers of the measure interface would use a different
+"weight" (e.g. cost, physical distance, total time door-to-door,…).
+
+
+• intention revealing interfaces
+
+** The team shows examples where they originally had an interface that
+was not very intention revealing and then they worked toward making it
+more intention revealing.
+
+
+• side-effect free functions
+
+** The team shows some before/after concerning side effects where they
+have a function with side effects before and they can either change it
+so it no longer needs side effects or they use command-query
+separation (see below).
+
+
+• command-query separation
+
+** The team shows examples where they used command-query separation. So,
+they show a function before the separation that includes a command
+aspect and a query aspect and how they separated these aspects into
+two. The resulting command function should be very simple.
+
+• assertions
+
+** The team shows assertions from their project. For example, they show a
+pre-condition and a post-condition for one of their commands.
+
+• stand-alone classes
+
+** The team shows examples where initially they had a class with several
+dependencies and then they worked towards making these dependencies
+unnecessary so they could drop them. This might involve the use of
+other patterns.
+
+
+• closure under operations
+
+** The team shows how they worked towards closure under an
+operation. They show an initial situation in which a class depended on
+various other classes or types. They also document how they changed
+this class to close it with respect to its operations (or at least
+make it depend on much fewer other classes.
+
+
+• other patterns
+
+** The team shows examples of at least one other pattern (composite,
+transaction,…)  from the analysis patterns discussed in class. An
+example would be locations within locations. Just for example, say we
+wanted to state where within an super market chain an item is
+located. We could have an initial "locator" indicating the individual
+store of the chain in which the item is located. Below that we might
+have a locator that indicates a location within the store, say the
+high level area (storage, shelves, unloading dock,…). Then some of
+these might contain another level of sub-division. For example,
+shelves divided into aisles, aisles into sections, sections into
+floors.
