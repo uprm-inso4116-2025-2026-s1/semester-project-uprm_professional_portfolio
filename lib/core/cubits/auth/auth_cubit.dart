@@ -15,9 +15,23 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> checkAuthStatus() async {
     emit(AuthLoading());
     try {
-      final user = await _storageService.getUser();
-      if (user != null) {
-        emit(AuthAuthenticated(user));
+      // Check Supabase auth status first
+      final isAuthenticated = await _authService.checkAuthStatus();
+
+      if (isAuthenticated) {
+        final user = _authService.currentUser;
+        if (user != null) {
+          // Update local storage with Supabase user
+          await _storageService.saveUser(user);
+          emit(AuthAuthenticated(user));
+          return;
+        }
+      }
+
+      // Fallback to local storage if Supabase not available
+      final localUser = await _storageService.getUser();
+      if (localUser != null) {
+        emit(AuthAuthenticated(localUser));
       } else {
         emit(AuthUnauthenticated());
       }
@@ -29,13 +43,21 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> login(String email, String password) async {
     emit(AuthLoading());
     try {
-      final user = await _storageService.verifyCredentials(email, password);
+      // Use AuthService to login with Supabase
+      final result = await _authService.login(email, password);
 
-      if (user != null) {
-        await _storageService.saveUser(user);
-        emit(AuthAuthenticated(user));
+      if (result.success) {
+        // Get the user from Supabase
+        final user = _authService.currentUser;
+        if (user != null) {
+          // Save to local storage for offline access
+          await _storageService.saveUser(user);
+          emit(AuthAuthenticated(user));
+        } else {
+          emit(AuthError('Login successful but user data not available'));
+        }
       } else {
-        emit(AuthError('Invalid email or password'));
+        emit(AuthError(result.error ?? 'Invalid email or password'));
       }
     } catch (e) {
       emit(AuthError(e.toString()));
@@ -46,17 +68,27 @@ class AuthCubit extends Cubit<AuthState> {
       String email, String password, String name, String role) async {
     emit(AuthLoading());
     try {
-      final user = User(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
+      // Use AuthService to sign up with Supabase
+      final result = await _authService.signUp(
         email: email,
+        password: password,
         fullName: name,
         role: role,
-        createdAt: DateTime.now(),
       );
 
-      await _storageService.saveCredentials(email, password, user);
-      await _storageService.saveUser(user);
-      emit(AuthAuthenticated(user));
+      if (result.success) {
+        // Get the user from Supabase
+        final user = _authService.currentUser;
+        if (user != null) {
+          // Save to local storage for offline access
+          await _storageService.saveUser(user);
+          emit(AuthAuthenticated(user));
+        } else {
+          emit(AuthError('Sign up successful but user data not available'));
+        }
+      } else {
+        emit(AuthError(result.error ?? 'Sign up failed'));
+      }
     } catch (e) {
       emit(AuthError(e.toString()));
     }
@@ -76,8 +108,8 @@ class AuthCubit extends Cubit<AuthState> {
 
       if (result.success) {
         // OAuth successful - wait a moment for Supabase to process
-        await Future.delayed(Duration(seconds: 2));
-        
+        await Future<void>.delayed(const Duration(seconds: 2));
+
         // Check if we have a user from Supabase
         final user = _authService.currentUser;
         if (user != null) {
@@ -85,7 +117,8 @@ class AuthCubit extends Cubit<AuthState> {
           await _storageService.saveUser(user);
           emit(AuthAuthenticated(user));
         } else {
-          emit(AuthError('OAuth authentication completed but no user data received'));
+          emit(AuthError(
+              'OAuth authentication completed but no user data received'));
         }
       } else {
         emit(AuthError(result.error ?? 'OAuth authentication failed'));

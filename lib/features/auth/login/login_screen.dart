@@ -183,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         // TODO: Implement LinkedIn sign in
                       },
-                      icon: Image.asset('assets/logo/linkedin_logo.jpg',
+                      icon: Image.asset('assets/logo/linkedin_logo.png',
                           height: 24),
                       backgroundColor: theme.colorScheme.primary,
                       foregroundColor: theme.colorScheme.onPrimary,
@@ -225,27 +225,5 @@ class _LoginScreenState extends State<LoginScreen> {
           _emailController.text.trim(),
           _passwordController.text,
         );
-Future<void> _handleLogin() async {
-  if (!_formKey.currentState!.validate()) return;
-
-  final result = await _controller.login(
-    _emailController.text.trim(),
-    _passwordController.text,
-  );
-
-  if (mounted) {
-    if (result.success) {
-      // No manual navigation — Supabase will trigger the GoRouter redirect automatically
-      // once auth state changes (login event detected).
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(result.error ?? 'Login failed'),
-          backgroundColor: Theme.of(context).colorScheme.error,
-        ),
-      );
-    }
   }
-}
-
 }
