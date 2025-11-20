@@ -2062,7 +2062,7 @@ _Figure 12. Itinerary of recruiter scenario showing the various stages and inter
 image::../Images/UML.match.entity.diagram.jpg[UML, align=center, pdfwidth=90%]
 _Figure 13. UML diagram showing the entities involved in the matching process between recruiters and students._
 
-==== Communication and the use of Language: Modeling Out Loud for Swipe Flow
+==== #Communication and the use of Language: Modeling Out Loud for Swipe Flow#
 :author: Alexa M. Zaragoza Torres
 // This LTT corresponds to the first section of Milestone 2.
 // I was advised to include it under the Milestone document for clarity and organization.
@@ -2686,8 +2686,75 @@ This Discovery Journal records key domain insights and refactors that, during de
 - Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/188
 
 
+==== #Continuous Refactoring Log#
+:author: Alexa M. Zaragoza Torres
 
+[NOTE]
+====
+Objective:
+Make the model’s evolution visible by documenting refactors whose primary value is clearer domain expression and better boundaries.
+====
 
+[discrete]
+=== Conventions
+Each entry captures: Smell/Trigger → Domain Insight → Refactor Performed → Resulting Clarity/Invariants. Where applicable, we reference related diagrams/docs and commits.
+
+[discrete]
+=== Entries
+
+[discrete]
+=== 2025-10-24 — Consolidate Ubiquitous Language around Actors and Organizations
+Smell/Trigger:: Mixed use of “user”, “candidate”, and “employer” blurred whether we meant the human actor or the institution.
+Domain Insight:: The domain distinguishes a Recruiter (human actor) from an Employer (organization). “Student” is a role-scoped specialization of Candidate.
+Refactor Performed:: Reworked terminology and definitions in Milestone-2 “Terminology” to explicitly model Recruiter, Employer, Student, Profile, Match, and Connection; removed ambiguous uses of “user”.
+Resulting Clarity/Invariants:: Business rules can now state: “A Match is created only on mutual interest between typed Profiles; messaging requires an existing Connection.” Prevents rules from referring to non-domain “user”.
+Artifacts Updated:: docs/Milestones/Milestone-2.adoc (Terminology); functionality_files/user_flows/*.adoc for actor names.
+Commits/PRs:: 3f792c5 (revised terminology section), ff847ff (domainTerminology).
+
+[discrete]
+=== 2025-10-24 — Module Boundaries: Profile ↔ Matching
+Smell/Trigger:: Profile logic and early matching behavior were intermingled in the same narrative, risking leakage of responsibilities.
+Domain Insight:: Matching consumes profile facts but must not mutate them; a narrow read-only seam expresses the boundary.
+Refactor Performed:: Introduced Profile and Matching modules with a one-way dependency via `IProfileReader`; documented responsibilities and examples.
+Resulting Clarity/Invariants:: “Matching never persists Profile state.” Dependency flow: Profile → exposes → IProfileReader; Matching → uses → IProfileReader. Enables independent evolution and testability.
+Artifacts Updated:: docs/Milestones/Milestone-2.adoc §“Module Organization (Lecture Topic Task: Modules for Profile and Matching)”.
+Commits/PRs:: d4a2fe0 ([LTT 10] Modules for Profile and Matching), 56b7f67/45a262e (follow-up doc adjustments).
+
+[discrete]
+=== 2025-10-24 — Business Rules as Invariants in Application Aggregate
+Smell/Trigger:: Offer, Interview, and Decision rules scattered across prose made it hard to see what must always hold.
+Domain Insight:: The decision process centers on an Application aggregate; invariants should be stated at the boundary.
+Refactor Performed:: Centralized “Invariants that guide design” under the Application; clarified one-active-offer, immutable interview notes, deadline traceability, and reproducible notifications.
+Resulting Clarity/Invariants:: Explicit constraints: at most one active Offer per Application; no overlapping interviews for the same Application; history-preserving updates for deadlines and outcomes.
+Artifacts Updated:: docs/Milestones/Milestone-2.adoc §§ Invariants, Edge cases, Core flow.
+Commits/PRs:: da315a6 (LTT 13: Business Rules in Domain Layer).
+
+[discrete]
+=== 2025-10-24 — Replace Procedural UI Verbs with Domain Operations
+Smell/Trigger:: Early function list mixed UI-centric verbs with domain actions, diluting the ubiquitous language.
+Domain Insight:: The model should speak in domain operations (judge, dismiss, establishConnection) and enforce creation rules (Connection from valid Match only).
+Refactor Performed:: Rewrote the Function Signatures section: introduced domain functions `judge`, `dismiss`, `establishConnection` alongside app-facing wrappers; aligned states via `CandidateStage`.
+Resulting Clarity/Invariants:: Only a successful Match can produce a Connection; permission checks are part of `getFullProfile`; clearer mapping from gestures (swipe) to domain decisions.
+Artifacts Updated:: docs/Milestones/Milestone-2.adoc §Function Signatures.
+Commits/PRs:: 56b7f67, 45a262e, cddd0d5 (Enhance Function Signatures documentation).
+
+[discrete]
+=== 2025-10-24 — Diagram Alignment with Domain Terms and Flows
+Smell/Trigger:: Diagrams used mixed labels and omitted new entities introduced in the terminology and module refactor.
+Domain Insight:: Visuals must reflect domain language to avoid concept drift between text and diagrams.
+Refactor Performed:: Updated user-flow diagrams to align with Student/Recruiter terms and module boundaries; synchronized functionality flow and student/recruiter flows.
+Resulting Clarity/Invariants:: Flows now show that messaging is gated by Connection and that Matching consumes read-only Profile data.
+Artifacts Updated:: docs/Images/student-flows.svg; docs/Images/recruiter-flows.svg; docs/Images/functionality-flow.svg; functionality_files/user_flows/*.adoc.
+Commits/PRs:: e65c133 (Functionality Diagrams Milestone 1), e3c9745 (recruiter insights), 701d309 (Logbook fix related to diagrams).
+
+[discrete]
+=== 2025-10-24 — Minimal vs Enriched UML for Communication Levels
+Smell/Trigger:: A single UML style attempted to serve both high-level communication and design detail, creating noise.
+Domain Insight:: The team needs two views: Minimal for teaching/overview; Enriched for design invariants and relationships.
+Refactor Performed:: Introduced a “Minimal vs Enriched UML” template and applied it to domain diagrams; separated signal-carrying essentials from detailed associations.
+Resulting Clarity/Invariants:: Prevents over-specification in overview docs while preserving invariants in enriched views; improves reviewer focus on business rules first.
+Artifacts Updated:: docs/Images/*.svg (where applicable); Milestone-2.adoc references; Milestone-1 touch-ups.
+Commits/PRs:: f189551 (Minimal vs Enriched UML template), e0e4ff4 (Modified Milestone-2.adoc).
 
 
 == Log Book
@@ -2705,7 +2772,7 @@ This Discovery Journal records key domain insights and refactors that, during de
 | Modified, Added
 
 | Alexa M. Zaragoza
-| 4.2.1, 2.2.1, 2.1.4, 4.6.1
+| 4.2.1, 4.1.3, 2.2.1, 2.1.4, 4.4.1, 4.4.2
 | Added, Modified
 
 | Heribiell A. Rodríguez Cruz
