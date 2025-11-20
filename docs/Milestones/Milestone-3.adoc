@@ -2062,7 +2062,74 @@ _Figure 12. Itinerary of recruiter scenario showing the various stages and inter
 image::../Images/UML.match.entity.diagram.jpg[UML, align=center, pdfwidth=90%]
 _Figure 13. UML diagram showing the entities involved in the matching process between recruiters and students._
 
+==== Communication and the use of Language: Modeling Out Loud for Swipe Flow
+:author: Alexa M. Zaragoza Torres
+// This LTT corresponds to the first section of Milestone 2.
+// I was advised to include it under the Milestone document for clarity and organization.
 
+[NOTE]
+====
+Objective: To explore and refine the Swipe→Match→Chat domain model using ubiquitous language and the “modeling out loud” technique, ensuring conceptual clarity, identifying domain rules, exposing ambiguities, and aligning the model with the system’s requirements.
+====
+
+[discrete]
+Modeling out loud: Swipe → Match → Chat
+
+[discrete]
+This flow uses a shared language. *A* is the Candidate; *B* is the Recruiter. Both have a public
+*Profile* and receive recommendations. When A views B’s Profile, A can *Swipe*: *Like* (right) or
+*Pass* (left). That action triggers the flow. The server saves the *A→B Like* *idempotently*
+(duplicates count once) and enforces *visibility* (if B is “by match only” or “private,” A cannot swipe).
+No chat occurs yet; *reciprocity* is required—only mutual Likes create a *Match*.
+
+[discrete]
+Later, B likes A. The *Matching Service* detects reciprocity, confirms *uniqueness* (only one active
+Match per pair), and creates `Match(A,B)`. This automatically opens a *1:1 ChatThread*, enabled
+immediately and seeded with the message *“You matched!”*. The *Notification Service* alerts both
+sides with retries and backoff; if delivery fails, the notification inbox surfaces the new state on the next
+session. From that point on, chat is enabled; before that, chat is gated by the Match.
+
+[discrete]
+Detours are covered. If either party chooses *Pass*, nothing else happens and the next card appears.
+A short, server-validated *Undo window* allows reverting the last Swipe; if no Match was formed,
+the change rolls back cleanly. If visibility changed or a profile was blocked between recommendation
+and Swipe, the server rejects the attempt with a clear, auditable message. Repeated Likes beyond the
+first are ignored due to idempotency.
+
+[discrete]
+Safety and exit conditions apply. Either party may *Unmatch* at any time. The ChatThread closes,
+future messages are rejected, and an audit record is written. If a *Report* is filed, a moderation case
+opens, and the system may restrict or close the chat according to policy. All actions are auditable, and
+participants are notified when appropriate.
+
+[discrete]
+Testing focuses on observable outcomes. After one Like, intent is saved but no chat appears. After two
+reciprocal Likes, exactly one `Match(A,B)` exists, one `ChatThread(A,B)` opens, and both parties
+receive notifications. Order or repetition of Likes must not break idempotency or uniqueness.
+Visibility rules apply both when showing the card and at Swiped time. Undo only reverts if the
+action has not yet created shared state (e.g., a Match).
+
+[discrete]
+Ubiquitous terms—*Profile, Swipe, Like/Pass, Match, ChatThread, Notification, Undo window,
+Unmatch, Report, Idempotency, Visibility, Uniqueness, Reciprocity*—should appear in user stories,
+acceptance criteria, and code (classes, events, endpoints) to keep the model and implementation
+aligned. When a term becomes ambiguous, the team updates the language and refactors accordingly.
+
+[discrete]
+In summary, the minimum scope runs from a Swipe on a valid recommendation to a reciprocal
+Match, automatic ChatThread opening, and reliable notifications, governed by reciprocity,
+uniqueness, gated chat, visibility, idempotency, and unmatch/report support, with end-to-end checks.
+The scope is traceable to Personas and User Stories, Epics, and Features, and is ready for build and
+review.
+
+.Flowchart LTT – Modeling Out Loud for Swipe Flow
+image::../images/Flowchart-LTT-ModelingOutLoudforSwipeFlow.png[width=70%,align=center]
+
+[discrete]
+This material is guided by sections 1.3 (*Scope, Span, and Synopsis*), 2.1 (*Domain Description*),
+2.2 (*Requirements*), and 3.2 (*Validation and Verification*). It draws substantially on the PDF
+*Communication and the Use of Language* (UPRM, 2020), particularly the guidance on ubiquitous
+language and “modeling out loud”.
 
 === Isolating the Domain & Expressing Models in Software
 ==== Domain Rules in Domain Layer
