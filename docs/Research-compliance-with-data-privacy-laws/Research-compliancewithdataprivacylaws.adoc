@@ -1,0 +1,279 @@
+= Research compliance with data privacy laws
+:author: Alexa M. Zaragoza Torres
+:revdate: 2025-10-07
+:tags: privacy, GDPR, ePrivacy, PECR, CCPA, CPRA, COPPA, CAN-SPAM, TCPA, CASL, PIPEDA, LGPD, LFPDPPP, PDPA, DPDP, APPs, NZ Privacy Act, APPI, PIPA, PIPL, DPF, SCCs, Supabase, Firebase
+:toc!: macro
+:icons: font
+
+[NOTE]
+====
+This is a research document. It does not provide legal advice. The goal is to give the team a complete and neutral view of what we process, where data flows, which rules are likely to apply, and which design choices we have for payloads, consent and preferences, retention, logging, vendors, transfers, minors, and security. Decision matrices, a checklist, and a testing plan are included. All links appear at the end in the References section.
+====
+
+=== Objective
+We will create a detailed inventory of the fields and flows that the module will use across push, in-app, email, and SMS. We will describe the privacy regimes that are likely to apply in our current and near-term markets and explain how lawful bases and consent models differ for service messages and for marketing or re-engagement. We will present design alternatives with pros and cons for payload composition, preference capture, logging depth, token lifecycle, and data residency or transfer posture. We will propose concrete retention profiles with default time limits and the operational jobs needed to enforce them. We will set a pragmatic security baseline that the engineering team can implement. We will also provide an eight to ten item compliance checklist and acceptance tests that show how to validate behavior. Finally, we will list open questions for product owners and leads related to target markets, users under thirteen, hosting constraints, and service level targets for deletion and retention.
+
+=== Scope and data flows
+The module delivers time-relevant information through push notifications, in-app banners, email, and SMS. The data footprint should remain minimal and tied to a clear purpose. A typical path is Application to Backend on Supabase to Channel Provider such as APNs, FCM, an email service, or an SMS gateway, and finally to the user’s device. The application must respect platform gates. iOS requires an authorization step inside the app before notifications can be shown. Android from version 13 requires an explicit runtime permission before notifications can be posted. Our consent and preference capture must align with those platform gates so that the technical permission reflects the user’s legal choice.
+
+The recommended data set includes the user identifier as an internal UUID, the email address when email is used, and the phone number when SMS is used. It includes the device endpoint such as the push token, the platform such as iOS, Android, or Web, the application build or version, and the last seen time. It includes preference records by channel and by purpose that store the consent state, a timestamp, the collection surface and version, and the jurisdictional assumption if we show localized notices. It includes event metadata such as a notification identifier, the user identifier, the channel, a template or purpose, timestamps for creation, sending, delivery, or failure, a provider result code, and an explicit time to live. Diagnostics include rate limit counters, retry counts, queue depth, and dead-letter identifiers. A log of access, deletion, and export requests supports data subject rights. Optional or sensitive elements should be avoided by default. Examples are message content inside push payloads, precise location, persistent Internet addresses, or any content that can be read as special or sensitive categories. When full message text must be rendered, the app should fetch it after open to reduce exposure at vendors and in logs.
+
+The backend performs a policy and preference check before dispatch. It evaluates whether the message is service-necessary or marketing, checks the user’s recorded consent and opt-outs, and evaluates signals such as global privacy controls where they apply. Dispatch uses a minimal payload with an explicit time to live. Providers may keep undelivered notifications for a limited window, which is important for our retention notes. The system records outcomes in structured logs with redaction. Lifecycle jobs invalidate tokens when the application is uninstalled or when the platform refreshes the token and purge tokens that have been inactive beyond the chosen threshold.
+
+=== High-level legal landscape
+In the European Union and the European Economic Area, the General Data Protection Regulation defines lawful bases, core principles such as minimization and storage limitation, transparency duties, rights of access and deletion, controller and processor contracts, security measures, and breach notification timelines. Electronic direct marketing is governed by the ePrivacy framework that Member States implement. A safe baseline is to seek opt-in consent for direct electronic marketing sent to natural persons. Service-necessary notices can proceed on contract or legitimate interests when the message is strictly necessary for the service requested and when proportionality and opt-down are respected.
+
+In the United Kingdom, UK GDPR mirrors the main ideas of the European framework and the Privacy and Electronic Communications Regulations govern electronic communications. Most direct marketing to individuals is consent based and the term electronic mail is interpreted broadly so it can capture new formats such as in-app notifications when used for marketing. Controllers must satisfy both frameworks. They need a lawful basis for processing under data protection law and a valid consent under the electronic communications rules when a message is marketing.
+
+In the United States, state privacy laws such as the California Consumer Privacy Act as amended by the CPRA create rights to access, delete, correct, and opt out of sale, sharing, and targeted advertising. Several states require that companies honor a universal opt-out mechanism for targeted advertising. Channel rules operate in parallel. The CAN-SPAM Act regulates commercial email and requires identification, clear unsubscribe, and timely honoring of the opt-out. The Telephone Consumer Protection Act regulates automated calls and text messages and sets consent standards based on the scenario. Operational messages such as security alerts or receipts enjoy more leeway than marketing but the system must still honor unsubscribe and opt-out for commercial content.
+
+For users under thirteen in the United States, the Children’s Online Privacy Protection Rule requires verifiable parental consent before collecting or using personal information. In practice, marketing pushes should be suppressed for child accounts and any processing beyond the minimum needed to provide the service should be mediated by a parent. Re-engagement nudges that are designed to extend use require special care.
+
+International transfers require a valid transfer tool when European or United Kingdom personal data leaves the region. Options include Standard Contractual Clauses with a transfer impact assessment and supplementary measures, a certified vendor under the Data Privacy Framework for services that are in scope, or designs that avoid transfers by keeping processing within the European region through split projects or regional relays.
+
+Other jurisdictions that may be relevant include Canada, Brazil, Mexico, Singapore, India, Australia, New Zealand, Japan, South Korea, and China. These regimes differ in details but they converge on themes such as purpose limitation, minimization, retention controls, transparency, consent for direct marketing, rights handling, and transfer safeguards. The design choices below follow those themes so we can scale as markets are added.
+
+=== Lawful basis and consent
+Each notification should be classified as service-necessary or marketing and re-engagement. Service messages include account security, two factor codes, password resets, suspicious sign in alerts, receipts, critical changes to the product that affect the service, and downtime or incident notices. In the European frameworks, they typically use contract performance or legitimate interests when strict necessity and proportionality are documented. In the United States, they are not treated as marketing and can be sent where the user expects them as part of the service, and channel opt-downs should still exist. Marketing and re-engagement includes promotions, coupons, win-back messages, cross-sell, newsletters, and prompts that encourage a return to the app. In the European and United Kingdom frameworks, these messages require opt-in consent for individuals. In the United States, organizations should offer an immediate opt-out and track preferences and, where required, disable targeted advertising for users who send a universal opt-out signal. For under-thirteen users, do not send marketing pushes and secure parental consent before any processing beyond the minimum that the service requires.
+
+Consent and preference records must be durable. They should store the user id, the channel, the purpose, the consent value, a timestamp, the surface where the choice was made together with the copy version that was shown, the jurisdictional assumption used to select the copy, and the process or actor that performed the change. A global unsubscribe should exist and be easy to find. For email, a double opt in flow can reduce risk. For SMS, the system must process stop and unsubscribe keywords automatically and promptly.
+
+=== Minimization, payload strategy, and retention
+A privacy preserving payload is one that carries a template reference and only non sensitive parameters. The app renders the full message after the user opens the app or by deep linking into a screen. This approach reduces exposure in provider queues and on lock screens and it simplifies retention. For some short and low risk service notices, a brief human readable text can be included for glanceable experience, but the sender must validate the schema and all logs must apply redaction by default. Full text in payloads should be exceptional and should never include content that could be sensitive.
+
+Retention should be short and justified. Device tokens should exist only while active. Tokens with no activity beyond the chosen window should be removed. Raw delivery metadata can be kept for a short window such as thirty to ninety days and then replaced by aggregates that record rates and counts. Consent records and unsubscribe proofs should remain for the life of the purpose together with an audit buffer. Records of access, deletion, and export requests should remain long enough to demonstrate compliance. Backups must mirror the same time limits and restores must respect deletions.
+
+A register of processing should describe the purposes, categories of data, recipients, storage locations, retention periods, and transfer tools for this module. If the design introduces large scale monitoring, sensitive inferences, or vulnerable groups, a data protection impact assessment may be needed. If not, the design should document why the low risk payload strategy and short retention windows are sufficient.
+
+=== International transfers and vendors
+The transfer posture depends on the target markets and on vendor selection. A United States first design with limited European users can rely on Standard Contractual Clauses and on certified services under the Data Privacy Framework when the scope matches. This requires a written assessment and strong technical controls such as encryption in transit and at rest, minimized payloads, access controls, and audit evidence. A split region architecture with a European project for European and United Kingdom users reduces cross border flows and latency when that audience is material. If transfers are contractually prohibited or present high risk, an approach that uses European relays for notification delivery can avoid sending event metadata to the United States. In all cases, we must execute data processing agreements with processors such as Supabase, Firebase, email services, and SMS gateways, maintain a list of sub processors, disclose it, and keep a change log.
+
+=== Decision matrix: data residency options
+[cols="1,2,2,1,2", options="header"]
+|===
+|Option |Pros |Cons |Complexity |When to choose
+|United States first hosting with a single region |Simple operations and one pipeline, lower initial cost |Needs a valid transfer tool for European or United Kingdom users, higher exposure to cross border risk, possible latency for European users |Low |United States is the primary market and European traffic is limited and the transfer measures are acceptable
+|Split by region with a European project for European and United Kingdom users and a United States project for others |Reduces cross border transfers and can improve European latency and aligns with data sovereignty expectations |Two stacks to operate, more work in continuous integration and analytics, harder migrations |Medium |There is a meaningful European or United Kingdom user base and a long term presence is expected
+|European only routing for notification delivery through a relay or a regional vendor |Avoids transfers from Europe to the United States for notification events and can be combined with a United States hosted core if data is minimized |Vendor availability and cost, additional integration work, split observability across regions |Medium to High |Transfers are a blocker or a requirement from clients or partners
+|===
+
+=== Lawful basis by notification type
+[cols="1,2,2,2", options="header"]
+|===
+|Notification type |EU and UK lawful basis |US approach |Consent expectation
+|Transactional service such as account, security, receipts |Contract performance or legitimate interests with documented necessity and proportionality and an easy channel opt-down |Treated as non marketing with notice and choice where appropriate |No opt in when strictly service necessary
+|Product or service updates that materially affect use |Legitimate interests when necessary, otherwise consent when the message becomes promotional |Allow opt out and avoid promotional copy when using legitimate interests |Opt out recommended for legitimate interests and consent when the update is promotional
+|Re-engagement, promotions, and marketing |Consent under ePrivacy and PECR for individuals |Provide an immediate opt out and honor universal signals where required |Opt in in European and United Kingdom markets and opt out with preference tracking in the United States
+|Child accounts under thirteen |Parental consent and avoid usage extending nudges |Parental consent and heightened protections |Parental opt in with marketing pushes suppressed by default
+|===
+
+=== Transfer mechanisms for EU personal data
+[cols="1,2,2,2", options="header"]
+|===
+|Mechanism |Requirements |Advantages |Caveats
+|Data Privacy Framework for transfers to the United States |Vendor certification that covers the specific services in scope and commitments on onward transfers and redress |Administrative simplicity and an adequacy basis for transfers to certified services |Confirm that the certification covers the products you use and monitor changes, and still apply minimization and strong controls
+|Standard Contractual Clauses with a transfer assessment |Signed clauses between controller and processor and a documented risk assessment with supplementary measures where needed |Vendor agnostic and widely used and works with chains of providers |Ongoing assessment burden and a need for strong security and discipline in logging and payloads
+|No transfer by using only European vendors and paths |Equivalent functionality hosted in the European region and routing and storage remain local |Avoids analysis of cross border transfers and reduces risk |Potential cost and latency and possible gaps in features or provider choice
+|===
+
+=== Global jurisdiction snapshot
+[cols="1,2,3,2,2", options="header"]
+|===
+|Jurisdiction |Key law or authority |Scope notes |Direct marketing to individuals |Transfer notes
+|European Union and European Economic Area |GDPR and ePrivacy |Extraterritorial reach and strong principles and rights |Generally prior consent with national enforcement nuances |Use Chapter Five tools such as Standard Contractual Clauses, the Data Privacy Framework applies only for certified vendors that receive European data
+|United Kingdom |UK GDPR and PECR |Alignment with European concepts and broad definition of electronic mail |Consent required for electronic mail to individuals with a limited soft opt in |Use the International Data Transfer Agreement or the UK Addendum and the UK extension of the Data Privacy Framework
+|United States including California and similar states |CCPA and CPRA and peer state laws |Consumer rights and opt outs for targeted advertising and universal signals in some states |Opt out model and channel rules for email and SMS continue to apply |No general federal transfer tool and rely on contracts and security posture
+|Canada |PIPEDA and CASL |Private sector principles and an anti spam consent regime |Consent and clear notices with strong unsubscribe handling |European adequacy and onward transfers need safeguards by contract
+|Brazil |LGPD |Principles and lawful bases with a structure similar to GDPR and national authority oversight |Consent or legitimate interest depending on context |Transfer tools defined by the authority and by the statute
+|Mexico |LFPDPPP |Controller obligations and ARCO rights and notice duties |Consent or clear notices and opt out for marketing |Contractual safeguards for transfers
+|Singapore |PDPA with Do Not Call |Baseline privacy with overseas transfer duties |Consent is the default and there are targeted exemptions |Overseas transfer requires comparable protection
+|India |DPDP |Digital personal data law with notices, consent, and rights |Consent centric with certain legitimate uses |Rules define transfer conditions and significant data fiduciary duties
+|Australia |Privacy Act and Australian Privacy Principles |Principles based framework with active regulator guidance |Consent and notice for direct marketing and clear opt out |Overseas disclosure obligations and reasonable steps to ensure protection
+|New Zealand |Privacy Act 2020 and Unsolicited Electronic Messages Act |Principled privacy with a separate anti spam law |Consent required for commercial electronic messages |Overseas disclosure principles and safeguards
+|Japan |APPI |National commission supervision and cross border notice and consent expectations |Consent and transparency duties with cookie guidance |Cross border transfer requirements and notices
+|South Korea |PIPA |Stringent regime with detailed notice and consent granularity |Consent and detailed notices are standard |Transfer restrictions and guidance by the authority
+|China |PIPL |Extraterritorial reach and localization thresholds and security assessments |Strict consent and purpose controls |Security assessments, certifications, or contracts for exports
+|===
+
+=== Retention and logging profiles
+[cols="1,2,2", options="header"]
+|===
+|Profile |Tokens and routing data |Delivery logs and analytics
+|Short lived and privacy first |Expire tokens after six to twelve months without activity and revoke on account deletion or uninstall or refresh |Keep raw per event logs for three to six months and then keep only aggregated metrics and purge raw entries
+|Balanced for operations |Rotate tokens annually and purge stale tokens at twelve months and revoke on uninstall or refresh |Keep raw logs six to twelve months with aggregation at six months and apply redaction by default and enforce operator access controls
+|Long lived for deep debugging |Use only with explicit approval and time boxed windows and document risk justification |Use temporary verbose logging for an incident and purge after resolution and keep an audit record of any extension
+|===
+
+=== Vendor and platform integration notes
+Supabase projects should use a region that matches the user base and the database and edge functions should live in the same region to avoid cross region hops. Execute the data processing addendum and keep a list of sub processors with change history. Apply Postgres row level security on tables that store devices, preferences, and events and keep privileged service keys only in backend functions.  
+Firebase provides data processing and security terms and includes Standard Contractual Clauses where they are required. Configure message lifetimes explicitly to limit how long providers can retain undelivered messages. Avoid sensitive text in payloads and use fetch on open for rich content.  
+iOS requires in app authorization. The copy that explains why notifications are needed should match the preference center. Android from version 13 requires a runtime permission. If a user denies it, the app should respect that decision and not attempt workarounds. OS permissions should be synchronized with the legal consent state so that the user’s intent is consistent across technical and legal layers.
+
+=== Recommended compliance focus
+Choose a residency and transfer strategy that matches the market plan. Sign data processing agreements with all processors and publish a list of sub processors. Decide the route for transfers from the European region and document it. Map each notification type to a lawful basis and a consent pattern. Default to metadata only payloads and validate payloads against a schema. Adopt a short lived or balanced retention profile and implement purge jobs. Build a robust preference center with unsubscribe all and, where required, handle universal signals. Set a policy for users under thirteen that suppresses marketing messages unless a parent has given consent. Implement the security baseline that appears below and keep audit evidence of changes.
+
+==== Next steps
+* Owner & due dates for: residency decision, DPA execution, template classification, purge jobs, DSAR runbook.
+* DPIA decision note if we scale or handle sensitive cohorts; otherwise record why risk remains low.
+* Register of Processing entry for this module and privacy notice updates.
+* Vendor checks: verify DPF scope or SCCs for each service; pin regions in config; set message TTLs at providers.
+* QA: run the Testing approach scenarios in staging with evidence screenshots/log excerpts.
+
+=== Security baseline
+Access and isolation should follow least privilege. Service roles must be separated. Secrets must never be bundled into client code and must be rotated. Row level security must protect user scoped tables and administrative actions must be auditable.  
+Transport must be encrypted and at rest encryption must be enabled. Phone numbers and email addresses can use column level encryption if the platform supports it.  
+Templates must be allow listed and parameters validated. Payloads must not include secrets or sensitive categories. Deep links should use signed tokens with expiration.  
+Logging must apply redaction by default. Logs must be structured. The system must record consent changes, token revocations, and the outcome of purge jobs. Queues must provide dead letter handling and replay protection.  
+Abuse and reliability controls include rate limits, idempotency, exponential backoff, bounded retries, and circuit breakers.  
+Breach readiness requires a clear triage process, evidence capture, and notification timelines that match the jurisdictions we serve. Run table top exercises to validate the process.
+
+=== Risk hotspots for this module
+* Device tokens: risk of over-collection, stale tokens, exposure in logs and backups.
+* Payload content: sensitive text in payloads and lock-screen previews.
+* Message metadata: long TTLs and provider receipts that keep identifiers longer than necessary.
+* Logging and analytics: verbose logs with personal data, third-party telemetry outside the region, missing default redaction.
+* Backups and restores: misaligned retention and restores that reintroduce deleted data.
+* Cross-border routing: unintended out-of-region hops through APM, CDN, or observability integrations.
+* Preference and permission drift: OS notification permission not aligned with legal consent and sync failures between app and server.
+* Child accounts: accidental inclusion in marketing audiences and use of nudges that extend usage.
+* DSAR and deletion: tokens not revoked, queues not drained, orphaned records that survive deletion.
+
+
+=== Pre-build compliance checklist
+. Complete a lawful basis matrix by event and channel and include handling for users under thirteen.
+. Implement consent capture with timestamp, source, and jurisdiction. Provide an in app preference center and an unsubscribe all. Support stop and unsubscribe keywords for SMS.
+. Enforce minimization. Use metadata only payloads by default. Validate payload schemas and render sensitive content in the app.
+. Select a retention profile and implement purge jobs. Keep evidence of the jobs and their results.
+. Implement a deletion path. When an account is deleted, revoke tokens, drain queues, and remove linked logs within the service level target.
+. Execute data processing agreements with processors and maintain a sub processor registry with disclosures and change logs.
+. Document the transfer posture. Use the Data Privacy Framework for certified services when it applies or use Standard Contractual Clauses with a transfer assessment. Configure routing to match the residency choice.
+. Enforce a children’s policy. Block marketing pushes for users under thirteen unless a parent has given consent and record the proof.
+. Enable security controls including row level security, secret management, encrypted transport and storage, logging redaction, rate limits, and an incident runbook.
+. Complete documentation. Update the register of processing and update privacy notices to reflect channels, purposes, retention, transfers, and opt-out mechanisms.
+
+=== Testing approach
+Given a user withdraws consent for marketing pushes, the system does not deliver marketing on any channel for that user and the preference center reflects the new state without delay.  
+Given a user deletes the account, the system revokes device tokens, drains any pending notification queues, purges related logs within the target time, and records an audit entry.  
+Given the retention threshold is reached, the purge job removes raw event metadata and writes an audit record. Aggregated metrics remain for trend analysis.  
+Given an account that belongs to a child under thirteen, the system blocks marketing pushes and permits only essential service messages unless parental consent has been recorded.  
+Given a universal opt-out signal in a jurisdiction that requires it, the system disables targeted advertising flows and excludes the user from those audiences.
+
+=== Open questions and assumptions
+Which markets will we serve during the next twelve to eighteen months. Do we expect any users under thirteen or school related deployments that require parental consent flows. Are there contractual requirements that demand European hosting or that forbid certain transfer tools. What service level targets do we accept for deletion and retention. Do we need any persistent message content at rest for legal or product needs or can we rely entirely on templates and runtime rendering.
+
+[appendix]
+=== Suggested schemas
+[source,sql]
+----
+/* User notification devices with RLS on user_id */
+create table notification_devices (
+  user_id uuid not null,
+  device_token text not null,
+  platform text check (platform in ('ios','android','web')) not null,
+  app_version text,
+  last_seen_at timestamptz not null default now(),
+  primary key (user_id, device_token)
+);
+
+/* Preferences by channel and purpose with RLS on user_id */
+create table notification_preferences (
+  user_id uuid not null,
+  channel text check (channel in ('push','email','sms','inapp')) not null,
+  purpose text check (purpose in ('service','marketing')) not null,
+  consent boolean not null,
+  consent_ts timestamptz not null default now(),
+  source text,
+  jurisdiction text,
+  primary key (user_id, channel, purpose)
+);
+
+/* Events metadata with RLS on user_id */
+create table notification_events (
+  notification_id uuid primary key,
+  user_id uuid not null,
+  channel text not null,
+  template_id text not null,
+  created_at timestamptz not null default now(),
+  sent_at timestamptz,
+  delivered_at timestamptz,
+  failed_at timestamptz,
+  provider_code text,
+  ttl_seconds integer
+);
+
+/* Log of access, deletion, and export requests */
+create table dsar_log (
+  request_id uuid primary key,
+  user_id uuid not null,
+  request_type text check (request_type in ('access','delete','export')) not null,
+  requested_at timestamptz not null default now(),
+  closed_at timestamptz,
+  outcome text
+);
+----
+
+=== References
+
+==== EU and UK
+[cols="2,5",options="header"]
+|===
+| Topic | Official source
+| GDPR official text | link:https://eur-lex.europa.eu/eli/reg/2016/679/oj[EUR-Lex]
+| ePrivacy Directive | link:https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32002L0058[EUR-Lex]
+| PECR guide on electronic marketing | link:https://ico.org.uk/for-organisations/marketing/guide-to-pecr/what-are-pecr/[ICO]
+| International transfer tools, IDTA and UK Addendum | link:https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/international-transfers/international-data-transfer-agreement-and-guidance/[ICO]
+| UK extension to the EU U.S. Data Privacy Framework | link:https://www.dataprivacyframework.gov/program-articles/FAQs%E2%80%93UK-Extension-to-the-EU%E2%80%93U.S.-Data-Privacy-Framework-%28UK-Extension-to-the-EU%E2%80%93U.S.-DPF%29[Data Privacy Framework]
+|===
+
+==== United States
+[cols="2,5",options="header"]
+|===
+| Topic | Official source
+| CCPA and CPRA regulations | link:https://cppa.ca.gov/regulations/[California Privacy Protection Agency]
+| Global Privacy Control overview | link:https://oag.ca.gov/privacy/ccpa/gpc[California Department of Justice]
+| CAN-SPAM compliance guide | link:https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business[FTC]
+| TCPA rules | link:https://www.fcc.gov/sites/default/files/tcpa-rules.pdf[FCC]
+| COPPA rule and guidance | link:https://www.ftc.gov/business-guidance/resources/childrens-online-privacy-protection-rule-notice-rule[FTC]
+|===
+
+==== Transfers
+[cols="2,5",options="header"]
+|===
+| Topic | Official source
+| Standard Contractual Clauses | link:https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/standard-contractual-clauses-scc_en[European Commission]
+| EU U.S. Data Privacy Framework overview | link:https://www.dataprivacyframework.gov/Program-Overview[Data Privacy Framework]
+|===
+
+==== Platforms
+[cols="2,5",options="header"]
+|===
+| Topic | Official source
+| UserNotifications framework and authorization | link:https://developer.apple.com/documentation/usernotifications[Apple]
+| APNs expiration and delivery behavior | link:https://developer.apple.com/documentation/usernotifications/sending-notification-requests-to-apns[Apple]
+| Android notification permission from version 13 | link:https://developer.android.com/develop/ui/views/notifications/notification-permission[Android Developers]
+|===
+
+==== Vendors
+[cols="2,5",options="header"]
+|===
+| Topic | Official source
+| Supabase Data Processing Addendum | link:https://supabase.com/legal/dpa[Supabase]
+| Firebase Data Processing and Security Terms | link:https://firebase.google.com/terms/data-processing-terms[Firebase]
+|===
+
+==== Other jurisdictions
+[cols="2,5",options="header"]
+|===
+| Country | Official source
+| Australia | link:https://www.oaic.gov.au/privacy/australian-privacy-principles[OAIC Australian Privacy Principles]
+| Brazil | link:https://www.gov.br/anpd/pt-br/assuntos/lei-geral-de-protecao-de-dados-pessoais-lgpd[ANPD LGPD]
+| Canada | link:https://www.priv.gc.ca/en/about-the-opc/what-we-do/legislation/pipeda/[OPC PIPEDA]
+| Canada, CASL | link:https://crtc.gc.ca/eng/internet/anti.htm[CRTC Anti-Spam]
+| China | link:https://en.npc.gov.cn.cdurl.cn/2021-12/29/c_694559.htm[National People’s Congress, PIPL]
+| India | link:https://www.meity.gov.in/content/digital-personal-data-protection-act-2023[MeitY DPDP]
+| Japan | link:https://www.ppc.go.jp/en/legal[Personal Information Protection Commission, APPI]
+| Mexico | link:https://www.dof.gob.mx/nota_detalle.php?codigo=5150631&fecha=05/07/2010[Diario Oficial, LFPDPPP]
+| New Zealand | link:https://www.legislation.govt.nz/act/public/2020/0031/latest/LMS23223.html[Privacy Act 2020]
+| Singapore | link:https://sso.agc.gov.sg/Act-PDPA2012[Statutes Online, PDPA]
+| South Korea | link:https://elaw.klri.re.kr/eng_service/lawView.do?hseq=53044&lang=ENG[PIPA English translation]
+|=== 
