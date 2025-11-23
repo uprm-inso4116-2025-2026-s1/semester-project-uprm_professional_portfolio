@@ -1,0 +1,157 @@
+= Research Enabling Seamless Notifications in Flutter
+Second Milestone - Alexa M. Zargoza Torres
+:nofooter:
+:toc: macro
+:icons: font
+
+=== Summary
+Seamless notifications keep students and recruiters in sync. This research defines a practical, Supabase-aligned approach for shipping push and in-app alerts in Flutter. It covers the two core events (new match, new message), the Android/iOS setup that actually matters, and the essential workflows—device-token registration, deep links, and an Edge Function path to FCM. A brief strategy comparison and a weighted recommendation make the path to implementation clear, while preserving clean-architecture boundaries and addressing key risks.
+
+=== Objective
+Produce a clear, evidence-based decision on how to deliver notifications (push + in-app) for recruiter–job seeker interactions using Flutter with Supabase, without writing production code. The output should translate directly into implementation tasks once approved.
+
+=== Core Events
+Two notification moments are in scope because they materially impact engagement and retention.
+• New Message — On receipt of a chat message, the recipient is alerted and deep-linked to the Chats screen. Target: app://chat (evolves to app://chat/{threadId} when IDs are formalized). Behavior: if a single unread conversation exists, focus it; otherwise show the inbox list. Channel: push in background; lightweight in-app banner in foreground. Priority: High.
+• New Match — When mutual interest is recorded between a student and a recruiter, both users are alerted and deep-linked to the Matches screen. Target: app://match (evolves to app://match/{matchId} when IDs are formalized). Behavior: load the most recent match context to encourage starting a conversation. Channel: push plus a subtle in-app nudge. Priority: Medium.
+Payload policy — Minimal and privacy-preserving: type, title, body, deeplink, and only lightweight hints if needed ( latest=true or sender). No sensitive content in push. Titles/bodies localized; sound/badge appropriate; duplicates coalesced.
+
+=== Flutter SDKs
+Implementation relies on a compact, stable toolset: firebase_messaging for push registration, token lifecycle, and message reception on Android and iOS; flutter_local_notifications for consistent foreground presentation; a router capable of resolving deep links from a cold start (go_router); and supabase_flutter for authentication, database access, and Realtime subscriptions that drive in-app alerts. Overall setup effort is moderate, well documented, and aligned with a typical Flutter + Supabase stack.
+
+=== Platform Setup
+
+.Android — table view
+[cols="2,5,5", options="header"]
+|===
+|Topic | Action | Verification / Notes
+
+|Firebase initialization
+|Configure Firebase in the Android project and initialize early at app startup; register a background message handler.
+|Confirm app starts without errors and background handler logs a receipt when a silent push arrives.
+
+|Runtime permission (Android 13+)
+|Request the POST_NOTIFICATIONS runtime permission with a clear UX and a graceful denial path.
+|Verify first-run prompt; check Settings → App notifications reflects the user choice; simulate denial and ensure app handles it.
+
+|Notification channels
+|Create stable channels (e.g., “Messages”, “Matches”) before first use; choose importance suitable for heads-up alerts.
+|Channel IDs remain constant; importance cannot be raised later. Validate heads-up behavior on a real device.
+
+|Deep-link routing
+|Implement App Links or a URI scheme so a tap navigates to the correct route, including from a cold start.
+|Send a test push with a deep link; verify the app opens and lands on the intended screen from terminated and background states.
+
+|Device matrix testing
+|Exercise foreground, background, terminated, and battery-optimization scenarios, including stricter OEMs.
+|Test on Pixel + Samsung/Xiaomi devices; record any OEM-specific behaviors and required mitigations.
+|===
+
+.iOS — table view
+[cols="2,5,5", options="header"]
+|===
+|Topic | Action | Verification / Notes
+
+|Capabilities
+|Enable the Push Notifications capability and, when required, Background Modes → Remote notifications.
+|Check entitlements in Xcode; confirm background remote notifications are allowed.
+
+|APNs credentials
+|Add APNs token (.p8) or certificate to the push provider so delivery through APNs is authorized.
+|Send a provider test to a real device; verify receipt. Keep credentials per-environment (dev/stage/prod).
+
+|Authorization prompt
+|Request user authorization on first run (alert, badge, sound) and handle all outcomes.
+|Confirm prompt appears once; verify app behavior for authorized/denied states (badges, sounds, alerts).
+
+|Deep-link routing
+|Configure Universal Links or a custom URL scheme; ensure taps route to the correct screen from background/terminated.
+|Tap a push with deep link on a real device; confirm correct navigation from a cold start and when the app is already open.
+
+|Device testing
+|Execute end-to-end tests on physical devices; simulators are not reliable for remote push.
+|Use at least one modern iPhone; verify alert display, badge updates, sound, and navigation for both events.
+|===
+
+=== Technical Workflow
+At sign-in or app start, the mobile client requests permission, retrieves the FCM registration token, and upserts it into a device_tokens table with user_id, token, and platform. The client also subscribes to Realtime streams for in-app updates to avoid unnecessary push alerts while the user is active. When a new message or match row is inserted, either a Postgres trigger or a database webhook invokes a Supabase Edge Function. The function, running with service credentials, looks up the latest active tokens for the target user(s), builds a minimal payload including a deep link, and sends through the provider’s HTTP v1 API (FCM for Android and iOS via APNs). If the app is foregrounded, the client surfaces an in-app banner and may suppress a system alert to prevent duplication; when backgrounded or terminated, the OS presents the push and tapping it navigates using the deep link.
+
+To prevent duplicates, every outbound notification carries an immutable event_id. The delivery path treats event_id as the idempotency key and applies vendor collapse/summary keys so that stale copies are replaced rather than multiplied across devices. Transient delivery errors trigger bounded retries with exponential backoff and jitter; permanent errors (for example, invalid token) are not retried, and failed attempts are recorded in a dead-letter log for later inspection and optional replay. Message type determines delivery profile: user-visible alerts use standard priority with sound/badge as appropriate; foreground sessions prefer data-only payloads to drive in-app UI; time-sensitive items set a short TTL so that stale alerts do not surface after the user returns online. Deep links include a versioned path contract (for example, v1/chat or v1/match) so navigation remains stable as routes evolve. Observability covers per-event metrics (attempts, successes, latency buckets, error codes) and per-user/device trends (token freshness, last success); threshold breaches raise alerts so issues are detected early.
+
+=== Data & Security
+Design is intentionally minimal, auditable, and privacy preserving. The device_tokens table stores multiple tokens per user to support multi-device usage and includes platform and last-seen metadata for maintenance. Row-Level Security limits users to reading or upserting only their own tokens. The delivery function runs under a least-privilege service role with read-only access to token views and write access restricted to delivery logs. On login and app start the client upserts the current token. On logout tokens are marked inactive. When the provider reports an invalid token the delivery function removes it. Push payloads avoid PII and full message bodies; only identifiers and deep-link data travel over the notification channel so the app can fetch details after the user authenticates. Sender credentials are stored only in secure function configuration and are isolated by environment.
+
+The device_tokens schema adds operational columns: app_version, last_seen_at, last_success_at, last_error_code, and is_active. A nightly job disables tokens that repeatedly produce permanent errors and prunes long-dormant rows. This keeps the send set accurate and reduces provider rejections.
+Device tokens are treated as secrets at rest. Apply column-level encryption when available and restrict access to a narrow service-role path. Provider credentials are separated per environment (dev, stage, prod) and rotated on a fixed cadence. Rotation is validated with a canary send.
+RLS policies state the intent explicitly: users may upsert and read only their own tokens. Service roles read from a dedicated view that hides sensitive columns and may write only to notification_logs.
+Notification logs keep a minimal set of fields for 30 to 90 days to support troubleshooting and aggregate metrics. Payload bodies are not stored; only the identifiers required for navigation and correlation are retained. Optional user preferences such as category mutes and quiet hours are evaluated on the server before dispatch so alerts respect user choices.
+
+=== Risks & Mitigations
+
+[cols="1,3,4,6,2", options="header"]
+|===
+|# | Risk | Cause / When it occurs | Mitigation (actionable) | Severity
+
+|1
+|Delivery variability across platforms and device states
+|Misconfigured capabilities, channels, or permissions; OEM background limits; low-priority payloads.
+|Configure required capabilities precisely; define stable notification channels; validate on physical devices (foreground, background, cold start, strict OEMs); use high-priority delivery only when warranted.
+|High
+|2
+|Token churn and invalid tokens
+|Reinstalls or refresh events rotate FCM/APNs tokens; stale tokens persist in the database.
+|Listen for token refresh; upsert token on login/app start; mark tokens inactive on logout; prune on provider error codes; allow multiple active tokens per user.
+|Medium-High
+|3
+|Duplicate or missing alerts
+|Push and in-app both fire; OS alert shown while app is foregrounded; deep links break routing.
+|Prefer Realtime in-app updates when the user is active; send data-only pushes for foreground; centralize deep-link handling; add automated route checks to prevent broken navigation.
+|Medium
+|===
+
+=== Options Compared
+Supabase + FCM via Edge Functions (recommended) keeps logic on-stack, uses proven delivery rails, and provides full control over payloads and deep links; setup involves one small function and Firebase configuration. Firebase-only stack simplifies push delivery but diverges from Supabase data and access patterns, introducing duplication in persistence and authentication. Client polling is simple to build yet not near real-time, wastes battery, and can miss events when the app is closed—unsuitable for chat and matching. Email/SMS is useful for secondary reminders, not viable for interactive, time-sensitive use.
+
+=== Weighted Decision
+Four criteria reflect project priorities: Reliability (40%), Effort (30%), Stack Alignment (20%), and Cost/Lock-in (10%). On a five-point scale, Supabase + FCM scores 4.4 overall (high reliability and alignment, moderate effort, minimal cost); Firebase-only scores 3.5 (reliable, lower effort, weaker alignment); Polling scores 2.0 (poor real-time behavior despite low cost); Email/SMS scores 2.3 (cheap but not immediate). Decision: proceed with Supabase + FCM; use Firebase-only as fallback and email/SMS as a secondary channel for non-urgent flows.
+
+=== Testing Approach
+A dry-run of both platform checklists is executed end-to-end—permissions, tokens, channels, capabilities, and deep-link routing. Two proof scenarios validate behavior:
+(1) a new chat message produces an alert and opens its thread;
+(2) a new match produces an alert and opens the match screen. Tests run on physical iOS and Android devices in foreground, background, and terminated states; OEM-specific constraints and mitigations are documented. Send outcomes are recorded in notification_logs and token-cleanup logic is confirmed by simulating invalid tokens.
+
+=== Next Steps
+
+Create the Firebase project and APNs configuration; store server credentials securely as function secrets.
+Create device_tokens with Row-Level Security; implement token upsert on login/app start and cleanup on logout and provider error codes.
+Add a trigger or webhook on messages and matches that calls a single send_push Edge Function to resolve recipients, fetch tokens, build a minimal deep-link payload, send, and log results.
+Wire deep-link routing to chat/{id} and match/{id}, present a consistent foreground banner, and subscribe to Realtime for in-app updates.
+Run the platform checklists across a small device matrix; convert findings into follow-up tasks and acceptance tests.
+=== Success Criteria
+The research packet covers the required events and options, provides platform setup guidance, offers a minimal data/security design, identifies top risks with mitigations, presents a weighted recommendation, and lists concrete next steps that the team can immediately convert into implementation tickets. Open questions discovered during the dry-run are tracked as follow-ups.
+
+=== Setup References
+
+link:https://firebase.flutter.dev/docs/messaging/usage[Cloud Messaging]
+: Token registration, foreground/background handlers, message reception. Flutter SDKs quick check.
+
+link:https://firebase.google.com/docs/cloud-messaging/flutter/client[Firebase: Set up a FCM client app on Flutter]
+: Console setup for Android/iOS, including uploading the APNs .p8 key. iOS APNs credentials.
+
+link:https://developer.android.com/develop/ui/views/notifications/notification-permission[Android 13+: Notification runtime permission]
+: Runtime POST_NOTIFICATIONS permission and testing. Android permission flow.
+
+link:https://developer.android.com/develop/ui/views/notifications/channels[Android: Create and manage notification channels]
+: Stable channels, importance levels, and behavior. Android notification channels.
+
+link:https://docs.flutter.dev/cookbook/navigation/set-up-app-links[Flutter: Set up app links for Android]
+: Android App Links configuration and verification from Flutter. Android deep-link routing.
+
+link:https://developer.apple.com/documentation/xcode/supporting-universal-links-in-your-app[Apple: Supporting Universal Links in your app]
+: Enable and handle Universal Links. iOS deep-link routing.
+
+link:https://developer.apple.com/documentation/usernotifications/pushing-background-updates-to-your-app[Apple: Pushing background updates to your app]
+: Turn on Background Modes → Remote notifications. iOS capabilities/background
+
+link:https://developer.apple.com/documentation/usernotifications/establishing-a-token-based-connection-to-apns[Apple: Establishing a token-based connection to APNs]
+: APNs token-based auth with the .p8 key, Team ID, and Key ID. iOS APNs auth.
