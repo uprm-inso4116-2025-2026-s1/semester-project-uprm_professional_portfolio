@@ -2848,6 +2848,102 @@ Resulting Clarity/Invariants:: Prevents over-specification in overview docs whil
 Artifacts Updated:: docs/Images/*.svg (where applicable); Milestone-2.adoc references; Milestone-1 touch-ups.
 Commits/PRs:: f189551 (Minimal vs Enriched UML template), e0e4ff4 (Modified Milestone-2.adoc).
 
+==== Swipe and Match Logic in the Domain Layer
+:author: Carlos J. Pepín Delgado
+
+[NOTE]
+Objective: Define and document the complete domain behavior governing swipe evaluation, interest recording, mutual-interest detection, match creation, and connection activation. This task follows the principles from *Effective Domain Modeling*, *Making Implicit Concepts Explicit*, and *Isolating the Domain & Expressing Models in Software*.
+
+===== Topic Overview
+The lecture material emphasizes that business logic must be placed inside the Domain Layer and expressed through domain concepts rather than UI gestures or infrastructure behavior. Swiping, evaluating interest, and forming matches represent core domain transitions. Their rules must be defined using domain terminology and enforced at the boundaries of aggregates such as `Swipe`, `Match`, and `Connection`.
+
+A domain-owned sequence is required to ensure that swiping decisions and match formation are independent of UI concerns. The UI may initiate actions but cannot interpret business rules, compute reciprocity, or construct matches.
+
+===== Identification of Domain Behaviors
+Using terminology from Milestone 1 and behavioral descriptions from Milestone 2 and 3, the system defines:
+
+*Swipe* — A domain action representing interest (Like) or rejection (Pass).  
+*Match* — An event created only when mutual interest exists.  
+*Connection* — A persistent relationship created as the consequence of a Match.  
+*Session* — The context in which swipes and profile presentation occur.
+
+The task identifies the domain-owned behaviors that were previously implicit or spread across UI descriptions.
+
+===== Domain-Owned Swipe/Match Sequence
+The complete domain sequence is defined as:
+
+1. **Swipe**  
+   The actor performs a `Like` or `Pass` on a `ProfileCard`.  
+   Swipe is a domain event tied to the actor’s identity.
+
+2. **Evaluate Swipe**  
+   The Domain Layer records the action and interprets its effect.  
+   A `Pass` removes the profile from the current Session.  
+   A `Like` records interest but does not trigger additional actions by itself.
+
+3. **Check Mutual Interest**  
+   Reciprocity exists only when both parties have previously recorded a `Like` on each other’s ProfileCard.  
+   The check is expressed as a domain rule:  
+   `Like(A,B) AND Like(B,A) → Candidate for Match`.
+
+4. **Create Match**  
+   A `Match` is formed only when mutual interest exists.  
+   A Match is unique per Recruiter–Student pair and must not duplicate an existing relationship.  
+   Matches cannot be created for invalid, blocked, or private profiles.
+
+5. **Trigger Connection**  
+   A `Connection` is created as the domain consequence of a valid Match.  
+   The Connection persists beyond the transient Match event and serves as the only context for messaging.
+
+This sequence is the domain’s source of truth for all swipe and match logic.
+
+===== Separation From UI Responsibilities
+The following are explicitly *not* domain behaviors:
+
+* Swipe gestures, card animations, left/right drag distances  
+* Undo actions performed in the UI  
+* Deck navigation or presentation logic  
+* UI rules about when cards appear or disappear  
+
+The domain recognizes only committed domain actions and events.
+
+===== Domain Constraints and Invariants
+The domain enforces the following invariants:
+
+* A Match cannot be formed without mutual interest.  
+* A Connection cannot be formed without a Match.  
+* A Pass prevents the same ProfileCard from reappearing within the same Session.  
+* A Match must be unique and cannot be duplicated.  
+* Messaging requires an active Connection.  
+* Blocked users cannot form new Matches or Connections.
+
+These invariants maintain integrity across swiping and matching flows.
+
+===== Verification and Alignment
+The documented sequence was validated against:
+
+* Milestone 1 Terminology  
+* Milestone 2 Domain Description and Events  
+* Milestone 3 Domain Rules  
+* The required system flows (Swipe → Match → Connection)
+
+The rules match the project’s official ubiquitous language and remove any dependency on UI conditions.
+
+===== Traceability to Lecture Concepts
+[cols="2,4",options="header"]
+|===
+|Lecture Concept |Application in Task
+|Ubiquitous Language |Swipe, Like, Pass, Match, Connection, Session.
+|Implicit Concepts |Mutual interest, reciprocity, and connection triggers made explicit.
+|Aggregates and Entities |Rules tied to Swipe, Match, and Connection aggregates.
+|Invariants |Uniqueness of Match, Pass semantics, messaging constraints.
+|Domain Isolation |UI gestures removed; domain defines all logic.
+|===
+
+===== References
+Schütz-Schmuck, Marko. *Effective Domain Modeling*.  
+Schütz-Schmuck, Marko. *Making Implicit Concepts Explicit*.  
+Schütz-Schmuck, Marko. *Isolating the Domain & Expressing Models in Software*.
 
 == Log Book
 
