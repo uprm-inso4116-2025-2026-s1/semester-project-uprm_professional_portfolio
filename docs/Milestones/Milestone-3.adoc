@@ -2270,7 +2270,7 @@ The following invariants must hold within the `Address` Value Object:
 
 * Once created, an `Address` cannot be mutated; changes require a new instance.
 
-Validation occurs at the boundary—user input is verified before `Address` construction to ensure all invariants hold.  
+Validation occurs at the boundary user input is verified before `Address` construction to ensure all invariants hold.  
 Profiles may temporarily lack an address (e.g., new user); null updates are intentionally supported to clear address data safely.
 
 ===== Testing & Verification
@@ -2848,6 +2848,127 @@ Resulting Clarity/Invariants:: Prevents over-specification in overview docs whil
 Artifacts Updated:: docs/Images/*.svg (where applicable); Milestone-2.adoc references; Milestone-1 touch-ups.
 Commits/PRs:: f189551 (Minimal vs Enriched UML template), e0e4ff4 (Modified Milestone-2.adoc).
 
+==== Domain Rules in the Domain Layer
+:author: Carlos J. Pepín Delgado
+
+[NOTE]
+Objective: Consolidate all business rules governing swiping, matching, visibility, applications, openings, and profile interactions, and express them explicitly as part of the Domain Layer. This task follows the guidance from Effective Domain Modeling, Making Implicit Concepts Explicit, and Isolating the Domain & Expressing Models in Software.
+
+===== Topic Overview
+The lectures emphasize that business rules must be expressed in the Domain Layer, independent of UI gestures or infrastructure details. A domain rule describes the allowed states and transitions for aggregates, entities, value objects, and events. These rules govern the integrity of Matches, Connections, Profiles, Applications, and Opening Requirements.
+
+The course material clarifies that domain rules must use ubiquitous language, be tied to domain concepts, and be enforced at the boundaries of the model—not embedded inside UI components, animations, or database scripts.
+
+===== Identification of Domain Rules in the Project
+A cross-analysis of Milestone 1 terminology, the descriptive narrative, the event tables, the requirements, and the function signatures reveals multiple rules that were implicit or distributed across different sections. The terms that anchor the domain rules include:
+
+Swipe, Like, Pass
+Match (event)
+Connection (persistent relationship)
+Profile and ProfileCard
+Visibility (Public, By Match, Private)
+Opening, Requirements, Eligibility
+Application
+Session
+Block, Report
+Identity (UUID)
+
+The purpose of this task is to make these rules explicit and locate them clearly within the Domain Layer documentation.
+
+===== Consolidated Domain Rules
+
+Swipe Action Recording::
+A Swipe (Like or Pass) is a domain action tied to the identity of the actor.
+A Pass prevents the same ProfileCard from reappearing within the same session.
+A Like records interest but does not create a Match by itself.
+
+Reciprocity for Match::
+A Match is created only when both parties have explicitly recorded a Like on one another.
+A Match must be unique for a given Recruiter–Student pair.
+A Match must not be created for closed or invalid profiles.
+
+Visibility Constraints::
+A Profile with Private visibility must not appear in recruiter discovery.
+A Profile with By Match visibility becomes visible only after a Match is formed.
+A Public Profile may appear in recruiter search based on filters.
+
+Connection Creation::
+A Connection is created only from a valid Match.
+Messaging requires an active Connection or explicit candidate permission.
+A Connection is a persistent relationship that outlives the transient Match event.
+
+Blocking and Reporting Rules::
+Blocking immediately prevents future Matches between the parties.
+Blocking disables any active Connection and prohibits messaging.
+A Report must create a moderation case and restrict further interaction according to policy.
+
+Undo Behavior (Clarified)::
+Undo may revert the last swipe only in the UI layer and does not modify domain state.
+The Domain Layer recognizes only committed Swipes and Matches; it does not support reversal.
+Undo is therefore not a domain rule.
+
+Eligibility for Openings::
+Eligibility is computed based on the structured Requirements of an Opening.
+Eligibility outcomes must use the defined categories: meets, partially meets, does not meet.
+Eligibility must be consistent and reproducible across evaluations.
+
+Application Rules::
+An Application binds a Candidate to an Opening.
+Withdrawals update pending states but must preserve historical traceability.
+Applications cannot advance unless Requirements are satisfied.
+
+Interview Scheduling::
+An Interview may be scheduled only when:
+• a valid Match exists, or
+• the Candidate is shortlisted for the Opening.
+Time blocks must not overlap for either party.
+Scheduling must prevent double booking.
+
+Offer Validity::
+Offers must contain explicit terms and an expiration date.
+Expired Offers cannot be accepted.
+The acceptance state must be tracked in the domain model.
+
+Domain Identity Rules::
+Profiles, Matches, Openings, Applications, and Events must each have immutable identity values (UUIDs).
+Identity must not change across updates or system migrations.
+
+===== Placement in the Domain Layer
+Following the lecture material:
+
+Rules 1–4 reside in the aggregates Profile, Match, and Connection.
+Rules 5–6 belong to the safety and moderation behaviors of the domain.
+Rules 7–10 belong to the aggregates Opening, Application, and Interview.
+Rule 11 belongs to the model’s identity strategy.
+
+The Domain Layer becomes the single source of truth for business rules, as required by Milestone 3.
+
+===== Verification and Consistency
+The consolidated rules were cross-checked against:
+
+Milestone 1 terminology
+Domain Rough Sketch
+Events, Actions, and Behaviors
+Domain Requirements
+Function signatures (getNextProfile, processSwipe, checkForMatch, createConnection, sendMessage)
+
+All rules align with observable domain phenomena and do not depend on UI gestures, animations, or backend retrieval mechanics.
+
+===== Traceability to Lecture Concepts
+[cols="2,4",options="header"]
+|===
+|Lecture Concept |Application in Task
+|Ubiquitous Language |Swipe, Match, Connection, Opening, Eligibility.
+|Making Implicit Concepts Explicit |Reciprocity, visibility, blocking, offer validity, scheduling.
+|Aggregates & Entities |Rules attached to Profile, Match, Connection, Opening, Application.
+|Invariants |Uniqueness of matches, non-overlapping interviews, eligibility categories.
+|Domain Isolation |Rules placed in domain documentation, not UI or infrastructure.
+|===
+
+===== References
+Schütz-Schmuck, Marko. Effective Domain Modeling.  
+Schütz-Schmuck, Marko. Making Implicit Concepts Explicit.  
+Schütz-Schmuck, Marko. Isolating the Domain & Expressing Models in Software.
 
 == Log Book
 
