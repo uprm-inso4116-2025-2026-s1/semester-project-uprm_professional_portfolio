@@ -2512,9 +2512,9 @@ The proposed names reinforce domain clarity and remove ambiguity caused by UI or
 |===
 
 ===== References
-Schütz-Schmuck, Marko. *Communication and the Use of Language*.  
-Schütz-Schmuck, Marko. *Effective Domain Modeling*.  
-Schütz-Schmuck, Marko. *Making Implicit Concepts Explicit*.
+* Schütz-Schmuck, Marko. *Communication and the Use of Language* (Lecture Slides 3–6).
+* Schütz-Schmuck, Marko. *Effective Domain Modeling* (Lecture Slides 4–7).
+* Schütz-Schmuck, Marko. *Making Implicit Concepts Explicit* (Lecture Slides 2–5).
 
 === Isolating the Domain & Expressing Models in Software
 ==== Domain Rules in Domain Layer
