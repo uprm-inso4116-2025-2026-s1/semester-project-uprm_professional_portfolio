@@ -1244,6 +1244,8 @@ _"As a user, I want to block a profile so that it no longer appears or can initi
 
 ==== Personas
 
+[line-through]#**Narrative personas for Milestone 1 & 2:**#
+
 The personas below represent our core user segments and ground the scope of this product. For each persona we outline goals, pains, typical behaviors, and accessibility needs, and we link them to the stories, epics, and features defined in 2.2.1. We’ll reference these personas by name during planning and reviews to keep decisions concrete and tied to user value.
 
 .María “New Grad” Rivera — University Candidate (mobile-first)
@@ -1362,7 +1364,97 @@ The personas below represent our core user segments and ground the scope of this
 |Mina (Intl. Grad) |X |X |X |X |X
 |===
 
+&#160;
+[discrete]
 
+#**Updated narrative personas for Milestone 3:**#
+
+The following personas reinterpret our earlier feature-focused profiles as vivid, system-independent characters drawn from the domain. Each one should feel like a real person whose name can act as shorthand for their wishes, goals, fears, and decision habits
+
+
+.María "New Grad" Rivera - Narrative Persona
+[cols="1,3"]
+|===
+|Snapshot|María is the friend who rushes across campus with a coffee in one hand and a folder of résumés in the other, squeezing job-hunt moments into the ten minutes between class, tutoring, and the last shuttle home.
+|Background|22-year-old CS student at UPRM, first in her family to graduate. She juggles a capstone project, a part-time tutoring job, and calls from home about scholarships and family bills.
+|Wishes & Goals|Wants her first software role to be a place where she keeps learning and is taken seriously, not "just another intern". Hopes to earn enough to help her parents breathe easier while still having time for side projects and friends.
+|Fears & Pains|Still remembers waiting nearly forty minutes in a noisy job-fair line only to hand over a résumé and never hear back. She fears becoming invisible in big applicant pools and worries that one awkward conversation might erase months of preparation.
+|Decision Tendencies|Makes short handwritten lists of companies she truly cares about and circles those where recruiters seemed genuinely interested. She says yes quickly when communication is specific and respectful, but silently drops opportunities that ghost her or feel transactional.
+|Recruiting Habits|Uses campus career fairs, WhatsApp chats with classmates, and LinkedIn posts to spot openings. After each interaction she writes down the recruiter's name, what they mentioned, and any promised follow-up so she does not lose track.
+|Tech & Environment|Checks roles on her phone while walking between buildings or waiting for the bus; deeper work such as tailoring applications happens late at night on a shared, occasionally unreliable laptop at the kitchen table.
+|Visual Cue|María in worn sneakers at the student center, backpack half-open, a highlighter in hand tracing circles around three companies on a folded job-fair map.
+|Domain Role|Embodies the Student / Applicant who needs visibility, timely feedback, and fair early-career chances without having to master every tool or platform at once.
+|===
+
+.Luis "Switcher" Santiago - Narrative Persona
+[cols="1,3"]
+|===
+|Snapshot|Luis is the meticulous coworker who always knows which server is failing and which cable belongs where, quietly studying for a new career after everyone else has logged off.
+|Background|30-year-old support technician who has spent years fixing other people's outages. He is halfway through an evening QA bootcamp and often helps his younger cousins with homework on weekends.
+|Wishes & Goals|Wants to prove that his hands-on troubleshooting experience counts as much as formal titles. His goal is a stable QA role with room to grow, where he can stop hiding his job search from current colleagues.
+|Fears & Pains|Fears that recruiters will see only "IT support" and never the disciplined tester underneath. He is anxious about his manager discovering that he is interviewing elsewhere and about being forced to accept the first mediocre offer out of fear.
+|Decision Tendencies|Researches obsessively before applying, saving notes in color-coded spreadsheets. He responds only to opportunities that explain expectations, compensation range, and work modality clearly; vague descriptions go into a "maybe someday" tab that he rarely reopens.
+|Recruiting Habits|Prefers asynchronous communication — email, messages he can answer late at night, or quiet one-on-one calls after work. He avoids anything that feels like a public announcement of his search and looks for signals that companies respect privacy and confidentiality.
+|Tech & Environment|Works on a home desktop with multiple monitors, keeping browser tabs for bootcamp materials, test reports, and job leads side by side. On the commute he reviews saved roles on his phone but rarely applies from it.
+|Visual Cue|Luis at his desk after hours, office lights mostly off, bootcamp slides on one monitor and a spreadsheet of "target roles" open on the other.
+|Domain Role|Represents the Candidate already in the workforce who values control over visibility, accurate filters, and verifiable signals more than sheer volume of outreach.
+|===
+
+.Karla "Campus Recruiter" Gómez - Narrative Persona
+[cols="1,3"]
+|===
+|Snapshot|Karla is the recruiter who arrives at campus with a rolling suitcase of banners, a thermos of coffee, and a mental checklist of ten hires she needs before the end of the quarter.
+|Background|Mid-career recruiter at a tech company responsible for several junior roles. She coordinates campus visits, tracks dozens of conversations in parallel, and reports weekly numbers to her hiring managers.
+|Wishes & Goals|Wants to leave each event with a short, trustworthy list of candidates she can confidently present to engineering leads. She values reliability over spectacle and hates wasting time on incomplete profiles.
+|Fears & Pains|Fears promising candidates slipping through the cracks because their names get lost in spreadsheets or handwritten notes. She worries about no-shows at interviews and about overpromising timelines she cannot keep.
+|Decision Tendencies|Thinks in funnels and stages: discover, screen, interview, offer. She prioritizes candidates who show up prepared, follow through after conversations, and communicate clearly about availability.
+|Recruiting Habits|Combines university rosters, event RSVPs, and her own notes to plan outreach. During a fair she scans badges quickly, jotting shorthand tags ("data viz", "strong communicator") and marking a star next to those she wants to contact within 48 hours.
+|Tech & Environment|Lives in tabs: ATS, spreadsheets, shared calendars, and video-conference links. She often works on a laptop balanced on a small booth table, tethered to spotty campus Wi-Fi.
+|Visual Cue|Karla standing behind a company banner, a lanyard full of badges and a stack of color-coded sticky notes on the table beside her laptop.
+|Domain Role|Embodies the Recruiter who needs efficient triage, reliable evidence of skills, and tools that preserve memory across many brief student encounters.
+|===
+
+.Jorge "HR Generalist" Ortiz - Narrative Persona
+[cols="1,3"]
+|===
+|Snapshot|Jorge is the one-person HR department at a small firm, answering benefits questions, fixing payroll issues, and interviewing candidates all in the same afternoon.
+|Background|Works at a 35-person company where he handles onboarding, policy questions, and recruiting for interns and entry-level roles. Formal tools are limited; much of the process lives in his head and a few shared documents.
+|Wishes & Goals|Wants a shortlist of dependable candidates who will stay and grow with the team, not just fill seats. He values professionalism, clear communication, and low drama over fancy résumés.
+|Fears & Pains|Fears hiring someone who leaves after a few months because expectations were misaligned. He dreads spammy messages and candidates who treat interviews casually, because every wasted slot eats into time needed for payroll and compliance work.
+|Decision Tendencies|Schedules interviews in tight blocks, preferring straightforward conversations. If a candidate communicates respectfully, arrives prepared, and responds quickly to follow-ups, Jorge is inclined to move fast with an offer.
+|Recruiting Habits|Relies on referrals, local universities, and a small number of online postings. Keeps notes about each conversation in a simple document and uses flags in his inbox to remember who needs a response.
+|Tech & Environment|Works on an older desktop during office hours and checks email on his phone while walking between meetings or visiting different sites.
+|Visual Cue|Jorge at a cluttered desk with a stack of onboarding folders on one side and a printed list of interview times clipped to a clipboard on the other.
+|Domain Role|Represents the Employer-side Recruiter / HR Generalist who values speed, safety, and clear signals more than elaborate workflows.
+|===
+
+.Ana "Safe User" Lozada - Narrative Persona
+[cols="1,3"]
+|===
+|Snapshot|Ana is the cautious friend who double-checks every privacy setting before joining a new group chat and who would rather miss an opportunity than feel unsafe.
+|Background|24-year-old recent graduate entering the job market after a few unsettling experiences on social media platforms. She lives with roommates, shares Wi-Fi, and often studies in public spaces like libraries and cafés.
+|Wishes & Goals|Wants to explore professional opportunities without being overwhelmed by unsolicited messages or pressured into sharing more personal information than necessary.
+|Fears & Pains|Worries about harassment, fake offers, and her personal data being reused without consent. Even legitimate notifications can feel invasive if they arrive late at night or interrupt time with family.
+|Decision Tendencies|Reads policies and settings carefully, turning off most channels by default. She stays engaged with platforms that respect her boundaries and make it easy to report or block inappropriate behavior.
+|Recruiting Habits|Prefers written communication that leaves a trace and lets her think before replying. She appreciates recruiters who introduce themselves clearly, explain why they reached out, and give her options instead of ultimatums.
+|Tech & Environment|Uses a mid-range Android phone as her main device, often on battery-saver mode, and checks messages in set windows during the day rather than continuously.
+|Visual Cue|Ana on a quiet balcony in the evening, phone in hand, carefully toggling notification switches before tapping "save".#
+|Domain Role|#Embodies the Safety-focused Candidate whose trust depends on predictable notifications, clear controls, and effective moderation paths.
+|===
+
+.Mina "International Grad" Shah - Narrative Persona
+[cols="1,3"]
+|===
+|Snapshot|Mina is the international student who always carries a folder of immigration documents in her backpack, just in case, and tracks time zones across three countries on her watch.
+|Background|24-year-old MS student in Data Science studying abroad. She balances thesis work, part-time research assistance, and late-night video calls with family in another time zone.
+|Wishes & Goals|Wants a role where her visa status is understood and respected, and where she can apply her analytics skills to real problems rather than short-term gigs. She hopes to plan her life several months ahead instead of living deadline to deadline.
+|Fears & Pains|Lives with constant low-level anxiety about whether a role is actually visa-eligible, what the real compensation package looks like, and how long she has to respond to an offer before it expires.
+|Decision Tendencies|Creates comparison charts of openings including location, work modality, sponsorship options, and start-date flexibility. She commits only after confirming that expectations match on both sides.
+|Recruiting Habits|Attends virtual career fairs, follows specific employers that explicitly mention sponsorship, and keeps screenshots of any written confirmation about eligibility or deadlines.
+|Tech & Environment|Uses her phone for quick scans of opportunities during commutes and a laptop in the evenings to update portfolios, prepare case studies, and schedule interviews across time zones.
+|Visual Cue|Mina at a shared kitchen table late at night, laptop open to a calendar full of color-coded time-zone labels and a stack of printed offer letters with sticky notes marking key clauses.
+|Domain Role|Represents the International Candidate navigating authorization rules, time zones, and high-stakes decisions that depend on precise information about location, compensation, and validity periods.
+|===
 
 
 ==== Domain Requirements
@@ -3055,7 +3147,7 @@ Layered view (Presentation, Application, Domain, Infrastructure, Cross-cutting c
 | Modified, Added
 
 | Alexa M. Zaragoza
-| 4.2.1, 4.1.3, 2.2.1, 2.1.4, 4.4.1, 4.4.2
+| 4.1.3, 2.2.1, 2.1.4, 4.4.1, 4.4.2, 4.1.1, 2.2.2
 | Added, Modified
 
 | Heribiell A. Rodríguez Cruz
