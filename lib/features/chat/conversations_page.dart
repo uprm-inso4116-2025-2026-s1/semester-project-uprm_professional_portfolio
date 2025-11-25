@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import '../../core/constants/app_constants.dart';
 import '../../core/constants/ui_constants.dart';
 import '../../core/services/conversation_service.dart';
 import '../../models/conversation_list_item.dart';
@@ -153,8 +152,13 @@ class _ConversationsPageState extends State<ConversationsPage> {
             const SizedBox(height: UIConstants.spaceXL),
             ElevatedButton.icon(
               onPressed: () {
-                // Navigate to matches screen
-                context.go(AppConstants.matchesScreenRoute);
+                // Show coming soon message instead of navigating
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Matches feature coming soon!'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
               },
               icon: const Icon(Icons.explore),
               label: const Text('Explore Matches'),
