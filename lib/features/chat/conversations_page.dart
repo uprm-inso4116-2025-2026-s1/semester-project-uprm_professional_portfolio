@@ -165,7 +165,8 @@ class _ConversationsPageState extends State<ConversationsPage> {
     );
   }
 
-  Widget _buildConversationTile(ConversationListItem conversation, ThemeData theme) {
+  Widget _buildConversationTile(
+      ConversationListItem conversation, ThemeData theme) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(
         horizontal: UIConstants.spaceMD,
