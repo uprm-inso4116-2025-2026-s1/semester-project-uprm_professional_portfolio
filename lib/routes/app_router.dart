@@ -14,7 +14,7 @@ import '../features/welcome/welcome_screen.dart';
 import '../features/main/main_screen.dart';
 import '../features/profiles/recruiter_profile/recruiter_profile_screen.dart';
 import '../features/profiles/jobseeker_profile/jobseeker_profile_screen.dart';
-import '../features/profiles/recruiter_profile/recruiter_profile_screen.dart';
+import '../features/chat/chat_room_page.dart';
 
 // App router configuration
 class AppRouter {
@@ -112,10 +112,9 @@ class AppRouter {
         return AppConstants.loginRoute;
       }
 
-      // If logged in and trying to access /login or /signup → send to a private route
+      // If logged in and trying to access /login or /signup → send to main screen
       if (session != null && isAuthRoute) {
-        // You can change this to your true "home" when ready
-        return AppConstants.recruiterProfileRoute;
+        return AppConstants.mainRoute;
       }
 
       // No redirect
@@ -133,6 +132,16 @@ class AppRouter {
         builder: (context, state) => const SignupScreen(),
       ),
 
+      // Main screen with bottom navigation (private)
+      GoRoute(
+        path: AppConstants.mainRoute,
+        builder: (context, state) {
+          final indexParam = state.uri.queryParameters['tab'];
+          final index = int.tryParse(indexParam ?? '0') ?? 0;
+          return MainScreen(initialIndex: index);
+        },
+      ),
+
       // Profile setup routes (private)
       GoRoute(
         path: AppConstants.recruiterProfileRoute,
@@ -141,6 +150,15 @@ class AppRouter {
       GoRoute(
         path: AppConstants.jobseekerProfileRoute,
         builder: (context, state) => const JobSeekerProfileScreen(),
+      ),
+
+      // Individual chat room
+      GoRoute(
+        path: '/chat/:conversationId',
+        builder: (context, state) {
+          final conversationId = state.pathParameters['conversationId']!;
+          return ChatRoomPage(conversationId: conversationId);
+        },
       ),
     ],
   );

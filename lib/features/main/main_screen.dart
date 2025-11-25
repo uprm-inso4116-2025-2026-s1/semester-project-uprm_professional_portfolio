@@ -1,6 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../settings/settings_screen.dart';
+import '../chat/conversations_page.dart';
 
 class MainScreen extends StatefulWidget {
   final int initialIndex;
@@ -22,6 +23,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = const [
     DashboardScreen(),
+    ConversationsPage(),
     SettingsScreen(),
   ];
 
@@ -43,6 +45,10 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
             label: 'Dashboard',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble),
+            label: 'Conversations',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
