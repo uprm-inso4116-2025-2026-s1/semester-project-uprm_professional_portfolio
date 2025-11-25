@@ -2224,6 +2224,109 @@ This material is guided by sections 1.3 (*Scope, Span, and Synopsis*), 2.1 (*Dom
 *Communication and the Use of Language* (UPRM, 2020), particularly the guidance on ubiquitous
 language and “modeling out loud”.
 
+==== Refactoring Names to Match Ubiquitous Language
+:author: Carlos J. Pepín Delgado
+
+[NOTE]
+Objective: Align all names used in the project—classes, files, screens, services, and models—with the Ubiquitous Language established in Milestones 1–3. This task applies the lecture principles from *Communication and the Use of Language*, *Effective Domain Modeling*, and *Making Implicit Concepts Explicit*.
+
+===== Topic Overview
+The lectures emphasize that every concept in a domain-driven design must use a **single, precise term** across the entire system.  
+Ambiguous names, duplicate terms, or UI-driven terminology cause inconsistencies that break communication between developers, designers, and stakeholders.
+
+The Ubiquitous Language is defined by our Milestone 1 Terminology and expanded in Milestones 2 and 3.  
+This task identifies mismatches between that vocabulary and the names currently present in the project structure.
+
+===== Ubiquitous Language Reference (from M1–M3)
+The official terms relevant to naming include:
+
+Profile, ProfileCard  
+Swipe, Like, Pass  
+Match  
+Connection  
+Jobseeker Profile, Recruiter Profile  
+Opening, Application, Requirements, Eligibility  
+Message, Conversation  
+Session  
+Visibility (Public, By Match, Private)  
+Identity (UUID)
+
+These terms guide all naming corrections.
+
+===== Identification of Naming Inconsistencies
+A review of the project’s folder and file structure (as shown in the provided screenshots) revealed the following inconsistencies:
+
+[cols="4,4,6",options="header"]
+|===
+|Current Name | Issue | Explanation
+| `user.dart` | Vague / generic | Domain uses *Profile* to refer to participants; “User” is ambiguous.
+| `models.dart` | Non-domain, unclear purpose | “Models” does not map to any domain concept.
+| `conversation.dart` | UI wording | Domain concept corresponds to *MessageThread* or *ConversationThread*.
+| `recruiter_profile_card.dart` | UI term mixed into model | “Card” belongs to UI; domain uses *ProfileCard* only in discovery flow.
+| `matches.dart` | Plural file for singular domain concept | Domain concept is *Match* (singular, event).
+| `jobseeker_profile.dart` vs `student_profile.dart` | Terminology conflict | Only one term should represent this domain role.
+| `mock_data.dart` | Non-domain, generic | Acceptable for mock layer but must not leak into domain naming.
+| `jobseeker_profile_controller.dart` | UI term acceptable | Should remain clearly UI-only.
+| `login_controller.dart` | OK, UI-only | No change; matches presentation layer.
+| `chat_service.dart` | Vague | Domain concept is *MessageService* or *ConversationService*.
+| `app_router.dart` | Technical name | Acceptable, belongs to infrastructure/UI.
+|===
+
+These inconsistencies affect clarity in domain documentation and create hidden mismatches between terminology and implementation.
+
+===== Proposed Renamed Set (Aligned with Domain Language)
+The following replacements maintain meaning while ensuring alignment with official terminology:
+
+[cols="4,4,6",options="header"]
+|===
+|Current Name | Recommended Replacement | Rationale
+| `user.dart` | `profile.dart` or `participant_profile.dart` | Matches domain’s Profile concept.
+| `models.dart` | Remove or rename to `shared_types.dart` | Must not imply domain concept that doesn't exist.
+| `conversation.dart` | `message_thread.dart` | Matches domain’s description of message grouping.
+| `recruiter_profile_card.dart` | `recruiter_profile_preview.dart` | UI element representing a profile; avoids mixing “card” with domain term *ProfileCard*.
+| `matches.dart` | `match.dart` | Domain event is singular and atomic.
+| `jobseeker_profile.dart` | `candidate_profile.dart` OR unify with `student_profile.dart` | Only one canonical term should be used for the candidate role.
+| `chat_service.dart` | `message_service.dart` | Domain entity is Message, not “chat”.
+| `mock_data.dart` | Leave unchanged, but document as infrastructure-only | Clarifies it is technical, not domain language.
+|===
+
+Only names that belong inside the domain layer or affect conceptual clarity are renamed.  
+UI names (controllers, screens, widgets) stay as is—they do not affect domain terminology.
+
+===== Documentation Updates
+To preserve consistency in the Milestone 3 document:
+
+* All references to “user” must be replaced with **Profile** or the appropriate domain role.
+* Any mention of “chat” in domain contexts must be replaced with **Message** or **Conversation Thread**.
+* Match should appear only in the singular form when referring to the domain event.
+* For candidate roles, the terminology must settle on a single label (Student, Jobseeker, or Candidate); the recommended choice is *Candidate*, as it matches Milestone 3 wording.
+* The Domain Rules section should avoid UI words such as “card,” except when referring to the discovery *ProfileCard*.
+
+===== Consistency Verification
+Each proposed replacement was validated against:
+
+* Milestone 1 Terminology  
+* Milestone 2 Narrative and Events  
+* Milestone 3 Domain Rules (LTT 13)  
+* The Ubiquitous Language guidelines from lecture materials
+
+The proposed names reinforce domain clarity and remove ambiguity caused by UI or infrastructure terminology.
+
+===== Traceability to Lecture Concepts
+[cols="2,4",options="header"]
+|===
+|Lecture Concept |Application in Task
+|Ubiquitous Language |Names unified using consistent domain terms.
+|Communication & Language |Eliminates ambiguity and improves shared understanding.
+|Implicit Concepts |Reveals hidden mismatches (e.g., “user” vs “profile”).
+|Making Domain Concepts Explicit |Each name directly maps to a domain entity or event.
+|===
+
+===== References
+Schütz-Schmuck, Marko. *Communication and the Use of Language*.  
+Schütz-Schmuck, Marko. *Effective Domain Modeling*.  
+Schütz-Schmuck, Marko. *Making Implicit Concepts Explicit*.
+
 === Isolating the Domain & Expressing Models in Software
 ==== Domain Rules in Domain Layer
 :author: Juan R. Rivera Rodriguez
