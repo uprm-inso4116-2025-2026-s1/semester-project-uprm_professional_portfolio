@@ -1518,10 +1518,10 @@ For example, when a user performs a “Like” action, the event triggers the `S
 
 This flow contextualizes the domain-centric method signatures presented in the next section, showing how each function contributes to the overall behavior of the system.
 
-image::../Images/jobseeker-flows.svg[Jobseeker Flow, align=center, pdfwidth=50%]
+image::../Images/jobseeker-flows.svg[Jobseeker Flow, align=center, width=40%]
 _Figure 8. Jobseeker flows diagram showing jobseeker interactions (search, view jobs, apply, save, follow-up) and how those actions map to backend services such as profile updates, application repository writes, and notification triggers._
 
-image::../Images/recruiter-flows.svg[Recruiter Flow, align=center, pdfwidth=50%]
+image::../Images/recruiter-flows.svg[Recruiter Flow, align=center, width=40%]
 _Figure 9. Recruiter flows diagram illustrating recruiter workflows (post job, screen applicants, schedule interviews, take notes), ATS interactions, prescreen operations, and note persistence in repositories._
 
 image::../Images/student-flows.svg[Student Flow, align=center, pdfwidth=50%]
@@ -2242,7 +2242,7 @@ Objective: Implement and document a `MatchFactory` that creates valid `Match` do
 
 ====== Example Dart fragment
 
-[source,dart]
+[source, dart]
 ----
 class MatchFactory {
   final MatchRepository _repo;
@@ -2546,7 +2546,8 @@ Transitions are implied within the state descriptions and governed by events and
 - Archived → Active: triggered by `ProfileReactivated`
 - Active/Archived → Deletion: triggered by `ProfileDeleted` when authorized  
 
-image::..\Images\StudentProfile.png[StudentProfile Lifecycle Diagram]
+image::..\Images\StudentProfile.png[width=70%,align=center]
+
 
 ===== Aggregate Deletion Rules
 
@@ -2757,6 +2758,288 @@ Artifacts Updated:: docs/Images/*.svg (where applicable); Milestone-2.adoc refer
 Commits/PRs:: f189551 (Minimal vs Enriched UML template), e0e4ff4 (Modified Milestone-2.adoc).
 
 
+=== Relating Desing Patterns to the Domain Model
+
+==== #Identifying Weak Spots in Domain Model#
+:author: Jean P. I. Sanchez
+
+[discrete]
+=== Overview
+
+This section identifies weak spots in the current **domain model** and **code implementation** and proposes improvements, supported by UML diagrams. By analyzing these weaknesses, we can improve maintainability, testability, and overall system correctness while ensuring the domain model aligns with strategic design principles.
+
+[discrete]
+=== Identified Weak Spots
+
+[discrete]
+==== Weak Spot 1 — Ambiguous Application-Profile Relationship
+
+[discrete]
+===== Description
+
+The existing relationship between **Application** and **Profile** is ambiguous and introduces tight coupling. Currently, Application objects may hold direct references to mutable Profile data, meaning that changes in a candidate’s profile automatically propagate to all submitted applications. This behavior undermines the concept of Application as a snapshot of a candidate at a specific point in time. As a result, historical records can become inconsistent, leading to potential data integrity issues and confusion in both the domain model and the user-facing application.
+
+[discrete]
+===== Why This Is a Problem
+
+The ambiguity violates the **Single Responsibility Principle (SRP)**, as the Application object is tasked both with representing a submitted application and reflecting live profile updates. This dual responsibility creates unpredictable behaviors and makes it hard to reason about the system. Furthermore, testing becomes difficult: unit tests for Applications may fail unexpectedly when Profile data changes, introducing flakiness and non-determinism. Extending the system is also challenging—adding new Profile types or fields can unintentionally break Application logic, and it blurs the distinction between domain and application layers, reducing overall clarity of the model.
+
+[discrete]
+===== Proposed Refinement
+
+To address this weak spot, the Application should store a **snapshot of relevant Profile data** at the time of submission. This ensures that Applications capture the state of the candidate as it existed at the moment of application, eliminating unintended coupling with live Profile data. All references from Application should point to **immutable artifact versions**, not directly to the mutable Profile object. Additionally, the relationship should be made explicit: Applications should reference `ArtifactVersion` or `Snapshot` objects rather than the Profile itself, clarifying domain boundaries and reducing the potential for side effects.
+
+[discrete]
+===== UML Diagram
+image::../images/weakpoint1.png[width=50%,align=center]
+[discrete]
+The diagram illustrates the revised relationship between **Application** and **Profile**, showing that Applications now reference immutable `ArtifactVersion` objects rather than live Profile objects. This separation enforces snapshot semantics, clarifies domain boundaries, and reduces unintended coupling.
+
+[discrete]
+==== Weak Spot 2 — Profile Logic Duplication
+
+[discrete]
+===== Description
+
+Logic related to Profile management is duplicated across multiple areas, including the Profile aggregate, ProfileService, and MatchService. For instance, eligibility checks, skill matching, and visibility rules are implemented in more than one location. This duplication creates a fragmented model where understanding, updating, or extending Profile behavior requires touching multiple parts of the codebase, increasing the risk of inconsistencies and bugs.
+
+[discrete]
+===== Why This Is a Problem
+
+Duplicated logic leads to **drift between modules**. When one location is updated but others are not, invariants like eligibility or visibility rules may be violated, creating unexpected system behaviors. This redundancy also complicates enforcement of domain rules, making it difficult to ensure that all modules consistently apply the same business logic. Maintenance overhead is higher, and onboarding new developers becomes harder as they must understand multiple implementations of the same concepts. Ultimately, it decreases confidence in the correctness of the system and slows down feature development.
+
+[discrete]
+===== Proposed Refinement
+
+To address this issue, all domain logic related to Profile should be centralized within the **Profile aggregate**. The application layer should orchestrate high-level processes without containing business logic. Validation and domain-specific rules, such as skill eligibility or visibility, should reside in domain value objects (e.g., `Skill`, `Eligibility`) that encapsulate their own behavior. This approach ensures a single source of truth, reduces maintenance burden, and improves the robustness of the model.
+
+[discrete]
+===== UML Diagram
+image::../images/weakpoint2.png[width=70%,align=center]
+[discrete]
+The diagram depicts the consolidation of Profile-related logic inside the **Profile aggregate**, illustrating how ProfileService and MatchService now delegate validation and domain rules to value objects within the aggregate. This centralization reduces duplication and ensures consistent application of business rules across the system.
+
+[discrete]
+==== Weak Spot 3 — Matching Module Dependence on Mutable Data
+
+[discrete]
+===== Description
+
+The matching module currently reads **live Profile data** directly instead of accessing snapshots or read-only interfaces. As a result, updates to Profile objects—such as changes to skills, visibility settings, or preferences—can retroactively alter existing matches. This behavior undermines the integrity and reproducibility of the matching process, as past decisions are no longer consistent with the state of data at the time of match creation.
+
+[discrete]
+===== Why This Is a Problem
+
+Relying on mutable data violates consistency guarantees for previously computed matches. It makes auditing and reproducing past decisions extremely difficult, as there is no definitive record of the candidate state when the match was originally computed. Moreover, unexpected changes in Profile visibility or attributes may introduce inconsistent or unintended match outcomes, which could compromise user trust and create operational issues. This tight coupling between matching logic and live data also increases testing complexity and reduces system predictability.
+
+[discrete]
+===== Proposed Refinement
+
+The matching module should interact with **read-only representations of Profile data**, for example through an `IProfileReader` interface. Match-relevant snapshots should be created and stored at the time a match is generated, preserving historical consistency. By decoupling Matching from Profile persistence and ensuring immutable access, the system gains reliability, reproducibility, and better separation of concerns. This design also enables safer evolution of the Profile domain without risk of inadvertently affecting historical matches.
+
+[discrete]
+===== UML Diagram
+image::../images/weakpoint3.png[width=70%,align=center]
+[discrete]
+The diagram illustrates how the Matching module accesses Profile data through the **IProfileReader** interface and works with stored snapshots. This structure decouples matching from live Profile updates, ensuring historical match data remains consistent and auditable.
+
+
+
+=== Strategic Desing
+
+
+==== #Distilling the Core Domain#
+:author: Jean P. I. Sanchez
+
+[discrete]
+=== Purpose
+
+This section identifies the *core domain* of the application and classifies all domain areas into **core**, **supporting**, and **generic** subdomains. It supports strategic design decisions by clarifying where the highest value lies in the system architecture.
+
+The core domain of this system is the **Match Formation and Alignment Logic** — the mechanism responsible for evaluating compatibility between candidates and employers, determining mutual interest, and producing meaningful matches. This domain is central to the platform’s purpose because it directly influences the quality of the matches, which ultimately affects user satisfaction, retention, and the system’s competitive advantage. By focusing design effort on this area, the platform can differentiate itself from generic job boards and establish a unique value proposition.
+
+[discrete]
+=== Subdomain Classification
+
+[discrete]
+==== Core Domain
+
+[discrete]
+====== Match Formation & Alignment Logic
+
+The **Match Formation & Alignment Logic** subdomain is where the system’s strategic value resides. It involves several key processes: evaluating compatibility between candidate profiles and job openings, interpreting interest signals from both parties, applying domain-specific rules for match creation, and calculating priority scores to rank matches. Additionally, it enforces constraints such as geographic location, start date, compensation fit, and required skills, ensuring that matches are realistic and actionable. The results of this process are persisted to maintain a history of interactions and allow for analytics and continuous improvement of the matching algorithms.
+
+**Justification:**  
+This domain determines the system’s value proposition. Without robust and intelligent alignment logic, the platform would be indistinguishable from generic job boards, providing little competitive advantage. Investing in this subdomain ensures the system delivers meaningful, high-quality matches that retain users and provide a measurable differentiation in the market.
+
+[discrete]
+==== Supporting Subdomains
+
+Supporting subdomains provide critical functionality that enhances the performance and usability of the core domain but do not themselves create a competitive advantage. They ensure that the core matching process has accurate, rich, and structured data to operate effectively.
+
+[discrete]
+===== Profile Management
+
+Profile Management enables candidates and recruiters to create and maintain comprehensive profiles. Candidates can record their experience, skills, certifications, and coursework, while recruiters define role requirements and company information. This structured data feeds directly into the matching logic, improving the accuracy and relevance of match results. By allowing for dynamic updates and rich data capture, Profile Management supports personalized and meaningful matches.
+
+[discrete]
+===== Job Opening Management
+
+Job Opening Management handles the creation and updating of job postings. This includes defining role attributes, setting compensation ranges, specifying work modalities and locations, and enforcing deadlines or expiration rules. Proper management ensures that the core matching logic operates on up-to-date and accurate job information, directly impacting the quality of matches produced.
+
+[discrete]
+===== Candidate–Recruiter Interaction
+
+This subdomain provides the interfaces and mechanisms for users to interact with each other. Candidates and recruiters can view profiles, express interest, shortlist prospects, and initiate communication. By facilitating engagement, this subdomain indirectly enhances match quality by capturing explicit signals that refine alignment calculations.
+
+[discrete]
+===== Event & Job Fair Representation
+
+Recruiting events and job fairs are modeled in this subdomain, allowing the system to represent real-world interactions in the digital platform. It supports pre-screening flows, manages attendance planning, and captures event-based interactions that feed into the core matching process, enriching the dataset for more informed alignment decisions.
+
+**Justification:**  
+Supporting subdomains provide functional depth and ensure the core domain operates with high-quality data and user engagement. They are essential to platform functionality but do not independently drive competitive advantage.
+
+[discrete]
+==== Generic Subdomains
+
+Generic subdomains provide foundational services that are necessary for system operation but are not unique to this platform and can often be implemented using off-the-shelf solutions.
+
+[discrete]
+===== Authentication & Authorization
+
+This subdomain handles user identity management, including login, account creation, password reset, and session management. It provides essential security and access control but does not directly contribute to match quality or strategic differentiation.
+
+[discrete]
+===== Notifications
+
+Notifications deliver reminders, updates, and alerts to users via email or push mechanisms. While important for engagement and system responsiveness, this subdomain is standard across many applications and can be implemented with existing libraries or frameworks.
+
+[discrete]
+===== Storage & Persistence
+
+This subdomain manages database interactions, CRUD operations, and ORM or adapter logic. It ensures reliable data storage and retrieval for all other subdomains but is generic infrastructure that does not affect the platform’s unique value proposition.
+
+[discrete]
+===== UI Framework Layer
+
+The UI Framework Layer standardizes visual components such as buttons, forms, and cards, and may utilize frameworks like React, Svelte, or Next.js. While critical for usability, it is largely replaceable and does not contribute to strategic differentiation.
+
+**Justification:**  
+Generic subdomains support operational needs, providing stability, security, and usability, but they do not define the product’s strategic value. Their main role is to enable the core and supporting subdomains to function efficiently.
+
+[discrete]
+=== Domain Segmentation Diagram
+
+image::../images/coredomain.svg[width=99%,align=center]
+The diagram above illustrates the relationship between the core, supporting, and generic subdomains. At the center is the **Core Domain**, which contains the Match Formation & Alignment Logic — the system’s strategic differentiator. Surrounding it are the **Supporting Subdomains**, which provide enriched data and interaction mechanisms to enhance the core functionality. The **Generic Subdomains** form the outer layer, delivering necessary infrastructural services such as authentication, notifications, storage, and UI components. This layered visualization emphasizes how value and complexity flow from the core outward, highlighting where design focus should be concentrated to maximize system effectiveness and competitive advantage.
+
+[discrete]
+=== Strategic Justification
+
+The system must excel at forming high-quality matches. All supporting subdomains exist to enhance the accuracy, richness, and reliability of the inputs into the core domain. Generic subdomains serve only infrastructural needs, ensuring security, persistence, and consistent user interaction.
+
+This classification guides decision-making in several ways:
+
+* Identifying where to invest design and development effort to maximize product differentiation.
+* Isolating complexity within the core domain, allowing other areas to remain modular and maintainable.
+* Structuring modules and services in a way that clearly separates strategic value from supporting infrastructure.
+* Planning future refactoring efforts by prioritizing areas that directly impact the platform’s competitive advantage.
+
+
+==== #Large-Scale Structure Proposal#
+:author: Jean P. I. Sanchez
+
+[discrete]
+=== Overview
+
+This document describes the chosen large-scale architecture for the project: a layered architecture that separates responsibilities into **Presentation**, **Application**, **Domain**, and **Infrastructure** layers. This model provides clear dependency rules and establishes clean boundaries that support long-term maintainability. Cross-cutting concerns such as authentication, logging, validation, and observability are handled orthogonally to avoid polluting the core logic and to maintain coherence across layers.
+
+By structuring the system in this way, the architecture ensures that business rules remain isolated from technical details, enabling evolutionary development, easier testing, and more controlled coupling between modules.
+
+[discrete]
+=== Layer Definitions
+
+[discrete]
+==== Presentation Layer
+* Responsibilities:  
+  The Presentation Layer handles all client-facing concerns. It processes user input at the system boundary, performs lightweight validation, and composes views or API responses. Its primary goal is to adapt the user interface to application needs without embedding business logic. It serves as the “window” into the system and must remain thin to avoid coupling the UI to underlying domain rules.
+
+* Components:  
+  Web and mobile interfaces, API gateways, front-end form validation, graphical screens, and UI composition. These components translate user actions into application requests and present responses in user-friendly formats.
+
+* Non-goals:  
+  The layer explicitly avoids business rule implementation. Any decision-making that affects the system state belongs in the Application or Domain layers, not here.
+
+* Example artifacts:  
+  React/Vue components, Flutter screens, Svelte or HTML templates, and API request handlers that simply forward validated input downstream.
+
+[discrete]
+==== Application Layer
+* Responsibilities:  
+  This layer orchestrates use-cases by coordinating domain operations. It acts as the glue between the UI and the core business logic. Its responsibilities are transactional: it ensures consistency, sequences workflows, manages application-specific DTOs, and integrates multiple domain operations into cohesive processes.
+
+* Components:  
+  Use-case services, application-level DTOs, workflow orchestrators, and components responsible for defining how different domain models interact for particular use-cases. This layer defines *what* happens in a use-case, not *how* a rule is defined internally.
+
+* Non-goals:  
+  It does not contain core business rules or domain logic. The layer avoids embedding domain knowledge and instead delegates those decisions to the Domain Layer.
+
+* Example artifacts:  
+  Match orchestrator, InvitationService, ApplicationService—services that coordinate multiple domain operations while keeping domain logic encapsulated elsewhere.
+
+[discrete]
+==== Domain Layer
+* Responsibilities:  
+  This is the heart of the system. The Domain Layer encapsulates all core business rules, defines entities, aggregates, domain events, and domain services. It must remain insulated from external concerns such as persistence or API structure. The goal is to maintain a pure, technology-agnostic model expressing the core of the business.
+
+* Components:  
+  Domain models such as Profile, Candidate, Opening, and Match. Domain services like the MatchingEngine encapsulate complex rules that cannot sit cleanly within a single aggregate. Domain events capture meaningful changes within the system and allow other layers or bounded contexts to react.
+
+* Non-goals:  
+  It should never contain persistence concerns, HTTP details, or infrastructure logic. The domain must remain clean, stable, and independent of frameworks.
+
+* Example artifacts:  
+  The match algorithm, CandidateStage state machine, and compatibility rules expressed as domain services or aggregate logic.
+
+[discrete]
+==== Infrastructure Layer
+* Responsibilities:  
+  This layer provides the technical foundation needed to support the application. It manages databases, messaging systems, external API integrations, and concrete implementations of interfaces defined in the domain or application layers. It converts domain abstractions into operational details.
+
+* Components:  
+  Databases, ORMs, caches, message brokers, third-party API clients, and authentication backends. These are concrete adapters that fulfill contracts defined by the domain or application layers.
+
+* Non-goals:  
+  The layer must not contain business logic. Infrastructure exists to serve the domain, not influence it.
+
+* Example artifacts:  
+  SQL schemas, Redis cache adapters, SMTP connectors, REST clients, and object mappers.
+
+[discrete]
+==== Cross-cutting Concerns
+* Logging, metrics, authentication, validation, tracing, and monitoring form the system’s cross-cutting functionality.  
+* These concerns are implemented through middleware, interceptors, or shared services accessible to multiple layers.  
+* Their implementation is orthogonal—meaning they do not belong to any single layer but support all layers as needed while avoiding entanglement with domain logic.
+
+
+[discrete]
+=== Architecture Diagram
+
+image::../images/architecturediagram.png[width=75%,align=center]
+Layered view (Presentation, Application, Domain, Infrastructure, Cross-cutting concerns)
+
+1. Presentation Layer (Top Layer): This is the highest layer in the diagram and represents everything the end user interacts with—web interfaces, mobile screens, or any UI. It depends on the Application Layer to retrieve data, trigger use-cases, and update the interface. The label on the right ("Clients") emphasizes that this layer is the direct entry point for users.
+
+2. Application Layer: Positioned beneath the presentation layer, this layer orchestrates use-cases. It does not contain business rules itself; instead, it coordinates operations by invoking domain logic. The right-side label ("Orchestrates use-cases") makes that role explicit.
+
+3. Domain Layer (Core Domain): This is the central and most important layer. It contains entities, aggregates, business rules, and domain services, including the system’s core competitive logic such as the matching engine. The right label ("Core domain logic → match engine") highlights this key responsibility. It is called directly by the Application Layer.
+
+4. Infrastructure Layer: Located below the domain, this layer provides all external operational capabilities: databases, caches, filesystems, APIs, and message brokers. It implements the persistence and communication mechanisms required by the domain but does not contain domain logic. The right-side annotation ("DB, Cache, External Services") clarifies its dependencies.
+
+5. Cross-cutting Concerns (Bottom Band): This horizontally aligned band spans the entire architecture. It covers functionalities that apply across all layers—authentication, logging, validation, monitoring, and tracing. Unlike the four main layers, cross-cutting concerns do not sit in the vertical call stack; they are injected or run alongside each layer through middleware, shared libraries, or centralized services.
+
+
 == Log Book
 
 [cols="3,^2,5",options="header",]
@@ -2764,7 +3047,7 @@ Commits/PRs:: f189551 (Minimal vs Enriched UML template), e0e4ff4 (Modified Mile
 | Name | Section | Added/Modified
 
 | Jean P. I. Sanchez
-| 5., 4.4.1., 3.2.1.
+| 5.0, 4.4.1., 3.2.1, 4.5.1, 4.6.1, 4.6.2
 | Added, Modified
 
 | Kiara N. Perez
@@ -2800,7 +3083,7 @@ Commits/PRs:: f189551 (Minimal vs Enriched UML template), e0e4ff4 (Modified Mile
 | Modified
 
 | Fernando Castro Cancel
-| 2.3.2., 2.2.3, 2.2.4, 2.2.5
+| 2.3.2, 2.2.3, 2.2.4, 2.2.5
 | Modified
 
 
