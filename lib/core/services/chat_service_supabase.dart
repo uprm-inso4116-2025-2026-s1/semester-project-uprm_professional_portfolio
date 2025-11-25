@@ -17,7 +17,7 @@ class ChatServiceSupabase {
   final int _maxPageSize;
 
   static const _cols =
-      'id, conversation_id, sender_id, body, created_at, deleted_at';
+      'id, conversation_id, sender_id, body, created_at, deleted_at, attachment_url, attachment_type';
 
   /// Get current authenticated user ID
   String? get currentUserId => _client.auth.currentUser?.id;
@@ -46,7 +46,8 @@ class ChatServiceSupabase {
       final rows = (rowsDynamic as List).cast<Map<String, dynamic>>();
       return rows.map(_rowToChatMessage).toList();
     } on PostgrestException catch (e, st) {
-      debugPrint('[chat_service_supabase] fetchMessages PG error: ${e.message}\n$st');
+      debugPrint(
+          '[chat_service_supabase] fetchMessages PG error: ${e.message}\n$st');
       return const <ChatMessage>[];
     } on Exception catch (e, st) {
       debugPrint('[chat_service_supabase] fetchMessages error: $e\n$st');
@@ -56,8 +57,10 @@ class ChatServiceSupabase {
 
   Future<ChatMessage?> sendMessage(
     String conversationId,
-    String body,
-  ) async {
+    String body, {
+    String? attachmentUrl,
+    String? attachmentType,
+  }) async {
     final user = _client.auth.currentUser;
     if (user == null) {
       debugPrint('[chat_service_supabase] sendMessage: no authenticated user');
@@ -69,8 +72,9 @@ class ChatServiceSupabase {
       return null;
     }
     final text = body.trim();
-    if (text.isEmpty) {
-      debugPrint('[chat_service_supabase] sendMessage: empty body');
+    if (text.isEmpty && attachmentUrl == null) {
+      debugPrint(
+          '[chat_service_supabase] sendMessage: empty body and no attachment');
       return null;
     }
 
@@ -80,6 +84,10 @@ class ChatServiceSupabase {
         'sender_id': user.id,
         'body': text,
       };
+      if (attachmentUrl != null) {
+        payload['attachment_url'] = attachmentUrl;
+        payload['attachment_type'] = attachmentType;
+      }
 
       final row = await _client
           .from(_table)
@@ -89,7 +97,8 @@ class ChatServiceSupabase {
 
       return _rowToChatMessage(row);
     } on PostgrestException catch (e, st) {
-      debugPrint('[chat_service_supabase] sendMessage PG error: ${e.message}\n$st');
+      debugPrint(
+          '[chat_service_supabase] sendMessage PG error: ${e.message}\n$st');
       return null;
     } on Exception catch (e, st) {
       debugPrint('[chat_service_supabase] sendMessage error: $e\n$st');
@@ -98,7 +107,8 @@ class ChatServiceSupabase {
   }
 
   // ---------- Helpers ----------
-  PostgrestFilterBuilder<List<Map<String, dynamic>>> _baseQuery(String conversationId) =>
+  PostgrestFilterBuilder<List<Map<String, dynamic>>> _baseQuery(
+          String conversationId) =>
       _client
           .from(_table)
           .select(_cols)
@@ -117,6 +127,8 @@ class ChatServiceSupabase {
       senderId: m['sender_id'] as String,
       text: (m['body'] as String?) ?? '',
       timeStamp: createdAt,
+      attachmentUrl: m['attachment_url'] as String?,
+      attachmentType: m['attachment_type'] as String?,
     );
   }
 }

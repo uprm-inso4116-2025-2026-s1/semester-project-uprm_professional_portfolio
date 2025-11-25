@@ -8,6 +8,8 @@ class ChatMessage {
     required this.senderId,
     required this.text,
     required this.timeStamp,
+    this.attachmentUrl,
+    this.attachmentType,
   });
 
   final String id;
@@ -15,6 +17,11 @@ class ChatMessage {
   final String senderId;
   final String text;
   final DateTime timeStamp;
+  final String? attachmentUrl;
+  final String? attachmentType;
+
+  bool get hasAttachment => attachmentUrl != null && attachmentUrl!.isNotEmpty;
+  bool get isImage => attachmentType?.startsWith('image/') ?? false;
 }
 
 /// Represents a local chat conversation.
@@ -61,8 +68,7 @@ class ChatService extends ChangeNotifier {
       _conversations[conversationId]?.messages ?? [];
 
   /// Returns all existing conversations. → expression body
-  List<ChatConversation> getConversations() =>
-      _conversations.values.toList();
+  List<ChatConversation> getConversations() => _conversations.values.toList();
 
   /// Clears all conversations.
   void reset() {
