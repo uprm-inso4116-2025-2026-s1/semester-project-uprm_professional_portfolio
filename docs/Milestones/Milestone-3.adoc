@@ -317,82 +317,137 @@ Finally, a crucial derived goal is to transform the job search from a black box 
 
 ==== Domain Rough Sketch
 
-NOTE: This is an unprocessed collection of notes, quotes, and observations from the domain (student-recruiter interactions). 
+NOTE: This is an unprocessed collection of notes, quotes, and observations from the domain (student–recruiter interactions). 
+#However, analytic abstractions derived from these notes have been added inline.#
+
 
 *Student (Abdul, Mechanical Engineering senior)*:  
 “At last year’s fall job fair, I stood in line almost 40 minutes just to hand my résumé to a recruiter from Pratt & Whitney.  
 The line wrapped around the Student Center atrium — people were sweating, holding folders, and trying to look composed.  
 When I finally got to the table, the recruiter just smiled, took my résumé, and said they’d be in touch. I wasn’t sure if she’d even remember me by the end of the day.”  
-→ *Observation:* Waiting fatigue, impersonal exchanges, uncertainty about follow-up.
+
+- → *Observation:* Waiting fatigue, impersonal exchanges, uncertainty about follow-up.  
+
+- → #**Derived concepts**: _queue duration_, _interaction brevity_, _candidate recognizability_, _physical discomfort_, _interaction outcome uncertainty_.#
+
 
 *Recruiter (Corey, Lilly Pharmaceuticals)*:  
 “We meet hundreds of students in just a few hours. By the end of the day, names and faces blur together.  
 I jot quick notes on sticky labels: ‘Python — confident’, ‘Good communicator’, or sometimes just a checkmark.  
 Later, when reviewing, I can’t always recall which student said what.”  
-→ *Observation:* Recruiters rely on quick, shorthand impressions; limited retention of individual details.
+
+- → *Observation:* Recruiters rely on quick, shorthand impressions; limited retention of individual details.  
+- → #**Derived concepts**: _meeting duration_, _candidate trait extraction_, _note/annotation_, _memory fade_, _reviewing constraints_.#
+
 
 *Student (Maria, Computer Engineering junior)*:  
 “This year I wore new shoes — bad idea. I had a class right before the fair and another right after, so I kept rushing back and forth between buildings.  
 By the time I came back to the fair after my thermodynamics class, it was packed. I could barely hear anything; someone even stepped on my heel while I tried to talk to a recruiter from Google.  
 It’s so loud you have to almost shout to be heard.”  
-→ *Observation:* Physical fatigue and environmental noise affect both comfort and communication quality.
+
+- → *Observation:* Physical fatigue and environmental noise affect both comfort and communication quality.  
+
+- → #**Derived concepts**: _environmental noise_, _communication friction_, _mobility constraints_, _time pressure_, _crowd density_.#
+
 
 *Recruiter (Daniel, local tech startup)*:  
 “By noon, my voice is gone. I try to smile and look engaged, but it’s hard to remember each student’s story.  
 We keep a spreadsheet open on the booth laptop — name, major, key skills — just enough to remember who’s who.  
 If a student brings something visual, like a project or a QR code to their portfolio, it really helps.”  
-→ *Observation:* Recruiters value portfolio evidence over résumé lines; digital aids improve recall.
+
+- → *Observation:* Recruiters value portfolio evidence over résumé lines; digital aids improve recall. 
+ 
+- → #**Derived concepts**: _information reinforcement_, _portfolio artifact_, _digital reference_, _interaction fatigue_, _memory support tools_.#
+
 
 *Student (Lina, Electrical Engineering sophomore)*:  
 “I applied on Handshake, then on LinkedIn, and again on the company website. I never knew if anyone actually saw it.  
 After two months, no one replied, and I started to wonder if my applications were just getting lost somewhere.”  
-→ *Observation:* Lack of transparency in the post-fair pipeline; unclear feedback loop between applicant systems.
+
+- → *Observation:* Lack of transparency in the post-fair pipeline; unclear feedback loop between applicant systems.  
+
+- → #**Derived concepts**: _application visibility_, _pipeline opacity_, _multi-platform submissions_, _response latency_.#
+
 
 *Recruiter (Rafael, mid-sized design firm)*:  
 “We usually contact students weeks later, but by then many already accepted other offers or stopped checking their student email.  
 If the first batch of candidates looks good, we stop looking. There’s just too little time.”  
-→ *Observation:* Recruiting process favors early applicants; short attention window post-fair.
+
+- → *Observation:* Recruiting process favors early applicants; short attention window post-fair.
+  
+- → #**Derived concepts**: _review window_, _candidate availability_, _early-selection bias_, _time-limited screening_.#
+
 
 *Student (Jorge, freshman)*:  
 “I was nervous to talk to recruiters because I didn’t even know what their companies did.  
 Some just told me, ‘come back next year when you have more experience.’  
 I mostly went this year just to practice — to get used to talking.”  
-→ *Observation:* Early-year students attend fairs for exposure rather than placement; recruiters focus on upperclassmen.
+
+- → *Observation:* Early-year students attend fairs for exposure rather than placement; recruiters focus on upperclassmen.  
+
+- → #**Derived concepts**: _experience gap_, _interaction purpose variance_, _preparation asymmetry_, _first-time candidate behavior_.#
+
 
 *Recruiter (Helen, aerospace company)*:  
 “A lot of students come unprepared — they don’t know which positions are open, or what our company even does.  
 We’d love to pre-screen them, maybe through a short survey or a skill-based filter before the fair starts.”  
-→ *Observation:* Recruiters express need for pre-fair filtering and digital preparation workflows.
+
+- → *Observation:* Recruiters express need for pre-fair filtering and digital preparation workflows.
+
+- → #**Derived concepts**: _preparedness level_, _pre-screening questionnaire_, _role-awareness_, _skill matching_.#
+
 
 *Student (Emilio, Software Engineering senior)*:  
 “The fair feels like speed dating — you only get two minutes to impress, then they move on.  
 It’s hard to show personality or teamwork skills when the line behind you is ten people long.”  
-→ *Observation:* Limited interaction window leads to superficial evaluation; “soft skills” remain under-assessed.
+
+- → *Observation:* Limited interaction window leads to superficial evaluation; “soft skills” remain under-assessed.  
+
+- → #**Derived concepts**: _interaction time constraint_, _soft-skill invisibility_, _queue pressure_, _rapid-assessment mode_.#
+
 
 *Recruiter (Isabel, consulting firm)*:  
 “We hand out branded tote bags and pens — it’s funny, but sometimes that’s what students remember us by.  
 When I reach out later, they’ll reply ‘Oh, you were the ones with the blue water bottles!’”  
-→ *Observation:* Brand association through physical tokens enhances recall; small sensory cues matter.
+
+- → *Observation:* Brand association through physical tokens enhances recall; small sensory cues matter.  
+
+- → #**Derived concepts**: _brand token_, _sensory cue_, _recall aid_, _brand-to-memory mapping_.#
+
 
 *Student (Arjun, Industrial Engineering senior)*:  
 “I wish I knew right away if I had a chance instead of waiting months. After the fair, you check your email every day, but mostly nothing happens.”  
-→ *Observation:* Desire for instant or early feedback mechanisms post-interaction.
+
+- → *Observation:* Desire for instant or early feedback mechanisms post-interaction.  
+
+- → #**Derived concepts**: _feedback latency_, _candidate anxiety cycle_, _instant-evaluation desire_.#
+
 
 *Recruiter (Paula, tech recruiter)*:  
 “We often rehire interns we already know. There’s trust there — we’ve seen their work.  
 That’s why sometimes new applicants don’t get the same attention.”  
-→ *Observation:* Prior familiarity skews fairness; existing relationships heavily influence hiring behavior.
+
+- → *Observation:* Prior familiarity skews fairness; existing relationships heavily influence hiring behavior.  
+
+- → #**Derived concepts**: _familiarity bias_, _trust-weighted selection_, _returning applicant advantage_.#
+
 
 *Student (Elena, Business Administration major)*:  
 “The fairs are always packed — the noise, the pushing, it’s chaotic. I tried to ask a recruiter a question, but they just handed me a flyer and moved on.  
 Later, I realized that the quieter booths in the back actually had time to talk.”  
-→ *Observation:* Spatial arrangement and booth placement affect engagement quality.
+
+- → *Observation:* Spatial arrangement and booth placement affect engagement quality.  
+
+- → #**Derived concepts**: _booth location_, _interaction density_, _engagement opportunity_, _crowding effect_.#
+
 
 *Career Advisor (Lucia, UPRM)*:  
 “We encourage students to bring a ‘target list’ of companies, but many still wander without a plan.  
 On the other side, recruiters tell us they want better visibility into who’s coming — maybe an advance roster of students and their profiles.”  
-→ *Observation:* Advisors recognize preparation asymmetry; opportunities for platform pre-matching.
 
+- → *Observation:* Advisors recognize preparation asymmetry; opportunities for platform pre-matching. 
+
+- → #**Derived concepts**: _target-list preparation_, _candidate pre-registration_, _roster visibility_, _pre-match potential_.#
 
 ==== Terminology
 
