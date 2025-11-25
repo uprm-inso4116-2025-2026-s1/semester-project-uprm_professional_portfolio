@@ -10,6 +10,7 @@ import '../../../core/constants/app_constants.dart';
 import '../../../core/constants/ui_constants.dart';
 import '../../../core/utils/validators.dart';
 import '../../../core/cubits/auth/auth_cubit.dart';
+import '../../../core/cubits/auth/auth_state.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -225,7 +226,6 @@ class _SignupScreenState extends State<SignupScreen> {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: UIConstants.spaceMD),
-
         OAuthButton(
           provider: 'google',
           label: 'Continue with Google',
@@ -234,7 +234,6 @@ class _SignupScreenState extends State<SignupScreen> {
           onPressed: () => _handleOAuthSignIn('google'),
         ),
         const SizedBox(height: UIConstants.spaceMD),
-
         OAuthButton(
           provider: 'linkedin',
           label: 'Continue with LinkedIn',
@@ -263,8 +262,8 @@ class _SignupScreenState extends State<SignupScreen> {
     });
   }
 
- void _handleNext() async {
-  // Validate role selection
+  void _handleNext() async {
+    // Validate role selection
     if (_selectedRole == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -277,6 +276,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
     if (!_formKey.currentState!.validate()) return;
 
+    print('[SignupScreen] Starting signup process');
+
     // Create user account using AuthCubit
     await context.read<AuthCubit>().signUp(
           _emailController.text.trim(),
@@ -285,13 +286,42 @@ class _SignupScreenState extends State<SignupScreen> {
           _selectedRole!,
         );
 
-    if (mounted) {
+    if (!mounted) return;
+
+    print('[SignupScreen] Checking auth state after signup');
+
+    // Check the auth state
+    final authState = context.read<AuthCubit>().state;
+
+    if (authState is AuthError) {
+      print('[SignupScreen] Signup failed with error: ${authState.message}');
+      // Show error to user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(authState.message),
+          backgroundColor: Theme.of(context).colorScheme.error,
+          duration: const Duration(seconds: 4),
+        ),
+      );
+      return;
+    }
+
+    if (authState is AuthAuthenticated) {
+      print('[SignupScreen] Signup successful, navigating to profile form');
       // Navigate to profile form based on role
       if (_selectedRole == AppConstants.recruiterRole) {
         context.go(AppConstants.recruiterProfileRoute);
       } else {
         context.go(AppConstants.jobseekerProfileRoute);
       }
+    } else {
+      print('[SignupScreen] Unexpected auth state: ${authState.runtimeType}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Signup failed. Please try again.'),
+          backgroundColor: Theme.of(context).colorScheme.error,
+        ),
+      );
     }
   }
 }

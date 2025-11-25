@@ -29,15 +29,32 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> login(String email, String password) async {
     emit(AuthLoading());
     try {
-      final user = await _storageService.verifyCredentials(email, password);
+      print('[AuthCubit] Starting login for: $email');
 
+      // Call Supabase AuthService
+      final result = await _authService.login(email, password);
+
+      if (!result.success) {
+        print('[AuthCubit] Login failed: ${result.error}');
+        emit(AuthError(result.error ?? 'Login failed'));
+        return;
+      }
+
+      print('[AuthCubit] Login successful, checking for user');
+
+      // Get the current user from AuthService
+      final user = _authService.currentUser;
       if (user != null) {
+        print(
+            '[AuthCubit] User found, saving and emitting authenticated state');
         await _storageService.saveUser(user);
         emit(AuthAuthenticated(user));
       } else {
-        emit(AuthError('Invalid email or password'));
+        print('[AuthCubit] No user found after login');
+        emit(AuthError('Login succeeded but no user data available'));
       }
     } catch (e) {
+      print('[AuthCubit] Login exception: $e');
       emit(AuthError(e.toString()));
     }
   }
@@ -46,75 +63,94 @@ class AuthCubit extends Cubit<AuthState> {
       String email, String password, String name, String role) async {
     emit(AuthLoading());
     try {
-      final user = User(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
+      print('[AuthCubit] Starting signup for: $email');
+
+      // Call Supabase AuthService
+      final result = await _authService.signUp(
         email: email,
+        password: password,
         fullName: name,
         role: role,
-        createdAt: DateTime.now(),
       );
 
-      await _storageService.saveCredentials(email, password, user);
-      await _storageService.saveUser(user);
-      emit(AuthAuthenticated(user));
+      if (!result.success) {
+        print('[AuthCubit] Signup failed: ${result.error}');
+        emit(AuthError(result.error ?? 'Sign up failed'));
+        return;
+      }
+
+      print('[AuthCubit] Signup successful, checking for user');
+
+      // Get the current user from AuthService
+      final user = _authService.currentUser;
+      if (user != null) {
+        print(
+            '[AuthCubit] User found, saving and emitting authenticated state');
+        await _storageService.saveUser(user);
+        emit(AuthAuthenticated(user));
+      } else {
+        print('[AuthCubit] No user found after signup');
+        emit(AuthError('Sign up succeeded but no user data available'));
+      }
     } catch (e) {
+      print('[AuthCubit] Signup exception: $e');
       emit(AuthError(e.toString()));
     }
   }
 
-  // OAuth Sign In Method
-  Future<void> signInWithOAuth({
-    required String provider,
-    required String role,
-  }) async {
-    emit(AuthLoading());
-    try {
-      final result = await _authService.signInWithOAuth(
-        provider: provider,
-        role: role,
-      );
+  // OAuth Sign In Method - DISABLED (not implemented in AuthService)
+  // Future<void> signInWithOAuth({
+  //   required String provider,
+  //   required String role,
+  // }) async {
+  //   emit(AuthLoading());
+  //   try {
+  //     final result = await _authService.signInWithOAuth(
+  //       provider: provider,
+  //       role: role,
+  //     );
+  //
+  //     if (result.success) {
+  //       // OAuth successful - wait a moment for Supabase to process
+  //       await Future.delayed(Duration(seconds: 2));
+  //
+  //       // Check if we have a user from Supabase
+  //       final user = _authService.currentUser;
+  //       if (user != null) {
+  //         // Save to local storage for consistency
+  //         await _storageService.saveUser(user);
+  //         emit(AuthAuthenticated(user));
+  //       } else {
+  //         emit(AuthError('OAuth authentication completed but no user data received'));
+  //       }
+  //     } else {
+  //       emit(AuthError(result.error ?? 'OAuth authentication failed'));
+  //     }
+  //   } catch (e) {
+  //     emit(AuthError('OAuth sign in failed: ${e.toString()}'));
+  //   }
+  // }
 
-      if (result.success) {
-        // OAuth successful - wait a moment for Supabase to process
-        await Future.delayed(Duration(seconds: 2));
-        
-        // Check if we have a user from Supabase
-        final user = _authService.currentUser;
-        if (user != null) {
-          // Save to local storage for consistency
-          await _storageService.saveUser(user);
-          emit(AuthAuthenticated(user));
-        } else {
-          emit(AuthError('OAuth authentication completed but no user data received'));
-        }
-      } else {
-        emit(AuthError(result.error ?? 'OAuth authentication failed'));
-      }
-    } catch (e) {
-      emit(AuthError('OAuth sign in failed: ${e.toString()}'));
-    }
-  }
-
-  // Link account with OAuth
-  Future<void> linkAccountWithOAuth(String provider) async {
-    emit(AuthLoading());
-    try {
-      final result = await _authService.linkAccountWithOAuth(provider);
-
-      if (result.success) {
-        // Refresh user data after linking
-        final user = _authService.currentUser;
-        if (user != null) {
-          await _storageService.saveUser(user);
-          emit(AuthAuthenticated(user));
-        }
-      } else {
-        emit(AuthError(result.error ?? 'Account linking failed'));
-      }
-    } catch (e) {
-      emit(AuthError('Account linking failed: ${e.toString()}'));
-    }
-  }
+  // Link account with OAuth - DISABLED (not implemented in AuthService)
+  // Future<void> linkAccountWithOAuth(String provider) async {
+  //   emit(AuthLoading());
+  //   try {
+  //     final result = await _authService.linkAccountWithOAuth(provider);
+  //
+  //     if (result.success) {
+  //       // Refresh user data after linking
+  //       final user = _authService.currentUser;
+  //       if (user != null) {
+  //         await _storageService.saveUser(user);
+  //         emit(AuthAuthenticated(user));
+  //       }
+  //     } else {
+  //       emit(AuthError(result.error ?? 'Account linking failed'));
+  //     }
+  //   } catch (e) {
+  //     emit(AuthError('Account linking failed: ${e.toString()}'));
+  //   }
+  // }
 
   Future<void> logout() async {
     emit(AuthLoading());

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
 
 import 'package:uprm_professional_portfolio/features/matches.dart';
 import '../core/constants/app_constants.dart';
@@ -162,18 +162,8 @@ class _GoRouterRefreshStream extends ChangeNotifier {
   @override
   void dispose() {
     _subscription.cancel();
-      GoRoute(
-        path: AppConstants.matchesScreenRoute,
-        builder: (context, state) => const MatchesScreen(),
-      ),
-
-      // TODO: Add more routes as needed
-      // - Dashboard
-      // - Job listings
-      // - Profile view
-      // - Settings
-    ],
-  );
+    super.dispose();
+  }
 }
 
 /// Helper so GoRouter can listen to a Stream and call notifyListeners()
