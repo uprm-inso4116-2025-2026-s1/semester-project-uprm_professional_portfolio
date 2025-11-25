@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -267,6 +268,123 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     }
   }
 
+  Future<void> _showMessageOptions(ChatMessage message) async {
+    // Check if message is within edit time window (15 minutes)
+    final canEdit = DateTime.now().difference(message.timeStamp).inMinutes < 15;
+
+    await showModalBottomSheet<void>(
+      context: context,
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (canEdit)
+              ListTile(
+                leading: const Icon(Icons.edit),
+                title: const Text('Edit Message'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _showEditDialog(message);
+                },
+              ),
+            ListTile(
+              leading: const Icon(Icons.delete),
+              title: const Text('Delete Message'),
+              onTap: () {
+                Navigator.pop(context);
+                _showDeleteDialog(message);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.close),
+              title: const Text('Cancel'),
+              onTap: () => Navigator.pop(context),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _showEditDialog(ChatMessage message) async {
+    String? result;
+
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => _EditMessageDialog(
+        initialText: message.text,
+        onSave: (String text) {
+          result = text;
+          Navigator.pop(context);
+        },
+        onCancel: () => Navigator.pop(context),
+      ),
+    );
+
+    if (result != null && result!.isNotEmpty && result != message.text) {
+      final success = await _chatService.editMessage(message.id, result!);
+
+      if (mounted) {
+        if (success) {
+          await _loadMessages();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Message edited')),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Failed to edit message'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    }
+  }
+
+  Future<void> _showDeleteDialog(ChatMessage message) async {
+    await showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Message'),
+        content: const Text(
+          'Are you sure you want to delete this message? This action cannot be undone.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              final success = await _chatService.deleteMessage(message.id);
+
+              if (mounted) {
+                Navigator.pop(context);
+                if (success) {
+                  await _loadMessages(); // Refresh to show deleted placeholder
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Message deleted')),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Failed to delete message'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              }
+            },
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -347,160 +465,191 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   ) {
     return Align(
       alignment: isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: UIConstants.spaceMD),
-        padding: const EdgeInsets.symmetric(
-          horizontal: UIConstants.spaceMD,
-          vertical: UIConstants.spaceSM,
-        ),
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.7,
-        ),
-        decoration: BoxDecoration(
-          color: isCurrentUser
-              ? theme.colorScheme.primary
-              : theme.colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(16).copyWith(
-            bottomRight: isCurrentUser ? const Radius.circular(4) : null,
-            bottomLeft: !isCurrentUser ? const Radius.circular(4) : null,
+      child: GestureDetector(
+        onLongPress: isCurrentUser && !message.isDeleted
+            ? () => _showMessageOptions(message)
+            : null,
+        child: Container(
+          margin: const EdgeInsets.only(bottom: UIConstants.spaceMD),
+          padding: const EdgeInsets.symmetric(
+            horizontal: UIConstants.spaceMD,
+            vertical: UIConstants.spaceSM,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.08),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.7,
+          ),
+          decoration: BoxDecoration(
+            color: message.isDeleted
+                ? theme.colorScheme.surfaceContainerHighest.withOpacity(0.5)
+                : (isCurrentUser
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.surfaceContainerHighest),
+            borderRadius: BorderRadius.circular(16).copyWith(
+              bottomRight: isCurrentUser ? const Radius.circular(4) : null,
+              bottomLeft: !isCurrentUser ? const Radius.circular(4) : null,
             ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Display attachment if present
-            if (message.hasAttachment) ...[
-              if (message.isImage)
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (context) => ImageViewerPage(
-                          imageUrl: message.attachmentUrl!,
-                          heroTag: 'message_image_${message.id}',
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.08),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Display attachment if present and not deleted
+              if (message.hasAttachment && !message.isDeleted) ...[
+                if (message.isImage)
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (context) => ImageViewerPage(
+                            imageUrl: message.attachmentUrl!,
+                            heroTag: 'message_image_${message.id}',
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  child: Hero(
-                    tag: 'message_image_${message.id}',
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        message.attachmentUrl!,
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => Container(
-                          padding: const EdgeInsets.all(8),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.broken_image,
-                                color: isCurrentUser
-                                    ? theme.colorScheme.onPrimary
-                                    : theme.colorScheme.onSurface,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                'Image unavailable',
-                                style: theme.textTheme.bodySmall?.copyWith(
+                      );
+                    },
+                    child: Hero(
+                      tag: 'message_image_${message.id}',
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(
+                          message.attachmentUrl!,
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                            padding: const EdgeInsets.all(8),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.broken_image,
                                   color: isCurrentUser
                                       ? theme.colorScheme.onPrimary
                                       : theme.colorScheme.onSurface,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return Container(
-                            width: MediaQuery.of(context).size.width * 0.6,
-                            height: 200,
-                            alignment: Alignment.center,
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                  : null,
+                                const SizedBox(width: 8),
+                                Text(
+                                  'Image unavailable',
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: isCurrentUser
+                                        ? theme.colorScheme.onPrimary
+                                        : theme.colorScheme.onSurface,
+                                  ),
+                                ),
+                              ],
                             ),
-                          );
-                        },
+                          ),
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              height: 200,
+                              alignment: Alignment.center,
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  )
+                else
+                  // Non-image attachment
+                  GestureDetector(
+                    onTap: () => _openFile(message.attachmentUrl!),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: isCurrentUser
+                            ? theme.colorScheme.onPrimary.withOpacity(0.1)
+                            : theme.colorScheme.onSurface.withOpacity(0.05),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.attach_file,
+                            size: 20,
+                            color: isCurrentUser
+                                ? theme.colorScheme.onPrimary
+                                : theme.colorScheme.onSurface,
+                          ),
+                          const SizedBox(width: 8),
+                          Flexible(
+                            child: Text(
+                              message.attachmentUrl!.split('/').last,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: isCurrentUser
+                                    ? theme.colorScheme.onPrimary
+                                    : theme.colorScheme.onSurface,
+                                decoration: TextDecoration.underline,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                )
-              else
-                // Non-image attachment
-                GestureDetector(
-                  onTap: () => _openFile(message.attachmentUrl!),
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: isCurrentUser
-                          ? theme.colorScheme.onPrimary.withOpacity(0.1)
-                          : theme.colorScheme.onSurface.withOpacity(0.05),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.attach_file,
-                          size: 20,
-                          color: isCurrentUser
-                              ? theme.colorScheme.onPrimary
-                              : theme.colorScheme.onSurface,
-                        ),
-                        const SizedBox(width: 8),
-                        Flexible(
-                          child: Text(
-                            message.attachmentUrl!.split('/').last,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: isCurrentUser
-                                  ? theme.colorScheme.onPrimary
-                                  : theme.colorScheme.onSurface,
-                              decoration: TextDecoration.underline,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
+                if (message.text.isNotEmpty) const SizedBox(height: 8),
+              ],
+              // Display text if present
+              if (message.text.isNotEmpty)
+                Text(
+                  message.text,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: message.isDeleted
+                        ? theme.colorScheme.onSurfaceVariant.withOpacity(0.6)
+                        : (isCurrentUser
+                            ? theme.colorScheme.onPrimary
+                            : theme.colorScheme.onSurface),
+                    fontStyle: message.isDeleted ? FontStyle.italic : null,
                   ),
                 ),
-              if (message.text.isNotEmpty) const SizedBox(height: 8),
+              const SizedBox(height: 4),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    DateFormat.jm().format(message.timeStamp.toLocal()),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: isCurrentUser
+                          ? theme.colorScheme.onPrimary.withOpacity(0.7)
+                          : theme.colorScheme.onSurfaceVariant,
+                      fontSize: 11,
+                    ),
+                  ),
+                  if (message.isEdited && !message.isDeleted) ...[
+                    const SizedBox(width: 4),
+                    Text(
+                      '(edited)',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: isCurrentUser
+                            ? theme.colorScheme.onPrimary.withOpacity(0.6)
+                            : theme.colorScheme.onSurfaceVariant
+                                .withOpacity(0.8),
+                        fontSize: 10,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
             ],
-            // Display text if present
-            if (message.text.isNotEmpty)
-              Text(
-                message.text,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: isCurrentUser
-                      ? theme.colorScheme.onPrimary
-                      : theme.colorScheme.onSurface,
-                ),
-              ),
-            const SizedBox(height: 4),
-            Text(
-              DateFormat.jm().format(message.timeStamp.toLocal()),
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: isCurrentUser
-                    ? theme.colorScheme.onPrimary.withOpacity(0.7)
-                    : theme.colorScheme.onSurfaceVariant,
-                fontSize: 11,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -655,6 +804,66 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _EditMessageDialog extends StatefulWidget {
+  const _EditMessageDialog({
+    required this.initialText,
+    required this.onSave,
+    required this.onCancel,
+  });
+
+  final String initialText;
+  final void Function(String text) onSave;
+  final VoidCallback onCancel;
+
+  @override
+  State<_EditMessageDialog> createState() => _EditMessageDialogState();
+}
+
+class _EditMessageDialogState extends State<_EditMessageDialog> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.initialText);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Edit Message'),
+      content: TextField(
+        controller: _controller,
+        decoration: const InputDecoration(
+          hintText: 'Enter new message',
+          border: OutlineInputBorder(),
+        ),
+        maxLines: 3,
+        autofocus: true,
+      ),
+      actions: [
+        TextButton(
+          onPressed: widget.onCancel,
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            final text = _controller.text.trim();
+            widget.onSave(text);
+          },
+          child: const Text('Save'),
+        ),
+      ],
     );
   }
 }

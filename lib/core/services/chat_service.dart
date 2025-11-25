@@ -10,6 +10,9 @@ class ChatMessage {
     required this.timeStamp,
     this.attachmentUrl,
     this.attachmentType,
+    this.isEdited = false,
+    this.isDeleted = false,
+    this.updatedAt,
   });
 
   final String id;
@@ -19,6 +22,9 @@ class ChatMessage {
   final DateTime timeStamp;
   final String? attachmentUrl;
   final String? attachmentType;
+  final bool isEdited;
+  final bool isDeleted;
+  final DateTime? updatedAt;
 
   bool get hasAttachment => attachmentUrl != null && attachmentUrl!.isNotEmpty;
   bool get isImage => attachmentType?.startsWith('image/') ?? false;
@@ -69,6 +75,74 @@ class ChatService extends ChangeNotifier {
 
   /// Returns all existing conversations. → expression body
   List<ChatConversation> getConversations() => _conversations.values.toList();
+
+  /// Edits a message's text.
+  bool editMessage(String messageId, String newBody) {
+    for (final conversation in _conversations.values) {
+      final message = conversation.messages.firstWhere(
+        (m) => m.id == messageId,
+        orElse: () => ChatMessage(
+          id: '',
+          conversationId: '',
+          senderId: '',
+          text: '',
+          timeStamp: DateTime.now(),
+        ),
+      );
+      if (message.id == messageId) {
+        final index = conversation.messages.indexOf(message);
+        conversation.messages[index] = ChatMessage(
+          id: message.id,
+          conversationId: message.conversationId,
+          senderId: message.senderId,
+          text: newBody,
+          timeStamp: message.timeStamp,
+          attachmentUrl: message.attachmentUrl,
+          attachmentType: message.attachmentType,
+          isEdited: true,
+          isDeleted: message.isDeleted,
+          updatedAt: DateTime.now(),
+        );
+        notifyListeners();
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /// Soft-deletes a message.
+  bool deleteMessage(String messageId) {
+    for (final conversation in _conversations.values) {
+      final message = conversation.messages.firstWhere(
+        (m) => m.id == messageId,
+        orElse: () => ChatMessage(
+          id: '',
+          conversationId: '',
+          senderId: '',
+          text: '',
+          timeStamp: DateTime.now(),
+        ),
+      );
+      if (message.id == messageId) {
+        final index = conversation.messages.indexOf(message);
+        conversation.messages[index] = ChatMessage(
+          id: message.id,
+          conversationId: message.conversationId,
+          senderId: message.senderId,
+          text: 'Message deleted',
+          timeStamp: message.timeStamp,
+          attachmentUrl: message.attachmentUrl,
+          attachmentType: message.attachmentType,
+          isEdited: message.isEdited,
+          isDeleted: true,
+          updatedAt: DateTime.now(),
+        );
+        notifyListeners();
+        return true;
+      }
+    }
+    return false;
+  }
 
   /// Clears all conversations.
   void reset() {
