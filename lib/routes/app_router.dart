@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
 
 import 'package:uprm_professional_portfolio/features/matches.dart';
 import '../core/constants/app_constants.dart';
@@ -14,7 +14,7 @@ import '../features/welcome/welcome_screen.dart';
 import '../features/main/main_screen.dart';
 import '../features/profiles/recruiter_profile/recruiter_profile_screen.dart';
 import '../features/profiles/jobseeker_profile/jobseeker_profile_screen.dart';
-import '../features/profiles/recruiter_profile/recruiter_profile_screen.dart';
+import '../features/chat/chat_room_page.dart';
 
 // App router configuration
 class AppRouter {
@@ -101,23 +101,20 @@ class AppRouter {
 
     // Basic auth guard
     redirect: (context, state) {
-
       final session = Supabase.instance.client.auth.currentSession;
       final path = state.uri.path;
 
-      final isAuthRoute = path == AppConstants.loginRoute ||
-      path == AppConstants.signupRoute; 
-
+      final isAuthRoute =
+          path == AppConstants.loginRoute || path == AppConstants.signupRoute;
 
       // If not logged in and trying to hit a protected route → go to /login
       if (session == null && !isAuthRoute) {
         return AppConstants.loginRoute;
       }
 
-      // If logged in and trying to access /login or /signup → send to a private route
+      // If logged in and trying to access /login or /signup → send to main screen
       if (session != null && isAuthRoute) {
-        // You can change this to your true "home" when ready
-        return AppConstants.recruiterProfileRoute;
+        return AppConstants.mainRoute;
       }
 
       // No redirect
@@ -135,6 +132,16 @@ class AppRouter {
         builder: (context, state) => const SignupScreen(),
       ),
 
+      // Main screen with bottom navigation (private)
+      GoRoute(
+        path: AppConstants.mainRoute,
+        builder: (context, state) {
+          final indexParam = state.uri.queryParameters['tab'];
+          final index = int.tryParse(indexParam ?? '0') ?? 0;
+          return MainScreen(initialIndex: index);
+        },
+      ),
+
       // Profile setup routes (private)
       GoRoute(
         path: AppConstants.recruiterProfileRoute,
@@ -143,6 +150,15 @@ class AppRouter {
       GoRoute(
         path: AppConstants.jobseekerProfileRoute,
         builder: (context, state) => const JobSeekerProfileScreen(),
+      ),
+
+      // Individual chat room
+      GoRoute(
+        path: '/chat/:conversationId',
+        builder: (context, state) {
+          final conversationId = state.pathParameters['conversationId']!;
+          return ChatRoomPage(conversationId: conversationId);
+        },
       ),
     ],
   );
@@ -162,18 +178,8 @@ class _GoRouterRefreshStream extends ChangeNotifier {
   @override
   void dispose() {
     _subscription.cancel();
-      GoRoute(
-        path: AppConstants.matchesScreenRoute,
-        builder: (context, state) => const MatchesScreen(),
-      ),
-
-      // TODO: Add more routes as needed
-      // - Dashboard
-      // - Job listings
-      // - Profile view
-      // - Settings
-    ],
-  );
+    super.dispose();
+  }
 }
 
 /// Helper so GoRouter can listen to a Stream and call notifyListeners()
