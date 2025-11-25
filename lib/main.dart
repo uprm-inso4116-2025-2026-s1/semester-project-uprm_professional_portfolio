@@ -17,6 +17,12 @@ Future<void> main() async {
     anonKey: Env.supabaseAnonKey,
   );
 
+  // Force clear any existing session
+  await Supabase.instance.client.auth.signOut();
+  
+  // Wait a moment for the session to fully clear
+  await Future.delayed(const Duration(milliseconds: 100));
+
   runApp(const MyApp());
 }
 

@@ -24,26 +24,23 @@ class AppRouter {
 
     // Basic auth guard
     redirect: (context, state) {
-
       final session = Supabase.instance.client.auth.currentSession;
       final path = state.uri.path;
 
       final isAuthRoute = path == AppConstants.loginRoute ||
-      path == AppConstants.signupRoute; 
+          path == AppConstants.signupRoute;
 
+      // If logged in and trying to access /login or /signup → send to a private route
+      if (session != null && isAuthRoute) {
+        return AppConstants.recruiterProfileRoute;
+      }
 
       // If not logged in and trying to hit a protected route → go to /login
       if (session == null && !isAuthRoute) {
         return AppConstants.loginRoute;
       }
 
-      // If logged in and trying to access /login or /signup → send to a private route
-      if (session != null && isAuthRoute) {
-        // You can change this to your true "home" when ready
-        return AppConstants.recruiterProfileRoute;
-      }
-
-      // No redirect
+      // No redirect needed
       return null;
     },
 
