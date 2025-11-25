@@ -1248,6 +1248,7 @@ _"As a user, I want to block a profile so that it no longer appears or can initi
 
 The personas below represent our core user segments and ground the scope of this product. For each persona we outline goals, pains, typical behaviors, and accessibility needs, and we link them to the stories, epics, and features defined in 2.2.1. We’ll reference these personas by name during planning and reviews to keep decisions concrete and tied to user value.
 
+[line-through]
 .María “New Grad” Rivera — University Candidate (mobile-first)
 [cols="1,3"]
 |===
@@ -1367,7 +1368,7 @@ The personas below represent our core user segments and ground the scope of this
 &#160;
 [discrete]
 
-#**Updated narrative personas for Milestone 3:**#
+#**Narrative Personas**#
 
 The following personas reinterpret our earlier feature-focused profiles as vivid, system-independent characters drawn from the domain. Each one should feel like a real person whose name can act as shorthand for their wishes, goals, fears, and decision habits
 
@@ -1603,24 +1604,24 @@ Before diving into the implementation fragments, it is useful to visualize the o
 This visualization complements the subsequent implementation fragments by illustrating how user-facing features are realized through coordinated service logic and database operations, ensuring alignment between system behavior and architectural design.
 
 image::../Images/functionality-flow.svg[Functionality Flow, align=center, pdfwidth=90%]
-_Figure 7. Functionality Flow Diagram illustrating the end-to-end process from user interactions to backend persistence._
+_Figure 2.3.1. - 1. Functionality Flow Diagram illustrating the end-to-end process from user interactions to backend persistence._
 
 The diagram clarifies how user interactions are processed across the system’s layers.  
 For example, when a user performs a “Like” action, the event triggers the `SwipeService`, which validates and records the swipe, checks for mutual matches, and—if both users liked each other—creates a new `Connection` entity in the `Matches` table.
 
 This flow contextualizes the domain-centric method signatures presented in the next section, showing how each function contributes to the overall behavior of the system.
 
-image::../Images/jobseeker-flows.svg[Jobseeker Flow, align=center, width=40%]
-_Figure 8. Jobseeker flows diagram showing jobseeker interactions (search, view jobs, apply, save, follow-up) and how those actions map to backend services such as profile updates, application repository writes, and notification triggers._
+image::../Images/jobseeker-flows.svg[Jobseeker Flow, align=center, width=50%]
+_Figure 2.3.1 - 2. Jobseeker flows diagram showing jobseeker interactions (search, view jobs, apply, save, follow-up) and how those actions map to backend services such as profile updates, application repository writes, and notification triggers._
 
-image::../Images/recruiter-flows.svg[Recruiter Flow, align=center, width=40%]
-_Figure 9. Recruiter flows diagram illustrating recruiter workflows (post job, screen applicants, schedule interviews, take notes), ATS interactions, prescreen operations, and note persistence in repositories._
+image::../Images/recruiter-flows.svg[Recruiter Flow, align=center, width=50%]
+_Figure 2.3.1 - 3. Recruiter flows diagram illustrating recruiter workflows (post job, screen applicants, schedule interviews, take notes), ATS interactions, prescreen operations, and note persistence in repositories._
 
-image::../Images/student-flows.svg[Student Flow, align=center, pdfwidth=50%]
-_Figure 10. Student flows diagram capturing student-specific steps including event check-in, resume tailoring, booth pitch, informal networking, and multichannel application submission, mapped to system events and follow-up operations._
+image::../Images/student-flows.svg[Student Flow, align=center, width=50%]
+_Figure 2.3.1 - 4. Student flows diagram capturing student-specific steps including event check-in, resume tailoring, booth pitch, informal networking, and multichannel application submission, mapped to system events and follow-up operations._
 
 image::../Images/database-schema.svg[Database Schema, align=center, pdfwidth=90%]
-_Figure 11. Database schema diagram (ER) showing core domain tables — users, student_profiles, programs, program_applications, mentor_assignments, matches, conversations, messages, conversation_participants, feedback, audit_logs, companies, jobs, and job_applications — with primary keys, foreign keys, relationships, and key indices used for deduplication, matching, and conversation threading._
+_Figure 2.3.1 - 5. Database schema diagram (ER) showing core domain tables — users, student_profiles, programs, program_applications, mentor_assignments, matches, conversations, messages, conversation_participants, feedback, audit_logs, companies, jobs, and job_applications — with primary keys, foreign keys, relationships, and key indices used for deduplication, matching, and conversation threading._
 
 
 ==== Selected Fragments of the Implementation
@@ -2148,11 +2149,11 @@ Indeed for Employers. (2024, November 4). 6 texting and chatting rules with cand
 In the enriched model the operation of accepting or swiping right to allow communication between recruiter and job seeker from the perspective of the recruiter, with the assumption that job seekers have accepted or “swiped right” a job or program that this recruiter manages/is a mentor of. It is decomposed into the layers that are used in the order they are used by the system. It shows 2 user scenarios, one were the connection is available and access to the database is possible in the moment it is requested or “happy path” and another when the access is not possible at that moment which makes the system look for a backup or cache of the matches that could have been retrieved in a previous fetch and if that also fails it will store the user interaction to update database with the accept flag for the role of the current user on the corresponding user of opposite role.
 
 image::../Images/Itinerary.of.recruiter.scenario.jpg[Itinerary, align=center, pdfwidth=90%]
-_Figure 12. Itinerary of recruiter scenario showing the various stages and interactions involved in the recruitment process._
+_Figure 4.1.2. - 1. Itinerary of recruiter scenario showing the various stages and interactions involved in the recruitment process._
 
 
 image::../Images/UML.match.entity.diagram.jpg[UML, align=center, pdfwidth=90%]
-_Figure 13. UML diagram showing the entities involved in the matching process between recruiters and students._
+_Figure 4.1.2. - 2. UML diagram showing the entities involved in the matching process between recruiters and students._
 
 ==== #Communication and the use of Language: Modeling Out Loud for Swipe Flow#
 :author: Alexa M. Zaragoza Torres
@@ -2214,8 +2215,8 @@ uniqueness, gated chat, visibility, idempotency, and unmatch/report support, wit
 The scope is traceable to Personas and User Stories, Epics, and Features, and is ready for build and
 review.
 
-.Flowchart LTT – Modeling Out Loud for Swipe Flow
 image::../images/Flowchart-LTT-ModelingOutLoudforSwipeFlow.png[width=70%,align=center]
+_Figure 4.1.3. - 1. Flowchart LTT – Modeling Out Loud for Swipe Flow_
 
 [discrete]
 This material is guided by sections 1.3 (*Scope, Span, and Synopsis*), 2.1 (*Domain Description*),
@@ -2639,6 +2640,7 @@ Transitions are implied within the state descriptions and governed by events and
 - Active/Archived → Deletion: triggered by `ProfileDeleted` when authorized  
 
 image::..\Images\StudentProfile.png[width=70%,align=center]
+_Figure 4.3.1. - 1. State Transitions_
 
 
 ===== Aggregate Deletion Rules
@@ -2885,6 +2887,8 @@ To address this weak spot, the Application should store a **snapshot of relevant
 ===== UML Diagram
 image::../images/weakpoint1.png[width=50%,align=center]
 [discrete]
+_Figure 4.5.1. - 1. UML Diagram Illustrating Revised Relationship Between Application and Profile_
+
 The diagram illustrates the revised relationship between **Application** and **Profile**, showing that Applications now reference immutable `ArtifactVersion` objects rather than live Profile objects. This separation enforces snapshot semantics, clarifies domain boundaries, and reduces unintended coupling.
 
 [discrete]
@@ -2908,6 +2912,9 @@ To address this issue, all domain logic related to Profile should be centralized
 [discrete]
 ===== UML Diagram
 image::../images/weakpoint2.png[width=70%,align=center]
+
+_Figure 4.5.1. - 2. UML Diagram Illustrating Centralized Profile Logic_
+
 [discrete]
 The diagram depicts the consolidation of Profile-related logic inside the **Profile aggregate**, illustrating how ProfileService and MatchService now delegate validation and domain rules to value objects within the aggregate. This centralization reduces duplication and ensures consistent application of business rules across the system.
 
@@ -2932,6 +2939,9 @@ The matching module should interact with **read-only representations of Profile 
 [discrete]
 ===== UML Diagram
 image::../images/weakpoint3.png[width=70%,align=center]
+
+_Figure 4.5.1. - 3. UML Diagram Illustrating Matching Module Accessing Profile Data via Interface_
+
 [discrete]
 The diagram illustrates how the Matching module accesses Profile data through the **IProfileReader** interface and works with stored snapshots. This structure decouples matching from live Profile updates, ensuring historical match data remains consistent and auditable.
 
@@ -3024,6 +3034,8 @@ Generic subdomains support operational needs, providing stability, security, and
 === Domain Segmentation Diagram
 
 image::../images/coredomain.svg[width=99%,align=center]
+_Figure 4.6.1. - 1. Domain Segmentation Diagram_
+
 The diagram above illustrates the relationship between the core, supporting, and generic subdomains. At the center is the **Core Domain**, which contains the Match Formation & Alignment Logic — the system’s strategic differentiator. Surrounding it are the **Supporting Subdomains**, which provide enriched data and interaction mechanisms to enhance the core functionality. The **Generic Subdomains** form the outer layer, delivering necessary infrastructural services such as authentication, notifications, storage, and UI components. This layered visualization emphasizes how value and complexity flow from the core outward, highlighting where design focus should be concentrated to maximize system effectiveness and competitive advantage.
 
 [discrete]
@@ -3119,17 +3131,17 @@ By structuring the system in this way, the architecture ensures that business ru
 === Architecture Diagram
 
 image::../images/architecturediagram.png[width=75%,align=center]
-Layered view (Presentation, Application, Domain, Infrastructure, Cross-cutting concerns)
+_Figure 4.6.2. - 1. Layered view (Presentation, Application, Domain, Infrastructure, Cross-cutting concerns)_
 
-1. Presentation Layer (Top Layer): This is the highest layer in the diagram and represents everything the end user interacts with—web interfaces, mobile screens, or any UI. It depends on the Application Layer to retrieve data, trigger use-cases, and update the interface. The label on the right ("Clients") emphasizes that this layer is the direct entry point for users.
+1. **Presentation Layer (Top Layer)**: This is the highest layer in the diagram and represents everything the end user interacts with—web interfaces, mobile screens, or any UI. It depends on the Application Layer to retrieve data, trigger use-cases, and update the interface. The label on the right ("Clients") emphasizes that this layer is the direct entry point for users.
 
-2. Application Layer: Positioned beneath the presentation layer, this layer orchestrates use-cases. It does not contain business rules itself; instead, it coordinates operations by invoking domain logic. The right-side label ("Orchestrates use-cases") makes that role explicit.
+2. **Application Layer**: Positioned beneath the presentation layer, this layer orchestrates use-cases. It does not contain business rules itself; instead, it coordinates operations by invoking domain logic. The right-side label ("Orchestrates use-cases") makes that role explicit.
 
-3. Domain Layer (Core Domain): This is the central and most important layer. It contains entities, aggregates, business rules, and domain services, including the system’s core competitive logic such as the matching engine. The right label ("Core domain logic → match engine") highlights this key responsibility. It is called directly by the Application Layer.
+3. **Domain Layer (Core Domain)**: This is the central and most important layer. It contains entities, aggregates, business rules, and domain services, including the system’s core competitive logic such as the matching engine. The right label ("Core domain logic → match engine") highlights this key responsibility. It is called directly by the Application Layer.
 
-4. Infrastructure Layer: Located below the domain, this layer provides all external operational capabilities: databases, caches, filesystems, APIs, and message brokers. It implements the persistence and communication mechanisms required by the domain but does not contain domain logic. The right-side annotation ("DB, Cache, External Services") clarifies its dependencies.
+4. **Infrastructure Layer**: Located below the domain, this layer provides all external operational capabilities: databases, caches, filesystems, APIs, and message brokers. It implements the persistence and communication mechanisms required by the domain but does not contain domain logic. The right-side annotation ("DB, Cache, External Services") clarifies its dependencies.
 
-5. Cross-cutting Concerns (Bottom Band): This horizontally aligned band spans the entire architecture. It covers functionalities that apply across all layers—authentication, logging, validation, monitoring, and tracing. Unlike the four main layers, cross-cutting concerns do not sit in the vertical call stack; they are injected or run alongside each layer through middleware, shared libraries, or centralized services.
+5. **Cross-cutting Concerns (Bottom Band)**: This horizontally aligned band spans the entire architecture. It covers functionalities that apply across all layers—authentication, logging, validation, monitoring, and tracing. Unlike the four main layers, cross-cutting concerns do not sit in the vertical call stack; they are injected or run alongside each layer through middleware, shared libraries, or centralized services.
 
 
 == Log Book
