@@ -2786,17 +2786,17 @@ The rules match the project’s official ubiquitous language and remove any depe
 [cols="2,4",options="header"]
 |===
 |Lecture Concept |Application in Task
-|Ubiquitous Language |Swipe, Like, Pass, Match, Connection, Session.
-|Implicit Concepts |Mutual interest, reciprocity, and connection triggers made explicit.
-|Aggregates and Entities |Rules tied to Swipe, Match, and Connection aggregates.
-|Invariants |Uniqueness of Match, Pass semantics, messaging constraints.
-|Domain Isolation |UI gestures removed; domain defines all logic.
+|Communication and the Use of Language (Slides 3–6) |Swipe, Like, Pass, Match, Connection, Session expressed in official UL.
+|Making Implicit Concepts Explicit (Slides 2–5) |Mutual interest made explicit as a domain rule.
+|Isolating the Domain (Slides 3–8) |UI gestures removed; all logic assigned to domain.
+|A Model Expressed in Software (Slides 4–9) |Rules mapped onto aggregates and domain events.
 |===
 
 ===== References
-Schütz-Schmuck, Marko. *Effective Domain Modeling*.  
-Schütz-Schmuck, Marko. *Making Implicit Concepts Explicit*.  
-Schütz-Schmuck, Marko. *Isolating the Domain & Expressing Models in Software*.
+* Schütz-Schmuck, Marko. *Communication and the Use of Language* (Lecture Slides 3–6).  
+* Schütz-Schmuck, Marko. *Making Implicit Concepts Explicit* (Lecture Slides 2–5).  
+* Schütz-Schmuck, Marko. *Isolating the Domain* (Lecture Slides 3–8).  
+* Schütz-Schmuck, Marko. *A Model Expressed in Software* (Lecture Slides 4–9).
 
 ==== Factory Design for Match Creation
 :author: Kiara N. Pérez Rivera
