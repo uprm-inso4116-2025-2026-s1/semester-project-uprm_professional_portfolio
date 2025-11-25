@@ -156,13 +156,147 @@ The project's span is focused on creating a scalable and user-friendly solution 
 The project aims to develop a mobile application that modernizes how students and recruiters connect by addressing the inefficiencies of traditional job search methods. It uses a swiping-based interface to enable dynamic and real time engagement between students presenting their qualifications and recruiters offering opportunities. Throughout its lifecycle, the project will progress through several key phases: requirements engineering to define user and system needs, software architecture and design to establish the platform’s structure, implementation of both front-end and back-end components, and systematic testing and validation to ensure reliability and usability.# #An iterative approach will be adopted, allowing feedback to refine requirements and improve design over time. The final goal is to deliver a scalable and efficient application that enhances job placement success, fosters meaningful recruiter to student connections, and maintains user centered quality across all development stages.
 
 === Other Activities than Just Developing Source Code
-Projects are successful when coding is supported by planning, communication, and documentation. These activities keep the team organized and ready for future development.
 
-* Although source code development is a top priority on this project, its success depends on several activities that extend beyond programming. Documentation plays a crucial role in keeping the project aligned, covering goals, requirements, architectural decisions, and detailed contributions. Well-maintained records make it easier for members to integrate into new teams and ensure stakeholders remain informed about progress, scope, and direction throughout the project.
+#Although implementation is central to the project, a significant portion of the work since Milestone 1 consisted of non-coding activities that shaped the system’s direction, clarified requirements, validated assumptions, and prepared the team for upcoming development. This section documents planning, research, experimentation, testing preparation, and design exploration work that contributed directly to the system’s maturity.#
 
-* While the application is not yet developed enough for full-scale testing, it is still necessary to plan for quality assurance. This involves deciding how unit testing, integration testing, and usability evaluation will eventually be carried out once prototypes and code are available. In parallel, version control practices such as branching strategies, pull requests, and code reviews can already be defined so the team is prepared to manage collaboration effectively when development begins. These preparatory activities set the standard for a structured and reliable workflow.
+==== #Requirements Refinement and Domain Understanding#
+Throughout Milestones 1-3, the team conducted several rounds of requirement clarification to reinforce the foundation of the system and align with the evolving domain model (Candidate, Recruiter, Profile, Opening, Application).
 
-* Project management and communication establish the general structure that ties everything together during this milestone. Setting clear milestone goals, assigning responsibilities, and documenting meeting outcomes help the team stay organized and avoid confusion. Regular communication ensures that issues are identified and addressed early, while planning for security, privacy, and future phases prepares the project for ongoing development. By combining documentation, early planning for testing and version control, and strong management practices with the coding that will follow, the team lays the foundation for a successful project.
+===== Domain Exploration Workshops
+* Structured sessions focused on understanding student–recruiter interactions in job fair environments.
+* Observations emphasized real-world constraints such as noise, fatigue, time limitations, lack of preparation, and poor recall.
+* Insights from these workshops directly influenced the definition of aggregates and bounded contexts.
+
+===== Persona and Scenario Development
+* Personas included: overwhelmed student, fatigued recruiter, early-year undecided student, and highly prepared senior.
+* Scenarios were refined to represent realistic workflows and stress points across both user types.
+
+===== Requirements Revisions
+* Several ambiguous requirements were rewritten to be measurable and testable.
+* Non-functional requirements (responsiveness, clarity, adaptive interaction, information recall support) were clarified.
+* Edge-case analysis led to new requirements around profile completeness and recruiter note structure.
+
+===== Mapping Requirements to Domain Structures
+* Requirements were systematically mapped to the emerging aggregates:
+** *Candidate* – profile ownership, application submission, match visibility.
+** *Recruiter* – opening ownership, candidate review workflows, note-taking.
+** *Profile* – central reference for candidate attributes and matching.
+** *Opening* – job description structure, eligibility constraints.
+** *Application* – lifecycle events, status handling, duplicate prevention.
+
+These activities ensured a deeper understanding of user needs and established a solid basis for design and implementation.
+
+==== #Design and Architecture Exploration#
+
+Multiple design-oriented sessions occurred to visualize and reason about the evolving system structure.
+
+===== Domain Model Iterations
+* Iterative refinement of early conceptual models revealed issues such as duplicated responsibilities in the Profile entity and unclear aggregate boundaries.
+* Responsibilities were redistributed to reduce coupling, especially between Candidate and Recruiter roles.
+
+===== UML Diagram Creation
+* Class diagrams were drafted for all primary aggregates (Candidate, Recruiter, Profile, Opening, Application).
+* Sequence diagrams were created for:
+** Candidate applying to an opening.
+** Recruiter reviewing matches.
+** MatchService generating a ranking.
+* State diagrams were explored for application status transitions.
+
+===== Architecture Discussions
+* Evaluations included modular monolith vs. service-split designs.
+* Clearer separation between application layer and domain layer emerged from these discussions.
+* The team emphasized a domain-driven design approach for maintainability and scalability.
+
+===== Review of Aggregates and Bounded Contexts
+* Candidate and Recruiter emerged as primary user-driven aggregates.
+* Profile, Opening, and Application were validated as supporting aggregates with well-defined ownership.
+* Ambiguous relationships (e.g., who owns profile edits during applications) were clarified.
+
+===== Preliminary Interface and Interaction Flow Mapping
+* Early workflow mapping included:
+** Profile creation.
+** Opening creation.
+** Application submission.
+** Match generation.
+** Recruiter feedback loop.
+
+These activities informed structural and behavioral foundations for upcoming implementation.
+
+==== #Research and Technology Evaluation#
+
+Significant research effort took place to guide development decisions and ensure alignment with industry standards.
+
+===== Data Storage Approaches
+* Comparison of relational vs. document-based models for profile and recruiter note data.
+* Early sketches of hybrid approaches where structured attributes coexist with semi-structured notes.
+
+===== Review of Similar Existing Systems
+* Analysis of Handshake, LinkedIn, and other career platforms identified common features and missing opportunities.
+* Findings informed the matching and interaction design.
+
+===== Matching Algorithm Research
+* Early exploration of:
+** attribute weighting,
+** recruiter preference scoring,
+** profile completeness coefficients,
+** potential future ML extension.
+
+This research shaped the conceptual basis for MatchService and related components.
+
+==== #Testing Activities#
+This involves deciding how unit testing, integration testing, and usability evaluation will eventually be carried out once prototypes and code are available. In parallel, version control practices such as branching strategies, pull requests, and code reviews can already be defined so the team is prepared to manage collaboration effectively when development begins. These preparatory activities set the standard for a structured and reliable workflow.
+
+===== Early Validation and Experimentation
+* Manual walkthroughs simulating student–recruiter interactions.
+* Scenario-driven tests examining typical flows:
+** match generation,
+** profile editing,
+** application duplication.
+* Pseudocode logic experiments for validating data flow in Profile and Opening interactions.
+* Persona-based consistency checks to ensure realism.
+
+===== Planning and Infrastructure for Future Testing
+* Draft test strategy including unit tests, integration tests, and future usability tests.
+* Early test case definitions:
+** Profile completeness,
+** Application submission rules,
+** Opening eligibility checks.
+* Error scenario mapping for likely failure points.
+
+These activities ensured analytical rigor before any code was written.
+
+==== #Project Management and Coordination#
+
+Consistent coordination activities supported progress clarity and team alignment.
+
+===== Milestone Planning Sessions
+* Deliverables, deadlines, and responsibility distribution were set for each milestone.
+
+===== Meeting Documentation
+* Logs captured decisions, unresolved questions, design changes, and next steps.
+
+===== Role Clarification
+* Clear assignments for:
+** domain modeling,
+** testing preparation,
+** documentation,
+** research.
+
+===== Communication Management
+Project management and communication establish the general structure that ties everything together during this milestone. Setting clear milestone goals, assigning responsibilities, and documenting meeting outcomes help the team stay organized and avoid confusion. Regular communication ensures that issues are identified and addressed early, while planning for security, privacy, and future phases prepares the project for ongoing development. By combining documentation, early planning for testing and version control, and strong management practices with the coding that will follow, the team lays the foundation for a successful project.
+
+===== #Documentation and Logbook Updates#
+Source code development is a top priority on this project, its success depends on several activities that extend beyond programming. Documentation plays a crucial role in keeping the project aligned, covering goals, requirements, architectural decisions, and detailed contributions. Well-maintained records make it easier for members to integrate into new teams and ensure stakeholders remain informed about progress, scope, and direction throughout the project.
+
+
+===== Domain Description Drafting
+* Consolidation of observations, stakeholder statements, personas, and requirements.
+
+===== Milestone Logbook Maintenance
+* All design and modeling changes recorded with proper notation and revision trails.
+
+===== Diagram Documentation
+* All UML diagrams versioned with explanations for each update.
 
 === Derived Goals
 
