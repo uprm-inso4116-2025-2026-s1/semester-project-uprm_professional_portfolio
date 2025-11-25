@@ -7,6 +7,8 @@ import 'package:uprm_professional_portfolio/features/matches.dart';
 import '../core/constants/app_constants.dart';
 import '../features/auth/login/login_screen.dart';
 import '../features/auth/signup/signup_screen.dart';
+import '../features/chat/chat_room_page.dart';
+import '../features/chat/conversations_page.dart';
 import '../features/profiles/jobseeker_profile/jobseeker_profile_screen.dart';
 import '../features/profiles/recruiter_profile/recruiter_profile_screen.dart';
 
@@ -67,6 +69,19 @@ class AppRouter {
       GoRoute(
         path: AppConstants.matchesScreenRoute,
         builder: (context, state) => const MatchesScreen(),
+      ),
+
+      // Chat routes (private)
+      GoRoute(
+        path: AppConstants.conversationsRoute,
+        builder: (context, state) => const ConversationsPage(),
+      ),
+      GoRoute(
+        path: '/chat/:conversationId',
+        builder: (context, state) {
+          final conversationId = state.pathParameters['conversationId']!;
+          return ChatRoomPage(conversationId: conversationId);
+        },
       ),
 
       // TODO: Add more routes as needed

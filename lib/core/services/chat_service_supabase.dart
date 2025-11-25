@@ -19,6 +19,9 @@ class ChatServiceSupabase {
   static const _cols =
       'id, conversation_id, sender_id, body, created_at, deleted_at';
 
+  /// Get current authenticated user ID
+  String? get currentUserId => _client.auth.currentUser?.id;
+
   Future<List<ChatMessage>> fetchMessages(
     String conversationId, {
     int limit = 50,
