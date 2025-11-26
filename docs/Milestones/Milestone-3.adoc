@@ -2036,7 +2036,9 @@ Abdul updates his profile, adding a brief description and project artifacts. Onc
 Aisha is a volunteer mentor from the tech industry who joined the platform through a university partnership. She specifies her domain as “data science and product analytics.”  
 Daniel, a computer engineering student, signs up for mentoring. He lists his interests as “AI systems,” “data visualization,” and “career readiness.”  
 
-The system’s mentor matching service pairs them based on overlapping interests. During the first meeting, Daniel mentions wanting to add his internship project portfolio. Aisha advises him to include visualizations of his code metrics. Later, Daniel updates his portfolio accordingly.  
+The system’s mentor matching service pairs them based on overlapping interests.#The match occurs because the platform organizes expertise, skills and interests into a shared parent domain "Data Science",which includes subdomains such as AI systems and data visualization. Daniel's interests fall under these subdomains, allowing the matching algorithm to recognize a conceptual overlap between his interest and Aisha's data-science expertise, making her a suitable mentor.#
+
+During the first meeting, Daniel mentions wanting to add his internship project portfolio. Aisha advises him to include visualizations of his code metrics. Later, Daniel updates his portfolio accordingly.  
 
 **Validation Points:**  
 - Confirms **mentor matching criteria** reflect relevant skill intersections.  
