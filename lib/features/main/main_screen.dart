@@ -1,10 +1,8 @@
 ﻿import 'package:flutter/material.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../settings/settings_screen.dart';
-import '../chat/conversations_page.dart';
 
 class MainScreen extends StatefulWidget {
-
   const MainScreen({super.key, this.initialIndex = 0});
   final int initialIndex;
 
@@ -23,64 +21,53 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = const [
     DashboardScreen(),
-    ConversationsPage(),
     SettingsScreen(),
   ];
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _screens,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _screens,
+        ),
+        bottomNavigationBar: Container(
+          margin: const EdgeInsets.only(bottom: 12, left: 16, right: 16),
+          width: 428,
+          height: 54,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: ShapeDecoration(
+            color: const Color(0xFF2B7D61),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(36),
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat_bubble),
-            label: 'Conversations',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _navItem(
+                index: 2, // placeholder - to be implemented later
+                icon: Icons.star_outline_rounded,
+              ),
+              _navItem(
+                index: 3, // placeholder - to be implemented later
+                icon: Icons.search_outlined,
+              ),
+              _navItem(
+                index: 0,
+                icon: Icons.home_outlined,
+              ),
+              _navItem(
+                index: 4, // placeholder - to be implemented later
+                icon: Icons.chat_bubble_outline,
+              ),
+              _navItem(
+                index: 1,
+                icon: Icons.person_outlined,
+              ),
+            ],
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _navItem(
-              index: 2, // placeholder - to be implemented later
-              icon: Icons.star_outline_rounded,
-            ),
-            _navItem(
-              index: 3, // placeholder - to be implemented later
-              icon: Icons.search_outlined,
-            ),
-            _navItem(
-              index: 0,
-              icon: Icons.home_outlined,
-            ),
-            _navItem(
-              index: 4, // placeholder - to be implemented later
-              icon: Icons.chat_bubble_outline,
-            ),
-            _navItem(
-              index: 1,
-              icon: Icons.person_outlined,
-            ),
-          ],
-        ),
-      ),
-    );
+      );
 
   // --- NavBar Helper ---
   Widget _navItem({required int index, required IconData icon}) {

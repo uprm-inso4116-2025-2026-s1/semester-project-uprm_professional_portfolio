@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         title: 'UPRM Professional Portfolio',
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        routerConfig: AppRouter.router,
+        routerConfig: AppRouter.createRouter(authCubit),
         debugShowCheckedModeBanner: false,
         builder: (context, child) {
           if (!kIsWeb || child == null) {

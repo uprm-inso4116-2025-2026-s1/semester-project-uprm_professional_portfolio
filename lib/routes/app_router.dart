@@ -24,24 +24,27 @@ class AppRouter {
       redirect: (BuildContext context, GoRouterState state) {
         final authState = authCubit.state;
         final isAuthenticated = authState is AuthAuthenticated;
-        final isLoggingIn = state.matchedLocation == AppConstants.loginRoute ||
-            state.matchedLocation == AppConstants.signupRoute;
-        final isProfileRoute =
-            state.matchedLocation == AppConstants.recruiterProfileRoute ||
-                state.matchedLocation == AppConstants.jobseekerProfileRoute;
-        final isWelcomeRoute =
-            state.matchedLocation == AppConstants.welcomeRoute;
+        final currentLocation = state.matchedLocation;
+        final targetLocation = state.uri.toString();
+
+        final isLoggingIn = currentLocation == AppConstants.loginRoute ||
+            currentLocation == AppConstants.signupRoute;
+        final isGoingToProfile =
+            targetLocation.startsWith(AppConstants.recruiterProfileRoute) ||
+                targetLocation.startsWith(AppConstants.jobseekerProfileRoute);
+        final isGoingToWelcome =
+            targetLocation.startsWith(AppConstants.welcomeRoute);
 
         // If not authenticated and not on login/signup, redirect to login
         if (!isAuthenticated && !isLoggingIn) {
           return AppConstants.loginRoute;
         }
 
-        // If authenticated and on login/signup (but NOT going to profile or welcome), redirect to main
+        // If authenticated and on login/signup, only redirect to main if NOT going to profile or welcome
         if (isAuthenticated &&
             isLoggingIn &&
-            !isProfileRoute &&
-            !isWelcomeRoute) {
+            !isGoingToProfile &&
+            !isGoingToWelcome) {
           return AppConstants.mainRoute;
         }
 

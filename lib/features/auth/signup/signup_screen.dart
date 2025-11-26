@@ -219,7 +219,7 @@ class _SignupScreenState extends State<SignupScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Sign up with',
+          ' with',
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
@@ -310,9 +310,9 @@ class _SignupScreenState extends State<SignupScreen> {
       print('[SignupScreen] Signup successful, navigating to profile form');
       // Navigate to profile form based on role
       if (_selectedRole == AppConstants.recruiterRole) {
-        context.go(AppConstants.recruiterProfileRoute);
+        context.push(AppConstants.recruiterProfileRoute);
       } else {
-        context.go(AppConstants.jobseekerProfileRoute);
+        context.push(AppConstants.jobseekerProfileRoute);
       }
     } else {
       print('[SignupScreen] Unexpected auth state: ${authState.runtimeType}');

@@ -57,7 +57,7 @@ flutter:
   assets:
     - assets/logo/professional_portfolio_logo.png
     - assets/logo/google_logo.png
-    # - assets/logo/linkedin_logo.png  # TODO: Add this file
+    - assets/logo/linkedin_logo.png
     - assets/logo/professional_portfolio_logo_with_txt.png
   #   - images/
   #   - icons/

@@ -172,8 +172,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       icon: Image.asset('assets/logo/google_logo.png',
                           height: 24),
-                      backgroundColor: theme.colorScheme.primary,
-                      foregroundColor: theme.colorScheme.onPrimary,
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black87,
                     ),
 
                     const SizedBox(height: UIConstants.spaceMD),
@@ -185,8 +185,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       icon: Image.asset('assets/logo/linkedin_logo.png',
                           height: 24),
-                      backgroundColor: theme.colorScheme.primary,
-                      foregroundColor: theme.colorScheme.onPrimary,
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black87,
                     ),
 
                     const SizedBox(height: UIConstants.spaceMD),

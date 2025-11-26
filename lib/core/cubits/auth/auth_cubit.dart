@@ -87,40 +87,21 @@ class AuthCubit extends Cubit<AuthState> {
         role: role,
       );
 
-      if (result.success) {
-        // Get the user from Supabase
-        final user = _authService.currentUser;
-        if (user != null) {
-          // Save to local storage for offline access
-          await _storageService.saveUser(user);
-          emit(AuthAuthenticated(user));
-        } else {
-          emit(AuthError('Sign up successful but user data not available'));
-        }
-      } else {
+      if (!result.success) {
+        print('[AuthCubit] Signup failed: ${result.error}');
         emit(AuthError(result.error ?? 'Sign up failed'));
+        return;
       }
-    } catch (e) {
-      emit(AuthError(e.toString()));
-    }
-  }
 
       print('[AuthCubit] Signup successful, checking for user');
 
-      if (result.success) {
-        // OAuth successful - wait a moment for Supabase to process
-        await Future<void>.delayed(const Duration(seconds: 2));
-
-        // Check if we have a user from Supabase
-        final user = _authService.currentUser;
-        if (user != null) {
-          // Save to local storage for consistency
-          await _storageService.saveUser(user);
-          emit(AuthAuthenticated(user));
-        } else {
-          emit(AuthError(
-              'OAuth authentication completed but no user data received'));
-        }
+      // Get the current user from AuthService
+      final user = _authService.currentUser;
+      if (user != null) {
+        print(
+            '[AuthCubit] User found, saving and emitting authenticated state');
+        await _storageService.saveUser(user);
+        emit(AuthAuthenticated(user));
       } else {
         print('[AuthCubit] No user found after signup');
         emit(AuthError('Sign up succeeded but no user data available'));
