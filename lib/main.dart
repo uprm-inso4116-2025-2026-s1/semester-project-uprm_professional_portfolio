@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'routes/app_router.dart';
+import 'core/constants/env_prod.dart';
 import 'core/theme/app_theme.dart';
+import 'routes/app_router.dart';
 import 'core/cubits/auth/auth_cubit.dart';
 import 'core/services/storage_service.dart';
 import 'core/services/auth_service.dart';
-import 'core/constants/env_prod.dart';
 import 'components/role_badge.dart';
 
 Future<void> main() async {

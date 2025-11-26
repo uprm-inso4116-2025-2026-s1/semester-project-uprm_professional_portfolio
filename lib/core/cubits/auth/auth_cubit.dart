@@ -15,9 +15,23 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> checkAuthStatus() async {
     emit(AuthLoading());
     try {
-      final user = await _storageService.getUser();
-      if (user != null) {
-        emit(AuthAuthenticated(user));
+      // Check Supabase auth status first
+      final isAuthenticated = await _authService.checkAuthStatus();
+
+      if (isAuthenticated) {
+        final user = _authService.currentUser;
+        if (user != null) {
+          // Update local storage with Supabase user
+          await _storageService.saveUser(user);
+          emit(AuthAuthenticated(user));
+          return;
+        }
+      }
+
+      // Fallback to local storage if Supabase not available
+      final localUser = await _storageService.getUser();
+      if (localUser != null) {
+        emit(AuthAuthenticated(localUser));
       } else {
         emit(AuthUnauthenticated());
       }
@@ -73,21 +87,40 @@ class AuthCubit extends Cubit<AuthState> {
         role: role,
       );
 
-      if (!result.success) {
-        print('[AuthCubit] Signup failed: ${result.error}');
+      if (result.success) {
+        // Get the user from Supabase
+        final user = _authService.currentUser;
+        if (user != null) {
+          // Save to local storage for offline access
+          await _storageService.saveUser(user);
+          emit(AuthAuthenticated(user));
+        } else {
+          emit(AuthError('Sign up successful but user data not available'));
+        }
+      } else {
         emit(AuthError(result.error ?? 'Sign up failed'));
-        return;
       }
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
 
       print('[AuthCubit] Signup successful, checking for user');
 
-      // Get the current user from AuthService
-      final user = _authService.currentUser;
-      if (user != null) {
-        print(
-            '[AuthCubit] User found, saving and emitting authenticated state');
-        await _storageService.saveUser(user);
-        emit(AuthAuthenticated(user));
+      if (result.success) {
+        // OAuth successful - wait a moment for Supabase to process
+        await Future<void>.delayed(const Duration(seconds: 2));
+
+        // Check if we have a user from Supabase
+        final user = _authService.currentUser;
+        if (user != null) {
+          // Save to local storage for consistency
+          await _storageService.saveUser(user);
+          emit(AuthAuthenticated(user));
+        } else {
+          emit(AuthError(
+              'OAuth authentication completed but no user data received'));
+        }
       } else {
         print('[AuthCubit] No user found after signup');
         emit(AuthError('Sign up succeeded but no user data available'));

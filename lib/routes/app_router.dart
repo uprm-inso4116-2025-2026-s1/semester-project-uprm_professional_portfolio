@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
 
-import 'package:uprm_professional_portfolio/features/matches.dart';
 import '../core/constants/app_constants.dart';
 import '../core/cubits/auth/auth_cubit.dart';
 import '../core/cubits/auth/auth_state.dart';
@@ -87,81 +86,6 @@ class AppRouter {
       ],
     );
   }
-
-  // Legacy router for compatibility - will be removed
-  static final GoRouter router = GoRouter(
-    // React to Supabase auth changes (login/logout)
-    refreshListenable: GoRouterRefreshStream(
-      // Any event on this stream will cause GoRouter to reevaluate redirects
-      Supabase.instance.client.auth.onAuthStateChange,
-    ),
-
-    // Start on login (your current behavior)
-    initialLocation: AppConstants.loginRoute,
-
-    // Basic auth guard
-    redirect: (context, state) {
-      final session = Supabase.instance.client.auth.currentSession;
-      final path = state.uri.path;
-
-      final isAuthRoute =
-          path == AppConstants.loginRoute || path == AppConstants.signupRoute;
-
-      // If not logged in and trying to hit a protected route → go to /login
-      if (session == null && !isAuthRoute) {
-        return AppConstants.loginRoute;
-      }
-
-      // If logged in and trying to access /login or /signup → send to main screen
-      if (session != null && isAuthRoute) {
-        return AppConstants.mainRoute;
-      }
-
-      // No redirect
-      return null;
-    },
-
-    routes: [
-      // Authentication routes (public)
-      GoRoute(
-        path: AppConstants.loginRoute,
-        builder: (context, state) => const LoginScreen(),
-      ),
-      GoRoute(
-        path: AppConstants.signupRoute,
-        builder: (context, state) => const SignupScreen(),
-      ),
-
-      // Main screen with bottom navigation (private)
-      GoRoute(
-        path: AppConstants.mainRoute,
-        builder: (context, state) {
-          final indexParam = state.uri.queryParameters['tab'];
-          final index = int.tryParse(indexParam ?? '0') ?? 0;
-          return MainScreen(initialIndex: index);
-        },
-      ),
-
-      // Profile setup routes (private)
-      GoRoute(
-        path: AppConstants.recruiterProfileRoute,
-        builder: (context, state) => const RecruiterProfileScreen(),
-      ),
-      GoRoute(
-        path: AppConstants.jobseekerProfileRoute,
-        builder: (context, state) => const JobSeekerProfileScreen(),
-      ),
-
-      // Individual chat room
-      GoRoute(
-        path: '/chat/:conversationId',
-        builder: (context, state) {
-          final conversationId = state.pathParameters['conversationId']!;
-          return ChatRoomPage(conversationId: conversationId);
-        },
-      ),
-    ],
-  );
 }
 
 // Helper class to refresh router when auth state changes
@@ -178,22 +102,6 @@ class _GoRouterRefreshStream extends ChangeNotifier {
   @override
   void dispose() {
     _subscription.cancel();
-    super.dispose();
-  }
-}
-
-/// Helper so GoRouter can listen to a Stream and call notifyListeners()
-class GoRouterRefreshStream extends ChangeNotifier {
-  GoRouterRefreshStream(Stream<dynamic> stream) {
-    _sub = stream.asBroadcastStream().listen((_) {
-      notifyListeners();
-    });
-  }
-  late final StreamSubscription<dynamic> _sub;
-
-  @override
-  void dispose() {
-    _sub.cancel();
     super.dispose();
   }
 }

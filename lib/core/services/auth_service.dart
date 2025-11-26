@@ -1,53 +1,36 @@
-import 'package:supabase_flutter/supabase_flutter.dart' as supa;
-import '../../models/user.dart' as model;
+﻿import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import '../../models/user.dart' as app_models;
 import '../constants/app_constants.dart';
 
-/// Supabase-backed AuthService that preserves the existing public API.
+class AuthResult {
+  final bool success;
+  final String? error;
+
+  AuthResult({required this.success, this.error});
+}
+
 class AuthService {
-  factory AuthService() => _instance;
-  AuthService._internal();
-  static final AuthService _instance = AuthService._internal();
+  final SupabaseClient _supabase = Supabase.instance.client;
 
-  final supa.SupabaseClient _sb = supa.Supabase.instance.client;
+  app_models.User? _currentUser;
 
-  model.User? _currentUser;
+  app_models.User? get currentUser {
+    final user = _supabase.auth.currentUser;
+    if (user == null) return _currentUser;
 
-  // Current user getter (unchanged)
-  model.User? get currentUser => _currentUser;
-
-  // Check if user is logged in (unchanged)
-  bool get isLoggedIn => _sb.auth.currentSession != null;
-
-  // ----------------------------
-  // Login (Supabase)
-  // ----------------------------
-  Future<AuthResult> login(String email, String password) async {
-    try {
-      final res = await _sb.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
-
-      final sUser = res.user;
-      if (sUser == null) {
-        return AuthResult(
-            success: false, error: 'Login failed. No active session.');
-      }
-
-      _currentUser = _fromSupabaseUser(sUser);
-      return AuthResult(success: true);
-    } on supa.AuthException catch (e) {
-      return AuthResult(success: false, error: _friendlyAuthMessage(e));
-    } on Exception catch (_) {
-      return AuthResult(
-          success: false,
-          error: 'Unexpected error during sign in. Please try again.');
-    }
+    return app_models.User(
+      id: user.id,
+      email: user.email!,
+      fullName: (user.userMetadata?['full_name'] as String?) ?? 'User',
+      role:
+          (user.userMetadata?['role'] as String?) ?? AppConstants.jobseekerRole,
+      createdAt: DateTime.now(),
+    );
   }
 
-  // ----------------------------
-  // Sign up (Supabase)
-  // ----------------------------
+  bool get isLoggedIn => _supabase.auth.currentUser != null;
+
   Future<AuthResult> signUp({
     required String email,
     required String password,
@@ -55,8 +38,7 @@ class AuthService {
     required String role,
   }) async {
     try {
-      print('[AuthService] Attempting signup for: $email');
-      final res = await _sb.auth.signUp(
+      final AuthResponse response = await _supabase.auth.signUp(
         email: email,
         password: password,
         data: {
@@ -65,58 +47,124 @@ class AuthService {
         },
       );
 
-      print(
-          '[AuthService] Signup response - User: ${res.user?.id}, Session: ${res.session?.accessToken != null}');
-
-      final sUser = res.user;
-      if (sUser == null) {
-        print('[AuthService] ERROR: No user returned from signup');
-        return AuthResult(
-            success: false, error: 'Sign up failed. No user returned.');
-      }
-
-      print(
-          '[AuthService] User created successfully - ID: ${sUser.id}, Email: ${sUser.email}');
-
-      // Check if email confirmation is required
-      if (res.session == null) {
-        print('[AuthService] No session - email confirmation required');
+      if (response.user != null) {
+        _currentUser = app_models.User(
+          id: response.user!.id,
+          email: email,
+          fullName: fullName,
+          role: role,
+          createdAt: DateTime.now(),
+        );
+        return AuthResult(success: true);
+      } else {
         return AuthResult(
           success: false,
-          error:
-              'Please check your email to confirm your account before logging in.',
+          error: 'Signup failed. Please try again.',
         );
       }
-
-      _currentUser = _fromSupabaseUser(sUser);
-      return AuthResult(success: true);
-    } on supa.AuthException catch (e) {
-      print('[AuthService] Signup AuthException: ${e.message}');
-      return AuthResult(success: false, error: _friendlyAuthMessage(e));
-    } on Exception catch (e) {
-      print('[AuthService] Signup Exception: $e');
+    } on AuthException catch (e) {
+      return AuthResult(success: false, error: e.message);
+    } catch (e) {
       return AuthResult(
-          success: false,
-          error: 'Unexpected error during sign up. Please try again.');
+        success: false,
+        error: 'An unexpected error occurred: ${e.toString()}',
+      );
     }
   }
 
-  // ----------------------------
-  // Logout (Supabase)
-  // ----------------------------
+  Future<AuthResult> login(String email, String password) async {
+    try {
+      final AuthResponse response = await _supabase.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+
+      if (response.user != null) {
+        final user = response.user!;
+        _currentUser = app_models.User(
+          id: user.id,
+          email: user.email!,
+          fullName: (user.userMetadata?['full_name'] as String?) ?? 'User',
+          role: (user.userMetadata?['role'] as String?) ??
+              AppConstants.jobseekerRole,
+          createdAt: DateTime.now(),
+        );
+        return AuthResult(success: true);
+      } else {
+        return AuthResult(
+          success: false,
+          error: 'Login failed. Please try again.',
+        );
+      }
+    } on AuthException catch (e) {
+      return AuthResult(success: false, error: e.message);
+    } catch (e) {
+      return AuthResult(
+        success: false,
+        error: 'Login failed: ${e.toString()}',
+      );
+    }
+  }
+
+  Future<AuthResult> signInWithOAuth({
+    required String provider,
+    String? role,
+  }) async {
+    try {
+      OAuthProvider oauthProvider;
+
+      switch (provider.toLowerCase()) {
+        case 'google':
+          oauthProvider = OAuthProvider.google;
+          break;
+        case 'linkedin':
+          oauthProvider = OAuthProvider.linkedin;
+          break;
+        default:
+          return AuthResult(
+              success: false, error: 'Unsupported OAuth provider');
+      }
+
+      await _supabase.auth.signInWithOAuth(
+        oauthProvider,
+        redirectTo: kIsWeb ? null : 'your-app-scheme://login-callback',
+      );
+
+      return AuthResult(success: true);
+    } on AuthException catch (e) {
+      return AuthResult(success: false, error: e.message);
+    } catch (e) {
+      return AuthResult(
+        success: false,
+        error: 'OAuth sign in failed: ${e.toString()}',
+      );
+    }
+  }
+
+  Future<AuthResult> linkAccountWithOAuth(String provider) async {
+    return AuthResult(
+      success: false,
+      error: 'Account linking is not currently supported',
+    );
+  }
+
   Future<void> logout() async {
-    await _sb.auth.signOut();
+    await _supabase.auth.signOut();
     _currentUser = null;
   }
 
-  // ----------------------------
-  // Check authentication status (unchanged signature)
-  // Now uses Supabase's currentSession; hydrates _currentUser if needed.
-  // ----------------------------
   Future<bool> checkAuthStatus() async {
-    final session = _sb.auth.currentSession;
+    final session = _supabase.auth.currentSession;
     if (session?.user != null) {
-      _currentUser ??= _fromSupabaseUser(session!.user);
+      final user = session!.user;
+      _currentUser = app_models.User(
+        id: user.id,
+        email: user.email!,
+        fullName: (user.userMetadata?['full_name'] as String?) ?? 'User',
+        role: (user.userMetadata?['role'] as String?) ??
+            AppConstants.jobseekerRole,
+        createdAt: DateTime.now(),
+      );
       return true;
     }
     _currentUser = null;

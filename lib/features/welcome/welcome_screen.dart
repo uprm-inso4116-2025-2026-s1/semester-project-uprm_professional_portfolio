@@ -62,8 +62,8 @@ class WelcomeScreen extends StatelessWidget {
                     const SizedBox(height: 48),
                     ElevatedButton(
                       onPressed: () {
-                        // Navigate to main screen on Settings tab
-                        context.go('${AppConstants.mainRoute}?tab=1');
+                        // Navigate to main screen on Dashboard tab
+                        context.go('${AppConstants.mainRoute}?tab=0');
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
