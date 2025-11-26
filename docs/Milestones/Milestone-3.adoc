@@ -3767,6 +3767,9 @@ _Figure 4.6.2. - 1. Layered view (Presentation, Application, Domain, Infrastruct
 | 2.3.2, 2.2.3, 2.2.4, 2.2.5
 | Modified
 
+| Naedra Feliciano
+| 3.2.1
+| Modified
 
 |===
 '''
