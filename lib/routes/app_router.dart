@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
 
 import '../core/constants/app_constants.dart';
 import '../core/cubits/auth/auth_cubit.dart';
@@ -12,6 +13,7 @@ import '../features/welcome/welcome_screen.dart';
 import '../features/main/main_screen.dart';
 import '../features/profiles/recruiter_profile/recruiter_profile_screen.dart';
 import '../features/profiles/jobseeker_profile/jobseeker_profile_screen.dart';
+import '../features/chat/chat_room_page.dart';
 
 // App router configuration
 class AppRouter {

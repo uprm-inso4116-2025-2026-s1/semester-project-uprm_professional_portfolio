@@ -1,0 +1,615 @@
+﻿= Team Communications – Programming Tasks Documentation
+:toc:
+:toclevels: 2
+
+[NOTE]
+====
+This file documents **all programming-related tasks** completed or owned by the
+Team Communications members. Tasks are grouped by team member. For each issue we
+include a brief explanation and, when code exists in the repository, a
+representative code excerpt.
+====
+
+== alexamzt
+
+=== #185 – [Main-Issue]: Create mock_data.dart – Dummy Data for Testing (Milestone 2)
+
+*Brief explanation*
+Creates rich in-memory mock conversations and messages so the chat UI can be
+implemented and demonstrated without a live backend. The mock data models
+include participant names, unread counts, and helper functions to query and
+update conversations.
+
+*Code excerpt – lib/mock/mock_data.dart*
+[source,dart]
+----
+class Message {
+  final String id;
+  final String conversationId;
+  final String senderId;
+  final String senderName;
+  final String content;
+  final DateTime timestamp;
+  final bool isFromCurrentUser;
+
+  const Message({
+    required this.id,
+    required this.conversationId,
+    required this.senderId,
+    required this.senderName,
+    required this.content,
+    required this.timestamp,
+    required this.isFromCurrentUser,
+  });
+}
+
+class MockData {
+  static const String currentUserId = 'user_001';
+  static const String currentUserName = 'John Doe';
+
+  static final List<Message> mockMessages = [
+    Message(
+      id: 'msg_001',
+      conversationId: 'conv_001',
+      senderId: 'user_002',
+      senderName: 'Sarah Johnson',
+      content: 'Hi! I saw your profile and think you would be a great fit.',
+      timestamp: DateTime.now().subtract(const Duration(hours: 2)),
+      isFromCurrentUser: false,
+    ),
+    // ...more sample messages...
+  ];
+
+  static List<Message> getMessagesForConversation(String conversationId) {
+    return mockMessages
+        .where((m) => m.conversationId == conversationId)
+        .toList()
+      ..sort((a, b) => a.timestamp.compareTo(b.timestamp));
+  }
+}
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/185
+
+
+=== #181 – [Main-Issue]: Design Message Bubble Styles – UX Planning (Milestone 3, Open)
+
+*Brief explanation*
+Defines how chat bubbles are rendered in the detailed chat view: alignment,
+colors, and timestamps differ for the current user versus other participants.
+This is implemented in ChatDetailScreen using the mock data.
+
+*Code excerpt – lib/features/chat/chat_list_screen.dart (detail view)*
+[source,dart]
+----
+Widget _buildMessageBubble(Message message) {
+  final isCurrentUser = message.isFromCurrentUser;
+
+  return Align(
+    alignment: isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
+    child: Container(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width * 0.75,
+      ),
+      decoration: BoxDecoration(
+        color: isCurrentUser ? Colors.blue : Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            message.content,
+            style: TextStyle(
+              color: isCurrentUser ? Colors.white : Colors.black87,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(_formatDetailTimestamp(message.timestamp)),
+        ],
+      ),
+    ),
+  );
+}
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/181
+
+
+== carlospepin23
+
+=== #83 – [Main-Issue]: Supabase Setup & Integration (DB Hosting, Auth, API) (Milestone 2)
+
+*Brief explanation*
+Creates the Supabase project used by the app, configures database hosting,
+authentication, and REST API access. This task establishes the infrastructure so
+other issues can rely on a shared backend.
+
+*Code / configuration excerpt (conceptual)*
+[source,sql]
+----
+-- Example of schema work performed in Supabase for this task
+create table profiles (
+  id uuid primary key,
+  email text not null unique,
+  full_name text,
+  role text not null
+);
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/83
+
+
+=== #85 – [Sub-Issue]: Load Schema in Supabase (Milestone 2)
+
+*Brief explanation*
+Loads the initial SQL schema into Supabase so all tables and relationships exist
+before application code connects. Includes definitions for users, jobs,
+applications, and messaging-related tables.
+
+*Code / configuration excerpt (conceptual)*
+[source,sql]
+----
+-- Example of relationship and constraint work
+alter table applications
+  add constraint applications_unique_user_job
+  unique (user_id, job_id);
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/85
+
+
+=== #86 – [Sub-Issue]: Seed Minimal Data & Verify Queries in Supabase (Milestone 2)
+
+*Brief explanation*
+Inserts a small set of seed records (companies, users, jobs, applications) and
+runs join queries to confirm that the schema behaves correctly and unique
+constraints work as intended.
+
+*Code / configuration excerpt (conceptual)*
+[source,sql]
+----
+insert into companies (id, name) values ('c1', 'Demo Corp');
+insert into users (id, email) values ('u1', 'demo@example.com');
+insert into jobs (id, title, company_id) values ('j1', 'Software Engineer', 'c1');
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/86
+
+
+=== #191 – [Main-Issue]: Supabase Integration in Flutter (Milestone 2)
+
+*Brief explanation*
+Integrates Supabase into the Flutter application, wiring environment variables
+and client initialization so that services such as auth and chat can use the
+same shared SupabaseClient instance.
+
+*Code excerpt – lib/core/services/supabase_service.dart*
+[source,dart]
+----
+class SupabaseService {
+  static bool _isInitialized = false;
+
+  static Future<void> init() async {
+    final url = dotenv.env['SUPABASE_URL'];
+    final anonKey = dotenv.env['SUPABASE_ANON_KEY'];
+
+    if (url == null || anonKey == null || url.isEmpty || anonKey.isEmpty) {
+      print('Supabase credentials not found in .env - running without Supabase');
+      return;
+    }
+
+    await Supabase.initialize(
+      url: url,
+      anonKey: anonKey,
+    );
+    _isInitialized = true;
+  }
+}
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/191
+
+
+=== #194 – [Sub-Issue]: Basic Auth Guard in go_router (Milestone 2)
+
+*Brief explanation*
+Adds a basic guard to the app router so unauthenticated users are redirected to
+the login/signup screens and authenticated users are sent to the main app
+instead of staying on auth routes.
+
+*Code excerpt – lib/routes/app_router.dart*
+[source,dart]
+----
+redirect: (BuildContext context, GoRouterState state) {
+  final authState = authCubit.state;
+  final isAuthenticated = authState is AuthAuthenticated;
+  final isLoggingIn =
+      state.matchedLocation == AppConstants.loginRoute ||
+      state.matchedLocation == AppConstants.signupRoute;
+
+  if (!isAuthenticated && !isLoggingIn) {
+    return AppConstants.loginRoute;
+  }
+
+  if (isAuthenticated && isLoggingIn) {
+    return AppConstants.mainRoute;
+  }
+
+  return null;
+},
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/194
+
+
+=== #195 – [Main-Issue]: AuthService → Supabase & Controllers Wiring (Milestone 2)
+
+*Brief explanation*
+Replaces mocked authentication with a Supabase-backed AuthService while
+preserving existing controller method signatures. Handles email/password login
+and maps Supabase users to the app’s User model.
+
+*Completed jointly with:* diegoperez16
+
+*Code excerpt – lib/core/services/auth_service.dart (login method)*
+[source,dart]
+----
+class AuthService {
+  factory AuthService() => _instance;
+  AuthService._internal();
+  static final AuthService _instance = AuthService._internal();
+
+  final supa.SupabaseClient _sb = supa.Supabase.instance.client;
+
+  Future<AuthResult> login(String email, String password) async {
+    try {
+      final res = await _sb.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+      final sUser = res.user;
+      if (sUser == null) {
+        return AuthResult(success: false, error: 'Login failed. No active session.');
+      }
+      _currentUser = _fromSupabaseUser(sUser);
+      return AuthResult(success: true);
+    } on supa.AuthException catch (e) {
+      return AuthResult(success: false, error: _friendlyAuthMessage(e));
+    }
+  }
+}
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/195
+
+
+=== #197 – [Main-Issue]: Supabase Chat Service (fetch/send) (Milestone 2)
+
+*Brief explanation*
+Implements ChatServiceSupabase, which fetches and sends chat messages using
+the messages table in Supabase. Converts raw rows into ChatMessage objects
+consumed by the UI.
+
+*Completed jointly with:* diegoperez16
+
+*Code excerpt – lib/core/services/chat_service_supabase.dart*
+[source,dart]
+----
+class ChatServiceSupabase {
+  ChatServiceSupabase({
+    SupabaseClient? client,
+    String tableName = 'messages',
+    int maxPageSize = 200,
+  })  : _client = client ?? Supabase.instance.client,
+        _table = tableName,
+        _maxPageSize = maxPageSize;
+
+  Future<List<ChatMessage>> fetchMessages(
+    String conversationId, {
+    int limit = 50,
+    DateTime? before,
+  }) async {
+    final cid = conversationId.trim();
+    if (cid.isEmpty) return const <ChatMessage>[];
+
+    final rows = await _client
+        .from(_table)
+        .select('id, conversation_id, sender_id, body, created_at, deleted_at')
+        .eq('conversation_id', cid)
+        .isFilter('deleted_at', null)
+        .order('created_at', ascending: false)
+        .limit(limit.clamp(1, _maxPageSize).toInt());
+
+    return (rows as List)
+        .cast<Map<String, dynamic>>()
+        .map(_rowToChatMessage)
+        .toList();
+  }
+}
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project_uprm_professional_portfolio/issues/197
+
+
+=== #200 – [Sub-Issue]: Conversations Page (remote) (Milestones 2 & 3)
+
+*Brief explanation*
+Builds the conversations list screen showing recent threads, last message
+preview, relative timestamp, and unread count. Initially powered by MockData,
+with the intent to later back it with Supabase queries.
+
+*Completed jointly with:* diegoperez16
+
+*Code excerpt – lib/features/chat/chat_list_screen.dart*
+[source,dart]
+----
+ListView.builder(
+  itemCount: conversations.length,
+  itemBuilder: (context, index) {
+    final conversation = conversations[index];
+    return ListTile(
+      title: Text(conversation.title),
+      subtitle: Text(
+        conversation.lastMessageContent ?? 'No messages yet',
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+      trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(_formatTimestamp(conversation.lastMessageTimestamp)),
+          if (conversation.unreadCount > 0)
+            Container(), // unread badge
+        ],
+      ),
+    );
+  },
+)
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/200
+
+
+=== #198 – [Sub-Issue]: Wire ChatRoom to Supabase + Realtime (Milestone 3, Open)
+
+*Brief explanation*
+Plans the work to connect the chat room UI to Supabase Realtime so new messages
+appear instantly without manual refresh. Builds on top of ChatServiceSupabase.
+
+*Completed jointly with:* diegoperez16
+
+*Planned code structure (conceptual)*
+[source,dart]
+----
+final channel = supabase.channel('public:messages')
+  ..onPostgresChanges(
+    event: PostgresChangeEvent.insert,
+    table: 'messages',
+    callback: (payload) {
+      final msg = _rowToChatMessage(payload.newRecord);
+      _messages.add(msg);
+      notifyListeners();
+    },
+  )
+  ..subscribe();
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/198
+
+
+=== #218 – [Main-Issue]: Implement Message Edit & Delete Functionality (Milestone 3, Open)
+
+*Brief explanation*
+Defines how messages can be edited and soft-deleted while preserving ordering
+and history. Introduces flags such as is_edited and is_deleted to allow the
+UI to distinguish between live and removed messages.
+
+*Completed jointly with:* diegoperez16
+
+*Planned code structure (conceptual)*
+[source,sql]
+----
+alter table messages
+  add column is_edited boolean not null default false,
+  add column is_deleted boolean not null default false,
+  add column deleted_at timestamptz;
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/218
+
+
+== diegoperez16
+
+[NOTE]
+====
+Several of diegoperez16's programming tasks were completed jointly with
+carlospepin23. For shared issues, the primary code excerpts appear in the
+*carlospepin23* section above; they are referenced again here.
+====
+
+=== #191 – Supabase Integration in Flutter (Milestone 2, Joint with carlospepin23)
+
+*Brief explanation*
+Shared responsibility for wiring Supabase initialization and ensuring services
+can access the configured SupabaseClient. See the SupabaseService code
+excerpt under carlospepin23.
+
+=== #195 – AuthService → Supabase & Controllers Wiring (Milestone 2, Joint)
+
+*Brief explanation*
+Co-designed the Supabase-backed AuthService, including error handling and the
+mapping between Supabase User objects and the app User model. See the
+AuthService excerpt above.
+
+=== #197 – Supabase Chat Service (fetch/send) (Milestone 2, Joint)
+
+*Brief explanation*
+Implemented and refined the ChatServiceSupabase API shape (parameters, return
+values) so the chat UI can page through messages and handle soft deletes.
+
+=== #200 – Conversations Page (remote) (Milestones 2 & 3, Joint)
+
+*Brief explanation*
+Worked on the Flutter conversations screen layout, empty state, and navigation
+behavior, using mock conversations and preparing for Supabase-backed data.
+
+=== #198 – Wire ChatRoom to Supabase + Realtime (Milestone 3, Joint)
+
+*Brief explanation*
+Focused on how realtime events from Supabase will be translated into in-memory
+message lists and UI updates; see the conceptual Realtime snippet under
+carlospepin23.
+
+=== #218 – Implement Message Edit & Delete Functionality (Milestone 3, Joint)
+
+*Brief explanation*
+Helped define the data model changes and UI states for edited/deleted messages,
+including how these states interact with realtime updates.
+
+
+=== #217 – [Main-Issue]: Implement Message Reactions (Emojis) (Milestone 3, Open)
+
+*Brief explanation*
+Designs emoji-based reactions for each message using a message_reactions
+Supabase table and realtime updates so reaction counts stay in sync across
+clients.
+
+*Planned code structure (conceptual)*
+[source,sql]
+----
+create table message_reactions (
+  id uuid primary key default gen_random_uuid(),
+  message_id uuid not null references messages(id) on delete cascade,
+  user_id uuid not null,
+  emoji text not null,
+  unique (message_id, user_id, emoji)
+);
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/217
+
+
+== Osvaldoo1414
+
+=== #182 – [Main-Issue]: Create message.dart – Base Message Class (Milestone 2)
+
+*Brief explanation*
+Implements a backend-independent Message entity with sender, receiver, text,
+and timestamp fields, plus JSON conversion helpers.
+
+*Code excerpt – lib/models/message.dart*
+[source,dart]
+----
+class Message {
+  const Message({
+    required this.id,
+    required this.senderId,
+    required this.receiverId,
+    required this.text,
+    required this.timestamp,
+  });
+
+  factory Message.fromJson(Map<String, dynamic> json) => Message(
+        id: json['id'] as String,
+        senderId: json['senderId'] as String,
+        receiverId: json['receiverId'] as String,
+        text: json['text'] as String,
+        timestamp: DateTime.parse(json['timestamp'] as String),
+      );
+
+  final String id;
+  final String senderId;
+  final String receiverId;
+  final String text;
+  final DateTime timestamp;
+}
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/182
+
+
+=== #183 – [Main-Issue]: Create conversation.dart – Base Conversation Class (Milestone 2)
+
+*Brief explanation*
+Defines a Conversation aggregate that owns a list of Message objects for a
+set of participants and provides methods to add and remove messages.
+
+*Code excerpt – lib/models/conversation.dart*
+[source,dart]
+----
+class Conversation {
+  final String id;
+  final List<String> participants;
+  final List<Message> _messages = [];
+
+  Conversation({
+    required this.id,
+    required this.participants,
+    List<Message>? messages,
+  }) {
+    if (messages != null) _messages.addAll(messages);
+  }
+
+  List<Message> get messages => List.unmodifiable(_messages);
+
+  void addMessage(Message message) => _messages.add(message);
+
+  bool removeMessage(String messageId) {
+    final before = _messages.length;
+    _messages.removeWhere((m) => m.id == messageId);
+    return _messages.length < before;
+  }
+}
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/183
+
+
+== YandreCaban
+
+=== #184 – [Main-Issue]: Create chat_service.dart – Base Communication Logic (Local Only) (Milestone 2)
+
+*Brief explanation*
+Implements an in-memory chat service that stores conversations and messages in a
+map and exposes methods to send messages and fetch histories. Used for early
+iterations of the chat UI before Supabase integration.
+
+*Code excerpt – lib/core/services/chat_service.dart*
+[source,dart]
+----
+class ChatService extends ChangeNotifier {
+  final Map<String, ChatConversation> _conversations = {};
+
+  ChatMessage sendMessage({
+    required String conversationId,
+    required String senderId,
+    required String text,
+  }) {
+    final conversation = _conversations.putIfAbsent(
+      conversationId,
+      () => ChatConversation(id: conversationId),
+    );
+
+    final message = ChatMessage(
+      id: UniqueKey().toString(),
+      conversationId: conversationId,
+      senderId: senderId,
+      text: text,
+      timeStamp: DateTime.now(),
+    );
+
+    conversation.messages.add(message);
+    notifyListeners();
+    return message;
+  }
+
+  List<ChatMessage> getMessages(String conversationId) =>
+      _conversations[conversationId]?.messages ?? <ChatMessage>[];
+}
+----
+
+*GitHub*: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/184

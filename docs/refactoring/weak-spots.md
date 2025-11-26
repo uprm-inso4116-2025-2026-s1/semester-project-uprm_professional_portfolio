@@ -24,7 +24,9 @@ Introduced a shared `BaseProfile` or `UserProfile` abstraction containing the co
 
 ---
 
+
 ## Refactored Model
+
 
 **Updated UML:**
 https://lucid.app/lucidchart/e3d47e86-4096-43dd-b307-cce580cfa31a/edit?viewport_loc=1404%2C184%2C923%2C1096%2C0_0&invitationId=inv_d9f34411-ba0e-4cd5-9beb-97ae931def64

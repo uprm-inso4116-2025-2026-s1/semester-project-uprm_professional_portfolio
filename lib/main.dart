@@ -37,28 +37,21 @@ class MyApp extends StatelessWidget {
 
     return BlocProvider(
       create: (_) => authCubit..checkAuthStatus(),
-      child: Builder(
-        builder: (context) {
-          // Get the authCubit from context to pass to router
-          final cubit = context.read<AuthCubit>();
-
-          return MaterialApp.router(
-            title: 'UPRM Professional Portfolio',
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
-            routerConfig: AppRouter.createRouter(cubit),
-            debugShowCheckedModeBanner: false,
-            builder: (context, child) {
-              if (!kIsWeb || child == null) {
-                return child ?? const SizedBox.shrink();
-              }
-              return Stack(
-                children: [
-                  child,
-                  const Positioned(top: 12, right: 12, child: RoleBadge()),
-                ],
-              );
-            },
+      child: MaterialApp.router(
+        title: 'UPRM Professional Portfolio',
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        routerConfig: AppRouter.router,
+        debugShowCheckedModeBanner: false,
+        builder: (context, child) {
+          if (!kIsWeb || child == null) {
+            return child ?? const SizedBox.shrink();
+          }
+          return Stack(
+            children: [
+              child,
+              const Positioned(top: 12, right: 12, child: RoleBadge()),
+            ],
           );
         },
       ),

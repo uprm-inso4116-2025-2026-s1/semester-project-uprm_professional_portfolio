@@ -171,5 +171,49 @@ class AuthService {
     return false;
   }
 
-  Stream<AuthState> get authStateChanges => _supabase.auth.onAuthStateChange;
+  // ----------------------------
+  // Helpers
+  // ----------------------------
+  model.User _fromSupabaseUser(supa.User sUser) {
+    final meta = sUser.userMetadata ?? const <String, dynamic>{};
+
+    // Supabase's createdAt is String (ISO-8601). Convert to DateTime safely.
+    final createdAtStr = sUser.createdAt;
+    final createdAt = DateTime.tryParse(createdAtStr) ?? DateTime.now();
+
+    return model.User(
+      id: sUser.id,
+      email: sUser.email ?? '',
+      fullName: (meta['full_name'] as String?) ?? '',
+      role: (meta['role'] as String?) ?? AppConstants.jobseekerRole,
+      createdAt: createdAt,
+    );
+  }
+
+  String _friendlyAuthMessage(supa.AuthException e) {
+    final msg = e.message.toLowerCase();
+    if (msg.contains('invalid login') ||
+        msg.contains('invalid email') ||
+        msg.contains('invalid credentials') ||
+        msg.contains('email or password is invalid')) {
+      return 'Invalid email or password.';
+    }
+    if (msg.contains('user already registered') || msg.contains('duplicate')) {
+      return 'This email is already registered.';
+    }
+    if (msg.contains('email not confirmed')) {
+      return 'Please confirm your email to continue.';
+    }
+    return e.message;
+  }
+
+  // Get auth state changes stream
+  Stream<supa.AuthState> get authStateChanges => _sb.auth.onAuthStateChange;
+}
+
+// Auth result class
+class AuthResult {
+  AuthResult({required this.success, this.error});
+  final bool success;
+  final String? error;
 }
