@@ -456,7 +456,12 @@ On the other side, recruiters tell us they want better visibility into who’s c
 Each term below is derived from raw observations in the Domain Rough Sketch (2.1.1) and refined through concept analysis. Terms are presented with their classification (entity, actor, event, etc.), domain scope, and traceability to source observations. The derivation of each term is explicitly shown through annotations linking back to specific observations, quotes, and patterns from the rough sketch.
 
 This structured approach ensures transparency in how our domain vocabulary emerged from real-world observations rather than being imposed artificially. When new terms are needed, they should follow this same pattern of clear derivation from documented domain phenomena.
+
+#The terms are now organized into Domain Nouns, Domain Verbs, and Domain Constraints to align with ubiquitous language structure in Domain-Driven Design.#
 ====
+
+[discrete]
+=== #Domain Nouns (entities, objects, abstractions)#
 
 *Applicant* :: (entity, domain)
 A person, usually a student or recent graduate, pursuing professional chances. Candidates strive to highlight their abilities and credentials via their portfolios.
@@ -503,7 +508,6 @@ The relationship established upon mutual interest. Day-to-day interaction typica
 The initial professional interaction after a confirmed connection, typically between an applicant and a **recruiter**; it may still be considered as leading to a connection with the **employer**.
 [.small]#_Derived from: "Student: 'I'm nervous approaching a recruiter if I don't already know about the company'"; importance of structured initial interactions_#
 
-
 *Interview Modality* :: (taxonomy, domain)
 The manner in which an interview is conducted (e.g., in-person, virtual). Serves as the parent concept for specific interview types.
 [.small]#_Derived from: "Job fairs are often loud, crowded, chaotic"; need for flexible interaction formats_#
@@ -511,21 +515,21 @@ The manner in which an interview is conducted (e.g., in-person, virtual). Serves
 *Validity Period* :: (attribute, domain)
 The time window during which an offer remains actionable before it expires.
 
-*Clarifications* :: (process, domain)
-Bidirectional questions and answers to resolve ambiguities (scope, duties, timeline) without changing negotiated terms.
+[line-through]*Clarifications* :: [line-through]#(process, domain)#
+[line-through]#Bidirectional questions and answers to resolve ambiguities (scope, duties, timeline) without changing negotiated terms.#
 
-*Adjustments* :: (process, domain)
-Mutually agreed changes to offer terms (e.g., title, start date, compensation range) prior to acceptance.
+[line-through]*Adjustments* :: [line-through]#(process, domain)#
+[line-through]#Mutually agreed changes to offer terms (e.g., title, start date, compensation range) prior to acceptance.#
 
-*Accept* :: (decision/event, domain)
-The applicant’s affirmative decision to proceed under the current offer within its validity period.
+[line-through]*Accept* :: [line-through]#(decision/event, domain)#
+[line-through]#The applicant’s affirmative decision to proceed under the current offer within its validity period.#
 
-*Decline* :: (decision/event, domain)
-The applicant’s explicit decision not to proceed under the current offer.
+[line-through]*Decline* :: [line-through]#(decision/event, domain)#
+[line-through]#The applicant’s explicit decision not to proceed under the current offer.#
 
-*Ghosting* :: (behavior, domain)
-The act of ceasing communication without notice, leading to inefficiency in the recruitment process.
-[.small]#_Derived from: "Student: 'I never know if recruiters actually looked at my resume or if it went into a pile'"; lack of feedback and communication_#
+[line-through]*Ghosting* :: [line-through]#(behavior, domain)#
+[line-through]#The act of ceasing communication without notice, leading to inefficiency in the recruitment process.#
+[line-through]#[.small]##_Derived from: "Student: 'I never know if recruiters actually looked at my resume or if it went into a pile'"; lack of feedback and communication_###
 
 *Identity Assurance* :: (behavior, domain)
 The process of verifying that participants are authentic and represent legitimate individuals.
@@ -543,9 +547,9 @@ The process of clarifying and agreeing on key role aspects, including scope, com
 The assurance that professional interactions occur under respectful conduct, secure data handling, and clear reporting mechanisms.
 [.small]#_Derived from: Recruiters mentioning "trust factor" with known candidates; need for safe, professional interactions_#
 
-*Feedback* :: (event, domain)
-Information shared between employer and applicant regarding application status, interest, or evaluation, enabling transparency.
-[.small]#_Derived from: "Student: 'I wish I knew immediately if I had a chance instead of waiting months'"; need for timely updates_#
+[line-through]*Feedback* :: [line-through]#(event, domain)#
+[line-through]#Information shared between employer and applicant regarding application status, interest, or evaluation, enabling transparency.#
+[line-through]#[.small]##_Derived from: "Student: 'I wish I knew immediately if I had a chance instead of waiting months'"; need for timely updates_###
 
 *User* :: (technical/authentication, domain)
 An authenticated account in the system. Each User is typed as either Candidate (e.g., Student) or Recruiter; avoid using “User” to describe domain roles.
@@ -583,9 +587,9 @@ A dismissal on a Profile Card (left-swipe). Removes the card from the current se
 *Match* :: (event, domain)
 Created only when both sides have explicitly liked each other’s Profile Cards (mutual interest signaling).
 
-*Message* :: (entity/action, domain)
-A communication exchanged only when a valid Connection exists (or explicit permission).
-[.small]#_Derived from: "Informal hallway conversations sometimes lead to opportunities"; need for structured yet natural communication_#
+[line-through]*Message* :: [line-through]#(entity/action, domain)#
+[line-through]#A communication exchanged only when a valid Connection exists (or explicit permission).#
+[line-through]#[.small]##_Derived from: "Informal hallway conversations sometimes lead to opportunities"; need for structured yet natural communication_###
 
 *Opening (Job Opening)* :: (entity, domain)
 A role posted by an Employer with explicit Requirements, Location, Work Modality, Compensation Range, and Start Date.
@@ -604,8 +608,8 @@ A curated set of Candidates selected by a Recruiter for next steps (review, outr
 *Interview* :: (event, domain)
 A scheduled conversation following a Connection/Shortlist; must respect non-overlapping time blocks and uses an Interview Modality.
 
-*RSVP* :: (action/state, domain)
-An explicit intent to attend an Event; updates capacity and powers reminders.
+[line-through]*RSVP* :: [line-through]#(action/state, domain)#
+[line-through]#An explicit intent to attend an Event; updates capacity and powers reminders.#
 
 *Offer* :: (entity, domain)
 A proposal from an Employer to a Candidate with explicit terms (role, Compensation Range, Location/Work Modality, Start Date) and a Validity Period.
@@ -618,6 +622,68 @@ Exposure level of a StudentProfile: Public (searchable), By Match (visible only 
 
 *Session* :: (technical, domain)
 The authenticated runtime context for a User. Authorizes actions (swipes, messages, RSVPs).
+
+[discrete]
+=== #Domain Verbs (actions, events, operations)#
+
+*#Apply#* :: (action, domain)
+A student submits an Application to an Opening, freezing artifacts at submission time.  
+[.small]#_Performed by: Student | Purpose: Enables triage and interview selection based on consistent, versioned evidence._#
+
+*#Publish#* :: (action, domain)
+Make a Profile or Company page visible according to Visibility settings.  
+[.small]#_Performed by: Student / Recruiter | Purpose: Allows discovery and evaluation within the matching process._#
+
+*#Filter#* :: (action, domain)
+Narrow candidates or openings by skill, modality, authorization, or availability.  
+[.small]#_Performed by: Recruiter / System | Purpose: Supports fast triage and prioritization of relevant matches._#
+
+*#Swipe#* :: (action, domain)
+Evaluate a Profile Card using a Like or Pass decision.  
+[.small]#_Performed by: Student / Recruiter | Purpose: Generates interest signals used to determine Match eligibility._#
+
+*#Like#* / *#Pass#* :: (action, domain)
+Rapid interest-signaling gestures that drive Match formation.  
+[.small]#_Performed by: Student / Recruiter | Purpose: Determines if a Match will be created._#
+
+*#Match#* :: (system event, domain)
+Created when both sides explicitly Like each other’s Profile Card.  
+[.small]#_Performed by: System | Purpose: Establishes a Connection and unlocks communication._#
+
+*#Clarify#* :: (process, domain)
+Exchange bidirectional questions and answers to resolve uncertainties without altering terms.  
+[.small]#_Performed by: Student / Recruiter | Purpose: Reduces ambiguity and supports informed decision-making._#
+
+*#Adjust#* :: (process, domain)
+Modify terms such as title, start date, or compensation before acceptance.  
+[.small]#_Performed by: Student / Recruiter | Purpose: Supports negotiation and alignment before final decision._#
+
+*#Message#* :: (action/event, domain)
+Exchange communication once a valid Connection exists.  
+[.small]#_Performed by: Student / Recruiter | Purpose: Coordinates next steps and reduces delays or ghosting._#
+
+*#RSVP#* :: (action/domain)
+Declare intent to attend an Event and trigger reminders; updates event capacity.  
+[.small]#_Performed by: Student | Purpose: Enables event scheduling and attendance management._#
+
+*#Report#* / *#Block#* :: (action, domain)
+Safety-focused controls to restrict visibility or escalate moderation.  
+[.small]#_Performed by: Student / Recruiter / System | Purpose: Preserves trust, safety, and platform integrity._#
+
+*#Provide Feedback#* :: (event, domain)
+Share status, evaluation, guidance, or closure between recruiter and candidate.  
+[.small]#_Performed by: Recruiter / System | Purpose: Improves transparency and reduces uncertainty._#
+
+[discrete]
+=== #Domain Constraints# / #Rules (invariant business conditions)#  
+
+*#Single active offer per application#* :: Prevents contradictory decisions.
+*#Frozen artifacts after Apply#* :: Preserves evidence used in triage.
+*#Mutual interest required for Match#* :: No implicit or unilateral matching.
+*#Visibility always respected#* :: Profiles not shown outside configured scope.
+*#Offer validity window must exist#* :: Does not allow open-ended offers.
+*#Immutable decision history#* :: Notes and interview outcomes cannot be overwritten.
+
 
 [discrete]
 === Scope and actors
@@ -734,7 +800,7 @@ Through this structure, the system adheres to the principles of high cohesion an
 [discrete]
 === Language and abstractions used consistently
 
-* Ubiquitous terms include Student, Opening, Application, Interview, Offer, Acceptance, Reminder, and Notification.
+* Ubiquitous terms include Student, Opening, Application, Interview, Offer, Acceptance, Reminder, and Notification. #These are treated as core domain nouns reused across 2.1.1, 2.2.1, and 2.2.2.#
 * Application is the aggregate root for interviews, offer, acceptance, and decision notes. All changes that affect the decision state go through the application.
 * Offer Deadline is a value that carries time zone and precision to minutes.
 * Artifact Version captures the exact resume or portfolio snapshot attached to an application.
@@ -3684,8 +3750,8 @@ _Figure 4.6.2. - 1. Layered view (Presentation, Application, Domain, Infrastruct
 | Added
 
 | Samarys Barreiro Melendez
-| 2.1.5
-| Modified
+| 2.1.5, 2.1.2
+| Modified, Modified
 
 | Diego A. Pérez Gandarillas
 | 2.3.1
