@@ -3203,6 +3203,32 @@ Transitions are implied within the state descriptions and governed by events and
 image::..\Images\StudentProfile.png[width=70%,align=center]
 _Figure 4.3.1. - 1. State Transitions_
 
+==== SwipeProcess Life Cycle
+
+`SwipeProcess` is a domain object that is created when swiping and/or selecting thumbs up,x button inside Matches screen. It contains references to the user that performed the action and the id of the target user. Whenever the user swipes an entry is created and held in case the user needs to undo this action for this and subsequent swipes they will be temporily stored and archived when the user is out of profiles or inactivity.
+
+===== Life Cycle States
+
+* **Creation** When a user swipes in any direction
+  - events: `User swipe right/presses thumbs up button`,`User swipes left/presses x button`
+  - outcome: Swipe entry is created and **Active**.
+* **Active** stored temporarily in case user needs to undo
+  - event: `SwipeProcess asigns id`
+* **Archive** inactivity or no more profiles available at the time
+  - event: `Out of Profiles/timeout`
+* **Deletion** remove swipe entry from system
+  - guard: only removed if user with targetId no longer exists inside system or user needs undo of last swipe
+  - events: `Undo last swipe`, `user referenced no longer exists`
+
+===== State Transitions
+
+- Creation → Active: triggered by `User swipe right/presses thumbs up button`,`User swipes left/presses x button` 
+- Active → Archived: triggered by `SwipeProcess asigns id`
+- Archived → Active: triggered by `Out of Profiles/timeout`
+- Active/Archived → Deletion: triggered by `Undo last swipe`, `user referenced no longer exists` 
+
+image::..\Images\swipe_process.png[width=70%,align=center]
+_Figure 4.3.2. - 1. State Transitions_
 
 ===== Aggregate Deletion Rules
 
@@ -3752,6 +3778,10 @@ _Figure 4.6.2. - 1. Layered view (Presentation, Application, Domain, Infrastruct
 | Naedra Feliciano
 | 3.2.1
 | Modified
+
+| Horeb Cotto Rosado
+| 4.3.2
+| Added
 
 |===
 '''
