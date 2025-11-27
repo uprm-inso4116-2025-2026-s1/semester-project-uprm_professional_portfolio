@@ -4375,6 +4375,147 @@ _Figure 4.6.2. - 1. Layered view (Presentation, Application, Domain, Infrastruct
 
 5. **Cross-cutting Concerns (Bottom Band)**: This horizontally aligned band spans the entire architecture. It covers functionalities that apply across all layers—authentication, logging, validation, monitoring, and tracing. Unlike the four main layers, cross-cutting concerns do not sit in the vertical call stack; they are injected or run alongside each layer through middleware, shared libraries, or centralized services.
 
+
+
+
+
+
+
+
+
+
+
+
+
+=== #Maintaining Model Integrity#
+==== #Evaluate Model Integrity Patterns#
+:author: Yandre Caban Torres
+
+[discrete]
+=== Overview
+
+This document describes the boundaries between key subsystems in the domain model and the model-integrity patterns applied to maintain separation, clarity, and consistency.  
+
+It includes:
+
+- The main bounded contexts of the system
+- Upstream and downstream relationships
+- Model-integrity patterns applied (ACL, Shared Kernel, Customer–Supplier, Conformist)
+- Rationale behind each pattern
+- A context map diagram for visual understanding
+
+[discrete]
+=== Context Map Diagram
+
+The diagram provides a high-level view of the bounded contexts, their relationships, and the integrity patterns applied.
+
+UML Diagram:  
+
+
+image:../Images/LTT 79_ Evaluate Model Integrity Patterns.png[]
+
+_Figure 4.7.1. - 1. Context Map for Model Integrity Patterns_
+
+[discrete]
+==== Bounded Contexts and Patterns
+
+===== Authentication Context
+
+**Responsibilities**
+
+- UserIdentity  
+- Login / SignUp  
+- UserID  
+
+**Upstream**: None  
+**Downstream**: Profile Management Context  
+
+**Pattern Applied**: **Customer–Supplier + ACL**  
+
+- ACL: `toProfileModel`  
+- Authentication provides stable identity data; Profile Management consumes it with translation.
+
+
+
+===== Profile Management Context
+
+**Responsibilities**
+
+- JobSeekerProfile  
+- StudentProfile  
+- Address  
+- Profile domain logic  
+
+**Upstream**: Authentication Context  
+
+**Downstream**: Chat / Messaging Context, Supabase Persistence Context  
+
+**Patterns Applied**:  
+
+**Conformist** (toward Chat / Messaging Context) 
+
+  - Chat consumes `profileId` and profile structure without forcing Profile domain changes.  
+
+**Shared Kernel + ACL** (toward Supabase Persistence Context) 
+
+  - ACL: `ProfileRowMapper`  
+  - Ensures stable, shared domain rules and mapping for persistence.  
+
+
+
+===== Chat / Messaging Context
+
+**Responsibilities**
+
+- ChatMessage  
+- Conversation  
+- Messaging services  
+
+**Upstream**: Profile Management Context 
+
+**Downstream**: Supabase Persistence Context  
+
+**Pattern Applied**: **Shared Kernel + ACL**  
+
+- ACL: `ChatRowMapper`  
+- Provides consistent translation for chat persistence.
+
+
+
+===== Supabase Persistence Context
+
+**Responsibilities**
+
+- Persistence access  
+- Database tables  
+- Raw rows / maps  
+
+**Upstream**: Profile Management Context, Chat / Messaging Context 
+
+**Downstream**: None  
+
+**Pattern Applied**: **Shared Kernel**  
+
+- Ensures consistent persistence rules and mappings across contexts.
+
+[discrete]
+==== Why These Patterns?
+
+Applying these patterns ensures:
+
+- Avoidance of tight coupling between domain areas  
+- Clear ownership of data and responsibilities  
+- Independent evolution of each context  
+- Controlled translation through ACLs  
+- Separation of persistence logic from domain concerns  
+- Messaging and profile domains remain clean and focused  
+- Reduced cross-context assumptions and improved maintainability
+
+
+
+
+
+
 == Log Book
 
 [cols="3,^2,5",options="header",]
