@@ -21,9 +21,8 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   final List<Widget> _screens = const [
-    DashboardScreen(),
-    SettingsScreen(),
     MatchesScreen(),
+    SettingsScreen(),
   ];
 
   @override
@@ -47,11 +46,11 @@ class _MainScreenState extends State<MainScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _navItem(
-                index: 3, // placeholder - to be implemented later
+                index: 2, // placeholder - to be implemented later
                 icon: Icons.star_outline_rounded,
               ),
               _navItem(
-                index: 2, // placeholder - to be implemented later
+                index: 3, // placeholder - to be implemented later
                 icon: Icons.search_outlined,
               ),
               _navItem(
