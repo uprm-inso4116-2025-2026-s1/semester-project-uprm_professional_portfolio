@@ -4,6 +4,11 @@ import 'matches_local_repository.dart';
 //Skill vocabulary
 final List<String> _skillVocabulary = _buildSkillVocabulary();
 
+final technical_skills = LocalRepository().getSkills();
+final jobs = LocalRepository().getJobs();
+final jobseekers = LocalRepository().getSeekers();
+final recruiters = LocalRepository().getRecruiters();
+
 List<String> _buildSkillVocabulary() {
   final vocab = <String>{...technical_skills};
 
