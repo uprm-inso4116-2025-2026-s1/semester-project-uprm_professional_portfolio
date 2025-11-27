@@ -5,7 +5,8 @@ List<Map<String,dynamic>> localRepository = [];
 
 class SwipeProcessRepository {
 
-  void insertSwipe(SwipeProcess swipe){
+  /// Record user's swipe action on a profile card
+  void recordSwipeAction(SwipeProcess swipe){
     localRepository.add({
       'id': swipe.id,
       'initiatorId': swipe.initiatorId,

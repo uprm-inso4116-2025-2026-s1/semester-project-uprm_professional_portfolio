@@ -28,7 +28,7 @@ class _JobSeekerProfileScreenState extends State<JobSeekerProfileScreen> {
   Future<void> _loadProfile() async {
     // Try to load existing profile from storage
     final storageService = StorageService();
-    final savedProfile = await storageService.getJobSeekerProfile();
+    final savedProfile = await storageService.retrieveJobSeekerProfileFromLocalStorage();
 
     if (savedProfile != null) {
       ctrl.loadFromModel(savedProfile);
@@ -156,7 +156,7 @@ class _JobSeekerProfileScreenState extends State<JobSeekerProfileScreen> {
     // Save profile to storage
     final model = ctrl.toModel(id: 'temp', userId: 'temp-user');
     final storageService = StorageService();
-    await storageService.saveJobSeekerProfile(model);
+    await storageService.persistJobSeekerProfileLocally(model);
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

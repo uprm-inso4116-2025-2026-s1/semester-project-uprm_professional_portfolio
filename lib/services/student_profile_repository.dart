@@ -50,7 +50,8 @@ class StudentProfileRepository {
   }
 
   // --- public API ---
-  Future<StudentProfile> getById(String profileId) async {
+  /// Retrieve student profile by unique profile identifier
+  Future<StudentProfile> retrieveStudentProfileById(String profileId) async {
     final row = await _client
         .from('student_profiles')
         .select('id,user_id,created_at,'
@@ -61,7 +62,8 @@ class StudentProfileRepository {
     return _rowToStudentProfile(row);
   }
 
-  Future<void> updateAddress({
+  /// Update student's contact address
+  Future<void> updateStudentContactAddress({
     required String profileId,
     required Address? address,
   }) async {

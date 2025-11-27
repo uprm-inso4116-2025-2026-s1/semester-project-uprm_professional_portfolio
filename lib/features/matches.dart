@@ -44,7 +44,7 @@ class MatchesState extends State<MatchesScreen> {
       direction: SwipeType.like,
     );
     // store swipe locally
-    SwipeProcessRepository().insertSwipe(newSwipe);
+    SwipeProcessRepository().recordSwipeAction(newSwipe);
     _nextUser();
   }
 
@@ -56,7 +56,7 @@ class MatchesState extends State<MatchesScreen> {
       direction: SwipeType.dislike,
     );
     // store swipe temporarily
-    SwipeProcessRepository().insertSwipe(newSwipe);
+    SwipeProcessRepository().recordSwipeAction(newSwipe);
     _nextUser();
   }
 

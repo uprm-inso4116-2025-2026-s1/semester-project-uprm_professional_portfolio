@@ -9,8 +9,8 @@ class RecruiterProfileController extends ChangeNotifier {
   RecruiterProfile? _profile;
   RecruiterProfile? get profile => _profile;
 
-  // Save recruiter profile
-  Future<bool> saveProfile(RecruiterProfile profile) async {
+  /// Persist recruiter's company profile to storage
+  Future<bool> persistRecruiterProfile(RecruiterProfile profile) async {
     _setLoading(true);
 
     try {
@@ -27,8 +27,8 @@ class RecruiterProfileController extends ChangeNotifier {
     }
   }
 
-  // Load recruiter profile
-  Future<void> loadProfile(String userId) async {
+  /// Retrieve recruiter profile by user identity
+  Future<void> retrieveRecruiterProfileByUserId(String userId) async {
     _setLoading(true);
 
     try {

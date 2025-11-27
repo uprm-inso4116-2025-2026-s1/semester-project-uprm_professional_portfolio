@@ -35,7 +35,7 @@ class _RecruiterProfileScreenState extends State<RecruiterProfileScreen> {
   Future<void> _loadProfile() async {
     // Try to load existing profile from storage
     final storageService = StorageService();
-    final savedProfile = await storageService.getRecruiterProfile();
+    final savedProfile = await storageService.retrieveRecruiterProfileFromLocalStorage();
 
     setState(() {
       _draft = savedProfile ??
@@ -67,7 +67,7 @@ class _RecruiterProfileScreenState extends State<RecruiterProfileScreen> {
 
     // Save profile to storage
     final storageService = StorageService();
-    await storageService.saveRecruiterProfile(_draft!);
+    await storageService.persistRecruiterProfileLocally(_draft!);
 
     if (mounted) {
       AppSnackbars.success(context, 'Profile created successfully!');
