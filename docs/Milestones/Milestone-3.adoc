@@ -3267,47 +3267,6 @@ The deletion of a `StudentProfile` must adhere to strict rules to maintain **agg
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 === Refactoring Towards Deeper Insight and Breakthroughs
 
 ==== Discovery Journal:
@@ -3482,19 +3441,6 @@ Artifacts Updated:: docs/Images/*.svg (where applicable); Milestone-2.adoc refer
 Commits/PRs:: f189551 (Minimal vs Enriched UML template), e0e4ff4 (Modified Milestone-2.adoc).
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 ==== #Spot Duplicate Concepts#
 :author: Yandre Caban Torres
 
@@ -3650,10 +3596,6 @@ Methods:
   - `getMessages(): List<Message>`
 
 
-
-
-
-
 **ChatServiceInterface**
 
 Methods:
@@ -3665,20 +3607,14 @@ Methods:
   - `reset()`
 
 
-
-
 **ChatService / ChatServiceSupabase**
 
   - Encapsulates conversation handling with optional persistence integration.
-
-
 
 **Notes on duplicates**
 
 - `Message` class unified across all chat services.
 - `Conversation` ensures single structure for message storage.
-
-
 
 
 
@@ -3714,35 +3650,6 @@ Methods:
 - Duplicates resolved and structures unified.
 - Shared value objects reused across contexts.
 - The domain model is cleaner, easier to maintain, and aligned with bounded contexts.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 === Relating Desing Patterns to the Domain Model
@@ -3837,44 +3744,6 @@ _Figure 4.5.1. - 3. UML Diagram Illustrating Matching Module Accessing Profile D
 
 [discrete]
 The diagram illustrates how the Matching module accesses Profile data through the **IProfileReader** interface and works with stored snapshots. This structure decouples matching from live Profile updates, ensuring historical match data remains consistent and auditable.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ==== #Factor Behavioral Alternatives#
@@ -4144,43 +4013,7 @@ Scores based on thematic or domain interests, improving personalization and rele
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 === Strategic Desing
-
 
 ==== #Distilling the Core Domain#
 :author: Jean P. I. Sanchez
@@ -4376,17 +4209,6 @@ _Figure 4.6.2. - 1. Layered view (Presentation, Application, Domain, Infrastruct
 5. **Cross-cutting Concerns (Bottom Band)**: This horizontally aligned band spans the entire architecture. It covers functionalities that apply across all layers—authentication, logging, validation, monitoring, and tracing. Unlike the four main layers, cross-cutting concerns do not sit in the vertical call stack; they are injected or run alongside each layer through middleware, shared libraries, or centralized services.
 
 
-
-
-
-
-
-
-
-
-
-
-
 === #Maintaining Model Integrity#
 ==== #Evaluate Model Integrity Patterns#
 :author: Yandre Caban Torres
@@ -4569,6 +4391,11 @@ Applying these patterns ensures:
 | Horeb Cotto Rosado
 | 4.3.2
 | Added
+
+| Yandre Caban Torres
+| 4.7, 4.7.1, 4.5.2, 4.4.3
+| Added
+
 
 |===
 '''
