@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:uprm_professional_portfolio/features/matches.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../settings/settings_screen.dart';
 
@@ -20,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   final List<Widget> _screens = const [
-    DashboardScreen(),
+    MatchesScreen(),
     SettingsScreen(),
   ];
 
