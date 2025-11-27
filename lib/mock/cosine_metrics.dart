@@ -61,7 +61,7 @@ List<Map<String, dynamic>> getJobMatchesList(String jobseekerId) {
     final percent = score * 100.0;
 
     final entry = Map<String, dynamic>.from(job);
-    entry['similarity'] = percent; // percentage 0–100
+    entry['similarity'] = percent;
     results.add(entry);
   }
 
