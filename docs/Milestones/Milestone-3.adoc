@@ -746,253 +746,238 @@ Through this structure, the system adheres to the principles of high cohesion an
 This narrative ties the abstract model to observable work. The multiplicities clarify what can exist at the same time. The invariants prevent silent corruption such as orphaned offers or moving deadlines without trace. The edge cases show where business rules bend and how the system should keep truth and history. The language aligns with the rough sketch and the terminology so that design, code, and tests refer to the same concepts.
 
 ==== Events, Actions, and Behaviors
+#The following are concrete examples of events, actions, and behaviors derived from the domain observations. Each example includes a description of the type, triggering conditions, subsequent actions, and postconditions to illustrate how these elements manifest in the student-recruiter interaction context.#
 
 
-===== _Recruiting event announced (event)_
-* Type: event
-* Label: recruiting event announced
-* Triggered by: Recruiter, University, or Organizer.
-* Immediate response: Recruiter defines roles and requirements; organizer disseminates event details.
-* Expected outcome/postcondition: Candidates learn about openings and plan attendance or apply online.
-* Reference to sketch: Job fairs; desire to pre-screen before the fair.
+===== [underline]#_Recruiting event announced (event → actions → follow-up events)_#
 
-===== _Candidate checked in (event)_
-* Type: event
-* Label: candidate just arrived and checked in
-* Triggered by: Candidate or Student.
-* Immediate response: Candidate registers and receives a map and agenda.
-* Expected outcome/postcondition: Candidate can approach booths and recruiters.
-* Reference to sketch: Loud, crowded, and chaotic fair environment.
+* **Type:** event  
+* **Event:** A recruiting event has just been announced.  
+* **Triggered by:** Recruiter, university, or event organizer.  
+* **Actions following the event:**  
+  - Recruiter defines roles, basic requirements, and target profiles.  
+  - Organizer distributes event information through email, flyers, portals.  
+* **Postcondition:** Candidates become aware of opportunities and plan attendance or early applications.  
+* **Reference:** Desire to pre-screen before the fair.
 
-===== _Queue formed in front of booth (event)_
-* Type: event
-* Label: queue just formed in front of a booth
-* Triggered by: Candidate arrivals at a specific booth.
-* Immediate response: Candidates wait; staff organizes the line.
-* Expected outcome/postcondition: Long wait times and brief interactions.
-* Reference to sketch: Reports of waiting up to forty minutes.
+===== [underline]#_Candidate checked in (event interleaved with action)_#
+* **Type:** event  
+* **Event:** Candidate has just arrived and checked in.  
+* **Action:** Candidate registers, receives map and agenda.  
+* **Postcondition:** Candidate is now able to navigate booths and interact with recruiters.
 
-===== _Recruiter solicited introduction (event)_
-* Type: event
-* Label: recruiter just solicited introduction
-* Triggered by: Recruiter action to request a pitch.
-* Immediate response: Candidate delivers a 30–60 second elevator pitch; recruiter asks quick questions.
-* Expected outcome/postcondition: Superficial first impression; rushed evaluation.
-* Reference to sketch: “Speed dating” analogy; recruiter and candidate stress.
+===== [underline]#_Queue formed in front of booth (event explained in flow)_#
+* **Type:** event  
+* **Event:** A queue has formed in front of a booth due to multiple candidate arrivals.  
+* **Actions:** Staff organizes line, candidates wait and skim notes or portfolios.  
+* **Postcondition:** Long waits → reduced interaction quality.
 
-===== _Resume/portfolio handed over (event / entity)_
-* Type: hybrid — event (handed over) and entity (resume/portfolio)
-* Label: resume or portfolio handed over
-* Triggered by: Candidate.
-* Immediate response: Recruiter receives and sorts document (physical or digital).
-* Expected outcome/postcondition: Document enters a review pile/list and may lose visibility.
-* Reference to sketch: Concern that resumes are not reviewed.
+===== [underline]#_Recruiter solicited introduction (action → event sequence)_#
+* **Type:** event (solicitation) paired with action (pitch delivery)  
+* **Event:** Recruiter has just requested an introduction from the candidate.  
+* **Action:** Candidate delivers a short pitch; recruiter asks fast clarifying questions.  
+* **Postcondition:** First impression formed under noisy, rushed conditions.
 
-===== _Recruiter recording notes (operation / event)_
-* Type: operation (note-taking) / event (note recorded)
-* Label: recruiter just recorded notes
-* Triggered by: Recruiter following a candidate interaction.
-* Immediate response: Recruiter writes short tags such as "has Python" or "not ready".
-* Expected outcome/postcondition: Notes linked to contact for later review.
-* Reference to sketch: Spreadsheets used for quick note taking.
+===== [underline]#_Resume/portfolio handed over (action → event + entity appearance)_#
+* **Type:** hybrid  
+* **Action:** Candidate hands over resume/portfolio.  
+* **Event:** Resume/portfolio has just been received by recruiter.  
+* **Entity:** Resume/portfolio enters a pile, folder, or digital queue.  
+* **Postcondition:** Document becomes part of a review set and may lose visibility.
 
-===== _Informal meetup occurred (event)_
-* Type: event
-* Label: informal hallway or meetup conversation occurred
-* Triggered by: Candidate and Recruiter (unplanned proximity).
-* Immediate response: Unplanned exchange outside the booth.
-* Expected outcome/postcondition: New lead or opportunity may emerge.
-* Reference to sketch: Informal interactions often valued more than booth chats.
+===== [underline]#_Recruiter recording notes (operation → event clearly separated per feedback)_#
+* **Type:** operation + event  
+* **Operation (action):** Recruiter writes quick notes immediately after interacting with the candidate (“has Python”, “not ready”).  
+* **Event:** A note has just been recorded and stored in the notes repository.  
+* **Postcondition:** Candidate now has tag-linked metadata enabling future recall.  
+* **Clarification from feedback:** Distinguishes *the act of writing* from *the event of having completed the note*.
 
-===== _Multichannel application submitted (event / entity)_
-* Type: event (submission) / entity (application record)
-* Label: application submitted through multiple portals
-* Triggered by: Candidate.
-* Immediate response: Candidate uploads resume to Handshake, LinkedIn, company website, or via referral.
-* Expected outcome/postcondition: Duplicate entries for same profile; confusion about visibility.
-* Reference to sketch: "Did they even see my application?"
+===== [underline]#_Informal meetup occurred (event with embedded actions)_#
+* **Type:** event  
+* **Event:** An informal or accidental meetup has just occurred outside the booth.  
+* **Actions:** Short exchange, recruiter asks spontaneous questions, candidate improvises answers.  
+* **Postcondition:** Lead or opportunity may arise spontaneously.
 
-===== _Pre-screen completed (event)_
-* Type: event
-* Label: pre-screen just completed
-* Triggered by: Recruiter or screening system.
-* Immediate response: Recruiter/system applies heuristics (year, skills, seniority) or filters.
-* Expected outcome/postcondition: Candidate marked eligible or ruled out based on preset rules.
-* Reference to sketch: Desire for quick identification of fit candidates.
+===== [underline]#_Multichannel application submitted (action → event → entity)_#
+* **Type:** hybrid  
+* **Action:** Candidate submits applications across multiple portals.  
+* **Event:** Application submission has just occurred (possibly in duplicate).  
+* **Entity:** Application record stored in multiple systems.  
+* **Postcondition:** Recruiters encounter duplicate or inconsistent entries.
 
-===== _Invitation/follow-up delayed (event)_
-* Type: event (delay manifested)
-* Label: invitation or follow-up has been delayed
-* Triggered by: Recruiter or resourcing backlog.
-* Immediate response: Recruiter contacts candidate weeks later.
-* Expected outcome/postcondition: Candidate may have lost interest or accepted another offer.
-* Reference to sketch: Late outreach leads to attrition.
+===== [underline]#_Pre-screen completed (operation → event)_#
+* **Type:** event  
+* **Operation:** System or recruiter runs heuristics or filters on candidate data.  
+* **Event:** Pre-screening has just been completed.  
+* **Postcondition:** Candidate marked “eligible” or “ruled out."
 
-===== _Decision to stop sourcing (event / operation)_
-* Type: event (decision made) / operation (halt sourcing)
-* Label: decision to stop sourcing was just made
-* Triggered by: Recruiter evaluation of candidate pool.
-* Immediate response: Recruiter halts search once initial candidates seem sufficient.
-* Expected outcome/postcondition: Window for new applicants narrows; reduced diversity of options.
-* Reference to sketch: “If the first batch looks good, we stop looking.”
+===== [underline]#_Invitation/follow-up delayed (event contextualized)_#
+* **Type:** event  
+* **Event:** A follow-up or invitation is now delayed beyond expected timeline.  
+* **Actions:** Recruiter eventually contacts candidate after backlog clears.  
+* **Postcondition:** Candidate may have lost interest or accepted another offer.
 
-===== _Known talent rehired (operation / behavior)_
-* Type: operation (re-hire) and recurring pattern (behavior)
-* Label: known talent has been rehired
-* Triggered by: Recruiter preference for prior interns/employees.
-* Immediate response: Prior candidates prioritized; faster hiring due to trust.
-* Expected outcome/postcondition: Reduced onboarding uncertainty; shorter time-to-hire.
-* Reference to sketch: "Trust factor" in re-hiring interns."
+===== [underline]#_Decision to stop sourcing (operation → event)_#
+* **Type:** operation + event  
+* **Operation:** Recruiter analyzes applicant pool and decides to stop sourcing.  
+* **Event:** Decision to halt sourcing has just been officially made.  
+* **Postcondition:** Window for new applicants narrows.
 
-===== _Swag distributed (event / entity)_
-* Type: event (distribution) / entity (swag)
-* Label: swag or promotional material was handed out
-* Triggered by: Recruiter or marketing team.
-* Immediate response: Recruiter distributes branded items.
-* Expected outcome/postcondition: Improved employer brand recall among candidates.
-* Reference to sketch: Students remember companies by their swag.
+===== _Known talent rehired (behavior expanded per professor’s request)_
+* **Type:** behavior (multi-step pattern composed of operations + events)  
 
-===== _Recruiting system / institution (system / entity)_
-* Type: system / entity
-* Label: system/institution (registration, deduplication, filters)
-* Capabilities: announce events, register check-ins, collect/store records, deduplicate multichannel entries, apply automated prescreening, maintain traceability/versioning.
-* Reference to sketch: Institutional compliance and traceability.
+**Sequence of actions and events (interleaved as required):**  
+1. **Action:** Recruiter identifies a past intern/employee.  
+2. **Event:** Past performance record becomes relevant to the current opening.  
+3. **Action:** Recruiter contacts known talent or flags them internally.  
+4. **Event:** Candidate responds positively and expresses interest.  
+5. **Action:** Recruiter accelerates evaluation (shortened interview or direct recommendation).  
+6. **Event:** Hiring decision is finalized earlier than standard pipeline.
 
-===== _Reference providers (third-party entity)_
-* Type: entity
-* Label: third parties (referees, background-check providers)
-* Role: submit references, return verifications, confirm candidate details.
+* **Postcondition:** Reduced uncertainty; faster onboarding due to strong trust.
 
-===== _Resume repository / application repository (entity / operation)_
-* Type: entity (repository) / operation (persistence)
-* Label: transfer of application records into repository
-* Role: store application instances, link duplicates, provide a source-of-truth for recruiter review.
+===== _Swag distributed (event + entity)_
+* **Type:** event + entity  
+* **Event:** Swag has just been handed out.  
+* **Entity:** Promotional item representing company brand.  
+* **Postcondition:** Improves brand recall.
+
+===== _Recruiting system / institution (entity with operational capabilities)_
+* **Type:** system/entity  
+* **Capabilities:** Announce events, register check-ins, apply filters, deduplicate entries, store applications, maintain logs.  
+* **Role in events:** Generates and records domain events such as check-ins, pre-screens, or submissions.
+
+===== _Reference providers (entity)_
+* **Type:** third-party entity  
+* **Role:** Provide verification, references, and confirmations.
+
+===== _Resume/application repository (entity + operation)_
+* **Type:** entity + persistence operation  
+* **Role:** Stores and links application entries; handles deduplication.
 
 ===== _Note-taking repository (entity)_
-* Type: entity
-* Label: recruiter notes repository (spreadsheets/ATS notes)
-* Role: persistent place for quick tags and recall.
+* **Type:** entity  
+* **Role:** Stores recruiter notes tagged per interaction.
 
 ===== _Prescreen operation (operation)_
-* Type: operation
-* Label: prescreen operation
-* Role: apply heuristics and filters to candidate records (automated or manual).
+* **Type:** operation  
+* **Role:** Applies heuristics and filters.
 
-===== _Transfer logs (entity / artifact)_
-* Type: entity (log)
-* Label: transfer logs (audit trail for operations)
-* Role: record events triggered by operations (e.g., pre-screen applied, invitation sent).
+===== _Transfer logs (entity)_
+* **Type:** entity  
+* **Role:** Record domain events generated from operations (pre-screen, invitations, etc.).
 
 ===== _Transfer repository (entity)_
-* Type: entity
-* Label: transfer repository (persistent transfer entities)
-* Role: if transfer is modeled as entity, make it persistent for querying and linking.
+* **Type:** entity  
+* **Role:** Persistent store for transfer-relevant events and artifacts.
 
-===== _Candidate engagement (behavior)_
-* Type: behavior — sequence of actions and events
-* Definition / justification: This is a multi-step behavioral arc composed of preparation, event-driven interactions at the fair, and follow-up actions.
-* Constituent domain actions (what the actor does):
-** Prepare/tailor résumé and portfolio.
-** Attend and check in.
-** Deliver elevator pitch at booths.
-** Hand over resume/portfolio.
-** Submit applications through portals and referrals.
-** Send follow-up messages (email/LinkedIn) or withdraw application.
-* Constituent domain events (what happens in the domain):
-** Recruiting event announced.
-** Candidate checked in.
-** Recruiter solicited introduction.
-** Resume/portfolio handed over.
-** Application submitted through multiple portals.
-* Expected outcomes: candidate visibility, duplicate records, and follow-up probability.
-* Reference to sketch: Students prepare portfolios, deliver pitches, hand over resumes, and apply across multiple systems.
+===== _Candidate engagement (behavior with interleaved actions + events per feedback)_
+* **Type:** behavior — multi-step sequence of actions and events  
+
+**Interleaved sequence:**  
+1. **Event:** Recruiting event announced.  
+2. **Action:** Candidate prepares résumé and portfolio.  
+3. **Event:** Candidate checked in.  
+4. **Action:** Candidate explores booths and waits in queue.  
+5. **Event:** Recruiter solicits introduction.  
+6. **Action:** Candidate delivers pitch.  
+7. **Event:** Resume/portfolio handed over.  
+8. **Action:** Candidate later submits applications through portals.  
+9. **Event:** Application submission recorded.
+
+* **Outcome:** Candidate visibility improves, but duplicates and delays may affect results.
 
 ===== _Fast screening and prioritization (pattern / behavior)_
-* Type: behavior / operational pattern
-* Definition / justification: Recruiters manage volume by applying simple heuristics and rule-based filters — a pattern composed of repeated prescreen operations and evaluative events.
-* Constituent actions:
-** Define heuristics (year, skills, seniority).
-** Apply prescreen operation to incoming records.
-** Flag or tag candidates in note-taking repository.
-* Constituent events:
-** Pre-screen just completed.
-** Recruiter recorded notes.
-* Risks/side effects: risk of overlooking strong profiles due to coarse filters.
+* **Type:** behavior / operational pattern  
+* **Definition / justification:** Recruiters manage large candidate volume by applying simple heuristics and rule-based filters. This is a recurring domain pattern composed of repeated prescreen operations and evaluative events.  
+* **Constituent actions:**  
+  **–** Define heuristics (year, skills, seniority).  
+  **–** Apply prescreen operation to incoming records.  
+  **–** Flag or tag candidates in note-taking repository.  
+* **Constituent events:**  
+  **–** Pre-screen just completed.  
+  **–** Recruiter recorded notes.  
+* **Risks / side effects:** Coarse filters may overlook strong or atypical profiles.
 
 ===== _Multichannel application handling and consolidation (behavior)_
-* Type: behavior — system + human coordination
-* Definition / justification: A domain behavior involving repeated candidate submissions and system attempts to merge and deduplicate into a single source-of-truth.
-* Constituent actions:
-** Candidate submits across portals.
-** System deduplicates and merges records.
-** Recruiter/system links records for traceability.
-* Constituent events:
-** Application submitted through multiple portals.
-** Transfer logs updated.
-* Expected outcomes: reduced duplication, but potential confusion if deduplication is imperfect.
+* **Type:** behavior — system + human coordination  
+* **Definition / justification:** A domain behavior involving repeated candidate submissions across portals and systematic attempts to deduplicate and merge them into a single authoritative record.  
+* **Constituent actions:**  
+  **–** Candidate submits across portals.  
+  **–** System deduplicates and merges records.  
+  **–** Recruiter/system links records for traceability.  
+* **Constituent events:**  
+  **–** Application submitted through multiple portals.  
+  **–** Transfer logs updated.  
+* **Expected outcomes:** Reduced record duplication, though imperfect deduplication may still cause confusion.
+
 
 ===== _Stopping after an early promising cohort (behavior / decision pattern)_
-* Type: behavior / decision pattern
-* Definition / justification: A sourcing pattern where recruiters evaluate early candidates and then decide to pause or stop sourcing. This qualifies as a behavior because it combines evaluation actions and a sourcing-halting operation following recent evaluative events.
-* Constituent actions:
-** Evaluate initial cohort of candidates (screening, interviews).
-** Make sourcing decision (operation).
-** Halt active sourcing operation.
-* Constituent events:
-** Pre-screen just completed (for initial cohort).
-** Decision to stop sourcing was just made.
-* Expected outcomes: narrowing of applicant window and reduced diversity of incoming profiles.
-* Justification note: classifying this as a behavior makes explicit the action/event components rather than treating it as a single atomic "behavior."
+* **Type:** behavior / decision pattern  
+* **Definition / justification:** A sourcing pattern where recruiters evaluate early applicants and then choose to pause or stop sourcing. This qualifies as a behavior because it integrates evaluation actions with a sourcing-halting operation triggered by recent evaluative events.  
+* **Constituent actions:**  
+  **–** Evaluate initial cohort of candidates (screening, interviews).  
+  **–** Make sourcing decision (operation).  
+  **–** Halt active sourcing operation.  
+* **Constituent events:**  
+  **–** Pre-screen just completed for initial cohort.  
+  **–** Decision to stop sourcing was just made.  
+* **Expected outcomes:** Narrowing of applicant window and reduced diversity of incoming profiles.  
+* **Justification note:** Clarifies that the behavior is composite, not atomic, since it contains both actions and follow-up triggering events.
 
 ===== _Communication delay leading to attrition (behavior)_
-* Type: behavior
-* Definition / justification: A time-sensitive pattern where delayed outreach produces candidate attrition; composed of scheduling actions and delayed-contact events.
-* Constituent actions:
-** Queue candidates for later contact (operation).
-** Send invitations/follow-ups after delay.
-* Constituent events:
-** Invitation or follow-up has been delayed.
-** Candidate withdraws or accepts another offer (resulting event).
-* Expected outcomes: increased drop-off and lower conversion. rates.
+* **Type:** behavior  
+* **Definition / justification:** A time-sensitive pattern where delays in outreach lead to candidate attrition. This is composed of scheduling actions followed by delayed-contact events.  
+* **Constituent actions:**  
+  **–** Queue candidates for later contact (operation).  
+  **–** Send invitations or follow-ups after a delay.  
+* **Constituent events:**  
+  **–** Invitation or follow-up has been delayed.  
+  **–** Candidate withdraws or accepts another offer.  
+* **Expected outcomes:** Increased drop-off and reduced conversion rates.
 
 ===== _Informal networking conversion (behavior)_
-* Type: behavior
-* Definition / justification: Sequence where unplanned interactions produce higher-quality leads than booth interactions.
-* Constituent actions:
-** Informal conversation initiated by either party.
-** Focused follow-up scheduled and logged.
-** Interview scheduled or lead moved to pipeline.
-* Constituent events:
-** Informal meetup occurred.
-* Expected outcomes: stronger opportunities compared to rushed booth chats.
+* **Type:** behavior  
+* **Definition / justification:** Unplanned or informal interactions often yield deeper conversation and higher-quality leads compared to rushed booth exchanges.  
+* **Constituent actions:**  
+  **–** Informal conversation initiated by candidate or recruiter.  
+  **–** Focused follow-up scheduled and logged.  
+  **–** Interview scheduled or lead moved into the pipeline.  
+* **Constituent events:**  
+  **–** Informal meetup occurred.  
+* **Expected outcomes:** Higher-quality engagement and stronger lead conversion.
 
 ===== _Notes as memory (pattern / entity usage)_
-* Type: pattern / entity usage
-* Definition: Short tags and concise notes become the memory of many brief encounters; this is both a persistent-entity use (notes repository) and a recurring operation (note-taking).
-* Constituent actions:
-** Write short tags (e.g., "has Python").
-** Link notes to contact records in repository.
-* Constituent events:
-** Recruiter recording notes.
+* **Type:** pattern / entity usage  
+* **Definition:** Short recruiter notes act as an external memory for many brief encounters. This pattern combines a persistent entity (notes repository) with recurring tagging operations.  
+* **Constituent actions:**  
+  **–** Write short tags (e.g., “has Python”).  
+  **–** Link notes to candidate records in the repository.  
+* **Constituent events:**  
+  **–** Recruiter recording notes.  
+* **Outcome:** Improved recall and more reliable evaluation when revisiting interactions.
 
 ===== _Rehiring based on prior trust (behavior)_
-* Type: behavior
-* Definition / justification: Pattern where previous interns or employees are prioritized; it combines record-lookup actions with a rehire operation.
-* Constituent actions:
-** Lookup past intern/employee records in system.
-** Prioritize outreach and offer.
-* Constituent events:
-** Known talent has been rehired.
-* Expected outcomes: faster hiring and reduced uncertainty.
+* **Type:** behavior  
+* **Definition / justification:** Recruiters often prioritize previous interns or employees due to familiarity and trust. This pattern combines record lookup with accelerated rehire actions.  
+* **Constituent actions:**  
+  **–** Lookup past intern/employee records in system.  
+  **–** Prioritize outreach and extend offer more rapidly.  
+* **Constituent events:**  
+  **–** Known talent has been rehired.  
+* **Expected outcomes:** Faster hiring decisions and reduced uncertainty.
 
 ===== _Brand recall through giveaways (behavior / pattern)_
-* Type: behavior / marketing pattern
-* Definition: Distribution of swag leads to higher brand recall and subsequent reengagement.
-* Constituent actions:
-** Distribute promotional materials or swag.
-** Candidate later recalls brand and reengages during outreach.
-* Constituent events:
-** Swag or promotional material was handed out.
+* **Type:** behavior / marketing pattern  
+* **Definition:** Promotional swag distribution leads to higher brand recall, influencing later candidate engagement.  
+* **Constituent actions:**  
+  **–** Distribute promotional materials or swag.  
+  **–** Candidate later recalls brand and reengages during outreach.  
+* **Constituent events:**  
+  **–** Swag or promotional material was handed out.  
+* **Expected outcomes:** Enhanced brand visibility and improved interaction quality during follow-up.
+
+
 
 ==== Function Signatures
 
