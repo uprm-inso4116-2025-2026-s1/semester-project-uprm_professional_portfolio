@@ -3486,6 +3486,265 @@ Commits/PRs:: f189551 (Minimal vs Enriched UML template), e0e4ff4 (Modified Mile
 
 
 
+
+
+
+
+
+
+
+
+
+==== #Spot Duplicate Concepts#
+:author: Yandre Caban Torres
+
+[discrete]
+=== Overview
+
+This document describes the domain model analysis for duplicate concepts and the refactoring decisions applied to reduce redundancy and duplication. This is done by identifying repeated or overlapping structures across bounded contexts, the system improves maintainability, clarity, and consistency.
+
+
+[discrete]
+=== UML Class Diagram
+
+The diagram illustrates:
+
+- the Authentication, Profile, and Messaging contexts,
+- all classes and their relationships,
+- merged and refactored structures to remove duplication.
+
+UML Diagram:  
+image:../Images/LTT 76_ Spot Duplicate Concepts.png[]
+
+_Figure 4.4.3. - 1. UML Diagram Illustrating Unified Domain Model and Refactored Duplicates_
+
+[discrete]
+==== Bounded Contexts
+
+===== Authentication Context
+
+**Classes:**
+
+**User**
+
+Attributes:
+
+  - `id: String`
+  - `email: String`
+  - `fullName: String`
+  - `role: String`
+  - `createdAt: DateTime`
+
+Methods:
+
+  - `fromJson()`
+  - `toJson()`
+  - `copyWith()`
+
+**Notes on duplicates**
+
+- No duplicates within this context; all user identity data centralized.
+
+[discrete]
+===== Profile Context
+
+**Classes:**
+
+**Address**
+
+Attributes:
+
+  - `line1: String`
+  - `line2: String`
+  - `city: String`
+  - `region: String`
+  - `postalCode: String`
+  - `countryCode: String`
+
+Methods:
+
+  - `toMap()`
+  - `fromMap()`
+
+
+**Profile** (abstract/generalized)
+
+Attributes:
+
+  - `userId: String`
+  - `createdAt: DateTime`
+  - `bio: String`
+  - `location: String`
+  - `phoneNumber: String`
+  - `updatedAt: DateTime`
+
+
+**JobSeekerProfile**
+
+Attributes:
+
+  - `skills: List<String>`
+  - `interests: List<String>`
+  - `portfolioURL: String`
+  - `major: String`
+  - `graduationYear: int`
+  - `isStudent: bool`
+  - `jobType: String`
+  - `willingToRelocate: bool`
+  - `address: String`
+
+
+**RecruiterProfile**
+
+Attributes:
+
+  - `companyName: String`
+  - `companyWebsite: String`
+  - `jobTitle: String`
+  - `industries: List<String>`
+
+
+**Notes on duplicates**
+
+- `StudentProfile` merged into `JobSeekerProfile`.
+- Abstract `Profile` class unifies shared attributes of all profiles.
+
+
+
+
+[discrete]
+===== Messaging Context
+
+**Classes:**
+
+**Message**
+
+Attributes:
+
+  - `id: String`
+  - `senderId: String`
+  - `receiverId: String`
+  - `text: String`
+  - `timestamp: DateTime`
+
+
+Methods:
+
+  - `toJson()`
+  - `fromJson()`
+
+
+**Conversation**
+
+Attributes:
+
+  - `id: String`
+  - `participants: List<String>`
+  - `messages: List<Message>`
+
+
+Methods:
+
+  - `addMessage()`
+  - `removeMessage(): bool`
+  - `getMessages(): List<Message>`
+
+
+
+
+
+
+**ChatServiceInterface**
+
+Methods:
+
+  - `sendMessage()`
+  - `addMessage()`
+  - `removeMessage()`
+  - `getMessages()`
+  - `reset()`
+
+
+
+
+**ChatService / ChatServiceSupabase**
+
+  - Encapsulates conversation handling with optional persistence integration.
+
+
+
+**Notes on duplicates**
+
+- `Message` class unified across all chat services.
+- `Conversation` ensures single structure for message storage.
+
+
+
+
+
+[discrete]
+==== Duplicate Concepts Identified and Refactored
+
+
+[cols="3,^2,5",options="header",]
+|===
+| Original Concept | Duplicate | Decision
+
+| StudentProfile  
+| JobSeekerProfile  
+| Merged into JobSeekerProfile 
+
+
+| Profile attributes in multiple classes 
+| JobSeekerProfile & RecruiterProfile 
+| Abstract Profile class introduced
+
+
+| Message class in ChatService and Supabase 
+| Message 
+| Unified under Messaging Context
+
+|===
+
+
+
+[discrete]
+==== Summary
+
+- Duplicates resolved and structures unified.
+- Shared value objects reused across contexts.
+- The domain model is cleaner, easier to maintain, and aligned with bounded contexts.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 === Relating Desing Patterns to the Domain Model
 
 ==== #Identifying Weak Spots in Domain Model#
@@ -3495,56 +3754,6 @@ Commits/PRs:: f189551 (Minimal vs Enriched UML template), e0e4ff4 (Modified Mile
 === Overview
 
 This section identifies weak spots in the current **domain model** and **code implementation** and proposes improvements, supported by UML diagrams. By analyzing these weaknesses, we can improve maintainability, testability, and overall system correctness while ensuring the domain model aligns with strategic design principles.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 [discrete]
 === Identified Weak Spots
@@ -3667,6 +3876,7 @@ The diagram illustrates how the Matching module accesses Profile data through th
 
 
 
+
 ==== #Factor Behavioral Alternatives#
 :author: Yandre Caban Torres
 
@@ -3710,30 +3920,30 @@ It acts as input for ranking and is shielded from any outward dependency on rank
 
 **Attributes**
 
-- id: String  
-- userId: String  
-- major: String  
-- graduationYear: int  
-- bio: String  
-- location: String  
-- phoneNumber: String  
-- skills: List<String>  
-- interests: List<String>  
-- resumeUrl: String  
-- portfolioUrl: String  
-- linkedInUrl: String  
-- githubUrl: String  
-- isStudent: bool  
-- jobType: String  
-- willingToRelocate: bool  
-- createdAt: DateTime  
-- updatedAt: DateTime  
+- `id: String`
+- `userId: String` 
+- `major: String`
+- `graduationYear: int`
+- `bio: String`
+- `location: String`
+- `phoneNumber: String`
+- `skills: List<String>`
+- `interests: List<String>`
+- `resumeUrl: String`
+- `portfolioUrl: String`
+- `linkedInUrl: String` 
+- `githubUrl: String`
+- `isStudent: bool` 
+- `jobType: String`
+- `willingToRelocate: bool`  
+- `createdAt: DateTime` 
+- `updatedAt: DateTime` 
 
 **Methods**
 
-- toJson()  
-- fromJson()   
-- copyWith()  
+- `toJson()` 
+- `fromJson()`   
+- `copyWith()` 
 
 This model ensures clean separation between profile representation and evaluation behavior.
 
@@ -3745,7 +3955,7 @@ The `RankingStrategy` interface defines the required contract for any strategy t
 
 **Method**
 
-- rank(profile: JobSeekerProfile): double
+- `rank(profile: JobSeekerProfile): double`
 
 This formalizes:
 
@@ -3766,13 +3976,13 @@ It stores a list of strategies, iterates through them, and combines the results 
 
 **Attributes**
 
-- strategies: List<RankingStrategy>
+- `strategies: List<RankingStrategy>`
 
 **Methods**
 
-- addStrategy(strategy) 
-- removeStrategy(strategy)  
-- rank(profile): double 
+- `addStrategy(strategy)`
+- `removeStrategy(strategy)`
+- `rank(profile): double`
 
 **Why Composite Pattern?**
 
@@ -3796,12 +4006,12 @@ Each strategy implements `RankingStrategy` and is responsible for evaluating a t
 
 **Attributes**
 
-- studentWeight: double  
-- nonStudentWeight: double  
+- `studentWeight: double`
+- `nonStudentWeight: double`  
 
 **Uses**
 
-- isStudent  
+- `isStudent`  
 
 **Purpose**
 
@@ -3814,11 +4024,11 @@ Useful for internship prioritization, university pipelines, and early career pro
 
 **Attributes**
 
-- skillWeights: Map<String,double>  
+- `skillWeights: Map<String,double>` 
 
 **Uses**
 
-- skills  
+- `skills`  
 
 **Purpose**
 
@@ -3831,11 +4041,11 @@ Enables skill-driven job ranking and specialization matching.
 
 **Attributes**
 
-- jobTypeWeights: Map<String,double>  
+- `jobTypeWeights: Map<String,double>`  
 
 **Uses**
 
-- jobType  
+- `jobType`  
 
 **Purpose**
 
@@ -3847,15 +4057,15 @@ Scores profiles depending on their job preference (e.g., internship, part-time, 
 
 **Attributes**
 
-- isStudentWeight: double  
-- jobTypeWeight: double  
+- `isStudentWeight: double`  
+- `jobTypeWeight: double`
 
 **Uses**
 
-- createdAt  
-- updatedAt  
-- isStudent  
-- jobType  
+- `createdAt`  
+- `updatedAt` 
+- `isStudent`
+- `jobType`
 
 **Purpose**
 
@@ -3867,13 +4077,13 @@ Helps prioritize engaged users and discourage stale profile surfacing.
 
 **Attributes**
 
-- graduationYearWeight: double  
-- majorWeight: double  
+- `graduationYearWeight: double`  
+- `majorWeight: double`  
 
 **Uses**
 
-- graduationYear  
-- major  
+- `graduationYear`  
+- `major`  
 
 **Purpose**
 
@@ -3886,13 +4096,13 @@ Serves as a proxy for certain academic patterns.
 
 **Attributes**
 
-- preferredLocations: List<String>  
-- locationWeights: double  
+- `preferredLocations: List<String>`  
+- `locationWeights: double`  
 
 **Uses**
 
-- location  
-- willingToRelocate  
+- `location`  
+- `willingToRelocate` 
 
 **Purpose**
 
@@ -3905,11 +4115,11 @@ Supports local hiring, remote filters, and relocation-friendly ranking.
 
 **Attributes**
 
-- interestWeights: Map<String,double>  
+- `interestWeights: Map<String,double>`  
 
 **Uses**
 
-- interests  
+- `interests`  
 
 **Purpose**
 
@@ -3930,6 +4140,7 @@ Scores based on thematic or domain interests, improving personalization and rele
 
 4. **JobSeekerProfile (Independent Domain Object):**  
    No backward dependency on ranking logic; ensures clean layering.
+
 
 
 
