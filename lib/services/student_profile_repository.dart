@@ -39,13 +39,23 @@ class StudentProfileRepository {
         };
 
   StudentProfile _rowToStudentProfile(Map<String, dynamic> r) {
-    return StudentProfile(
+    return StudentProfile.create(
       id: r['id'] as String,
       userId: r['user_id'] as String,
       createdAt: r['created_at'] == null
           ? null
           : DateTime.parse(r['created_at'] as String),
       address: _rowToAddress(r),
+      skills: r['skills'] != null 
+          ? List<String>.from(r['skills'] as List)
+          : [],
+      activeMatchesCount: r['active_matches_count'] as int? ?? 0,
+      status: r['status'] != null
+          ? ProfileStatus.values.firstWhere(
+              (e) => e.toString() == 'ProfileStatus.${r['status']}',
+              orElse: () => ProfileStatus.draft,
+            )
+          : ProfileStatus.draft,
     );
   }
 
