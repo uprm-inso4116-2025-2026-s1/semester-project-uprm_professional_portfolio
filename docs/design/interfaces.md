@@ -1,15 +1,32 @@
-# Intention-Revealing Interfaces
+= Intention-Revealing Interfaces
+:revnumber: 1.0
+:revdate: 2025-11-27
+:toc: left
+:sectnums:
 
-**Related Issue:** LTT 46  
-**Date:** November 27, 2025
+== Summary
+This document describes the refactoring of public method names across the Profile and Matching modules to follow intention-revealing interface principles.  
+Method names now explicitly communicate domain intent rather than generic technical operations.
 
----
+*Related Issue:* LTT 46  
+*Modules Affected:* Profile Module, Matching Module
 
-## Profile Module
+== Goals
+- Replace ambiguous method names with domain-specific terminology.
+- Eliminate confusion about method purpose and scope.
+- Make code self-documenting through clear naming.
+- Align method names with ubiquitous language.
 
-### UML Class Diagram
+== Non-Goals
+- Changing method signatures or parameters.
+- Modifying internal implementation logic.
+- Refactoring private methods.
 
-```
+== Profile Module
+
+=== UML Class Diagram
+
+----
 ┌─────────────────────────────────────────────────────────────┐
 │                      <<interface>>                          │
 │                  IProfileRepository                         │
@@ -97,15 +114,13 @@
 │ + optionalInt(value: String?) → String?                     │
 │ + optionalUrl(value: String?) → String?                     │
 └─────────────────────────────────────────────────────────────┘
-```
+----
 
----
+== Matching Module
 
-## Matching Module
+=== UML Class Diagram
 
-### UML Class Diagram
-
-```
+----
 ┌─────────────────────────────────────────────────────────────┐
 │                   MatchCalculator                           │
 ├─────────────────────────────────────────────────────────────┤
@@ -173,28 +188,60 @@
 ├─────────────────────────────────────────────────────────────┤
 │ + recordSwipeAction(swipe: SwipeProcess) → void             │
 └─────────────────────────────────────────────────────────────┘
-```
+----
 
----
+== Method Refactoring Summary
 
-## Method Refactoring Summary
+=== Profile Module
 
-### Profile Module
+[cols="2,2,3"]
+|===
+|Old Name |New Name |Rationale
 
-| Old Name | New Name | Rationale |
-|----------|----------|-----------|
-| `saveRecruiterProfile()` | `persistRecruiterProfileLocally()` | Clarifies local storage persistence |
-| `getRecruiterProfile()` | `retrieveRecruiterProfileFromLocalStorage()` | Explicit about retrieval source |
-| `saveJobSeekerProfile()` | `persistJobSeekerProfileLocally()` | Clarifies local storage persistence |
-| `getJobSeekerProfile()` | `retrieveJobSeekerProfileFromLocalStorage()` | Explicit about retrieval source |
-| `getById()` | `retrieveStudentProfileById()` | Domain-specific retrieval by identifier |
-| `updateAddress()` | `updateStudentContactAddress()` | Clarifies type of address being updated |
-| `loadProfile()` | `retrieveRecruiterProfileByUserId()` | Clarifies lookup by user ID |
-| `saveProfile()` | `persistRecruiterProfile()` | Emphasizes persistence action |
-| `insertSwipe()` | `recordSwipeAction()` | Captures user swipe event |
+|`saveRecruiterProfile()`
+|`persistRecruiterProfileLocally()`
+|Clarifies local storage persistence
 
-### Matching Module
+|`getRecruiterProfile()`
+|`retrieveRecruiterProfileFromLocalStorage()`
+|Explicit about retrieval source
 
-| Old Name | New Name | Rationale |
-|----------|----------|-----------|
-| `calculateMatchScore()` | `evaluateCandidateCompatibility()` | Reveals domain intent: evaluation vs calculation |
+|`saveJobSeekerProfile()`
+|`persistJobSeekerProfileLocally()`
+|Clarifies local storage persistence
+
+|`getJobSeekerProfile()`
+|`retrieveJobSeekerProfileFromLocalStorage()`
+|Explicit about retrieval source
+
+|`getById()`
+|`retrieveStudentProfileById()`
+|Domain-specific retrieval by identifier
+
+|`updateAddress()`
+|`updateStudentContactAddress()`
+|Clarifies type of address being updated
+
+|`loadProfile()`
+|`retrieveRecruiterProfileByUserId()`
+|Clarifies lookup by user ID
+
+|`saveProfile()`
+|`persistRecruiterProfile()`
+|Emphasizes persistence action
+
+|`insertSwipe()`
+|`recordSwipeAction()`
+|Captures user swipe event
+|===
+
+=== Matching Module
+
+[cols="2,2,3"]
+|===
+|Old Name |New Name |Rationale
+
+|`calculateMatchScore()`
+|`evaluateCandidateCompatibility()`
+|Reveals domain intent: evaluation vs calculation
+|===
