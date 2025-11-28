@@ -814,6 +814,7 @@ This narrative ties the abstract model to observable work. The multiplicities cl
 ==== Events, Actions, and Behaviors
 #The following are concrete examples of events, actions, and behaviors derived from the domain observations. Each example includes a description of the type, triggering conditions, subsequent actions, and postconditions to illustrate how these elements manifest in the student-recruiter interaction context.#
 
+image::../Images/EventsActionsEntitiesUML.png[]
 
 ===== [underline]#_Recruiting event announced (event → actions → follow-up events)_#
 
@@ -892,13 +893,13 @@ This narrative ties the abstract model to observable work. The multiplicities cl
 ===== _Known talent rehired (behavior expanded per professor’s request)_
 * **Type:** behavior (multi-step pattern composed of operations + events)  
 
-**Sequence of actions and events (interleaved as required):**  
-1. **Action:** Recruiter identifies a past intern/employee.  
-2. **Event:** Past performance record becomes relevant to the current opening.  
-3. **Action:** Recruiter contacts known talent or flags them internally.  
-4. **Event:** Candidate responds positively and expresses interest.  
-5. **Action:** Recruiter accelerates evaluation (shortened interview or direct recommendation).  
-6. **Event:** Hiring decision is finalized earlier than standard pipeline.
+**Sequence of actions and events (interleaved as required):** +  
+1. **Action:** Recruiter identifies a past intern/employee. +  
+2. **Event:** Past performance record becomes relevant to the current opening. +  
+3. **Action:** Recruiter contacts known talent or flags them internally. +  
+4. **Event:** Candidate responds positively and expresses interest. + 
+5. **Action:** Recruiter accelerates evaluation (shortened interview or direct recommendation). +  
+6. **Event:** Hiring decision is finalized earlier than standard pipeline. +
 
 * **Postcondition:** Reduced uncertainty; faster onboarding due to strong trust.
 
@@ -940,16 +941,16 @@ This narrative ties the abstract model to observable work. The multiplicities cl
 ===== _Candidate engagement (behavior with interleaved actions + events per feedback)_
 * **Type:** behavior — multi-step sequence of actions and events  
 
-**Interleaved sequence:**  
-1. **Event:** Recruiting event announced.  
-2. **Action:** Candidate prepares résumé and portfolio.  
-3. **Event:** Candidate checked in.  
-4. **Action:** Candidate explores booths and waits in queue.  
-5. **Event:** Recruiter solicits introduction.  
-6. **Action:** Candidate delivers pitch.  
-7. **Event:** Resume/portfolio handed over.  
-8. **Action:** Candidate later submits applications through portals.  
-9. **Event:** Application submission recorded.
+**Interleaved sequence:** +
+1. **Event:** Recruiting event announced. +  
+2. **Action:** Candidate prepares résumé and portfolio. +  
+3. **Event:** Candidate checked in. +  
+4. **Action:** Candidate explores booths and waits in queue. +  
+5. **Event:** Recruiter solicits introduction. +  
+6. **Action:** Candidate delivers pitch. +  
+7. **Event:** Resume/portfolio handed over. +  
+8. **Action:** Candidate later submits applications through portals. +  
+9. **Event:** Application submission recorded. +
 
 * **Outcome:** Candidate visibility improves, but duplicates and delays may affect results.
 
