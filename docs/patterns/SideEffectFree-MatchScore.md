@@ -1,14 +1,34 @@
-**Side Effect Free  Match Score Function:** 
+# Side Effect Free  Match Score Function:
 
-Why it is important for the calculation of the match score of our project?
--The side effect free allows us to obtain the exact same score for the same inputs
--It helps and facilitates  testing and debugging 
+## **1.Why it is important for the calculation of the match score of the project?**
 
-From a Past Lecture Topic (Task #298), we defined a strategy pattern for skills,GPA and location. I am using what was implemented on that Lecture Topic Task to continue the Side-effect Free match score function.
+- The side effect free allows us to obtain the exact same score for the same inputs, making results consistent.
+- Helps and facilitates testing and debugging 
+- Avoids hidden behaviour
+  
+All this aspects are important because mantaning a  side-effect free  function ensures that match scores remain predictable and consistent across all parts of the platform.
 
+## **2. Use of Strategy Patern**
+
+In Lecture Topic (Task #298), we implemented a strategy pattern for three matching policies: skills,GPA and location. 
+This policies are reused to calculate their respectives match scores. Each policy (e.g. SkillsPolicy) implements the
+`Match Policy` interface and defines a `match(jobseeker,job)` method.
+These strategies return a numeric score between 0.0 to 1.0.
+
+
+**UML Diagram**
+
+
+<img width="631" height="232" alt="Image" src="https://github.com/user-attachments/assets/8648da07-3985-4cfe-b8d1-ae92ac3f9309" />
+
+
+
+**Implementation**
+
+The  `MatchScore` class, aggregates all strategies and computes the final score as the average: 
 
 ```
-`class MatchScrore{
+`class MatchScore{
     double claculationScore(Jobseeker js, Job job){
      final  List<double> strategyMatchPolicyScores= [SkillPriority().match(js, job), GPAPriority().match(js,job),            LocationPolicy().match(js,job)];
 
@@ -28,17 +48,23 @@ From a Past Lecture Topic (Task #298), we defined a strategy pattern for skills,
 
 
 ```
+This function is side-effect free.
 
 **Testing:** 
-For testing purposes,  I added a threshold of 0.70 to detect a match. In other words if a jobseeker obtains a match score >=70 it is considered a match, otherwise, is not. 
+For testing purposes:
+-A dummy threshold of 0.70 was added to detect a match. 
+How it works?
+If a jobseeker obtains a match score >=0.70 it is considered a match, otherwise, if the  score <0.70 there is no match. 
+Note: The value 0.70 is only a testing placeholder and is not part of the algorithm logic.
 
-Note: For testing purposes , I used dummy Jobseeker and Job objects represented as `Map<String, dynamic>`.
+- Dummy `Jobsekeer`and `Job` objects represented as `Map<String, dynamic>` structures.
+  
 ```
 
 `import 'StrategyPatternsTester.dart';
 
 
-class MatchScrore{
+class MatchScore{
     double claculationScore(Map<String, dynamic> js, Map<String, dynamic> job){
      final  List<double> strategyMatchPolicyScores= [SkillPriority().match(js, job), GPAPriority().match(js,job),            LocationPolicy().match(js,job)];
 
@@ -97,7 +123,7 @@ final jobs = [
 ];
 
 
-final  Score = MatchScrore();
+final  Score = MatchScore();
 
  const double matchpercent = 0.70;
  int counter =0;
@@ -139,14 +165,14 @@ final  Score = MatchScrore();
 
 ```
 `
-**The output obtained from the Testing: **
+**The output obtained from the Testing:**
 
 <img width="895" height="239" alt="Image" src="https://github.com/user-attachments/assets/4e8db766-ae19-46aa-9e68-9722bdae0adf" />
 
 
 **The side effects (before) of the function above could've been: **
-- If I  had added the `void main()`  testing logic  inside of the MatchScore calculation, the function would have had many side effects caused by the  print statements and if/else logic. 
-
+- All the side-effects were avoided by keeping the print statements and test loops outside the MatchSrore class.If they had been included inside the function
+  would no longer be side-effect free.
 
 References:
 
