@@ -2041,9 +2041,218 @@ class ProfileCard extends StatelessWidget {
 
 This section presents the **actual UI visuals** of the application, showing how domain concepts are represented to the user. The images illustrate the design of ProfileCards, swiping interactions, match notifications, messaging screens, and event participation views.
 
+===== #Communications Team#
+
+====== Image 1: Conversations List View
+
+image::../Images/CommInterface_InitialPage.jpeg[Conversations List View,align=center, width=40%]
+
+This image displays the main conversations screen, the entry point for users to view and access their ongoing chats. This is the `ConversationsPage` widget in action.
+
+*Screen Header*: The top bar shows "Messages" as the title with the system time "7:07 AM" and connectivity indicators (cellular signal, WiFi, battery). A refresh icon in the top-right corner allows users to manually trigger `_loadConversations()`, which re-fetches the conversation list from the database.
+
+*Conversation List Item*: A single conversation is displayed with user "CarlosTesterTwo" and email "carlos.pepin1@upr.edu". This data comes from the `ConversationListItem` model, which is populated by the Supabase RPC function `get_user_conversations_with_last_message()`.
+
+*Database Query*: The RPC function performs a complex join operation:
+```sql
+SELECT 
+  c.conversation_id,
+  u.full_name as participant_name,
+  u.email as participant_email,
+  m.message_text as last_message,
+  m.created_at as last_message_timestamp,
+  COUNT(unread) as unread_count
+FROM conversations c
+JOIN conversation_participants cp ON c.conversation_id = cp.conversation_id
+JOIN users u ON cp.user_id = u.user_id
+LEFT JOIN messages m ON c.last_message_id = m.message_id
+WHERE cp.user_id = $1
+GROUP BY c.conversation_id, u.full_name, u.email, m.message_text
+```
+
+*Last Message Preview*: Below the user's email, the preview text "I love your company" is displayed - this is the `last_message` field from the query, showing the most recent message content to give context about the conversation state.
+
+*Timestamp Display*: "1:07 AM" appears in the top-right of the list item, showing when the last message was sent using the `last_message_timestamp` field. The `_formatTimestamp()` method formats this intelligently:
+- Same day: Shows time (e.g., "1:07 AM")
+- Yesterday: Shows "Yesterday"  
+- This week: Shows day name (e.g., "Monday")
+- Older: Shows date (e.g., "Oct 15")
+
+*Visual Avatar*: A circular avatar with the initial "C" (in teal background) represents the user CarlosTesterTwo. This is generated programmatically from the first character of `participant_name`.
+
+*Navigation Interaction*: Tapping anywhere on this list item triggers:
+```dart
+onTap: () {
+  context.push('/chat/${conversation.id}');
+}
+```
+This navigates to the ChatRoomPage with the specific `conversation_id`, loading all messages for that conversation.
+
+*Bottom Navigation*: The custom bottom navigation bar shows five icons (star, search, home, chat, profile) in a rounded teal container. The chat icon is highlighted with a lighter background, indicating the user is currently on the Messages/Chat tab.
+
+*Loading State*: Since a conversation is displayed, the `_isLoading` state is false. If true, a CircularProgressIndicator would be centered on screen. If `_conversations` were empty, the `_buildEmptyState()` widget would display instead, showing an illustrative icon and message like "No conversations yet - Start matching with people to begin conversations."
+
+
+====== Image 2: Chat Interface with Message Reactions
+
+image::../Images/CommInterface_MessageReactions.jpeg[Chat Interface with Reactions,align=center, width=40%]
+
+This screenshot demonstrates the core chat interface displaying a conversation between a recruiter and a potential candidate. The interface showcases several implemented features:
+
+*Message Display System*: Messages are rendered in a bubble layout with distinct visual styling. The incoming message (gray bubble, left-aligned) shows a recruiter's initial outreach: "Hi! I saw your profile and I think you'd be a great fit for our Software Engineer position at TechCorp." The outgoing messages (teal/green bubbles, right-aligned) display the candidate's responses, demonstrating the bidirectional communication flow.
+
+*Reaction System Implementation*: Below the recruiter's message, two reaction indicators are visible - a heart emoji (❤️) with count "1" and a fire emoji (🔥) with count "1". This implements the `message_reactions` table functionality, where each reaction is stored as a separate row linking a `message_id`, `user_id`, and `emoji`. The UI aggregates these reactions and displays them as interactive chips below the message content.
+
+*Message Metadata*: Each message displays a timestamp (e.g., "2:41 PM", "7:57 PM", "8:38 PM") showing when the message was sent. The timestamps use the `created_at` field from the `messages` table and are formatted for readability using the DateFormat utility.
+
+*Real-time Updates*: The interface maintains a persistent connection to Supabase Realtime, listening for INSERT, UPDATE, and DELETE events on the messages table filtered by `conversation_id`. When a new message arrives or a reaction is added, the UI updates immediately without requiring a manual refresh.
+
+*Emoji Picker Interface*: At the bottom of the screen, an emoji reaction picker is visible, displaying commonly used reactions (👍, ❤️, 😂, 😮, 😢, 👏, 🎉, 🔥). This bottom sheet allows users to quickly add reactions to messages. When a user taps an emoji, the app calls `ChatServiceSupabase.addReaction()`, which inserts a row into `message_reactions` with the selected emoji.
+
+*Message Editing Indicator*: The last message shows "(edited)" in small, italicized text at "7:08 PM", indicating that this message was modified after initial sending. This corresponds to the `updated_at` timestamp and `is_edited` boolean flag in the messages table.
+
+====== Image 3: Message Options Menu
+
+image::../Images/CommInterface_MessageOptions.jpeg[Message Options Menu,align=center, width=40%]
+
+This screenshot shows the long-press action menu that appears when a user interacts with their own message. Visual indicators help identify which message is being acted upon.
+
+*Visual Feedback System*: Teal circular highlights with connecting lines trace from the top message down through the conversation, indicating the message selection state. These visual cues help users understand which message the action menu applies to, preventing confusion in longer conversations.
+
+*Context Menu Implementation*: A bottom sheet modal has appeared with three options:
+- "Edit Message" (pencil icon)
+- "Delete Message" (trash icon)  
+- "Cancel" (X icon)
+
+This menu is generated by the `_showMessageOptions()` method, which first validates the user owns the message by checking if `message.senderId == _chatService.currentUserId`. Non-owners cannot access this menu.
+
+*Conditional Menu Items*: The "Edit Message" option only appears if the message is within the 15-minute edit window. This is determined by the condition `DateTime.now().difference(message.timeStamp).inMinutes < 15`. For older messages, only the delete option would be available.
+
+*Message Selection State*: The visual connection lines indicate that the system tracks which message the user long-pressed. This message object is passed to `_showMessageOptions(ChatMessage message)` as a parameter, allowing the subsequent dialog actions to operate on the correct message.
+
+*Navigation Flow*:
+- Tapping "Edit Message" → Dismisses bottom sheet → Shows edit dialog (Image 2)
+- Tapping "Delete Message" → Dismisses bottom sheet → Shows confirmation dialog
+- Tapping "Cancel" → Simply dismisses the bottom sheet with `Navigator.pop(context)`
+
+*Message Types Display*: The conversation shows varied message content including plain text ("That sounds great!", "Good night!", "Let me know if you need anything!") and an expression of interest ("I love your company"), demonstrating that the action menu works regardless of message content type.
+
+====== Image 4: Message Edit Dialog
+
+image::../Images/CommInterface_EditMessage.jpeg[Message Edit Dialog,align=center, width=40%]
+
+This image captures the message editing functionality in action. A modal dialog has appeared over the chat interface with the title "Edit Message" at the top.
+
+*Edit Dialog Implementation*: The dialog is implemented as an AlertDialog widget containing a TextField pre-populated with the current message text: "Hello! This is a test!". The cursor is visible at the end of the text, indicating the field is focused and ready for input. This uses the `_EditMessageDialog` stateful widget which maintains its own TextEditingController initialized with the message's current text.
+
+*Edit Window Validation*: Before showing this dialog, the app validates that the message was sent within the last 15 minutes by calculating `DateTime.now().difference(message.timeStamp).inMinutes < 15`. This business rule is enforced in the `_showMessageOptions()` method. If the edit window has expired, the edit option is hidden from the action menu.
+
+*Dialog Actions*: Two action buttons are present at the bottom - "Cancel" (left) and "Save" (right). The Cancel button dismisses the dialog without making changes, while the Save button:
+1. Extracts the trimmed text from the TextEditingController
+2. Calls `ChatServiceSupabase.editMessage(messageId, newText)`
+3. Updates the database with new `message_text` and sets `updated_at = NOW()`
+4. Sets the `is_edited` flag to true
+5. Triggers a real-time update that refreshes the message in all connected clients
+
+*Visual Accessories*: On the left side of the screen, a vertical toolbar is visible with icons for voice input (microphone), close (X), undo/back (arrow), emoji picker (smiley face), and menu (three lines). These provide additional input options and navigation controls.
+
+*State Management*: The dialog operates independently from the main chat list, using a local state variable `result` to capture the edited text. Only when "Save" is tapped and the server operation succeeds does the main chat list reload via `_loadMessages()`.
+
+====== Image 5: Clean Chat View After Message Deletion
+
+image::../Images/CommInterface_ChatPage.jpeg[Chat View After Deletion,align=center, width=40%]
+
+This image shows the conversation interface after a message has been successfully deleted, demonstrating the soft deletion implementation.
+
+*Soft Deletion Result*: The last visible message in the conversation is "I love your company" sent at 9:07 PM. The previously edited message ("Hello! This is a test!") is no longer visible in the chat. However, this is a soft deletion - the message row still exists in the database with `is_deleted = true` and `message_text = '[Message deleted]'`.
+
+*Database Operation*: When the user confirmed the deletion in the previous screen, the app executed:
+```sql
+UPDATE messages 
+SET is_deleted = true, 
+    message_text = '[Message deleted]',
+    updated_at = NOW()
+WHERE message_id = $1 AND sender_id = $2
+```
+
+The WHERE clause with `sender_id` ensures users can only delete their own messages, enforced at the database level through Row Level Security (RLS) policies.
+
+*UI State After Deletion*: The message list has been refreshed via `_loadMessages()`, which queries messages filtered by `conversation_id`. The deleted message is either:
+- Excluded from the query results (if the query filters `is_deleted = false`), or
+- Rendered with a placeholder appearance if included (grayed out, italic text)
+
+Based on this clean interface, the implementation appears to exclude deleted messages from the display entirely.
+
+*Real-time Propagation*: The Realtime subscription would have received a DELETE or UPDATE event (depending on implementation), triggering the `onDelete` callback in other clients:
+```dart
+onDelete: (messageId) {
+  setState(() => _messages.removeWhere((m) => m.id == messageId));
+}
+```
+
+*User Experience*: The smooth transition from populated chat to deleted state, combined with the action feedback (likely via a SnackBar saying "Message deleted"), provides clear confirmation that the operation succeeded.
+
+*Floating Action Button*: The teal circular button with concentric circles is visible in the lower right - this appears to be a voice input or recording feature, separate from the text input functionality.
+
+====== Image 6: Database Schema - Conversation Participants Table
+
+image::../Images/CommInterface_ConversationParticipantsTable.jpeg[Conversation Participants Table Schema,align=center, width=40%]
+
+This image shows the Supabase database table view for `conversation_participants`, displaying the junction table that links users to conversations with their roles and read status.
+
+*Table Structure*: The table has four visible columns:
+- `conversation_id` (uuid): Foreign key to the conversations table
+- `user_id` (uuid): Foreign key to the users table  
+- `role` (text): Defines the user's role in the conversation (all shown as "member")
+- `last_read_message_id` (uuid): Tracks which message the user last read (all showing NULL)
+
+*Data Entries*: Seven rows are visible with different conversation and user ID combinations:
+- Conversation `11111111-1111-1111-1111-111111111111` has two members (`5253e6ae...` and `cd02cb35...`)
+- Conversation `22222222-2222-2222-2222-222222222222` has two members (`5253e6ae...` and `ce69eff4...`)
+- Conversation `33333333-3333-3333-3333-333333333333` has two members (`44db4d41...` and `5253e6ae...`)
+- Conversation `44444444-4444-4444-4444-444444444444` has one member (`44db4d41...`)
+
+*Many-to-Many Relationship*: This junction table implements the many-to-many relationship between users and conversations. A single user can participate in multiple conversations, and each conversation can have multiple participants. The composite primary key would be `(conversation_id, user_id)`.
+
+*Role System*: The `role` column allows for future role-based permissions (admin, member, observer, etc.). Currently all users are "member", but this could be extended to support:
+- Admins who can add/remove participants
+- Members who can only send messages
+- Observers with read-only access
+
+*Read Tracking Implementation*: The `last_read_message_id` column is crucial for the unread count feature. When a user opens a conversation and views messages, the app calls `ConversationService.markConversationAsRead()`, which updates this field:
+```sql
+UPDATE conversation_participants
+SET last_read_message_id = (
+  SELECT message_id 
+  FROM messages 
+  WHERE conversation_id = $1 
+  ORDER BY created_at DESC 
+  LIMIT 1
+)
+WHERE conversation_id = $1 AND user_id = $2
+```
+
+*Unread Count Calculation*: The RPC function that fetches conversations calculates unread counts by comparing message timestamps against `last_read_message_id`:
+```sql
+COUNT(CASE 
+  WHEN m.message_id > cp.last_read_message_id 
+  THEN 1 
+END) as unread_count
+```
+
+*Supabase UI Elements*: The interface shows the standard Supabase table editor with:
+- Tab navigation at top showing different tables (conversations, conversation_participants, messages, message_reactions)
+- Filter and Sort buttons for data manipulation
+- "Insert" button (green) for adding new rows
+- "RLS policies" indicator showing 3 active policies
+- "Enable Realtime" toggle for subscribing to table changes
+
+*NULL Values*: All `last_read_message_id` values are NULL, indicating either:
+- These are new conversations with no messages yet
+- Users haven't marked any messages as read yet
+- This is test/seed data without proper read tracking
 
 image::../Images/create_acc_pt1.jpg[Profile Card UI, align=center, width=40%]
-
 
 == Analytic Part
 
