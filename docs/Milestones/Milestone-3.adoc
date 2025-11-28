@@ -1713,55 +1713,57 @@ The domain requirements are the fundamental rules and constraints of the problem
 
 | DR003 | The system must represent every opening with explicit requirements (min. experience, qualifications, certifications, languages, legal authorizations, work modality, location, compensation range, and start date). | Epic-JobMgmt | T-API-002, T-UI-001
 
-| #DR004# | #The system must record the number of available positions for each opening.# | #US-Recruiter-001: Post New Opening# | #T-DB-003#
+| [underline]#DR004# | [underline]#The system must record the number of available positions for each opening.# | [underline]#US-Recruiter-001: Post New Opening# | [underline]#T-DB-003#
 
-| #DR005# | #The system must link every opening to its responsible employer entity.# | #US-Recruiter-001: Post New Opening# | #T-API-003#
+| [underline]#DR005# | [underline]#The system must link every opening to its responsible employer entity.# | [underline]#US-Recruiter-001: Post New Opening# | [underline]#T-API-003#
 
-| #DR006# | #The system must allow requirement updates for an opening.# | #US-Recruiter-002: Update Opening# | #T-Audit-001#
+| [underline]#DR006# | [underline]#The system must allow requirement updates for an opening.# | [underline]#US-Recruiter-002: Update Opening# | [underline]#T-Audit-001#
 
-| #DR007# | #The system must preserve a complete history of all requirement changes for an opening (audit trail).# | #US-Recruiter-002: Update Opening# | #T-Audit-001#
+| [underline]#DR007# | [underline]#The system must preserve a complete history of all requirement changes for an opening (audit trail).# | [underline]#US-Recruiter-002: Update Opening# | [underline]#T-Audit-001#
 
-| #DR008# | The system must represent each candidate profile with education, work history, competencies, certifications, portfolios, and verifiable references. | Epic-ProfileMgmt | T-DB-004
+| [underline]#DR008# | The system must represent each candidate profile with education, work history, competencies, certifications, portfolios, and verifiable references. | Epic-ProfileMgmt | T-DB-004
 
-| #DR009# | #The system must allow documents to be attached to the candidate profile.# | #US-Candidate-001: Upload Resume# | #T-File-001#
+| [underline]#DR009# | [underline]#The system must allow documents to be attached to the candidate profile.# | [underline]#US-Candidate-001: Upload Resume# | [underline]#T-File-001#
 
-| #DR010# | #The system must preserve the issue date, validity, and verification status for all attached documents.# | #US-Candidate-001: Upload Resume# | #T-File-001#
+| [underline]#DR010# | [underline]#The system must preserve the issue date, validity, and verification status for all attached documents.# | [underline]#US-Candidate-001: Upload Resume# | [underline]#T-File-001#
 
-| #DR0011# | The system must record candidate preferences such as areas of interest, desired location, and work modality. | US-Candidate-002: Set Preferences | T-DB-005
+| [underline]#DR0011# | The system must record candidate preferences such as areas of interest, desired location, and work modality. | US-Candidate-002: Set Preferences | T-DB-005
 
-| #DR012# | #The system must represent recruiting events with name, organizer, venue, agenda, date, and capacity.# | #Epic-EventMgmt# | #T-DB-006, T-API-004#
+| [underline]#DR012# | [underline]#The system must represent recruiting events with name, organizer, venue, agenda, date, and capacity.# | [underline]#Epic-EventMgmt# | [underline]#T-DB-006, T-API-004#
 
-| #DR013# | #The system must represent company booths/tables within an event structure.# | #Epic-EventMgmt# | #T-DB-006, T-API-004#
+| [underline]#DR013# | [underline]#The system must represent company booths/tables within an event structure.# | [underline]#Epic-EventMgmt# | [underline]#T-DB-006, T-API-004#
 
-| #DR014# | #The system must register the attendance and arrival of candidates and recruiters at an event.# | #US-Event-001: Check-in at Event# | #T-Event-001#
+| [underline]#DR014# | [underline]#The system must register the attendance and arrival of candidates and recruiters at an event.# | [underline]#US-Event-001: Check-in at Event# | [underline]#T-Event-001#
 
-| #DR015# | #The system must enforce event registration rules and capacity limits upon check-in.# | #US-Event-001: Check-in at Event# | #T-API-005#
+| [underline]#DR015# | [underline]#The system must enforce event registration rules and capacity limits upon check-in.# | [underline]#US-Event-001: Check-in at Event# | [underline]#T-API-005#
 
-| #DR016# | #The system must model queues in front of event booths/tables.# | #Epic-QueueMgmt# | #T-Queue-001#
+| [underline]#DR016# | [underline]#The system must model queues in front of event booths/tables.# | [underline]#Epic-QueueMgmt# | [underline]#T-Queue-001#
 
-| #DR017# | #The system must enforce a first-come, first-served order for modeled queues.# | #Epic-QueueMgmt# | #T-Queue-001#
+| [underline]#DR017# | [underline]#The system must enforce a first-come, first-served order for modeled queues.# | [underline]#Epic-QueueMgmt# | [underline]#T-Queue-001#
 
-| #DR018# | #The system must allow limiting the duration of each queue turn.# | #US-Event-002: Manage Queue# | #T-Queue-002#
-| #DR019# | #The system must register the closure of each turn.# | #US-Event-002: Manage Queue# | #T-Queue-002#
+| [underline]#DR018# | [underline]#The system must allow limiting the duration of each queue turn.# | [underline]#US-Event-002: Manage Queue# | [underline]#T-Queue-002#
 
-| #DR020# | #The system must prevent assigning turns that would exceed declared capacity or time limits.# | #US-Event-002: Manage Queue# | #T-Queue-002#
+| [underline]#DR019# | [underline]#The system must register the closure of each turn.# | [underline]#US-Event-002: Manage Queue# | [underline]#T-Queue-002#
 
-| #DR021# | #The system must allow candidates and recruiters to express positive or negative interest in openings or profiles.# | #US-Interaction-001: Express Interest# | #T-API-006#
+| [underline]#DR020# | [underline]#The system must prevent assigning turns that would exceed declared capacity or time limits.# | [underline]#US-Event-002: Manage Queue# | [underline]#T-Queue-002#
 
-| #DR022# | #The system must record reciprocal expressions of interest.# | #US-Interaction-001: Express Interest# | #T-API-006#
+| [underline]#DR021# | [underline]#The system must allow candidates and recruiters to express positive or negative interest in openings or profiles.# | [underline]#US-Interaction-001: Express Interest# | [underline]#T-API-006#
 
-| #DR023# | #The system must create a Match record when both sides express positive interest.# | #US-Interaction-002: Create Match# | #T-Match-001#
-| #DR024# | #The system must preserve the date and context of every Match creation event.# | #US-Interaction-002: Create Match# | #T-Match-001#
+| [underline]#DR022# | [underline]#The system must record reciprocal expressions of interest.# | [underline]#US-Interaction-001: Express Interest# | [underline]#T-API-006#
 
-| #DR025# | #The system must allow recruiters to define shortlisting criteria and register the decision.# | #US-Recruiter-003: Shortlist Candidate# | #T-API-007#
+| [underline]#DR023# | [underline]#The system must create a Match record when both sides express positive interest.# | [underline]#US-Interaction-002: Create Match# | [underline]#T-Match-001#
 
-| #DR026# | #The system must record the justification for every shortlisting or rejection decision.# | #US-Recruiter-003: Shortlist Candidate# | #T-API-007#
+| [underline]#DR024# | [underline]#The system must preserve the date and context of every Match creation event.# | [underline]#US-Interaction-002: Create Match# | [underline]#T-Match-001#
 
-| #DR027# | #The system must allow candidates to withdraw their interest from an opening or Match.# | #US-Candidate-003: Withdraw Interest# | #T-Match-002#
+| [underline]#DR025# | [underline]#The system must allow recruiters to define shortlisting criteria and register the decision.# | [underline]#US-Recruiter-003: Shortlist Candidate# | [underline]#T-API-007#
 
-| #DR028# | #The system must automatically update any pending Matches when interest is withdrawn.# | #US-Candidate-003: Withdraw Interest# | #T-Match-002#
+| [underline]#DR026# | [underline]#The system must record the justification for every shortlisting or rejection decision.# | [underline]#US-Recruiter-003: Shortlist Candidate# | [underline]#T-API-007#
 
-| #DR029# | The system must represent the availability of candidates and recruiters through calendars and time blocks. | Epic-Scheduling | T-DB-007
+| [underline]#DR027# | [underline]#The system must allow candidates to withdraw their interest from an opening or Match.# | [underline]#US-Candidate-003: Withdraw Interest# | [underline]#T-Match-002#
+
+| [underline]#DR028# | [underline]#The system must automatically update any pending Matches when interest is withdrawn.# | [underline]#US-Candidate-003: Withdraw Interest# | [underline]#T-Match-002#
+
+| [underline]#DR029# | [underline]#The system must represent the availability of candidates and recruiters through calendars and time blocks.# | [underline]#Epic-Scheduling# | [underline]#T-DB-007# 
 
 | #DR030# | #The system must schedule interviews only for valid, active Matches.# | #US-Scheduling-001: Book Interview# | #T-Schedule-001#
 
@@ -1787,7 +1789,7 @@ The domain requirements are the fundamental rules and constraints of the problem
 
 | #DR041# | #The system must generate a notification when changes to opening requirements affect a candidate's eligibility.# | #US-Notification-001# | #T-Notif-001#
 
-| #DR042# | The system must notify candidates about recruiting events related to employers or openings in which they have shown interest. | US-Notification-002 | T-Notif-002
+| #DR042# | #The system must notify candidates about recruiting events related to employers or openings in which they have shown interest.# | #US-Notification-002# | #T-Notif-002#
 
 | #DR043# | #The system must record domain metrics such as match rate, queue waiting time, average turn duration, follow-up rate, and event attendance.# | #Epic-Reporting# | #T-Metric-001#
 
@@ -2055,7 +2057,7 @@ Abdul updates his profile, adding a brief description and project artifacts. Onc
 Aisha is a volunteer mentor from the tech industry who joined the platform through a university partnership. She specifies her domain as “data science and product analytics.”  
 Daniel, a computer engineering student, signs up for mentoring. He lists his interests as “AI systems,” “data visualization,” and “career readiness.”  
 
-The system’s mentor matching service pairs them based on overlapping interests.#The match occurs because the platform organizes expertise, skills and interests into a shared parent domain "Data Science",which includes subdomains such as AI systems and data visualization. Daniel's interests fall under these subdomains, allowing the matching algorithm to recognize a conceptual overlap between his interest and Aisha's data-science expertise, making her a suitable mentor.#
+The system’s mentor matching service pairs them based on overlapping interests. #The match occurs because the platform organizes expertise, skills and interests into a shared parent domain "Data Science",which includes subdomains such as AI systems and data visualization. Daniel's interests fall under these subdomains, allowing the matching algorithm to recognize a conceptual overlap between his interest and Aisha's data-science expertise, making her a suitable mentor.#
 
 During the first meeting, Daniel mentions wanting to add his internship project portfolio. Aisha advises him to include visualizations of his code metrics. Later, Daniel updates his portfolio accordingly.  
 
@@ -3274,26 +3276,26 @@ The UML representation captures the static structure and navigability of the ass
 
 [source]
 ----
-┌─────────────────┐         ┌──────────────────┐         ┌─────────────────┐
-│   Student       │         │      Match       │         │   Recruiter     │
-├─────────────────┤         ├──────────────────┤         ├─────────────────┤
-│ - id: UUID      │         │ - id: UUID       │         │ - id: UUID      │
-│ - name: String  │         │ - studentId: UUID│         │ - name: String  │
-│ - major: String │         │ - recruiterId: UUID│       │ - company: String│
-│ - ...           │         │ - createdAt: DateTime│     │ - ...           │
-├─────────────────┤         │ - status: MatchStatus│     ├─────────────────┤
-│ + getMatches()  │         │ - score: Float   │         │ + getMatches()  │
-└────────┬────────┘         │ - source: String │         └────────┬────────┘
-         │                  ├──────────────────┤                  │
-         │                  │ + accept()       │                  │
-         │                  │ + reject()       │                  │
-         │                  │ + getStudent()   │                  │
-         │                  │ + getRecruiter() │                  │
-         │                  └────────┬─────────┘                  │
-         │                           │                            │
-         │         1                 │                 1          │
-         └──────────────────*────────┴────────*───────────────────┘
-              "matches"                            "matches"
+   ┌─────────────────┐         ┌───────────────────────┐     ┌──────────────────┐
+   │    Student      │         │         Match         │     │     Recruiter    │
+   ├─────────────────┤         ├───────────────────────┤     ├──────────────────┤
+   │ - id: UUID      │         │ - id: UUID            │     │ - id: UUID       │
+   │ - name: String  │         │ - studentId: UUID     │     │ - name: String   │
+   │ - major: String │         │ - recruiterId: UUID   │     │ - company: String│
+   │ - ...           │         │ - createdAt: DateTime │     │ - ...            │
+   ├─────────────────┤         │ - status: MatchStatus │     ├──────────────────┤
+   │ + getMatches()  │         │ - score: Float        │     │ + getMatches()   │
+   └────────┬────────┘         │ - source: String      │     └────────┬─────────┘
+            │                  ├───────────────────────┤              │
+            │                  │ + accept()            │              │
+            │                  │ + reject()            │              │
+            │                  │ + getStudent()        │              │
+            │                  │ + getRecruiter()      │              │
+            │                  └────────┬──────────────┘              │
+            │                           │                             │
+            │         1                 │                  1          │
+            └──────────────────*────────┴────────*────────────────────┘
+                  "matches"                            "matches"
 ----
 
 *Key Features:*
@@ -4693,29 +4695,31 @@ This Discovery Journal records key domain insights and refactors that, during de
 - Author/Date: PR merged by Julian Vivas — 2025-10-17
 - Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/188
 
-#Entry 11: Patterns in Matching Module.#
+[discrete]
+===== #Entry 11: Patterns in Matching Module.#
 
-#- Context/Problem: The matching logic required selecting a concrete implementation based on the current user's role. If implemented directly in MatchesState, the conditional logic could lead to tight coupling.#
+- #Context/Problem: The matching logic required selecting a concrete implementation based on the current user's role. If implemented directly in MatchesState, the conditional logic could lead to tight coupling.#
 
-#- Domain Insight: The matcher is an abstract whose specific implementation should be decoupled from the code that uses it. The choice of which matcher to use is a separate concern from displaying matches.#
+- #Domain Insight: The matcher is an abstract whose specific implementation should be decoupled from the code that uses it. The choice of which matcher to use is a separate concern from displaying matches.#
 
-#- Change Applied: Proposed adoption of the Factory Method design pattern. This patern will be responsible for encapsulating the conditional logic required to instantiate the correct matcher implementation.#
+- #Change Applied: Proposed adoption of the Factory Method design pattern. This patern will be responsible for encapsulating the conditional logic required to instantiate the correct matcher implementation.#
 
-#- Impact: The clarity of intent for the MatchesState class would improve, as it now simply requests a matcher without knowing the underlying implementation. Maintenance would also improve, since adding new user roles would not need too many lines of code.#
+- #Impact: The clarity of intent for the MatchesState class would improve, as it now simply requests a matcher without knowing the underlying implementation. Maintenance would also improve, since adding new user roles would not need too many lines of code.#
 
-#- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/353#
+- #Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/353#
 
-#Entry 12: Factory Pattern to Enforce Invariants#
+[discrete]
+===== #Entry 12: Factory Pattern to Enforce Invariants#
 
-#- Context/Problem: Profile objects are critical domain entities, where creation methods could lack centralized control, risking the instantiation of invalid states.#
+- #Context/Problem: Profile objects are critical domain entities, where creation methods could lack centralized control, risking the instantiation of invalid states.#
 
-#- Domain Insight: A profile is meaningful if its core invariants are met at the moment of creation. The responsibility for guaranteeing this validity is separate from the behavior of the profile object. This is where the factory method pattern would come in.#
+- #Domain Insight: A profile is meaningful if its core invariants are met at the moment of creation. The responsibility for guaranteeing this validity is separate from the behavior of the profile object. This is where the factory method pattern would come in.#
 
-#- Change Applied Idea: Implement the profile factory to encapsulate all creation logic. It would make the profile constructor private or protected to force all users to use the factory.#
+- #Change Applied Idea: Implement the profile factory to encapsulate all creation logic. It would make the profile constructor private or protected to force all users to use the factory.#
 
-#- Impact: Guaranteeing invariants, in this case the UUID and an initial resume attached. This would simplify downstream logic.#
+- #Impact: Guaranteeing invariants, in this case the UUID and an initial resume attached. This would simplify downstream logic.#
 
-#- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/381#
+- #Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/381#
 
 ==== #Continuous Refactoring Log#
 :author: Alexa M. Zaragoza Torres
@@ -5512,8 +5516,8 @@ The recommendations derived from this research provide concrete guidance for the
 | Modified
 
 | Fernando Castro Cancel
-| 2.3.2, 2.2.3, 2.2.4, 2.2.5, #4.4.1#
-| Modified, #Added#
+| 2.3.2, 2.2.3, 2.2.4, 2.2.5, 4.4.1
+| Modified, Added
 
 | Naedra Feliciano
 | 3.2.1
