@@ -5469,6 +5469,46 @@ The recommendations derived from this research provide concrete guidance for the
 - [x] Clear linkage between findings and project's modeling requirements (mapped to features, challenges, and architectural decisions)
 - [x] References properly cited with URLs, ISBNs, and publication details
 
+[discrete]
+=== 2025-11-28 — Domain Services for Cross-Aggregate Operations
+:author: Abdiel Cotto
+
+This Lecture Topic Task introduces Domain Services as a mechanism for handling business logic
+that spans multiple aggregates such as StudentProfile, RecruiterProfile, and Match. Domain
+Services provide stateless, pure domain logic that coordinates these aggregates without
+violating their boundaries.
+
+==== MatchingService (Domain Service)
+
+*Inputs*::
+- StudentProfile
+- RecruiterProfile
+- MatchPolicy
+
+*Responsibilities*::
+- Validate profile eligibility
+- Apply match rules
+- Compute match score
+- Create Match aggregate
+
+*Rationale*::
+This logic does not belong to any aggregate because it depends on multiple independent root
+entities and does not modify their internal invariants.
+
+==== Pseudocode Example
+
+```
+class MatchingService {
+  evaluate(student, recruiter) {
+    if (!student.meetsGPA(recruiter.minGPA)) return null;
+    if (!skillsCompatible(student.skills, recruiter.requiredSkills)) return null;
+
+    const score = calculateScore(student, recruiter);
+    return Match.create(student.id, recruiter.id, score);
+  }
+}
+```
+
 == Log Book
 
 [cols="3,^2,5",options="header",]
