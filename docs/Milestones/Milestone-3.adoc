@@ -1048,61 +1048,96 @@ image::../Images/EventsActionsEntitiesUML.png[width=100%,align=center]
 
 ==== Function Signatures
 
-This section describes the key operations that define the system's behavior. Each function signature is presented with its conceptual explanation.
+[Line-Through]#This section describes the key operations that define the system's behavior. Each function signature is presented with its conceptual explanation.Function: `Future<ProfileCard?> getNextProfile(String userId)`This function fetches the next profile card from a user's personalized deck. The deck is dynamically generated based on if  the user is a Candidate or Recruiter, their preferences, and active job openings. For a recruiter, this returns a `CandidateCard`; for a candidate, a JobCard. The function returns null when the current deck is exhausted, signaling there are no more profiles to review. This is a more abstract function.Function: `Future<Result<void>> processSwipe(String userId, String profileId, SwipeDirection direction)`This operation records a user's initial evaluation of a profile. Conceptually, a "Like" corresponds to the domain action of judging a profile as Interested, while a "Pass" corresponds to NotInterested. This function serves as the UI trigger that would typically invoke the domain-level judge or dismiss functions in the backend, persisting the user's intent. It returns a Result type to handle potential errors, such as trying to swipe on an invalid profile.Function: `Future<Match?> checkForMatch(String userId, String profileId)`Following a "Like" action, this function checks for mutual interest. It is the procedural counterpart to the declarative domain rule embodied in `checkForMutualInterest`. It queries the system state to determine if the profile the user just liked has also already liked them back. It returns a Match object upon this condition being met, otherwise null.Domain Function: `judge(recruiter: Recruiter, candidate: Candidate, stage: CandidateStage) → Recruiter`This is the pure domain abstraction for the evaluation process. It models the recruiter's action of classifying a candidate into a specific evaluative state. The CandidateStage is a central domain type representing this progression:`CandidateStage = { Undecided, NotInterested, Interested, Invited, OfferMade }`The function takes the current state of the recruiter, the candidate in question, and the new stage, and returns an updated Recruiter entity.Domain Function: `dismiss(recruiter: Recruiter, candidate: Candidate, position: JobOpening) → Recruiter`This function is a more specific form of judge, representing the domain action of a recruiter explicitly rejecting a candidate for a particular job opening. It is semantically clearer than `judge(..., NotInterested)` when the context of the specific position is important.Function: `Future<Connection> createConnection(Match match)` This function is called after a Match is found. It creates a persistent Connection entity, which serves as the shared context for all future one-to-one interactions between the matched users. This entity houses the chat history and connection metadata, formally establishing the communication channel.Function: `Future<Result<Message>> sendMessage(String connectionId, String userId, String content)` This operation allows a user to send a message within an established connection. It requires the specific connectionId to ensure the message is part of the correct conversation thread. It performs permissions checks and returns a Message entity on success, or an error for invalid requests.Domain Function: `establishConnection(match: Match) → Connection` This is the conceptual model for the createConnection function. It represents the creation of a Connection as a direct consequence of a successful Match in the domain.Function: `Future<Result<UserSession>> initializeUserSession(UserCredentials credentials)`* This function authenticates a user based on their credentials. Upon success, it returns a UserSession entity containing the user's identity and role, which is necessary for authorizing subsequent operations. A failure result indicates invalid authentication.Function: `Future<Result<Profile>> getFullProfile(String userId, String requesterId)` This retrieves a user's complete profile. Crucially, it incorporates a domain-level permission check: the requesterId parameter is used to enforce business rules about who is allowed to see which parts of a profile. This is a more nuanced and secure domain concept than a simple data fetch.Scenario: A Recruiter Reviews a Candidate1. Fetch Profile: The recruiter's app calls `getNextProfile("recruiter_123")`. The system returns a CandidateCard for candidate_abc.2. Express Interest: The recruiter swipes right (Like). The app calls processSwipe("recruiter_123", "candidate_abc", SwipeDirection.like). Internally, this likely triggers a backend service that executes the domain action judge(recruiter_123, candidate_abc, Interested).3. Check for Match: The system now calls `checkForMatch("recruiter_123", "candidate_abc")`. It discovers that candidate_abc had already "liked" a job opening from recruiter_123's company. Consequently, a Match object is returned.4. Establish Connection: The frontend, upon receiving the Match, calls `createConnection(match)` to create a persistent Connection between the two parties, which is the conceptual establishConnection domain action.5. Communication: The recruiter now uses `sendMessage("connection_xyz", "recruiter_123", "Welcome to our talent pool!")` to initiate contact within the sanctioned context of the new connection.#
 
-Function: `Future<ProfileCard?> getNextProfile(String userId)`
+1. getNextProfile
 
-* This function fetches the next profile card from a user's personalized deck. The deck is dynamically generated based on if  the user is a Candidate or Recruiter, their preferences, and active job openings. For a recruiter, this returns a `CandidateCard`; for a candidate, a JobCard. The function returns null when the current deck is exhausted, signaling there are no more profiles to review. This is a more abstract function.
+Domain Function
+getNextProfile(user: User) → (ProfileCursor, ProfileCard)
 
-Function: `Future<Result<void>> processSwipe(String userId, String profileId, SwipeDirection direction)`
+Purpose
+Returns the next card available to a user based on the domain rule:
+“The discovery flow has sequential steps.”
 
-* This operation records a user's initial evaluation of a profile. Conceptually, a "Like" corresponds to the domain action of judging a profile as Interested, while a "Pass" corresponds to NotInterested. This function serves as the UI trigger that would typically invoke the domain-level judge or dismiss functions in the backend, persisting the user's intent. It returns a Result type to handle potential errors, such as trying to swipe on an invalid profile.
+Scenario
+Recruiter R calls getNextProfile with their current cursor → receives the next CandidateCard → updated cursor returned.
 
-Function: `Future<Match?> checkForMatch(String userId, String profileId)`
+2. processSwipe
 
-* Following a "Like" action, this function checks for mutual interest. It is the procedural counterpart to the declarative domain rule embodied in `checkForMutualInterest`. It queries the system state to determine if the profile the user just liked has also already liked them back. It returns a Match object upon this condition being met, otherwise null.
+Domain Function
+processSwipe(reviewer: Reviewer, card: ProfileCard, interest: Interest) → (Reviewer, InterestRecord)
 
-Domain Function: `judge(recruiter: Recruiter, candidate: Candidate, stage: CandidateStage) → Recruiter`
+Purpose
+A reviewer (Candidate or Recruiter) expresses Interested or NotInterested regarding a ProfileCard.
+The reviewer aggregate changes.
 
-* This is the pure domain abstraction for the evaluation process. It models the recruiter's action of classifying a candidate into a specific evaluative state. The CandidateStage is a central domain type representing this progression:
-`CandidateStage = { Undecided, NotInterested, Interested, Invited, OfferMade }`
-The function takes the current state of the recruiter, the candidate in question, and the new stage, and returns an updated Recruiter entity.
+Scenario
+Reviewer R swipes Interested on Card C → R’s evaluation history updated → InterestRecord created.
 
-Domain Function: `dismiss(recruiter: Recruiter, candidate: Candidate, position: JobOpening) → Recruiter`
+3. determineMatch
 
-* This function is a more specific form of judge, representing the domain action of a recruiter explicitly rejecting a candidate for a particular job opening. It is semantically clearer than `judge(..., NotInterested)` when the context of the specific position is important.
+Domain Function
+determineMatch(reviewer: Reviewer, target: User, interestRecord: InterestRecord) → Match?
 
-Function: `Future<Connection> createConnection(Match match)`
+Purpose
+Checks whether reciprocal interest exists 
+domain rule: “a match occurs when both have expressed interest”
 
-* This function is called after a Match is found. It creates a persistent Connection entity, which serves as the shared context for all future one-to-one interactions between the matched users. This entity houses the chat history and connection metadata, formally establishing the communication channel.
-  
-Function: `Future<Result<Message>> sendMessage(String connectionId, String userId, String content)`
+Scenario
+Reviewer R likes Candidate A → processSwipe generates InterestRecord → determineMatch checks if A already liked R → produces Match.
 
-* This operation allows a user to send a message within an established connection. It requires the specific connectionId to ensure the message is part of the correct conversation thread. It performs permissions checks and returns a Message entity on success, or an error for invalid requests.
+4. judgeCandidate
 
-Domain Function: `establishConnection(match: Match) → Connection`
+Domain Function
+judgeCandidate(recruiter: Recruiter, candidate: Candidate, newStage: CandidateStage) → (Recruiter, Candidate)
 
-* This is the conceptual model for the createConnection function. It represents the creation of a Connection as a direct consequence of a successful Match in the domain.
+Purpose
+Models the recruiter assigning the candidate a new evaluative stage.
+This corrected signature returns both updated aggregates.
 
-Function: `Future<Result<UserSession>> initializeUserSession(UserCredentials credentials)`
+5. dismissCandidate
 
-* This function authenticates a user based on their credentials. Upon success, it returns a UserSession entity containing the user's identity and role, which is necessary for authorizing subsequent operations. A failure result indicates invalid authentication.
+Domain Function
+dismissCandidate(recruiter: Recruiter, candidate: Candidate, position: JobOpening) → (Recruiter, Candidate)
 
-Function: `Future<Result<Profile>> getFullProfile(String userId, String requesterId)`
+Purpose
+Represents domain action of rejecting a candidate for a specific job opening.
+6. establishConnection
 
-* This retrieves a user's complete profile. Crucially, it incorporates a domain-level permission check: the requesterId parameter is used to enforce business rules about who is allowed to see which parts of a profile. This is a more nuanced and secure domain concept than a simple data fetch.
+Domain Function
+establishConnection(match: Match, recruiter: Recruiter, candidate: Candidate) → (Recruiter, Candidate, Connection)
 
-Scenario: A Recruiter Reviews a Candidate
+Purpose
+Creates a new relationship context after a successful match.
+Establishes the connection in both participant aggregates.
+Produces a full Connection, not an ID.
+Corrects naming inconsistency.
 
-1. Fetch Profile: The recruiter's app calls `getNextProfile("recruiter_123")`. The system returns a CandidateCard for candidate_abc.
+7. sendMessage
 
-2. Express Interest: The recruiter swipes right (Like). The app calls processSwipe("recruiter_123", "candidate_abc", SwipeDirection.like). Internally, this likely triggers a backend service that executes the domain action judge(recruiter_123, candidate_abc, Interested).
+Domain Function
+sendMessage(connection: Connection, sender: User, content: MessageContent) → Connection
 
-3. Check for Match: The system now calls `checkForMatch("recruiter_123", "candidate_abc")`. It discovers that candidate_abc had already "liked" a job opening from recruiter_123's company. Consequently, a Match object is returned.
+Purpose
+Adds a new message to the connection’s message history.
+operates on the domain entity directly.
 
-4. Establish Connection: The frontend, upon receiving the Match, calls `createConnection(match)` to create a persistent Connection between the two parties, which is the conceptual establishConnection domain action.
+8. authenticateUser
 
-5. Communication: The recruiter now uses `sendMessage("connection_xyz", "recruiter_123", "Welcome to our talent pool!")` to initiate contact within the sanctioned context of the new connection.
+Domain Function
+authenticateUser(credentials: UserCredentials) → UserSession
+
+Purpose
+Domain-level authentication: produces a valid session.
+
+9. viewProfile
+
+Domain Function
+viewProfile(subject: User, viewer: User) → ProfileView
+
+Purpose
+Returns the authorized view of a user’s profile based on domain permissions.
+
 
 === Requirements
 
@@ -6626,7 +6661,7 @@ Applying these patterns ensures:
 | Modified, Added
 
 | Pedro Rodriguez Velez
-| 1.5, 2.1.6
+| 1.5, 2.1.6, 2.1.4
 | Modified, Added
 
 | Carlos J. Pepín Delgado
