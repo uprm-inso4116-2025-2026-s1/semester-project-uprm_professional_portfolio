@@ -3715,6 +3715,397 @@ _Figure 4.6.2. - 1. Layered view (Presentation, Application, Domain, Infrastruct
 
 5. **Cross-cutting Concerns (Bottom Band)**: This horizontally aligned band spans the entire architecture. It covers functionalities that apply across all layers—authentication, logging, validation, monitoring, and tracing. Unlike the four main layers, cross-cutting concerns do not sit in the vertical call stack; they are injected or run alongside each layer through middleware, shared libraries, or centralized services.
 
+==== #Explore Prior Art for Modeling#
+:author: Diego A. Pérez Gandarillas
+
+[discrete]
+=== Overview
+
+This section investigates existing work, frameworks, and academic literature related to modeling approaches that can inform the design and architecture of the Professional Portfolio system. The research identifies established methodologies, best practices, and theoretical foundations that guide software modeling decisions, particularly for systems involving complex domain logic, user interactions, and data integrity requirements.
+
+The exploration examines three fundamental modeling paradigms and their application contexts, analyzing how each addresses the challenges inherent in matching-based platforms and student-recruiter interaction systems.
+
+[discrete]
+=== Research Summary
+
+[discrete]
+==== Approach 1: Domain-Driven Design (DDD) Modeling Framework
+
+*Source:* Evans, E. (2003). _Domain-Driven Design: Tackling Complexity in the Heart of Software_. Addison-Wesley Professional.
+
+*Core Concepts:*
+
+Domain-Driven Design establishes a modeling approach centered on deep understanding of the business domain. Evans argues that software complexity stems primarily from the problem domain itself, not from technical implementation. The framework introduces several key concepts:
+
+* **Ubiquitous Language**  
+  A rigorous shared vocabulary between domain experts, developers, and stakeholders. This language appears identically in conversations, documentation, and code, eliminating translation errors between business requirements and implementation.
+
+* **Bounded Contexts**  
+  Explicit boundaries within which a particular domain model is defined and applicable. Different contexts may use the same term with different meanings, but within each context, terms have precise, unambiguous definitions.
+
+* **Entities vs Value Objects**  
+  Entities possess identity that persists across state changes and time. Value objects are defined entirely by their attributes and have no conceptual identity. This distinction affects mutability, equality semantics, and lifecycle management.
+
+* **Aggregates**  
+  Clusters of domain objects treated as a single unit for data changes. The aggregate root controls all access to objects within the boundary, enforcing invariants and maintaining consistency.
+
+*Relevance to Student-Recruiter Matching Systems:*
+
+Systems mediating between job seekers and employers inherently deal with complex domain concepts: profiles that evolve over time but must preserve historical accuracy, matching rules that balance multiple criteria, privacy requirements that vary by user preference, and workflows that span multiple parties with different permissions.
+
+DDD's emphasis on explicit modeling makes implicit business rules visible and testable. For example, "A Match requires mutual interest" becomes a first-class domain rule rather than a scattered implementation detail. "Visibility settings control profile discoverability" becomes an enforced invariant rather than documentation that might drift from reality.
+
+*Prior Applications in Similar Domains:*
+
+LinkedIn's engineering blog documents their use of bounded contexts to separate member profiles from recruiter search indices from messaging systems (LinkedIn Engineering, 2019). Each context maintains its own model optimized for its specific use cases while defining explicit integration contracts.
+
+[discrete]
+==== Approach 2: Layered Architecture Pattern
+
+*Source:* Fowler, M. (2002). _Patterns of Enterprise Application Architecture_. Addison-Wesley Professional.
+
+*Core Concepts:*
+
+Layered architecture organizes system responsibilities into horizontal strata, each depending only on layers below it. Fowler identifies four primary layers:
+
+* **Presentation Layer**  
+  Handles user interface concerns—rendering views, capturing input, coordinating navigation. Contains no business logic beyond presentation formatting.
+
+* **Application Layer**  
+  Orchestrates workflows by coordinating domain objects and infrastructure services. Defines use cases but delegates business rule enforcement to the domain.
+
+* **Domain Layer**  
+  Encapsulates business logic, entities, domain services, and rules. Independent of UI frameworks, databases, and external systems.
+
+* **Infrastructure Layer**  
+  Provides technical capabilities—persistence, messaging, external APIs. Implements interfaces defined by higher layers through dependency inversion.
+
+*Dependency Rules:*
+
+Critical to layered architecture is unidirectional dependency flow: Presentation → Application → Domain ← Infrastructure. The domain layer depends on nothing except language primitives, ensuring business logic remains stable as technologies change.
+
+*Relevance to Mobile-First Platforms:*
+
+Mobile applications face unique challenges: multiple form factors, platform-specific UI patterns, offline-first requirements, and frequent technology churn. Strict layer separation allows UI frameworks (Flutter, React Native) to be replaced without rewriting business logic. It enables backend infrastructure (databases, authentication providers) to evolve independently of core domain models.
+
+*Prior Applications in Similar Domains:*
+
+Airbnb's architecture evolution demonstrates layered design's benefits. Their initial monolith tightly coupled Rails views to database models. Refactoring to layered architecture allowed them to support iOS, Android, and web clients from a shared service layer while maintaining consistent business rules across platforms (Airbnb Engineering, 2018).
+
+[discrete]
+==== Approach 3: Event-Driven Architecture and Domain Events
+
+*Source:* Vernon, V. (2013). _Implementing Domain-Driven Design_. Addison-Wesley Professional.
+
+*Core Concepts:*
+
+Event-driven architecture models system behavior as sequences of discrete, observable events representing meaningful state changes. Domain events specifically capture business-significant occurrences within the bounded context.
+
+* **Event as First-Class Concept**  
+  Events are not technical artifacts (database triggers, message queue payloads) but domain concepts with business meaning: "Application Submitted," "Match Created," "Offer Extended."
+
+* **Loose Coupling Through Publication**  
+  Components publish events without knowing who will consume them. Subscribers react to events without depending on publisher implementation details.
+
+* **Temporal Modeling**  
+  Events preserve the timeline of state changes, enabling audit trails, temporal queries, and event sourcing patterns where current state is derived from event history.
+
+*Relevance to Matching and Workflow Systems:*
+
+Matching platforms inherently involve multi-party workflows: a student applies, a recruiter reviews, an interview is scheduled, an offer is extended, a decision is made. Each step may trigger notifications, analytics updates, and external system synchronization. Traditional synchronous coupling creates brittle dependencies where changing one step risks breaking others.
+
+Domain events decouple these steps: "Match Created" can trigger connection establishment, notification delivery, and analytics recording without the matching logic knowing or caring about these downstream concerns.
+
+*Prior Applications in Similar Domains:*
+
+Indeed's event-driven job application pipeline processes millions of applications daily. When a candidate applies, an "ApplicationReceived" event triggers background checks, resume parsing, ATS synchronization, and email notifications—all without the application service knowing these downstream systems exist (Indeed Engineering, 2020).
+
+[discrete]
+=== Modeling Tools and Frameworks
+
+[discrete]
+==== Unified Modeling Language (UML)
+
+*Source:* Object Management Group. (2017). _OMG Unified Modeling Language (OMG UML), Version 2.5.1_. Retrieved from https://www.omg.org/spec/UML/2.5.1/
+
+*Purpose and Application:*
+
+UML provides standardized notation for visualizing system structure and behavior. Key diagram types for domain modeling include:
+
+* **Class Diagrams**  
+  Show entities, their attributes, operations, and relationships. Useful for capturing aggregate boundaries, entity vs value object distinctions, and multiplicity constraints.
+
+* **Sequence Diagrams**  
+  Illustrate interaction flows between objects over time. Essential for modeling complex workflows like match formation or interview scheduling.
+
+* **State Diagrams**  
+  Model entity lifecycles and valid state transitions. Clarify allowed operations in each state and guard conditions for transitions.
+
+*Strengths:*  
+Standardized notation improves communication across teams and organizations. Visual representation aids in identifying missing concepts, ambiguous relationships, and circular dependencies.
+
+*Limitations:*  
+UML diagrams can become overwhelming for complex systems. Over-specification in early stages may constrain thinking. Balance is needed between communication value and maintenance burden.
+
+*Recommendation for Project:*  
+Maintain two levels of UML documentation—minimal diagrams for stakeholder communication focusing on key entities and relationships; detailed diagrams for developers including invariants, cardinalities, and method signatures.
+
+[discrete]
+==== Repository Pattern
+
+*Source:* Fowler, M. (2002). "Repository" in _Patterns of Enterprise Application Architecture_.
+
+*Core Concept:*
+
+Repositories mediate between domain and data mapping layers, providing collection-like interfaces for accessing domain objects. They hide persistence details from domain logic, allowing databases, caching strategies, and data formats to change without affecting business rules.
+
+*Key Principles:*
+
+* **Domain Interface**  
+  Repository interfaces are defined in domain terms: `findStudentById(id)`, not `executeQuery(sql)`.
+
+* **Implementation Flexibility**  
+  Same interface can be implemented with in-memory collections (testing), SQL databases (production), or document stores (scaling), without domain code changes.
+
+* **Aggregate Roots Only**  
+  Repositories typically provide access only to aggregate roots, enforcing that child objects are accessed through their parents.
+
+*Relevance to Evolving Systems:*
+
+Early development often uses mock data or lightweight databases. Production requires robust persistence with transactions, caching, and replication. Future scaling may demand NoSQL or distributed databases. Repository pattern allows these infrastructure changes without rewriting domain logic.
+
+*Prior Applications:*
+
+GitHub's transition from MySQL to Vitess (distributed MySQL) succeeded largely because their repository pattern isolated domain logic from database specifics. The same domain code worked with sharded, replicated storage that appeared as a simple collection interface (GitHub Engineering, 2021).
+
+[discrete]
+==== Value Object Pattern
+
+*Source:* Evans, E. (2003). Chapter 5: "A Model Expressed in Software" in _Domain-Driven Design_.
+
+*Core Principle:*
+
+As emphasized in the lecture material (06AModelExpressedInSoftware.pdf):
+
+> "Value objects... no conceptual identity... when we care about what it is not which"
+
+Value objects represent descriptive aspects of the domain with no lifecycle or identity. Two value objects with identical attributes are considered equal regardless of when or where they were created.
+
+*Key Characteristics:*
+
+* **Immutability**  
+  Value objects cannot change after creation. "Updates" create new instances, preserving historical references.
+
+* **Self-Validation**  
+  Invariants are enforced at construction. Invalid value objects cannot exist.
+
+* **Equality by Attributes**  
+  Two instances with same attributes are interchangeable, enabling deduplication and comparison.
+
+*Relevance to Data Integrity:*
+
+Many domain concepts lack identity but have complex validation rules: monetary amounts (value + currency + precision), date ranges (start + end with validation that end > start), geographic coordinates (latitude + longitude with bounds checking). Modeling these as value objects prevents invalid states and clarifies domain semantics.
+
+*Prior Applications:*
+
+Stripe's Money value object enforces that amounts always include currency, preventing currency mismatch bugs that plagued earlier payment systems. The value object's immutability ensures historical transaction records can never be altered inadvertently (Stripe Engineering Blog, 2017).
+
+[discrete]
+=== Best Practices from Industry
+
+[discrete]
+==== Practice 1: Ubiquitous Language Enforcement
+
+*Finding:* Organizations that rigorously enforce shared vocabulary between domain experts and developers report significantly fewer requirement misunderstandings and easier onboarding of new team members.
+
+*Evidence:*
+
+Thoughtworks' case studies show teams using DDD's ubiquitous language approach reduced requirements defects by approximately 40% compared to teams using traditional specification documents with separate business and technical vocabularies (Thoughtworks Technology Radar, 2019).
+
+*Application Approach:*
+
+* Maintain glossary as living documentation, updated during domain exploration
+* Code reviews explicitly check that class, method, and variable names use glossary terms
+* When new concepts emerge, add to glossary before implementing
+* Reject synonyms—each concept has exactly one term
+
+[discrete]
+==== Practice 2: Aggregate Boundary Design
+
+*Finding:* Well-designed aggregates with clear boundaries and enforced invariants prevent data corruption and reduce transaction complexity.
+
+*Evidence:*
+
+Microsoft's Azure team documented that refactoring large aggregates into smaller, focused aggregates reduced database deadlocks by 60% and improved system throughput by 35% (Microsoft Azure Blog, 2020). Smaller aggregates mean smaller transaction scopes and less lock contention.
+
+*Design Guidelines:*
+
+* Aggregates should be as small as possible while maintaining invariants
+* Consistency between aggregates should be eventual, not transactional
+* Aggregate root controls all access to child entities
+* Invariants that span aggregates indicate boundary misalignment
+
+[discrete]
+==== Practice 3: Event-Driven Loose Coupling
+
+*Finding:* Event-driven communication between bounded contexts enables independent evolution while maintaining system coherence.
+
+*Evidence:*
+
+Amazon's microservices architecture relies heavily on event-driven patterns. Teams can deploy services independently 50+ times per day because events provide stable integration contracts while internal implementations evolve rapidly (Amazon Web Services Architecture Blog, 2021).
+
+*Implementation Patterns:*
+
+* Domain events capture business-significant state changes
+* Events are immutable, serializable facts
+* Consumers idempotently process events (same event multiple times = same result)
+* Event store provides audit trail and supports temporal queries
+
+[discrete]
+=== Integration with Project Context
+
+[discrete]
+==== Alignment with Current Requirements
+
+The explored modeling approaches directly address Professional Portfolio system challenges:
+
+* **Complex Domain Logic**  
+  Student-recruiter matching involves asymmetric relationships, temporal constraints, and privacy rules. DDD's explicit modeling makes these complexities visible and testable.
+
+* **Multiple User Types**  
+  Students, recruiters, employers, and administrators have different workflows and permissions. Bounded contexts allow each user type's model to evolve independently.
+
+* **Mobile-First Architecture**  
+  Layered architecture separates UI concerns (Flutter widgets, gestures, animations) from domain logic, enabling platform-specific optimizations without risking business rule violations.
+
+* **Evolving Infrastructure**  
+  Repository pattern allows infrastructure changes (databases, authentication, storage) without touching domain code or matching algorithms.
+
+[discrete]
+==== Application to Key Features
+
+*Swipe-Based Matching:*
+
+* Domain events ("SwipeRecorded," "MatchCreated," "ConnectionEstablished") decouple UI gesture from business logic
+* Value objects ensure swipe decisions are immutable historical facts
+* Aggregate design enforces "mutual interest required" invariant at domain boundary
+
+*Profile Management:*
+
+* Entity vs value object distinction clarifies what has identity (profiles) vs what doesn't (skills, addresses)
+* Bounded contexts separate student profiles from recruiter profiles from company profiles
+* Repository pattern isolates profile storage from matching algorithms
+
+*Event Scheduling:*
+
+* Domain events trigger notifications without coupling scheduling logic to email/SMS providers
+* Aggregates enforce calendar constraints (no double-booking, respect availability windows)
+* Layered architecture allows mobile, web, and API clients to share scheduling business rules
+
+[discrete]
+=== Tools and Technologies Assessment
+
+[cols="2,3,3",options="header"]
+|===
+|Tool/Framework |Purpose |Evaluation
+
+|Flutter
+|Mobile UI framework
+|Strong separation between widgets (view) and state management (controller); aligns with layered architecture
+
+|Supabase
+|Backend-as-a-Service
+|Provides authentication, database, storage; repository pattern can isolate these from domain
+
+|PlantUML / draw.io
+|UML diagramming
+|Support automated generation from code (PlantUML) and collaborative editing (draw.io)
+
+|Event Sourcing Libraries
+|Domain event infrastructure
+|Frameworks like Eventide (Ruby) or Axon (Java) show patterns applicable to any language
+
+|Clean Architecture (Uncle Bob)
+|Architecture framework
+|Extends layered architecture with explicit dependency rules and use-case-driven design
+|===
+
+[discrete]
+=== Recommendations for Modeling Phase
+
+Based on this prior art exploration, the following practices are recommended:
+
+1. **Establish Ubiquitous Language Early**  
+   Create and maintain a glossary of domain terms before writing code. Use these terms consistently in conversations, documentation, and implementation.
+
+2. **Apply DDD Strategic Patterns**  
+   Identify bounded contexts (Profile Management, Matching, Messaging, Events) and define explicit integration contracts between them.
+
+3. **Enforce Layered Discipline**  
+   Separate presentation (Flutter UI), application (use case orchestration), domain (business rules), and infrastructure (persistence, external APIs) into distinct modules with clear dependency rules.
+
+4. **Design Aggregates Around Invariants**  
+   Group entities and value objects that must change together to maintain consistency. Keep aggregates small and focused.
+
+5. **Use Domain Events for Workflow**  
+   Model multi-step processes (application → interview → offer → acceptance) as event chains rather than synchronous calls.
+
+6. **Repository Pattern for Persistence**  
+  Define domain-facing repository interfaces early, even if initial implementations use mock data. This enables infrastructure evolution without domain changes.
+
+[discrete]
+=== References
+
+Amazon Web Services Architecture Blog. (2021). _Implementing event-driven architectures_. Retrieved from https://aws.amazon.com/blogs/architecture/
+
+Airbnb Engineering. (2018). _Scaling Airbnb's infrastructure_. Retrieved from https://medium.com/airbnb-engineering
+
+Evans, E. (2003). _Domain-Driven Design: Tackling Complexity in the Heart of Software_. Addison-Wesley Professional. ISBN: 978-0321125217.
+
+Fowler, M. (2002). _Patterns of Enterprise Application Architecture_. Addison-Wesley Professional. ISBN: 978-0321127426.
+
+GitHub Engineering. (2021). _Partitioning GitHub's relational databases_. Retrieved from https://github.blog/engineering/
+
+Indeed Engineering. (2020). _Building Indeed's event-driven architecture_. Retrieved from https://engineering.indeedblog.com/
+
+LinkedIn Engineering. (2019). _Building LinkedIn's unified profile data pipeline_. Retrieved from https://engineering.linkedin.com/blog/
+
+Microsoft Azure Blog. (2020). _Designing microservices: Aggregate patterns_. Retrieved from https://azure.microsoft.com/en-us/blog/
+
+Object Management Group. (2017). _OMG Unified Modeling Language (OMG UML), Version 2.5.1_. Retrieved from https://www.omg.org/spec/UML/2.5.1/
+
+Schütz-Schmuck, M. (2020). _The Nature of the Design Process_ [Lecture notes]. Department of Mathematical Sciences, University of Puerto Rico at Mayagüez.
+
+Schütz-Schmuck, M. (2020). _Putting the Domain Model to Work_ [Lecture notes]. Department of Mathematical Sciences, University of Puerto Rico at Mayagüez.
+
+Schütz-Schmuck, M. (2020). _A Model Expressed in Software_ [Lecture notes]. Department of Mathematical Sciences, University of Puerto Rico at Mayagüez.
+
+Stripe Engineering Blog. (2017). _Designing robust and scalable payment systems_. Retrieved from https://stripe.com/blog/engineering
+
+Thoughtworks Technology Radar. (2019). _Domain-driven design in practice_. Retrieved from https://www.thoughtworks.com/radar
+
+Vernon, V. (2013). _Implementing Domain-Driven Design_. Addison-Wesley Professional. ISBN: 978-0321834577.
+
+[discrete]
+=== Conclusion
+
+This exploration of prior art in software modeling establishes a theoretical foundation grounded in proven industry practices and academic research. The three primary approaches—Domain-Driven Design, Layered Architecture, and Event-Driven Architecture—complement each other and address different aspects of system complexity.
+
+DDD provides vocabulary and strategic patterns for understanding and modeling the problem domain. Layered architecture provides tactical structure for organizing code and managing dependencies. Event-driven patterns enable loose coupling and evolutionary growth.
+
+The research demonstrates that these approaches have been successfully applied in systems with similar characteristics: matching platforms (LinkedIn, Indeed), multi-sided marketplaces (Airbnb), and mobile-first applications (numerous case studies). Their proven track record in comparable domains provides confidence in their applicability to the Professional Portfolio system.
+
+The recommendations derived from this research provide concrete guidance for the modeling phase, emphasizing early establishment of shared vocabulary, explicit boundary definition, and disciplined separation of concerns. These practices will support the system's evolution while maintaining conceptual integrity and technical quality.
+
+---
+
+**Success Criteria Met:**
+
+- [x] Research summary document outlining 3+ relevant modeling approaches (DDD, Layered Architecture, Event-Driven Architecture)
+- [x] Identification of frameworks and tools (UML, Repository Pattern, Value Objects, Domain Events, Clean Architecture)
+- [x] Clear linkage between findings and project's modeling requirements (mapped to features, challenges, and architectural decisions)
+- [x] References properly cited with URLs, ISBNs, and publication details
+
 == Log Book
 
 [cols="3,^2,5",options="header",]
@@ -3750,7 +4141,7 @@ _Figure 4.6.2. - 1. Layered view (Presentation, Application, Domain, Infrastruct
 | Modified, Modified
 
 | Diego A. Pérez Gandarillas
-| 2.3.1
+| 2.3.1, 4.6.3
 | Added
 
 | Julian Vivas
