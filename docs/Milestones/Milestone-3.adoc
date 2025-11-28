@@ -3220,7 +3220,7 @@ _Figure 4.3.1. - 1. State Transitions_
 - Archived → Active: triggered by `Out of Profiles/timeout`
 - Active/Archived → Deletion: triggered by `Undo last swipe`, `user referenced no longer exists` 
 
-image::..\Images\swipe_process.png[width=70%,align=center]
+image::..\Images\swipe_process.png[width=75%,align=center]
 _Figure 4.3.2. - 1. State Transitions_
 
 ===== Aggregate Deletion Rules
