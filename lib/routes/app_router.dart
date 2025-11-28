@@ -77,6 +77,15 @@ class AppRouter {
           },
         ),
 
+        // Chat room route for a specific conversation
+        GoRoute(
+          path: '/chat/:conversationId',
+          builder: (context, state) {
+            final conversationId = state.pathParameters['conversationId'] ?? '';
+            return ChatRoomPage(conversationId: conversationId);
+          },
+        ),
+
         // Profile setup routes
         GoRoute(
           path: AppConstants.recruiterProfileRoute,

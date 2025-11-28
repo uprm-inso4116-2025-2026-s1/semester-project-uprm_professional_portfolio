@@ -2,6 +2,7 @@
 import 'package:uprm_professional_portfolio/features/matches.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../settings/settings_screen.dart';
+import '../chat/conversations_page.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key, this.initialIndex = 0});
@@ -17,12 +18,18 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    _selectedIndex = widget.initialIndex;
+    // Ensure the initial index is within the available screens range
+    _selectedIndex = (widget.initialIndex >= 0 &&
+            widget.initialIndex < _screens.length)
+        ? widget.initialIndex
+        : 0;
   }
 
   final List<Widget> _screens = const [
     MatchesScreen(),
+    DashboardScreen(),
     SettingsScreen(),
+    ConversationsPage(),
   ];
 
   @override
@@ -46,23 +53,23 @@ class _MainScreenState extends State<MainScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _navItem(
-                index: 2, // placeholder - to be implemented later
+                index: 10, // placeholder - to be implemented later
                 icon: Icons.star_outline_rounded,
               ),
               _navItem(
-                index: 3, // placeholder - to be implemented later
+                index: 0, // placeholder - to be implemented later
                 icon: Icons.search_outlined,
               ),
               _navItem(
-                index: 0,
+                index: 1,
                 icon: Icons.home_outlined,
               ),
               _navItem(
-                index: 4, // placeholder - to be implemented later
+                index: 3, // placeholder - to be implemented later
                 icon: Icons.chat_bubble_outline,
               ),
               _navItem(
-                index: 1,
+                index: 2,
                 icon: Icons.person_outlined,
               ),
             ],
@@ -72,11 +79,19 @@ class _MainScreenState extends State<MainScreen> {
 
   // --- NavBar Helper ---
   Widget _navItem({required int index, required IconData icon}) {
-    final isActive = _selectedIndex == index;
+    final isActive = index >= 0 && index < _screens.length && _selectedIndex == index;
 
     return GestureDetector(
       onTap: () {
-        setState(() => _selectedIndex = index);
+        // Only navigate to implemented screens (within _screens range).
+        if (index >= 0 && index < _screens.length) {
+          setState(() => _selectedIndex = index);
+        } else {
+          // Inform user this tab isn't implemented yet instead of causing an assertion.
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('This tab is not implemented yet')),
+          );
+        }
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 150),
