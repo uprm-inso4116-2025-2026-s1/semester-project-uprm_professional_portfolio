@@ -1048,95 +1048,90 @@ image::../Images/EventsActionsEntitiesUML.png[width=100%,align=center]
 
 ==== Function Signatures
 
-[Line-Through]#This section describes the key operations that define the system's behavior. Each function signature is presented with its conceptual explanation.Function: `Future<ProfileCard?> getNextProfile(String userId)`This function fetches the next profile card from a user's personalized deck. The deck is dynamically generated based on if  the user is a Candidate or Recruiter, their preferences, and active job openings. For a recruiter, this returns a `CandidateCard`; for a candidate, a JobCard. The function returns null when the current deck is exhausted, signaling there are no more profiles to review. This is a more abstract function.Function: `Future<Result<void>> processSwipe(String userId, String profileId, SwipeDirection direction)`This operation records a user's initial evaluation of a profile. Conceptually, a "Like" corresponds to the domain action of judging a profile as Interested, while a "Pass" corresponds to NotInterested. This function serves as the UI trigger that would typically invoke the domain-level judge or dismiss functions in the backend, persisting the user's intent. It returns a Result type to handle potential errors, such as trying to swipe on an invalid profile.Function: `Future<Match?> checkForMatch(String userId, String profileId)`Following a "Like" action, this function checks for mutual interest. It is the procedural counterpart to the declarative domain rule embodied in `checkForMutualInterest`. It queries the system state to determine if the profile the user just liked has also already liked them back. It returns a Match object upon this condition being met, otherwise null.Domain Function: `judge(recruiter: Recruiter, candidate: Candidate, stage: CandidateStage) → Recruiter`This is the pure domain abstraction for the evaluation process. It models the recruiter's action of classifying a candidate into a specific evaluative state. The CandidateStage is a central domain type representing this progression:`CandidateStage = { Undecided, NotInterested, Interested, Invited, OfferMade }`The function takes the current state of the recruiter, the candidate in question, and the new stage, and returns an updated Recruiter entity.Domain Function: `dismiss(recruiter: Recruiter, candidate: Candidate, position: JobOpening) → Recruiter`This function is a more specific form of judge, representing the domain action of a recruiter explicitly rejecting a candidate for a particular job opening. It is semantically clearer than `judge(..., NotInterested)` when the context of the specific position is important.Function: `Future<Connection> createConnection(Match match)` This function is called after a Match is found. It creates a persistent Connection entity, which serves as the shared context for all future one-to-one interactions between the matched users. This entity houses the chat history and connection metadata, formally establishing the communication channel.Function: `Future<Result<Message>> sendMessage(String connectionId, String userId, String content)` This operation allows a user to send a message within an established connection. It requires the specific connectionId to ensure the message is part of the correct conversation thread. It performs permissions checks and returns a Message entity on success, or an error for invalid requests.Domain Function: `establishConnection(match: Match) → Connection` This is the conceptual model for the createConnection function. It represents the creation of a Connection as a direct consequence of a successful Match in the domain.Function: `Future<Result<UserSession>> initializeUserSession(UserCredentials credentials)`* This function authenticates a user based on their credentials. Upon success, it returns a UserSession entity containing the user's identity and role, which is necessary for authorizing subsequent operations. A failure result indicates invalid authentication.Function: `Future<Result<Profile>> getFullProfile(String userId, String requesterId)` This retrieves a user's complete profile. Crucially, it incorporates a domain-level permission check: the requesterId parameter is used to enforce business rules about who is allowed to see which parts of a profile. This is a more nuanced and secure domain concept than a simple data fetch.Scenario: A Recruiter Reviews a Candidate1. Fetch Profile: The recruiter's app calls `getNextProfile("recruiter_123")`. The system returns a CandidateCard for candidate_abc.2. Express Interest: The recruiter swipes right (Like). The app calls processSwipe("recruiter_123", "candidate_abc", SwipeDirection.like). Internally, this likely triggers a backend service that executes the domain action judge(recruiter_123, candidate_abc, Interested).3. Check for Match: The system now calls `checkForMatch("recruiter_123", "candidate_abc")`. It discovers that candidate_abc had already "liked" a job opening from recruiter_123's company. Consequently, a Match object is returned.4. Establish Connection: The frontend, upon receiving the Match, calls `createConnection(match)` to create a persistent Connection between the two parties, which is the conceptual establishConnection domain action.5. Communication: The recruiter now uses `sendMessage("connection_xyz", "recruiter_123", "Welcome to our talent pool!")` to initiate contact within the sanctioned context of the new connection.#
+[.line-through]#This section describes the key operations that define the system's behavior. Each function signature is presented with its conceptual explanation, separating domain concepts from UI artifacts.#
 
-1. getNextProfile
+===== 1. `getNextProfile`
 
-Domain Function
-getNextProfile(user: User) → (ProfileCursor, ProfileCard)
+* *Domain Function*
+** `getNextProfile(user: User) → (ProfileCursor, ProfileCard)`
 
-Purpose
-Returns the next card available to a user based on the domain rule:
-“The discovery flow has sequential steps.”
+**Purpose**: Returns the next card available to a user based on the domain rule:
+“The discovery flow has sequential steps.”  
+The deck is dynamically generated depending on whether the user is a Candidate or a Recruiter, their preferences, and the active job openings. For a Recruiter, this returns a CandidateCard; for a Candidate, a JobCard. Returns `null` if no profiles remain.
 
-Scenario
-Recruiter R calls getNextProfile with their current cursor → receives the next CandidateCard → updated cursor returned.
+**Scenario**: Recruiter R calls `getNextProfile` with their current cursor → receives the next CandidateCard → cursor updated for next fetch.
 
-2. processSwipe
+===== 2. `processSwipe`
 
-Domain Function
-processSwipe(reviewer: Reviewer, card: ProfileCard, interest: Interest) → (Reviewer, InterestRecord)
+* *Domain Function*
+** `processSwipe(reviewer: Reviewer, card: ProfileCard, interest: Interest) → (Reviewer, InterestRecord)`
 
-Purpose
-A reviewer (Candidate or Recruiter) expresses Interested or NotInterested regarding a ProfileCard.
-The reviewer aggregate changes.
+**Purpose**: Records the reviewer’s evaluation of a ProfileCard as Interested or NotInterested.  
+Conceptually, a "Like" is equivalent to Interested, and a "Pass" maps to NotInterested. Updates the reviewer aggregate and persists an InterestRecord.
 
-Scenario
-Reviewer R swipes Interested on Card C → R’s evaluation history updated → InterestRecord created.
+**Scenario**: Reviewer R swipes Interested on Card C → R’s evaluation history updated → InterestRecord created.
 
-3. determineMatch
+===== 3. `determineMatch`
 
-Domain Function
-determineMatch(reviewer: Reviewer, target: User, interestRecord: InterestRecord) → Match?
+* *Domain Function*
+** `determineMatch(reviewer: Reviewer, target: User, interestRecord: InterestRecord) → Match?`
 
-Purpose
-Checks whether reciprocal interest exists 
-domain rule: “a match occurs when both have expressed interest”
+**Purpose**: Checks whether reciprocal interest exists; domain rule: “a match occurs when both have expressed interest.”  
+This separates domain logic from UI triggers.
 
-Scenario
-Reviewer R likes Candidate A → processSwipe generates InterestRecord → determineMatch checks if A already liked R → produces Match.
+**Scenario**: Reviewer R likes Candidate A → processSwipe generates InterestRecord → `determineMatch` checks if A already liked R → produces Match.
 
-4. judgeCandidate
+===== 4. `judgeCandidate`
 
-Domain Function
-judgeCandidate(recruiter: Recruiter, candidate: Candidate, newStage: CandidateStage) → (Recruiter, Candidate)
+* *Domain Function*
+** `judgeCandidate(recruiter: Recruiter, candidate: Candidate, newStage: CandidateStage) → (Recruiter, Candidate)`
 
-Purpose
-Models the recruiter assigning the candidate a new evaluative stage.
-This corrected signature returns both updated aggregates.
+**Purpose**: Models a recruiter assigning a candidate a new evaluative stage.  
+CandidateStage = {Undecided, NotInterested, Interested, Invited, OfferMade}. Returns updated aggregates for both recruiter and candidate.
 
-5. dismissCandidate
+===== 5. `dismissCandidate`
 
-Domain Function
-dismissCandidate(recruiter: Recruiter, candidate: Candidate, position: JobOpening) → (Recruiter, Candidate)
+* *Domain Function*
+** `dismissCandidate(recruiter: Recruiter, candidate: Candidate, position: JobOpening) → (Recruiter, Candidate)`
 
-Purpose
-Represents domain action of rejecting a candidate for a specific job opening.
-6. establishConnection
+**Purpose**: Represents the domain action of rejecting a candidate for a specific job opening. Semantically clearer than using `judgeCandidate` with NotInterested alone.
 
-Domain Function
-establishConnection(match: Match, recruiter: Recruiter, candidate: Candidate) → (Recruiter, Candidate, Connection)
+===== 6. `establishConnection`
 
-Purpose
-Creates a new relationship context after a successful match.
-Establishes the connection in both participant aggregates.
-Produces a full Connection, not an ID.
-Corrects naming inconsistency.
+* *Domain Function*
+** `establishConnection(match: Match, recruiter: Recruiter, candidate: Candidate) → (Recruiter, Candidate, Connection)`
 
-7. sendMessage
+**Purpose**: Creates a persistent connection entity after a successful match.  
+The connection serves as the context for all one-to-one interactions between participants and houses message history and metadata.
 
-Domain Function
-sendMessage(connection: Connection, sender: User, content: MessageContent) → Connection
+===== 7. `sendMessage`
 
-Purpose
-Adds a new message to the connection’s message history.
-operates on the domain entity directly.
+* *Domain Function*
+** `sendMessage(connection: Connection, sender: User, content: MessageContent) → Connection`
 
-8. authenticateUser
+**Purpose**: Adds a new message to a connection's message history. Operates directly on the domain entity and enforces permissions, ensuring proper inclusion in the conversation.
 
-Domain Function
-authenticateUser(credentials: UserCredentials) → UserSession
+===== 8. `authenticateUser`
 
-Purpose
-Domain-level authentication: produces a valid session.
+* *Domain Function*
+** `authenticateUser(credentials: UserCredentials) → UserSession`
 
-9. viewProfile
+**Purpose**: Domain-level authentication: validates credentials and produces a UserSession entity containing identity and role for authorization. Returns an error result for invalid credentials.
 
-Domain Function
-viewProfile(subject: User, viewer: User) → ProfileView
+===== 9. `viewProfile`
 
-Purpose
-Returns the authorized view of a user’s profile based on domain permissions.
+* *Domain Function*
+** `viewProfile(subject: User, viewer: User) → ProfileView`
+
+**Purpose**: Returns an authorized view of a user’s profile based on domain permissions. Encapsulates business rules determining which attributes can be viewed by whom.
+
+===== Scenario: Recruiter Reviewing a Candidate
+
+1. Fetch Profile: Recruiter calls `getNextProfile("recruiter_123")` → receives CandidateCard for candidate_abc.  
+2. Express Interest: Recruiter swipes right → calls `processSwipe("recruiter_123", "candidate_abc", SwipeDirection.like)` → triggers domain action `judgeCandidate(recruiter_123, candidate_abc, Interested)`.  
+3. Check for Match: System calls `determineMatch("recruiter_123", "candidate_abc", interestRecord)` → returns Match if reciprocal interest exists.  
+4. Establish Connection: Frontend calls `establishConnection(match, recruiter_123, candidate_abc)` → creates a persistent Connection.  
+5. Communication: Recruiter sends a message using `sendMessage(connection, recruiter_123, "Welcome to our talent pool!")`.
 
 
 === Requirements
@@ -1965,36 +1960,42 @@ image::../Images/database-schema.svg[Database Schema, align=center, pdfwidth=90%
 _Figure 2.3.1 - 5. Database schema diagram (ER) showing core domain tables — users, student_profiles, programs, program_applications, mentor_assignments, matches, conversations, messages, conversation_participants, feedback, audit_logs, companies, jobs, and job_applications — with primary keys, foreign keys, relationships, and key indices used for deduplication, matching, and conversation threading._
 
 
-==== Selected Fragments of the Implementation
+==== [underline]#Selected Fragments of the Implementation#
 
-The implementation fragments presented here illustrate how the proposed system realizes its core concepts—profiles, swiping, matching, messaging, and event participation—within the domain of student-recruiter interactions. They are not exhaustive; instead, they show how selected components are translated into concrete structures and operations, maintaining a clear separation between the core domain concepts and their presentation layer realizations.
+The implementation fragments presented here illustrate how the proposed system realizes its core concepts—profiles, swiping, matching, messaging, and event participation—within the domain of student-recruiter interactions. They are not exhaustive; instead, they demonstrate how selected components are translated into concrete structures and operations while maintaining a **clear separation between domain logic and UI representation**. This separation ensures that domain functions (business rules, state changes, eligibility checks) are distinct from presentation widgets (ProfileCard) that render the data.
 
 ===== Domain-Centric Function Signatures
-Domain-Centric Function SignaturesIn Flutter/Dart, we express domain contracts through method signatures and service interfaces. These serve as contracts between the UI layer, application logic, and backend services. The functions below operate on the $\mathbf{Profile}$ entity, which represents the core data, not on the presentation $\mathbf{ProfileCard}$ widget.
+
+In Flutter/Dart, domain contracts are expressed through method signatures and service interfaces. These contracts define operations on the **Profile** entity and related aggregates, independent of UI concerns. The following functions operate solely on domain concepts:
 
 ```dart
-// Fetch the next profile card for a user’s deck
-Future<ProfileCard?> getNextProfile(String userId);
+// Fetch the next domain entity for a user's discovery flow
+Future<Profile?> getNextProfile(String userId);
 
-// Record a swipe action, either Like or Pass
+// Record a domain evaluation (Interested / NotInterested)
 Future<Result<void>> processSwipe(String userId, String profileId, SwipeDirection direction);
 
-// Determine if a mutual Like exists
+// Check for reciprocal interest to create a Match
 Future<Match?> checkForMatch(String userId, String profileId);
 
-// Create a persistent connection once a Match occurs
-Future<Connection> createConnection(Match match);
+// Create a domain-level Connection entity after a Match
+Future<Connection> establishConnection(Match match);
 
-// Exchange a message between two Matched users
+// Send a message within a domain Connection
 Future<Result<Message>> sendMessage(String connectionId, String userId, String content);
 ```
 
-Each function encodes a clear business rule. For example, `processSwipe` ensures that only valid swipe actions are stored, while `checkForMatch` guards the creation of Matches until both parties express interest.
+Each function implements a specific business rule:
+
+- `processSwipe` persists a user’s intent to Like or Pass a profile while ensuring it aligns with domain validation rules.
+
+- `checkForMatch` enforces the domain rule that a Match only occurs when both parties express interest.
+
+- `establishConnection` creates the communication context at the domain level, storing history and metadata.
 
 ===== User Interface Complement
 
-A conceptual *ProfileCard* widget in Flutter may look like this. This shows how the domain concept (*Profile*) is passed to a *presentation-layer* widget (*ProfileCard*) for display and interaction. The widget itself belongs to the UI, but it depends on the domain's *Profile* data structure.
-
+The ProfileCard widget represents the presentation layer. It renders information from the Profile domain entity but does not encapsulate domain rules. Interaction events (onLike, onPass) are passed as callbacks that invoke the corresponding domain functions, ensuring that UI logic is separated from business logic.
 
 ```dart
 class ProfileCard extends StatelessWidget {
@@ -2035,6 +2036,8 @@ class ProfileCard extends StatelessWidget {
 ```
 
 ==== Visual Representation of the Implementation
+
+This section presents the **actual UI visuals** of the application, showing how domain concepts are represented to the user. The images illustrate the design of ProfileCards, swiping interactions, match notifications, messaging screens, and event participation views.
 
 
 
