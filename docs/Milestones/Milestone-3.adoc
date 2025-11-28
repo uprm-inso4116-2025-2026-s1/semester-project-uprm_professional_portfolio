@@ -1798,6 +1798,10 @@ Interface requirements specify the user-facing aspects of the system.
 
 
 ==== Machine Requirements
+:author: Carlos E. Cabán González
+
+[NOTE]
+#Highlight#Objective: Expand and clarify machine requirements, specifying hardware, software, performance, and environmental constraints to ensure the system-to-be operates effectively and aligns with interface and domain requirements.#
 
 Machine requirements specify the hardware, software, and environment needed for development, testing, and deployment.
 
@@ -1805,33 +1809,37 @@ Machine requirements specify the hardware, software, and environment needed for 
 |=== 
 | ID | Description | Linked User Stories/Epics | Verification Tests
 
-| MR001 | Developer Workstations must meet a minimum specification of Dual-core processor (Intel i5/AMD equivalent), 8 GB RAM, and 256 GB SSD. | Epic-DevSetup | T-Env-001
+| MR001 | #Highlight#Developer workstations must meet a minimum specification of Dual-core processor (Intel i5/AMD equivalent), 8 GB RAM, 256 GB SSD, and GPU capable of supporting Flutter/Android/iOS emulators efficiently.# | Epic-DevSetup | T-Env-001
 
-| MR002 | Mobile Devices for Testing must include Android devices running Android 10.0+ with at least 3 GB RAM and iOS devices running iOS 15+ (e.g., iPhone 11 or newer). | Epic-Testing | T-Env-002
+| MR002 | #Highlight#Mobile devices for testing must include Android devices running Android 10.0+ with at least 3 GB RAM and iOS devices running iOS 15+ (e.g., iPhone 11 or newer). Devices must support automated UI testing frameworks where applicable.# | Epic-Testing | T-Env-002
 
 | MR003 | Servers / Cloud Hosting must meet a minimum specification of 2 vCPUs, 4 GB RAM, and 50 GB storage. | Epic-Deployment | T-Env-003
 
-| MR004 | The Flutter SDK (latest stable release) and Dart SDK (bundled with Flutter) must be used for development. | | T-Tool-001
+| MR004 | #Highlight#The Flutter SDK (latest stable release) and Dart SDK (bundled with Flutter) must be used for development. Development environment must support hot reload and debugging tools.# | | T-Tool-001
 
-| MR005 | Android Studio and Xcode must be used for builds and emulators/simulators. | | T-Tool-002
+| MR005 | #Highlight#Android Studio and Xcode must be used for builds and emulators/simulators, including latest stable versions and plugins for Flutter development.# | | T-Tool-002
 
-| MR006 | Git and GitHub must be used for version control and collaboration. | | T-Tool-003
+| MR006 | #Highlight#Git and GitHub must be used for version control and collaboration; Git workflow must include feature branches and pull requests.# | | T-Tool-003
 
 | MR007 | SQLite must be used for local offline storage. | | T-DB-009
 
 | MR008 | Firebase, AWS, or Azure must be used for authentication, notifications, and backend integration. | | T-API-009
 
-| MR009 | Developer machines must run Windows 10/11 or macOS Monterey+. | | T-Env-004
+| MR009 | #Highlight#Developer machines must run Windows 10/11 or macOS Monterey+ with all necessary dependencies installed.# | | T-Env-004
   
 | MR010 | The application must be deployed to targets running Android 10+ and iOS 15+. | | T-Env-005
 
-| MR011 | A stable broadband connection (≥10 Mbps) must be available for syncing and testing cloud services.|  | T-Env-006
+| MR011 | #Highlight#A stable broadband connection (≥10 Mbps) must be available for syncing and testing cloud services; latency should not exceed 100ms in normal conditions.# |  | T-Env-006
 
 | MR012 | All client-server communication must use HTTPS. | | T-Security-004
 
 | MR013 | Developers must test on both Android and iOS environments. | | T-Test-001
 
 | MR014 | The application must comply with Google Play Store and Apple App Store distribution guidelines.| | T-Compliance-001 
+
+| MR015 | #Highlight#Environmental constraints: Development and testing machines must have stable power supply (UPS recommended), controlled room temperature (18–27°C), and low humidity (<60%) to ensure hardware reliability.# | | T-Env-007
+
+| MR016 | #Highlight#Performance expectations: Developer workstations and servers must sustain concurrent builds and testing workflows without degradation; response times for cloud API calls must meet SLA targets.# | | T-Perf-001
 |===
 
 
@@ -2063,25 +2071,32 @@ Future steps include:
 
 
 ==== Verification Strategy
-Verification ensures that the documentation is internally consistent and traceable across milestones.
+:author: Carlos E. Cabán González
+
+[NOTE]
+#Highlight#Objective: Ensure all system requirements are consistent, measurable, and traceable to design and implementation, leveraging existing traceability mappings as suggested by professor feedback.# 
 
 * **Peer Reviews (Planned)**  
-  Each section of the documentation (terminology, requirements, narrative) will be reviewed by a different team member. Early reviews already revealed ambiguities between the terms “candidate” and “student,” which were clarified.
+  #Highlight#Each section of the documentation (terminology, requirements, narrative) will be reviewed by a different team member. Reviews confirm consistent terminology, measurable requirements, and proper linkage to design elements.#  
+  Early reviews revealed ambiguities between the terms “candidate” and “student,” which were clarified.
 
 * **Checklists**  
-  A milestone-based checklist will be used:  
+  #Highlight#A milestone-based checklist will be used to explicitly verify each requirement and trace it to design and implementation elements:#  
   - Every requirement uses only defined terms.  
-  - Requirements map to at least one domain concept.  
-  - No contradictions between terminology and requirements.  
+  - Requirements map to at least one domain concept and at least one corresponding design element.  
+  - No contradictions exist between terminology, requirements, and design.  
   - Requirements are measurable and testable (planned for Milestone 2).  
+  - Step-by-step verification actions are defined for each requirement where applicable (e.g., functional test procedures, walkthroughs).
 
 * **Traceability Matrix (Planned)**  
-  A lightweight traceability matrix will link:  
-  - *Requirements → Goals* (does each requirement support at least one documented goal?).  
-  - *Requirements → Terminology* (is consistent terminology used?).  
+  #Highlight#A lightweight traceability matrix will be maintained to link requirements to goals, terminology, verification methods, and design elements. This ensures all verification is explicit and measurable:#  
+  - *Requirements → Goals* (ensuring each requirement supports at least one documented goal).  
+  - *Requirements → Terminology* (ensuring consistent and correct terminology).  
+  - *Requirements → Verification Method* (explicitly showing how each requirement will be verified, including specific tests or procedures).  
+  - *Requirements → Design / Implementation* (ensuring traceability from requirement to the actual design and implementation artifacts).
 
 * **Walkthroughs of Documentation**  
-  We will simulate “reader walkthroughs,” where one team member acts as an external reviewer and checks whether requirements can be traced back to definitions. This approach helps identify undefined or ambiguous terms.
+  #Highlight#Reader walkthroughs will be simulated by having a team member act as an external reviewer to check that each requirement traces back to definitions, models, and implementation elements. This identifies undefined or ambiguous terms and confirms measurable verification coverage.#  
 
 
 == Specific Class Topics
@@ -3772,6 +3787,11 @@ _Figure 4.6.2. - 1. Layered view (Presentation, Application, Domain, Infrastruct
 | Jahdiel Montero
 | 1.5
 | Modified
+
+| Carlos E. Cabán González
+| 2.2.5, 3.2.2
+| Modified
+
 
 |===
 '''
