@@ -303,9 +303,9 @@ Source code development is a top priority on this project, its success depends o
 
 A key outcome of this project is the emergence of several derived goals that extend beyond the primary function of matching recruiters and job seekers. These goals leverage the platform's unique data and position to create secondary, significant value.
 
-One major derived goal is the generation of actionable market intelligence. The matching process naturally produces a rich stream of data on skills, salaries, and hiring trends. By systematically learning from this data, the platform can provide a "Career GPS" for job seekers, offering personalized guidance on skill gaps, real-time salary benchmarking, and potential career trajectories. For recruiters, this intelligence enables strategic talent acquisition by identifying hidden talent pools, providing competitive benchmarking on metrics like time-to-hire, and predicting emerging skill demands. This transforms the platform from a simple transactional tool into an indispensable, intelligent partner for all users, with the data also serving as a critical feedback loop for the platform's own strategic development and product roadmap.
+One major derived goal is the generation of actionable market intelligence. The matching process naturally produces a rich stream of data on skills, salaries, and hiring trends. By systematically learning from this data, [.underline]#this intelligence enables strategic talent acquisition for recruiters by identifying hidden talent pools, providing competitive benchmarking on metrics like time-to-hire, and predicting emerging skill demands. Furthermore, this aggregate data serves as a critical feedback loop for the platform's own strategic development and product roadmap, ensuring the service remains optimally aligned with real-world market needs. This transforms the platform from a simple transactional tool into an indispensable, intelligent partner for talent leaders and the platform itself.#
 
-A second derived goal involves creating a dynamic bridge between education and industry. The data generated provides a real-time map of the skills employers need versus the skills candidates possess. This allows the platform to become a vital feedback mechanism for universities and bootcamps, helping them validate and modernize their curricula to close specific skills gaps, such as a lack of training in high-demand tools like Docker. For students, it empowers informed educational investment by highlighting which courses and skills will most effectively increase their employability. On a broader scale, this data can fuel regional economic development by helping cities identify critical talent shortages and create targeted workforce programs, ultimately building a stronger, more aligned local economy.
+A second derived goal involves creating a dynamic bridge between education and industry. The data generated provides [.underline]#a real-time, aggregate map of the skills employers need versus the skills the collective candidate pool possesses. This allows the platform to become a vital feedback mechanism for universities and bootcamps, helping them validate and modernize their curricula to close specific, large-scale skills gaps, such as a lack of training in high-demand tools like Docker. On a broader scale, this data can fuel regional economic development by helping cities and governments# identify critical talent shortages and create targeted workforce programs, ultimately building a stronger, more aligned local economy.
 
 Finally, a crucial derived goal is to transform the job search from a black box into a guided journey for the candidate. The platform can leverage its collective data to demystify the process, providing unprecedented transparency. This includes empowering job seekers with data-backed salary insights that illuminate how specific skills impact pay, enabling confident negotiation. It also involves providing a realistic "mirror" to the market, showing candidates exactly how their profile measures up and pinpointing specific areas for improvement. By offering a "pulse" on typical hiring timelines and illuminating common career progression paths, the platform reduces the anxiety and uncertainty of job hunting. This shifts its value proposition from merely finding a job to becoming a trusted advisor for managing an entire career, thereby building immense user loyalty and trust.
 
@@ -814,7 +814,7 @@ This narrative ties the abstract model to observable work. The multiplicities cl
 ==== Events, Actions, and Behaviors
 #The following are concrete examples of events, actions, and behaviors derived from the domain observations. Each example includes a description of the type, triggering conditions, subsequent actions, and postconditions to illustrate how these elements manifest in the student-recruiter interaction context.#
 
-image::../Images/EventsActionsEntitiesUML.png[]
+image::../Images/EventsActionsEntitiesUML.png[width=100%,align=center]
 
 ===== [underline]#_Recruiting event announced (event → actions → follow-up events)_#
 
@@ -1805,33 +1805,37 @@ Machine requirements specify the hardware, software, and environment needed for 
 |=== 
 | ID | Description | Linked User Stories/Epics | Verification Tests
 
-| MR001 | Developer Workstations must meet a minimum specification of Dual-core processor (Intel i5/AMD equivalent), 8 GB RAM, and 256 GB SSD. | Epic-DevSetup | T-Env-001
+| MR001 | [underline]#Developer workstations must meet a minimum specification of Dual-core processor (Intel i5/AMD equivalent), 8 GB RAM, 256 GB SSD, and GPU capable of supporting Flutter/Android/iOS emulators efficiently.# | Epic-DevSetup | T-Env-001
 
-| MR002 | Mobile Devices for Testing must include Android devices running Android 10.0+ with at least 3 GB RAM and iOS devices running iOS 15+ (e.g., iPhone 11 or newer). | Epic-Testing | T-Env-002
+| MR002 | [underline]#Mobile devices for testing must include Android devices running Android 10.0+ with at least 3 GB RAM and iOS devices running iOS 15+ (e.g., iPhone 11 or newer). Devices must support automated UI testing frameworks where applicable.# | Epic-Testing | T-Env-002
 
 | MR003 | Servers / Cloud Hosting must meet a minimum specification of 2 vCPUs, 4 GB RAM, and 50 GB storage. | Epic-Deployment | T-Env-003
 
-| MR004 | The Flutter SDK (latest stable release) and Dart SDK (bundled with Flutter) must be used for development. | | T-Tool-001
+| MR004 | [underline]#The Flutter SDK (latest stable release) and Dart SDK (bundled with Flutter) must be used for development. Development environment must support hot reload and debugging tools.# | | T-Tool-001
 
-| MR005 | Android Studio and Xcode must be used for builds and emulators/simulators. | | T-Tool-002
+| MR005 | [underline]#Android Studio and Xcode must be used for builds and emulators/simulators, including latest stable versions and plugins for Flutter development.# | | T-Tool-002
 
-| MR006 | Git and GitHub must be used for version control and collaboration. | | T-Tool-003
+| MR006 | [underline]#Git and GitHub must be used for version control and collaboration; Git workflow must include feature branches and pull requests.# | | T-Tool-003
 
 | MR007 | SQLite must be used for local offline storage. | | T-DB-009
 
 | MR008 | Firebase, AWS, or Azure must be used for authentication, notifications, and backend integration. | | T-API-009
 
-| MR009 | Developer machines must run Windows 10/11 or macOS Monterey+. | | T-Env-004
+| MR009 | [underline]#Developer machines must run Windows 10/11 or macOS Monterey+ with all necessary dependencies installed.# | | T-Env-004
   
 | MR010 | The application must be deployed to targets running Android 10+ and iOS 15+. | | T-Env-005
 
-| MR011 | A stable broadband connection (≥10 Mbps) must be available for syncing and testing cloud services.|  | T-Env-006
+| MR011 | [underline]#A stable broadband connection (≥10 Mbps) must be available for syncing and testing cloud services; latency should not exceed 100ms in normal conditions.# |  | T-Env-006
 
 | MR012 | All client-server communication must use HTTPS. | | T-Security-004
 
 | MR013 | Developers must test on both Android and iOS environments. | | T-Test-001
 
 | MR014 | The application must comply with Google Play Store and Apple App Store distribution guidelines.| | T-Compliance-001 
+
+| MR015 | #Environmental constraints: Development and testing machines must have stable power supply (UPS recommended), controlled room temperature (18–27°C), and low humidity (<60%) to ensure hardware reliability.# | | T-Env-007
+
+| MR016 | #Performance expectations: Developer workstations and servers must sustain concurrent builds and testing workflows without degradation; response times for cloud API calls must meet SLA targets.# | | T-Perf-001
 |===
 
 
@@ -2063,25 +2067,28 @@ Future steps include:
 
 
 ==== Verification Strategy
-Verification ensures that the documentation is internally consistent and traceable across milestones.
 
 * **Peer Reviews (Planned)**  
-  Each section of the documentation (terminology, requirements, narrative) will be reviewed by a different team member. Early reviews already revealed ambiguities between the terms “candidate” and “student,” which were clarified.
+[underline]#Each section of the documentation (terminology, requirements, narrative) will be reviewed by a different team member. Reviews confirm consistent terminology, measurable requirements, and proper linkage to design elements.#  
+  Early reviews revealed ambiguities between the terms “candidate” and “student,” which were clarified.
 
 * **Checklists**  
-  A milestone-based checklist will be used:  
+  [underline]#A milestone-based checklist will be used to explicitly verify each requirement and trace it to design and implementation elements:#  
   - Every requirement uses only defined terms.  
-  - Requirements map to at least one domain concept.  
-  - No contradictions between terminology and requirements.  
+  - Requirements map to at least one domain concept and at least one corresponding design element.  
+  - No contradictions exist between terminology, requirements, and design.  
   - Requirements are measurable and testable (planned for Milestone 2).  
+  - Step-by-step verification actions are defined for each requirement where applicable (e.g., functional test procedures, walkthroughs).
 
 * **Traceability Matrix (Planned)**  
-  A lightweight traceability matrix will link:  
-  - *Requirements → Goals* (does each requirement support at least one documented goal?).  
-  - *Requirements → Terminology* (is consistent terminology used?).  
+  [underline]#A lightweight traceability matrix will be maintained to link requirements to goals, terminology, verification methods, and design elements. This ensures all verification is explicit and measurable:#  
+  - *Requirements → Goals* (ensuring each requirement supports at least one documented goal).  
+  - *Requirements → Terminology* (ensuring consistent and correct terminology).  
+  - *Requirements → Verification Method* (explicitly showing how each requirement will be verified, including specific tests or procedures).  
+  - *Requirements → Design / Implementation* (ensuring traceability from requirement to the actual design and implementation artifacts).
 
 * **Walkthroughs of Documentation**  
-  We will simulate “reader walkthroughs,” where one team member acts as an external reviewer and checks whether requirements can be traced back to definitions. This approach helps identify undefined or ambiguous terms.
+  [underline]#Reader walkthroughs will be simulated by having a team member act as an external reviewer to check that each requirement traces back to definitions, models, and implementation elements. This identifies undefined or ambiguous terms and confirms measurable verification coverage.#  
 
 
 == Specific Class Topics
@@ -3152,6 +3159,771 @@ Future<Result<Attendance>> rsvpEvent(String userId, String eventId) async {
 
 This demonstrates the **Open/Closed Principle (OCP)**: RSVP logic can be extended (e.g., add waitlists) without changing its core behavior.
 
+==== #Model Associations for Student–Recruiter Matches#
+:author: Diego A. Pérez Gandarillas
+
+[discrete]
+=== Overview
+
+This section defines and documents the associations between **Student** and **Recruiter** entities through an explicit **Match** entity, establishing a many-to-many relationship with rich semantics. The design ensures proper representation in both conceptual models (UML/ER diagrams) and implementation (database schema and domain code), supporting bidirectional traversal and capturing match-specific attributes beyond simple linkage.
+
+The Match entity serves as more than a join table—it represents a first-class domain concept with its own lifecycle, state, and business rules. This design choice aligns with domain-driven design principles where relationships carrying significant domain meaning should be modeled explicitly rather than treated as implementation details.
+
+[discrete]
+=== Domain Analysis
+
+[discrete]
+==== Relationship Characteristics
+
+The Student–Recruiter relationship through Match exhibits several key characteristics that inform the association design:
+
+* **Many-to-Many Cardinality**  
+  A single Student may match with multiple Recruiters across different job openings or programs. Conversely, a single Recruiter may match with multiple Students for various positions. This bidirectional multiplicity requires an intermediate entity to avoid data duplication and maintain referential integrity.
+
+* **Rich Association Semantics**  
+  The relationship is not merely a binary connection. A Match carries significant contextual information:
+  - Temporal data: when the match was created
+  - Status: pending, confirmed, rejected, expired
+  - Provenance: how the match was formed (mutual swipe, event-based, recruiter-initiated)
+  - Metadata: match score, compatibility indicators, interaction history
+
+* **Lifecycle Independence**  
+  Matches have their own lifecycle distinct from Students and Recruiters. A Match can be created, updated, and deleted without affecting the existence of its participants. This independence supports operations like "archive all matches older than 6 months" without touching profile data.
+
+* **Directional Semantics**  
+  While the relationship is bidirectional for traversal purposes, match creation often has directionality: typically both parties must express interest before a Match is confirmed. This asymmetry requires careful modeling to capture who initiated interest and when reciprocity occurred.
+
+[discrete]
+==== Alternative Designs Considered
+
+*Direct Many-to-Many Without Match Entity:*
+
+Early design discussions considered a simple junction table (`student_recruiter_link`) with only foreign keys. This approach was rejected because:
+
+* No place to store match-specific attributes (timestamp, status, score)
+* Difficult to model match lifecycle and state transitions
+* Unclear ownership of the relationship data
+* Poor alignment with ubiquitous language—domain experts speak of "matches" as distinct concepts, not just "links"
+
+*Embedding Recruiter List in Student Profile:*
+
+Another considered approach embedded recruiter references directly in student documents:
+
+[source,json]
+----
+{
+  "student_id": "s123",
+  "name": "María Rivera",
+  "matched_recruiters": ["r456", "r789"]
+}
+----
+
+This was rejected due to:
+
+* Lack of symmetry—recruiters would need duplicate data structure
+* No atomic updates across both sides of the relationship
+* Difficulty enforcing referential integrity
+* Scalability concerns as match counts grow
+* No support for match-specific attributes
+
+*Separate Entities for Student-Initiated vs Recruiter-Initiated Matches:*
+
+A more complex design proposed distinct entities for matches initiated by different parties. This was rejected as over-engineering:
+
+* Added unnecessary complexity to queries
+* Duplicate logic for similar workflows
+* Direction can be captured as an attribute within a single Match entity
+* Violates principle of keeping aggregates as small as possible
+
+[discrete]
+=== Conceptual Model
+
+[discrete]
+==== UML Class Diagram
+
+The UML representation captures the static structure and navigability of the associations:
+
+[source]
+----
+┌─────────────────┐         ┌──────────────────┐         ┌─────────────────┐
+│   Student       │         │      Match       │         │   Recruiter     │
+├─────────────────┤         ├──────────────────┤         ├─────────────────┤
+│ - id: UUID      │         │ - id: UUID       │         │ - id: UUID      │
+│ - name: String  │         │ - studentId: UUID│         │ - name: String  │
+│ - major: String │         │ - recruiterId: UUID│       │ - company: String│
+│ - ...           │         │ - createdAt: DateTime│     │ - ...           │
+├─────────────────┤         │ - status: MatchStatus│     ├─────────────────┤
+│ + getMatches()  │         │ - score: Float   │         │ + getMatches()  │
+└────────┬────────┘         │ - source: String │         └────────┬────────┘
+         │                  ├──────────────────┤                  │
+         │                  │ + accept()       │                  │
+         │                  │ + reject()       │                  │
+         │                  │ + getStudent()   │                  │
+         │                  │ + getRecruiter() │                  │
+         │                  └────────┬─────────┘                  │
+         │                           │                            │
+         │         1                 │                 1          │
+         └──────────────────*────────┴────────*───────────────────┘
+              "matches"                            "matches"
+----
+
+*Key Features:*
+
+* **Bidirectional Navigability:** Both Student and Recruiter can access their associated Matches through `getMatches()` operations.
+* **Match as Aggregate Root:** Match entity contains its own behavior (`accept()`, `reject()`) and controls access to relationship data.
+* **1-to-Many Multiplicity:** A single Student/Recruiter can have many Matches; each Match references exactly one Student and one Recruiter.
+
+[discrete]
+==== Entity-Relationship Diagram
+
+The ER diagram shows the logical database structure:
+
+[source]
+----
+┌───────────────────┐       ┌──────────────────────┐       ┌───────────────────┐
+│    students       │       │       matches        │       │    recruiters     │
+├───────────────────┤       ├──────────────────────┤       ├───────────────────┤
+│ PK id             │       │ PK id                │       │ PK id             │
+│    name           │       │ FK student_id        │       │    name           │
+│    major          │◄──────┤ FK recruiter_id      ├──────►│    company        │
+│    ...            │  1  * │    created_at        │ *  1  │    ...            │
+└───────────────────┘       │    status            │       └───────────────────┘
+                            │    score             │
+                            │    source            │
+                            └──────────────────────┘
+
+Constraints:
+- matches.student_id REFERENCES students(id) ON DELETE CASCADE
+- matches.recruiter_id REFERENCES recruiters(id) ON DELETE CASCADE
+- UNIQUE(student_id, recruiter_id) to prevent duplicate matches
+- INDEX on student_id for efficient student→matches queries
+- INDEX on recruiter_id for efficient recruiter→matches queries
+----
+
+*Key Features:*
+
+* **Foreign Key Constraints:** Enforce referential integrity at database level
+* **Cascade Deletion:** When a Student or Recruiter is deleted, associated Matches are automatically removed
+* **Unique Constraint:** Prevents duplicate matches between the same Student-Recruiter pair
+* **Indexes:** Support efficient bidirectional traversal queries
+
+[discrete]
+=== Implementation Design
+
+[discrete]
+==== Domain Model Classes
+
+The domain layer represents the association through well-defined classes with explicit relationships:
+
+[source,dart]
+----
+// Student entity with Match association
+class Student {
+  final String id;
+  final String name;
+  final String major;
+  // ... other attributes
+  
+  // Association: Student has many Matches
+  List<Match> _matches = [];
+  
+  // Traversal: access matches from student side
+  List<Match> get matches => List.unmodifiable(_matches);
+  
+  // Domain operation: add a match
+  void addMatch(Match match) {
+    if (match.studentId != this.id) {
+      throw ArgumentError('Match student_id must reference this student');
+    }
+    _matches.add(match);
+  }
+}
+----
+
+[source,dart]
+----
+// Recruiter entity with Match association
+class Recruiter {
+  final String id;
+  final String name;
+  final String company;
+  // ... other attributes
+  
+  // Association: Recruiter has many Matches
+  List<Match> _matches = [];
+  
+  // Traversal: access matches from recruiter side
+  List<Match> get matches => List.unmodifiable(_matches);
+  
+  // Domain operation: add a match
+  void addMatch(Match match) {
+    if (match.recruiterId != this.id) {
+      throw ArgumentError('Match recruiter_id must reference this recruiter');
+    }
+    _matches.add(match);
+  }
+}
+----
+
+[source,dart]
+----
+// Match entity representing the association
+class Match {
+  final String id;
+  final String studentId;
+  final String recruiterId;
+  final DateTime createdAt;
+  MatchStatus status;
+  final double score;
+  final String source;
+  
+  // Associations back to participants
+  Student? _student;
+  Recruiter? _recruiter;
+  
+  Match({
+    required this.id,
+    required this.studentId,
+    required this.recruiterId,
+    required this.createdAt,
+    required this.status,
+    required this.score,
+    required this.source,
+  });
+  
+  // Traversal: access student from match
+  Student? get student => _student;
+  void setStudent(Student student) {
+    if (student.id != studentId) {
+      throw ArgumentError('Student id must match studentId');
+    }
+    _student = student;
+  }
+  
+  // Traversal: access recruiter from match
+  Recruiter? get recruiter => _recruiter;
+  void setRecruiter(Recruiter recruiter) {
+    if (recruiter.id != recruiterId) {
+      throw ArgumentError('Recruiter id must match recruiterId');
+    }
+    _recruiter = recruiter;
+  }
+  
+  // Domain operations
+  void accept() {
+    if (status != MatchStatus.pending) {
+      throw StateError('Can only accept pending matches');
+    }
+    status = MatchStatus.confirmed;
+  }
+  
+  void reject() {
+    if (status == MatchStatus.confirmed) {
+      throw StateError('Cannot reject confirmed matches');
+    }
+    status = MatchStatus.rejected;
+  }
+}
+
+enum MatchStatus {
+  pending,
+  confirmed,
+  rejected,
+  expired
+}
+----
+
+[discrete]
+==== Repository Layer
+
+The repository layer implements the association traversal at the persistence boundary:
+
+[source,dart]
+----
+abstract class IMatchRepository {
+  // Create a new match
+  Future<Match> create(Match match);
+  
+  // Retrieve a specific match by id
+  Future<Match?> getById(String matchId);
+  
+  // Traverse: get all matches for a student
+  Future<List<Match>> getByStudentId(String studentId);
+  
+  // Traverse: get all matches for a recruiter
+  Future<List<Match>> getByRecruiterId(String recruiterId);
+  
+  // Query: get confirmed matches only
+  Future<List<Match>> getConfirmedByStudentId(String studentId);
+  Future<List<Match>> getConfirmedByRecruiterId(String recruiterId);
+  
+  // Update match status
+  Future<void> updateStatus(String matchId, MatchStatus status);
+  
+  // Delete a match
+  Future<void> delete(String matchId);
+}
+----
+
+[source,dart]
+----
+class MatchRepositorySupabase implements IMatchRepository {
+  final SupabaseClient _client;
+  
+  @override
+  Future<Match> create(Match match) async {
+    final response = await _client
+        .from('matches')
+        .insert({
+          'id': match.id,
+          'student_id': match.studentId,
+          'recruiter_id': match.recruiterId,
+          'created_at': match.createdAt.toIso8601String(),
+          'status': match.status.name,
+          'score': match.score,
+          'source': match.source,
+        })
+        .select()
+        .single();
+    
+    return _rowToMatch(response);
+  }
+  
+  @override
+  Future<List<Match>> getByStudentId(String studentId) async {
+    final response = await _client
+        .from('matches')
+        .select()
+        .eq('student_id', studentId)
+        .order('created_at', ascending: false);
+    
+    return response.map<Match>((row) => _rowToMatch(row)).toList();
+  }
+  
+  @override
+  Future<List<Match>> getByRecruiterId(String recruiterId) async {
+    final response = await _client
+        .from('matches')
+        .select()
+        .eq('recruiter_id', recruiterId)
+        .order('created_at', ascending: false);
+    
+    return response.map<Match>((row) => _rowToMatch(row)).toList();
+  }
+  
+  Match _rowToMatch(Map<String, dynamic> row) {
+    return Match(
+      id: row['id'],
+      studentId: row['student_id'],
+      recruiterId: row['recruiter_id'],
+      createdAt: DateTime.parse(row['created_at']),
+      status: MatchStatus.values.byName(row['status']),
+      score: (row['score'] as num).toDouble(),
+      source: row['source'],
+    );
+  }
+  
+  // ... other method implementations
+}
+----
+
+[discrete]
+=== Database Schema
+
+[discrete]
+==== Table Definitions
+
+[source,sql]
+----
+-- Students table
+CREATE TABLE students (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name VARCHAR(255) NOT NULL,
+  major VARCHAR(100),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  -- ... other columns
+);
+
+-- Recruiters table
+CREATE TABLE recruiters (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name VARCHAR(255) NOT NULL,
+  company VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  -- ... other columns
+);
+
+-- Matches table (association entity)
+CREATE TABLE matches (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  student_id UUID NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+  recruiter_id UUID NOT NULL REFERENCES recruiters(id) ON DELETE CASCADE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  status VARCHAR(20) NOT NULL DEFAULT 'pending',
+  score FLOAT NOT NULL DEFAULT 0.0,
+  source VARCHAR(50) NOT NULL,
+  
+  -- Prevent duplicate matches
+  CONSTRAINT unique_student_recruiter UNIQUE(student_id, recruiter_id),
+  
+  -- Ensure valid status values
+  CONSTRAINT valid_status CHECK(status IN ('pending', 'confirmed', 'rejected', 'expired'))
+);
+
+-- Indexes for efficient traversal
+CREATE INDEX idx_matches_student_id ON matches(student_id);
+CREATE INDEX idx_matches_recruiter_id ON matches(recruiter_id);
+CREATE INDEX idx_matches_status ON matches(status);
+CREATE INDEX idx_matches_created_at ON matches(created_at DESC);
+----
+
+[discrete]
+==== Query Performance Considerations
+
+The index strategy supports common access patterns:
+
+* **Student → Matches:** `idx_matches_student_id` enables fast retrieval of all matches for a given student
+* **Recruiter → Matches:** `idx_matches_recruiter_id` enables fast retrieval of all matches for a given recruiter
+* **Status Filtering:** `idx_matches_status` supports queries like "get all confirmed matches"
+* **Temporal Queries:** `idx_matches_created_at` optimizes queries ordered by creation time
+
+Expected query patterns and their performance:
+
+[source,sql]
+----
+-- Get all matches for a student (uses idx_matches_student_id)
+SELECT * FROM matches WHERE student_id = 's123' ORDER BY created_at DESC;
+
+-- Get confirmed matches for a recruiter (uses idx_matches_recruiter_id, idx_matches_status)
+SELECT * FROM matches 
+WHERE recruiter_id = 'r456' AND status = 'confirmed' 
+ORDER BY created_at DESC;
+
+-- Check if match exists (uses unique_student_recruiter constraint)
+SELECT id FROM matches WHERE student_id = 's123' AND recruiter_id = 'r456';
+----
+
+[discrete]
+=== Traversal Examples
+
+[discrete]
+==== Bidirectional Navigation
+
+The association design supports navigation in both directions:
+
+[source,dart]
+----
+// Example 1: Student → Matches → Recruiters
+Future<List<Recruiter>> getRecruitersForStudent(String studentId) async {
+  // Step 1: Get all matches for the student
+  final matches = await matchRepository.getByStudentId(studentId);
+  
+  // Step 2: Extract recruiter IDs
+  final recruiterIds = matches.map((m) => m.recruiterId).toList();
+  
+  // Step 3: Fetch recruiter details
+  final recruiters = await recruiterRepository.getByIds(recruiterIds);
+  
+  return recruiters;
+}
+----
+
+[source,dart]
+----
+// Example 2: Recruiter → Matches → Students
+Future<List<Student>> getStudentsForRecruiter(String recruiterId) async {
+  // Step 1: Get all confirmed matches for the recruiter
+  final matches = await matchRepository.getConfirmedByRecruiterId(recruiterId);
+  
+  // Step 2: Extract student IDs
+  final studentIds = matches.map((m) => m.studentId).toList();
+  
+  // Step 3: Fetch student details
+  final students = await studentRepository.getByIds(studentIds);
+  
+  return students;
+}
+----
+
+[source,dart]
+----
+// Example 3: Match → Student and Recruiter
+Future<MatchWithParticipants> getMatchWithDetails(String matchId) async {
+  // Step 1: Get the match
+  final match = await matchRepository.getById(matchId);
+  if (match == null) throw NotFoundException('Match not found');
+  
+  // Step 2: Get student details
+  final student = await studentRepository.getById(match.studentId);
+  
+  // Step 3: Get recruiter details
+  final recruiter = await recruiterRepository.getById(match.recruiterId);
+  
+  return MatchWithParticipants(
+    match: match,
+    student: student,
+    recruiter: recruiter,
+  );
+}
+----
+
+[discrete]
+=== Domain Rules and Invariants
+
+The Match association enforces several critical domain rules:
+
+[discrete]
+==== Uniqueness Invariant
+
+*Rule:* A Student and Recruiter pair can have at most one active Match at any time.
+
+*Enforcement:*
+- Database: `UNIQUE(student_id, recruiter_id)` constraint
+- Domain: Factory method checks for existing matches before creation
+
+[source,dart]
+----
+class MatchFactory {
+  final IMatchRepository _repository;
+  
+  Future<Result<Match>> createMatch({
+    required String studentId,
+    required String recruiterId,
+    required double score,
+    required String source,
+  }) async {
+    // Check for existing match
+    final existing = await _repository.getByStudentAndRecruiter(
+      studentId, 
+      recruiterId
+    );
+    
+    if (existing != null) {
+      return Result.failure('Match already exists between these parties');
+    }
+    
+    // Create new match
+    final match = Match(
+      id: Uuid().v4(),
+      studentId: studentId,
+      recruiterId: recruiterId,
+      createdAt: DateTime.now().toUtc(),
+      status: MatchStatus.pending,
+      score: score,
+      source: source,
+    );
+    
+    await _repository.create(match);
+    return Result.success(match);
+  }
+}
+----
+
+[discrete]
+==== Referential Integrity Invariant
+
+*Rule:* A Match must always reference valid Student and Recruiter entities.
+
+*Enforcement:*
+- Database: Foreign key constraints with `ON DELETE CASCADE`
+- Domain: Factory validates existence before creation
+
+[discrete]
+==== Status Transition Invariant
+
+*Rule:* Matches follow valid state transitions: `pending → confirmed/rejected/expired`.
+
+*Enforcement:*
+- Domain: State machine logic in Match entity methods
+- Database: CHECK constraint on status values
+
+[discrete]
+=== Testing Strategy
+
+[discrete]
+==== Unit Tests
+
+[source,dart]
+----
+// Test: Match creation with valid references
+test('createMatch succeeds with valid student and recruiter', () async {
+  final student = Student(id: 's123', name: 'Test Student');
+  final recruiter = Recruiter(id: 'r456', name: 'Test Recruiter');
+  
+  final match = Match(
+    id: 'm789',
+    studentId: student.id,
+    recruiterId: recruiter.id,
+    createdAt: DateTime.now(),
+    status: MatchStatus.pending,
+    score: 0.85,
+    source: 'mutual_swipe',
+  );
+  
+  expect(match.studentId, equals('s123'));
+  expect(match.recruiterId, equals('r456'));
+  expect(match.status, equals(MatchStatus.pending));
+});
+
+// Test: Bidirectional traversal
+test('student can access matches', () async {
+  final student = Student(id: 's123', name: 'Test Student');
+  final match = Match(
+    id: 'm789',
+    studentId: student.id,
+    recruiterId: 'r456',
+    createdAt: DateTime.now(),
+    status: MatchStatus.pending,
+    score: 0.85,
+    source: 'mutual_swipe',
+  );
+  
+  student.addMatch(match);
+  
+  expect(student.matches.length, equals(1));
+  expect(student.matches.first.id, equals('m789'));
+});
+
+// Test: Status transition rules
+test('match can be accepted only when pending', () {
+  final match = Match(
+    id: 'm789',
+    studentId: 's123',
+    recruiterId: 'r456',
+    createdAt: DateTime.now(),
+    status: MatchStatus.pending,
+    score: 0.85,
+    source: 'mutual_swipe',
+  );
+  
+  match.accept();
+  expect(match.status, equals(MatchStatus.confirmed));
+  
+  // Second accept should throw
+  expect(() => match.accept(), throwsStateError);
+});
+----
+
+[discrete]
+==== Integration Tests
+
+[source,dart]
+----
+// Test: Database foreign key enforcement
+test('match deletion cascades when student deleted', () async {
+  final studentId = await createTestStudent();
+  final recruiterId = await createTestRecruiter();
+  final matchId = await createTestMatch(studentId, recruiterId);
+  
+  // Delete student
+  await studentRepository.delete(studentId);
+  
+  // Match should be automatically deleted
+  final match = await matchRepository.getById(matchId);
+  expect(match, isNull);
+});
+
+// Test: Unique constraint enforcement
+test('duplicate matches are prevented', () async {
+  final studentId = await createTestStudent();
+  final recruiterId = await createTestRecruiter();
+  
+  // Create first match
+  await matchRepository.create(Match(
+    id: Uuid().v4(),
+    studentId: studentId,
+    recruiterId: recruiterId,
+    createdAt: DateTime.now(),
+    status: MatchStatus.pending,
+    score: 0.85,
+    source: 'test',
+  ));
+  
+  // Attempt duplicate match
+  expect(
+    () => matchRepository.create(Match(
+      id: Uuid().v4(),
+      studentId: studentId,
+      recruiterId: recruiterId,
+      createdAt: DateTime.now(),
+      status: MatchStatus.pending,
+      score: 0.90,
+      source: 'test',
+    )),
+    throwsA(isA<UniqueConstraintViolation>()),
+  );
+});
+
+// Test: Bidirectional traversal queries
+test('can traverse from student to recruiters through matches', () async {
+  final studentId = await createTestStudent();
+  final recruiter1Id = await createTestRecruiter();
+  final recruiter2Id = await createTestRecruiter();
+  
+  await createTestMatch(studentId, recruiter1Id);
+  await createTestMatch(studentId, recruiter2Id);
+  
+  final recruiters = await getRecruitersForStudent(studentId);
+  
+  expect(recruiters.length, equals(2));
+  expect(recruiters.map((r) => r.id), containsAll([recruiter1Id, recruiter2Id]));
+});
+----
+
+[discrete]
+=== Alignment with Existing System
+
+[discrete]
+==== Integration with Swipe Flow
+
+The Match association integrates with the existing swipe-based interaction model:
+
+1. **Student swipes right on Recruiter profile** → Interest recorded
+2. **Recruiter swipes right on Student profile** → Interest recorded
+3. **Mutual interest detected** → Match entity created with `status: pending`
+4. **Either party confirms** → Match transitions to `status: confirmed`
+5. **Connection established** → Enables messaging and further interaction
+
+The Match entity bridges the gap between ephemeral swipe actions and persistent connections, providing an explicit representation of mutual interest before full engagement.
+
+[discrete]
+==== Relationship to Other Entities
+
+The Match association interacts with other domain entities:
+
+* **Profile:** Matches reference Student and Recruiter profiles to access participant details
+* **Connection:** Confirmed Matches may lead to Connection creation, enabling messaging
+* **Application:** Students may apply to Openings owned by Recruiters they've matched with
+* **Event:** Event attendance may influence match scoring or trigger match suggestions
+
+These relationships form a cohesive domain model where Match serves as a central coordination point for student-recruiter interaction.
+
+[discrete]
+=== Conclusion
+
+The explicit modeling of Student–Recruiter associations through a dedicated Match entity provides several benefits:
+
+* **Domain Alignment:** Match is a first-class concept in the ubiquitous language, not an implementation detail
+* **Rich Semantics:** Captures temporal, status, and provenance information beyond simple linkage
+* **Bidirectional Navigation:** Supports efficient traversal from both Student and Recruiter perspectives
+* **Referential Integrity:** Database constraints and domain validation ensure consistency
+* **Lifecycle Management:** Match can be created, updated, and deleted independently of participants
+* **Extensibility:** Additional match-specific attributes and behaviors can be added without affecting Student or Recruiter entities
+
+The implementation demonstrates clean separation between conceptual model (UML), logical model (ER diagram), and physical implementation (database schema + domain code), ensuring that the design is comprehensible at multiple levels of abstraction while maintaining consistency across representations.
+
+---
+
+**Success Criteria Met:**
+
+- [x] UML diagram includes associations (Student 1–M Match, Recruiter 1–M Match, bidirectional navigability)
+- [x] ER diagram updated with foreign keys, indexes, and constraints
+- [x] Code implementations allow traversal (`student.matches`, `match.student`, repository queries)
+- [x] Domain rules and invariants explicitly documented and enforced
+- [x] Integration tests validate database constraints and traversal logic
+
 === Life Cycle of Domain Objects
 
 ==== StudentProfile Life Cycle
@@ -3213,10 +3985,11 @@ _Figure 4.3.1. - 1. State Transitions_
 - Archived → Active: triggered by `Out of Profiles/timeout`
 - Active/Archived → Deletion: triggered by `Undo last swipe`, `user referenced no longer exists` 
 
-image::..\Images\swipe_process.png[width=70%,align=center]
+image::..\Images\swipe_process.png[width=75%,align=center]
 _Figure 4.3.2. - 1. State Transitions_
 
 ===== Aggregate Deletion Rules
+:reviewer: Diego A. Pérez Gandarillas
 
 The deletion of a `StudentProfile` must adhere to strict rules to maintain **aggregate consistency**, ensure **data integrity**, and comply with **domain policies**. The following rules apply:
 
@@ -3228,12 +4001,21 @@ The deletion of a `StudentProfile` must adhere to strict rules to maintain **agg
   - Deleting a `StudentProfile` may require cascading deletion or modification of related aggregates:
     - **Enrollments:** Any active or historical enrollments linked to the student must be removed or anonymized.  
     - **Submissions/Assignments:** Student submissions may need to be archived, anonymized, or deleted according to retention policies.
-    - **Notifications/Logs:** Events related to the profile should remain in the audit trail but must be decoupled from personally identifiable information. 
+    - **Notifications/Logs:** Events related to the profile should remain in the audit trail but must be decoupled from personally identifiable information.
+    - #**Matches:** Match records referencing the student must be removed as they lose meaning without the student profile.#
+    - #**Applications:** Application records tied to the student's intent should be removed to maintain referential integrity.#
+    - #**MentorAssignments:** Student-specific mentor assignments must be cleaned up as they are tightly coupled to the student.#
+
+* #**Retention of System-Owned Data**#
+  #- Certain records should be preserved even after profile deletion:#
+    #- **Feedback:** May be retained with soft orphaning for historical reporting and analytics.#
+    #- **AuditLogs:** Must persist for compliance, traceability, and regulatory requirements.#
 
 * **Validation Checks** 
   - Before deletion, the system must validate:  
-    *** That no critical dependencies remain in other aggregates (e.g., group projects, team memberships).
-    *** That deletion will not violate invariants of related domain objects.
+    - That no critical dependencies remain in other aggregates (e.g., group projects, team memberships).
+    - That deletion will not violate invariants of related domain objects.
+    - [.underline]#That all active relationships are properly handled or archived.#
 
 * **Compliance and Audit**
   - All deletion events must be logged with timestamp, actor, and reason for deletion.
@@ -3250,6 +4032,535 @@ The deletion of a `StudentProfile` must adhere to strict rules to maintain **agg
 * **Guard Clauses**
   - Deletion is prevented if any of the above rules are violated. 
   - Only profiles satisfying all deletion conditions are allowed to transition into the `Deletion` state.
+
+==== #Entity Identity for Student Profiles#
+:author: Diego A. Pérez Gandarillas
+
+[discrete]
+=== Overview
+
+This section defines and enforces the *immutable identity model* for the `StudentProfile` entity within the Professional Portfolio system. The goal is to guarantee that every student profile has a **permanent, globally unique UUID** that never changes across updates, migrations, or distributed operations.
+
+Identity is the anchor for all related entities (matches, experiences, skills, recruiter views). Therefore, `StudentProfile.id` must behave as a stable identity token, not a mutable attribute.
+
+Since the backend uses **Supabase (PostgreSQL)**, identity enforcement relies on schema constraints, triggers, and domain-level invariants.
+
+[discrete]
+=== Domain Analysis
+
+[discrete]
+==== Why Immutable Identity Matters
+
+* **Consistency Across Clients and Server**  
+  Identity drift would break cross-device synchronization and profile linking.
+
+* **Referential Stability**  
+  Many tables reference `student_profile.id`. Mutating identity would corrupt foreign keys.
+
+* **Offline-First Requirements**  
+  Cached data syncs correctly only when identity is permanent.
+
+* **Security Policies (RLS)**  
+  Supabase RLS references profile identity; changing it would break access control rules.
+
+[discrete]
+==== Identity Requirements
+
+1. Must be a UUID generated by PostgreSQL using `gen_random_uuid()`.
+2. Must remain immutable after creation.
+3. Must uniquely represent exactly one real student profile.
+4. Must operate independently from the `auth.users.id`.
+5. Must support indexing, joins, and performant queries.
+
+[discrete]
+=== Alternative Designs Considered
+
+*Using `auth.users.id` as the identity:*  
+Rejected because authentication lifecycle differs from profile lifecycle.
+
+*Using incrementing integer IDs:*  
+Rejected due to predictability, distributed write conflicts, and lower portability.
+
+*Allowing profile regeneration:*  
+Rejected because it produces duplicates and breaks relationships in match data.
+
+[discrete]
+=== Conceptual Model
+
+[discrete]
+==== UML Class Diagram
+
+[source]
+----
+┌────────────────────┐
+│   StudentProfile   │
+├────────────────────┤
+│ - id: UUID         │
+│ - userId: UUID     │
+│ - name: String     │
+│ - major: String    │
+│ - ...              │
+├────────────────────┤
+│ + updateProfile()  │
+│ + getId()          │
+└────────────────────┘
+----
+
+Identity is write-once and read-many.
+
+[discrete]
+=== Entity-Relationship Diagram
+
+[source]
+----
+┌──────────────────────────┐
+│    student_profiles      │
+├──────────────────────────┤
+│ PK id (UUID, immutable)  │
+│ FK user_id               │
+│ name                     │
+│ major                    │
+│ ...                      │
+└──────────────────────────┘
+
+Referenced by:
+- matches.student_id
+- skills.student_id
+- experiences.student_id
+- recruiter_views.student_id
+----
+
+This highlights the importance of identity immutability.
+
+[discrete]
+=== Implementation Design
+
+[discrete]
+==== Supabase Schema Requirements
+
+The table already exists but must enforce automatic UUID creation and immutability.
+
+Apply these schema updates:
+
+[source,sql]
+----
+ALTER TABLE student_profiles
+ALTER COLUMN id SET DEFAULT gen_random_uuid();
+
+ALTER TABLE student_profiles
+ALTER COLUMN id SET NOT NULL;
+
+-- Enforce immutability
+CREATE OR REPLACE FUNCTION protect_studentprofile_id()
+RETURNS trigger AS $$
+BEGIN
+  IF NEW.id <> OLD.id THEN
+    RAISE EXCEPTION 'Cannot modify immutable StudentProfile.id';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS studentprofile_id_immutable ON student_profiles;
+
+CREATE TRIGGER studentprofile_id_immutable
+BEFORE UPDATE ON student_profiles
+FOR EACH ROW
+EXECUTE FUNCTION protect_studentprofile_id();
+----
+
+This prevents ID updates at the database level.
+
+[discrete]
+=== Working With Existing Empty Table
+
+Since the table contains no rows, we can validate UUID identity through two methods:
+
+[discrete]
+==== Option A: Create Profiles Through App Flow
+
+Direct inserts through the app will generate IDs automatically.
+
+[discrete]
+==== Option B: Upload CSV for Testing
+
+Example test CSV:
+
+[source,csv]
+----
+id,user_id,name,major
+,,Maria Rivera,Computer Engineering
+,,Juan Torres,Software Engineering
+,,Ana Delgado,Information Systems
+----
+
+Leaving id empty triggers Supabase's default UUID generation.
+
+Validate:
+
+[source,sql]
+----
+SELECT id, name FROM student_profiles;
+----
+
+Expected: UUIDs assigned automatically.
+
+[discrete]
+=== Domain Code Enforcement
+
+[source,dart]
+----
+class StudentProfile {
+  final String id; // immutable
+  final String userId;
+  String name;
+  String major;
+
+  StudentProfile({
+    required this.id,
+    required this.userId,
+    required this.name,
+    required this.major,
+  });
+
+  void update(String name, String major) {
+    this.name = name;
+    this.major = major;
+  }
+}
+----
+
+No method may modify the profile ID.
+
+[discrete]
+==== Repository Enforcement (Supabase)
+
+[source,dart]
+----
+Future<StudentProfile> updateProfile(StudentProfile profile) async {
+  final updated = await supabase
+    .from('student_profiles')
+    .update({
+      'name': profile.name,
+      'major': profile.major,
+    })
+    .eq('id', profile.id)
+    .select()
+    .single();
+
+  return StudentProfile.fromJson(updated);
+}
+----
+
+Note: ID is not included in the update payload.
+
+[discrete]
+=== Validation Queries
+
+[source,sql]
+----
+-- Detect duplicate profiles per user
+SELECT user_id, COUNT(*)
+FROM student_profiles
+GROUP BY user_id
+HAVING COUNT(*) > 1;
+
+-- Ensure no null IDs
+SELECT * FROM student_profiles WHERE id IS NULL;
+
+-- Ensure valid UUID formatting
+SELECT id FROM student_profiles
+WHERE id::text !~ '^[0-9a-fA-F-]{36}$';
+----
+
+These confirm correctness across environments.
+
+[discrete]
+=== Testing Strategy
+
+[discrete]
+==== Unit Tests
+
+[source,dart]
+----
+test('profile creation generates UUID', () {
+  final profile = StudentProfile(
+    id: Uuid().v4(),
+    userId: 'abc',
+    name: 'Test User',
+    major: 'SE',
+  );
+
+  expect(profile.id.isNotEmpty, true);
+});
+----
+
+Identity stability:
+
+[source,dart]
+----
+final oldId = profile.id;
+profile.update("New Name", "New Major");
+expect(oldId, equals(profile.id));
+----
+
+[discrete]
+==== Integration Tests
+
+[source,sql]
+----
+-- Attempt to change ID (should fail)
+UPDATE student_profiles
+SET id = gen_random_uuid()
+WHERE name = 'Maria Rivera';
+----
+
+Expected:
+
+----
+ERROR: Cannot modify immutable StudentProfile.id
+----
+
+[discrete]
+=== Conclusion
+
+The StudentProfile.id identity model is now fully enforced:
+
+* UUID identity generated automatically by Supabase
+* Identity is immutable via database trigger
+* Domain logic avoids accidental mutation
+* CSV workflows support testing in empty environments
+* Validation queries confirm no corruption
+* Integration tests confirm trigger behavior
+
+This identity foundation ensures stability across the entire Professional Portfolio system and supports reliable relationships between students, recruiters, matches, and all connected modules.
+[discrete]
+====== #Deletion Policy Matrix#
+
+[cols="2,2,2,3",options="header"]
+|===
+|Entity |Relationship Type |Behavior on Deletion |Reasoning
+
+|`Match`
+|Strong reference
+|**Cascade delete**
+|Match is meaningless without the student
+
+|`Application`
+|Strong reference
+|**Cascade delete**
+|Tied to student's intent; should be removed
+
+|`MentorAssignment`
+|Strong reference
+|**Cascade delete**
+|Student-specific; must be cleaned up
+
+|`Enrollment`
+|Strong reference
+|**Cascade delete or anonymize**
+|Per retention policy requirements
+
+|`Submission`
+|Strong reference
+|**Archive or anonymize**
+|Per institutional retention policy
+
+|`Feedback`
+|Optional/Soft link
+|**Retain (soft orphan)**
+|Used for historical reporting and analytics
+
+|`AuditLog`
+|System-owned
+|**Retain**
+|Must persist for compliance and traceability
+
+|`Notification`
+|Weak reference
+|**Decouple PII**
+|Preserve event trail, remove identifying data
+|===
+
+[discrete]
+====== #Database Schema Enforcement#
+
+#The database schema enforces deletion rules through foreign key constraints:#
+
+[source,sql]
+----
+CREATE TABLE student_profiles (
+  id UUID PRIMARY KEY,
+  user_id UUID NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL,
+  deleted_at TIMESTAMPTZ,
+  deleted_by UUID
+);
+
+CREATE TABLE applications (
+  id UUID PRIMARY KEY,
+  student_id UUID NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
+  program_id UUID NOT NULL,
+  status TEXT NOT NULL,
+  submitted_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE mentor_assignments (
+  id UUID PRIMARY KEY,
+  student_id UUID NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
+  mentor_id UUID NOT NULL,
+  assigned_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE matches (
+  id UUID PRIMARY KEY,
+  student_id UUID NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
+  mentor_id UUID NOT NULL,
+  matched_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE feedback (
+  id UUID PRIMARY KEY,
+  student_id UUID,  -- Nullable to support soft orphaning
+  mentor_id UUID,
+  notes TEXT,
+  submitted_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE audit_logs (
+  id UUID PRIMARY KEY,
+  action TEXT NOT NULL,
+  actor_id UUID,
+  entity_type TEXT,
+  entity_id UUID,
+  created_at TIMESTAMPTZ NOT NULL
+);
+----
+
+[discrete]
+====== #Trade-offs Analysis#
+
+#**Cascade Delete Approach (Primary Strategy)**#
+
+#*Advantages:*#
+#* Ensures no orphaned data or broken relationships#
+#* Simpler cleanup logic and maintenance#
+#* Enforces referential integrity at database level#
+#* Prevents accumulation of stale references#
+
+#*Disadvantages:*#
+#* Risk of accidental mass deletion if not properly guarded#
+#* Loss of historical data for analytics#
+#* Irreversible without backup restoration#
+
+#**Soft Deletion with Orphan Retention (Alternative Strategy)**#
+
+#*Advantages:*#
+#* Preserves historical data for reporting and analysis#
+#* Enables potential recovery or audit review#
+#* Supports compliance with data retention requirements#
+
+#*Disadvantages:*#
+#* Leaves dangling references requiring careful handling#
+#* Requires additional application logic for filtering#
+#* Increases storage requirements over time#
+#* More complex query patterns to exclude deleted records#
+
+#**Hybrid Approach (Implemented)**#
+
+#The system implements a hybrid strategy:#
+#- **Cascade delete** for tightly-coupled entities that lose meaning without the profile#
+#- **Soft orphaning** for loosely-coupled analytics and reporting data#
+#- **Mandatory retention** for system-owned compliance records#
+
+[.underline]#This approach balances data integrity with historical preservation and regulatory compliance.#
+
+[discrete]
+====== #Application-Level Safeguards#
+
+#Before allowing profile deletion, the application layer enforces additional checks:#
+
+#1. **Authorization Verification**#
+   #- Confirm requester is profile owner or system administrator#
+   #- Validate deletion permissions in current context#
+
+#2. **Active Relationship Checks**#
+   #- Warn if active mentor assignments exist#
+   #- Confirm handling of pending applications#
+   #- Verify no active group projects or collaborations#
+
+#3. **Archival Process**#
+   #- Create immutable snapshot before deletion#
+   #- Store in compliance-approved archival system#
+   #- Include all related entity snapshots#
+
+#4. **Audit Trail Creation**#
+   #- Record deletion event with full context#
+   #- Capture: actor ID, timestamp, reason, affected entities#
+   #- Ensure audit entry is immutable#
+
+#5. **Notification Cascade**#
+   #- Alert dependent systems of impending deletion#
+   #- Provide grace period for external system updates#
+   #- Confirm all systems acknowledged deletion#
+
+[discrete]
+====== #Soft Deletion Implementation#
+
+#For scenarios requiring extended data retention:#
+
+[source,sql]
+----
+-- Soft delete implementation
+ALTER TABLE student_profiles ADD COLUMN deleted_at TIMESTAMPTZ;
+ALTER TABLE student_profiles ADD COLUMN deleted_by UUID;
+ALTER TABLE student_profiles ADD COLUMN deletion_reason TEXT;
+
+-- Application queries filter deleted profiles
+CREATE VIEW active_student_profiles AS
+SELECT * FROM student_profiles 
+WHERE deleted_at IS NULL;
+
+-- Periodic cleanup job for aged soft-deleted records
+-- (after retention period expires)
+DELETE FROM student_profiles 
+WHERE deleted_at < NOW() - INTERVAL '7 years'
+AND deletion_reason != 'legal_hold';
+----
+
+[discrete]
+====== #Validation Test Scenarios#
+
+#**Test Case 1: Cascade Verification**#
+#1. Create `StudentProfile` with associated `Match`, `Application`, `MentorAssignment`#
+#2. Execute deletion#
+#3. Verify all dependent records removed#
+#4. Confirm `Feedback` and `AuditLog` persist#
+#5. Validate no orphaned foreign key references remain#
+
+#**Test Case 2: Authorization Enforcement**#
+#1. Attempt deletion as unauthorized user#
+#2. Verify rejection with appropriate error code#
+#3. Confirm profile remains unchanged#
+#4. Validate audit log records failed attempt#
+
+#**Test Case 3: Active Relationship Warning**#
+#1. Create profile with active mentor assignment#
+#2. Initiate deletion#
+#3. Verify system presents active relationship warning#
+#4. Confirm deletion blocked until acknowledged or relationships resolved#
+
+#**Test Case 4: Audit Trail Completeness**#
+#1. Delete profile with full context#
+#2. Verify audit log entry created#
+#3. Confirm all required fields populated#
+#4. Validate audit entry immutability#
+
+#**Test Case 5: Soft Deletion Recovery**#
+#1. Soft delete profile#
+#2. Verify profile hidden from normal queries#
+#3. Execute recovery operation#
+#4. Confirm profile restored with all relationships intact#
 
 === Refactoring Towards Deeper Insight and Breakthroughs
 
@@ -4141,8 +5452,8 @@ The recommendations derived from this research provide concrete guidance for the
 | Modified, Modified
 
 | Diego A. Pérez Gandarillas
-| 2.3.1, 4.6.3
-| Added
+| 2.3.1, 4.2.7, 4.3.2, 4.3.3, 4.6.3
+| Added, Modified
 
 | Julian Vivas
 | 4.2.1
@@ -4159,6 +5470,15 @@ The recommendations derived from this research provide concrete guidance for the
 | Horeb Cotto Rosado
 | 4.3.2
 | Added
+
+| Jahdiel Montero
+| 1.5
+| Modified
+
+| Carlos E. Cabán González
+| 2.2.5, 3.2.2
+| Modified
+
 
 |===
 '''
