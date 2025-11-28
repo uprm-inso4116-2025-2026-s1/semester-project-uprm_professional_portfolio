@@ -1,15 +1,17 @@
-**Strategy Pattern for  Matching Policies**
+# **Strategy Pattern for  Matching Policies**
 
 In the Matching algorithm we have different strategies  to match the jobseekers with the recruiters just as: skill-priority, GPA-priority, location-priority
 
-What all this match strategies have in common? A common interface match()
+**What do all these match strategies have in common?**  A common interface match()
 
 But first, let's define:
 
 **What is a strategy pattern?** 
-"Strategy Design Pattern is a [behavioral design pattern](https://www.geeksforgeeks.org/system-design/behavioral-design-patterns/) that allows you to define a family of algorithms or behaviors, put each of them in a separate class, and make them interchangeable at runtime." (Extracted from Geek for Geeks)
+
+"Strategy Design Pattern is a [behavioral design pattern](https://www.geeksforgeeks.org/system-design/behavioral-design-patterns/) that allows you to define a family of algorithms or behaviors, put each of them in a separate class, and make them interchangeable at runtime." (Extracted from Geek for Geeks website) 
 
 **Why is useful and why we need it for our project?**
+
 It is useful because it allows us to have more flexibility in terms of changing how the matching works without modifying the  rest of the code. It also allow us to reuse strategies across different parts of the system.
 
 **The following is a pseudocode of how the Matching Policy should look like:** 
@@ -216,6 +218,7 @@ for( final js in jobseekers){
 ```
 
 References:
+Geek for Geeks, "Strategy Design Pattern", https://www.geeksforgeeks.org/system-design/strategy-pattern-set-1/
 
 Geek for Geeks, "Strategy Design Pattern", https://www.geeksforgeeks.org/system-design/strategy-pattern-set-1/
 
