@@ -4705,6 +4705,17 @@ This Discovery Journal records key domain insights and refactors that, during de
 
 #- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/353#
 
+#Entry 12: Factory Pattern to Enforce Invariants#
+
+#- Context/Problem: Profile objects are critical domain entities, where creation methods could lack centralized control, risking the instantiation of invalid states.#
+
+#- Domain Insight: A profile is meaningful if its core invariants are met at the moment of creation. The responsibility for guaranteeing this validity is separate from the behavior of the profile object. This is where the factory method pattern would come in.#
+
+#- Change Applied Idea: Implement the profile factory to encapsulate all creation logic. It would make the profile constructor private or protected to force all users to use the factory.#
+
+#- Impact: Guaranteeing invariants, in this case the UUID and an initial resume attached. This would simplify downstream logic.#
+
+#- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/381#
 
 ==== #Continuous Refactoring Log#
 :author: Alexa M. Zaragoza Torres
