@@ -8,7 +8,7 @@ But first, let's define:
 
 **What is a strategy pattern?** 
 
-"Strategy Design Pattern is a [behavioral design pattern](https://www.geeksforgeeks.org/system-design/behavioral-design-patterns/) that allows you to define a family of algorithms or behaviors, put each of them in a separate class, and make them interchangeable at runtime." (Extracted from Geek for Geeks website) 
+"Strategy Design Pattern is a [behavioral design pattern](https://www.geeksforgeeks.org/system-design/behavioral-design-patterns/) that allows you to define a family of algorithms or behaviors, put each of them in a separate class, and make them interchangeable at runtime." (Extracted from GeeksforGeeks website) 
 
 **Why is useful and why we need it for our project?**
 
@@ -218,7 +218,6 @@ for( final js in jobseekers){
 ```
 
 References:
-Geek for Geeks, "Strategy Design Pattern", https://www.geeksforgeeks.org/system-design/strategy-pattern-set-1/
 
-Geek for Geeks, "Strategy Design Pattern", https://www.geeksforgeeks.org/system-design/strategy-pattern-set-1/
+GeeksforGeeks, "Strategy Design Pattern", https://www.geeksforgeeks.org/system-design/strategy-pattern-set-1/
 
