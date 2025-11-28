@@ -308,4 +308,82 @@ class ChatServiceSupabase {
   void subscribeToReactions(void Function(Map<String, dynamic> payload) onEvent) {
     // no-op
   }
+
+  /// Subscribe to real-time message updates for a conversation
+  /// Returns a RealtimeChannel that should be unsubscribed when done
+  RealtimeChannel subscribeToMessages(
+    String conversationId, {
+    required void Function(ChatMessage message) onInsert,
+    required void Function(ChatMessage message) onUpdate,
+    required void Function(String messageId) onDelete,
+  }) {
+    final channel = _client.channel('messages:$conversationId');
+
+    channel
+        .onPostgresChanges(
+          event: PostgresChangeEvent.insert,
+          schema: 'public',
+          table: _table,
+          filter: PostgresChangeFilter(
+            type: PostgresChangeFilterType.eq,
+            column: 'conversation_id',
+            value: conversationId,
+          ),
+          callback: (payload) {
+            try {
+              final newRecord = payload.newRecord;
+              if (newRecord != null) {
+                final message = _rowToChatMessage(newRecord);
+                onInsert(message);
+              }
+            } catch (e, st) {
+              debugPrint('[chat_service_supabase] subscribeToMessages INSERT error: $e\n$st');
+            }
+          },
+        )
+        .onPostgresChanges(
+          event: PostgresChangeEvent.update,
+          schema: 'public',
+          table: _table,
+          filter: PostgresChangeFilter(
+            type: PostgresChangeFilterType.eq,
+            column: 'conversation_id',
+            value: conversationId,
+          ),
+          callback: (payload) {
+            try {
+              final newRecord = payload.newRecord;
+              if (newRecord != null) {
+                final message = _rowToChatMessage(newRecord);
+                onUpdate(message);
+              }
+            } catch (e, st) {
+              debugPrint('[chat_service_supabase] subscribeToMessages UPDATE error: $e\n$st');
+            }
+          },
+        )
+        .onPostgresChanges(
+          event: PostgresChangeEvent.delete,
+          schema: 'public',
+          table: _table,
+          filter: PostgresChangeFilter(
+            type: PostgresChangeFilterType.eq,
+            column: 'conversation_id',
+            value: conversationId,
+          ),
+          callback: (payload) {
+            try {
+              final oldRecord = payload.oldRecord;
+              if (oldRecord != null && oldRecord['id'] != null) {
+                onDelete(oldRecord['id'] as String);
+              }
+            } catch (e, st) {
+              debugPrint('[chat_service_supabase] subscribeToMessages DELETE error: $e\n$st');
+            }
+          },
+        )
+        .subscribe();
+
+    return channel;
+  }
 }
