@@ -4664,6 +4664,18 @@ This Discovery Journal records key domain insights and refactors that, during de
 - Author/Date: PR merged by Julian Vivas — 2025-10-17
 - Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/188
 
+#Entry 11: Patterns in Matching Module.#
+
+#- Context/Problem: The matching logic required selecting a concrete implementation based on the current user's role. If implemented directly in MatchesState, the conditional logic could lead to tight coupling.#
+
+#- Domain Insight: The matcher is an abstract whose specific implementation should be decoupled from the code that uses it. The choice of which matcher to use is a separate concern from displaying matches.#
+
+#- Change Applied: Proposed adoption of the Factory Method design pattern. This patern will be responsible for encapsulating the conditional logic required to instantiate the correct matcher implementation.#
+
+#- Impact: The clarity of intent for the MatchesState class would improve, as it now simply requests a matcher without knowing the underlying implementation. Maintenance would also improve, since adding new user roles would not need too many lines of code.#
+
+#- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/353#
+
 
 ==== #Continuous Refactoring Log#
 :author: Alexa M. Zaragoza Torres
@@ -5460,8 +5472,8 @@ The recommendations derived from this research provide concrete guidance for the
 | Modified
 
 | Fernando Castro Cancel
-| 2.3.2, 2.2.3, 2.2.4, 2.2.5
-| Modified
+| 2.3.2, 2.2.3, 2.2.4, 2.2.5, #4.4.1#
+| Modified, #Added#
 
 | Naedra Feliciano
 | 3.2.1
