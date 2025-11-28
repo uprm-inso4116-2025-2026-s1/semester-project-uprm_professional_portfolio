@@ -28,4 +28,8 @@ class AppConstants {
   static const int minPasswordLength = 8;
   static const int maxNameLength = 50;
   static const int maxBioLength = 500;
+
+  // Forgot Password
+  static const String forgotPasswordRoute = '/forgot-password';
+  static const String resetPasswordRoute  = '/reset-password';
 }

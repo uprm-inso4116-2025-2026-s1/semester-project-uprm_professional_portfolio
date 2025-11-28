@@ -14,6 +14,9 @@ import '../features/main/main_screen.dart';
 import '../features/profiles/recruiter_profile/recruiter_profile_screen.dart';
 import '../features/profiles/jobseeker_profile/jobseeker_profile_screen.dart';
 import '../features/chat/chat_room_page.dart';
+import '../core/services/auth_service.dart';
+import '../features/auth/reset_password/reset_password_screen.dart';
+
 
 // App router configuration
 class AppRouter {
@@ -28,7 +31,8 @@ class AppRouter {
         final targetLocation = state.uri.toString();
 
         final isLoggingIn = currentLocation == AppConstants.loginRoute ||
-            currentLocation == AppConstants.signupRoute;
+            currentLocation == AppConstants.signupRoute ||
+            currentLocation == AppConstants.resetPasswordRoute;
         final isGoingToProfile =
             targetLocation.startsWith(AppConstants.recruiterProfileRoute) ||
                 targetLocation.startsWith(AppConstants.jobseekerProfileRoute);
@@ -85,6 +89,18 @@ class AppRouter {
             return ChatRoomPage(conversationId: conversationId);
           },
         ),
+
+        // Forgot Password
+        GoRoute(
+          path: AppConstants.forgotPasswordRoute,
+          builder: (context, state) => const ForgotPasswordScreen(),
+          ),
+
+        // Reset Password
+        GoRoute(
+          path: AppConstants.resetPasswordRoute,
+          builder: (context, state) => const ResetPasswordScreen(),
+          ),
 
         // Profile setup routes
         GoRoute(
