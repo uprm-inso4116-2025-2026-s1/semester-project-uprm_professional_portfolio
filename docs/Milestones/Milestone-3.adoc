@@ -815,6 +815,8 @@ This narrative ties the abstract model to observable work. The multiplicities cl
 #The following are concrete examples of events, actions, and behaviors derived from the domain observations. Each example includes a description of the type, triggering conditions, subsequent actions, and postconditions to illustrate how these elements manifest in the student-recruiter interaction context.#
 
 image::../Images/EventsActionsEntitiesUML.png[width=100%,align=center]
+_Figure 2.3.1 - 1. UML Diagram of Events, Actions, and Entities_
+
 
 ===== [underline]#_Recruiting event announced (event → actions → follow-up events)_#
 
@@ -2035,12 +2037,12 @@ class ProfileCard extends StatelessWidget {
 }
 ```
 
-==== Visual Representation of the Implementation
+==== #Visual Representation of the Implementation#
 
 This section presents the **actual UI visuals** of the application, showing how domain concepts are represented to the user. The images illustrate the design of ProfileCards, swiping interactions, match notifications, messaging screens, and event participation views.
 
 
-
+image::../Images/create_acc_pt1.jpg[Profile Card UI, align=center, width=40%]
 
 
 == Analytic Part
@@ -2701,7 +2703,7 @@ uniqueness, gated chat, visibility, idempotency, and unmatch/report support, wit
 The scope is traceable to Personas and User Stories, Epics, and Features, and is ready for build and
 review.
 
-image::../images/Flowchart-LTT-ModelingOutLoudforSwipeFlow.png[width=70%,align=center]
+image::../images/Flowchart-LTT-ModelingOutLoudforSwipeFlow.png[width=%40,align=center]
 _Figure 4.1.3. - 1. Flowchart LTT – Modeling Out Loud for Swipe Flow_
 
 [discrete]
@@ -6021,7 +6023,7 @@ Generic subdomains support operational needs, providing stability, security, and
 [discrete]
 === Domain Segmentation Diagram
 
-image::../images/coredomain.svg[width=99%,align=center]
+image::../images/coredomain.png[width=99%,align=center]
 _Figure 4.6.1. - 1. Domain Segmentation Diagram_
 
 The diagram above illustrates the relationship between the core, supporting, and generic subdomains. At the center is the **Core Domain**, which contains the Match Formation & Alignment Logic — the system’s strategic differentiator. Surrounding it are the **Supporting Subdomains**, which provide enriched data and interaction mechanisms to enhance the core functionality. The **Generic Subdomains** form the outer layer, delivering necessary infrastructural services such as authentication, notifications, storage, and UI components. This layered visualization emphasizes how value and complexity flow from the core outward, highlighting where design focus should be concentrated to maximize system effectiveness and competitive advantage.
