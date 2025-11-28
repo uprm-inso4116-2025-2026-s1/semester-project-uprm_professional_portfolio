@@ -55,15 +55,15 @@ class StorageService {
     await prefs.clear();
   }
 
-  /// Save recruiter profile to local storage
-  Future<void> saveRecruiterProfile(RecruiterProfile profile) async {
+  /// Persist recruiter's company profile to local storage
+  Future<void> persistRecruiterProfileLocally(RecruiterProfile profile) async {
     final prefs = await SharedPreferences.getInstance();
     final profileJson = jsonEncode(profile.toJson());
     await prefs.setString(_recruiterProfileKey, profileJson);
   }
 
-  /// Get recruiter profile from local storage
-  Future<RecruiterProfile?> getRecruiterProfile() async {
+  /// Retrieve recruiter profile from local storage
+  Future<RecruiterProfile?> retrieveRecruiterProfileFromLocalStorage() async {
     final prefs = await SharedPreferences.getInstance();
     final profileJson = prefs.getString(_recruiterProfileKey);
 
@@ -77,15 +77,15 @@ class StorageService {
     }
   }
 
-  /// Save jobseeker profile to local storage
-  Future<void> saveJobSeekerProfile(JobSeekerProfile profile) async {
+  /// Persist job seeker's profile to local storage
+  Future<void> persistJobSeekerProfileLocally(JobSeekerProfile profile) async {
     final prefs = await SharedPreferences.getInstance();
     final profileJson = jsonEncode(profile.toJson());
     await prefs.setString(_jobseekerProfileKey, profileJson);
   }
 
-  /// Get jobseeker profile from local storage
-  Future<JobSeekerProfile?> getJobSeekerProfile() async {
+  /// Retrieve job seeker profile from local storage
+  Future<JobSeekerProfile?> retrieveJobSeekerProfileFromLocalStorage() async {
     final prefs = await SharedPreferences.getInstance();
     final profileJson = prefs.getString(_jobseekerProfileKey);
 

@@ -79,11 +79,11 @@ class MatchCalculator {
   /// Current algorithm version for tracking
   static const String algorithmVersion = '1.0.0';
 
-  /// Calculate match score between a candidate and job requirements.
+  /// Evaluate candidate compatibility with job opening requirements.
   ///
   /// This is a pure function - same inputs always produce same output.
   /// No side effects or mutations occur.
-  static MatchScore calculateMatchScore({
+  static MatchScore evaluateCandidateCompatibility({
     required CandidateData candidate,
     required JobRequirements requirements,
     ScoringWeights weights = ScoringWeights.balanced,

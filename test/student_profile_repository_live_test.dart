@@ -65,14 +65,14 @@ void main() {
       );
 
       try {
-        await repo.updateAddress(profileId: kProfileId, address: addr);
+        await repo.updateStudentContactAddress(profileId: kProfileId, address: addr);
       } on PostgrestException catch (e) {
         // ignore: avoid_print
         print('PG error code=${e.code} message=${e.message} details=${e.details} hint=${e.hint}');
         rethrow;
       }
 
-      final got = await repo.getById(kProfileId);
+      final got = await repo.retrieveStudentProfileById(kProfileId);
 
       expect(got.address, isNotNull);
       expect(got.address!.line1, '123 Main St');
@@ -81,8 +81,8 @@ void main() {
     });
 
     test('null address clears DB columns', () async {
-      await repo.updateAddress(profileId: kProfileId, address: null);
-      final got = await repo.getById(kProfileId);
+      await repo.updateStudentContactAddress(profileId: kProfileId, address: null);
+      final got = await repo.retrieveStudentProfileById(kProfileId);
       expect(got.address, isNull);
     });
   });
