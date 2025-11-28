@@ -59,6 +59,11 @@ flutter:
     - assets/logo/google_logo.png
     - assets/logo/linkedin_logo.png
     - assets/logo/professional_portfolio_logo_with_txt.png
+    - assets/matches_accept_button.png
+    - assets/matches_skip_button.png
+    - assets/matches_info_button.png
+    - assets/matches_star_button.png
+    - assets/matches_star_button_filled.png
   #   - images/
   #   - icons/
   # Note: .env is optional - only needed for Supabase configuration

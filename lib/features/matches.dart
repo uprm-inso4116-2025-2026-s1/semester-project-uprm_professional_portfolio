@@ -119,13 +119,13 @@ class MatchesState extends State<MatchesScreen> {
                 children: [
                   IconButton(
                     onPressed: userLiked,
-                    icon: Image.asset('matches_accept_button.png',
+                    icon: Image.asset('assets/matches_accept_button.png',
                         width: 50),
                   ),
                   IconButton(
                     onPressed: userDisliked,
                     icon:
-                    Image.asset('matches_skip_button.png', width: 50),
+                    Image.asset('assets/matches_skip_button.png', width: 50),
                   ),
                   IconButton(
                     onPressed: () {
@@ -177,7 +177,7 @@ class MatchesState extends State<MatchesScreen> {
                       );
                     },
                     icon: Image.asset(
-                      'matches_info_button.png',
+                      'assets/matches_info_button.png',
                       width: 50,
                     ),
                   ),
@@ -188,7 +188,7 @@ class MatchesState extends State<MatchesScreen> {
                             _Pressed = !_Pressed;
                           });
                         },
-                        icon: _Pressed? Image.asset('matches_star_button_filled.png', width: 50): Image.asset('matches_star_button.png', width: 50),
+                        icon: _Pressed? Image.asset('assets/matches_star_button_filled.png', width: 50): Image.asset('assets/matches_star_button.png', width: 50),
                       ),
                     ],
               ),

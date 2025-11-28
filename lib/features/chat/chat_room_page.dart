@@ -35,6 +35,10 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   bool _isSending = false;
   String? _selectedImageUrl;
   String? _selectedImageType;
+  // Reactions: messageId -> emoji -> count
+  final Map<String, Map<String, int>> _reactionCounts = {};
+  // Which emojis the current user has reacted with per message
+  final Map<String, Set<String>> _userReactions = {};
 
   @override
   void initState() {
@@ -62,8 +66,159 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
         _messages = messages.reversed.toList(); // Show oldest first
         _isLoading = false;
       });
+      // Load reactions for visible messages
+      _loadReactionsForMessages(_messages.map((m) => m.id).toList());
       _scrollToBottom();
     }
+  }
+
+  Future<void> _loadReactionsForMessages(List<String> messageIds) async {
+    if (messageIds.isEmpty) return;
+    final map = await _chatService.fetchReactionsForMessages(messageIds);
+    // reset and apply
+    if (!mounted) return;
+    setState(() {
+      _reactionCounts.clear();
+      _reactionCounts.addAll(map);
+    });
+
+    // Also fetch which emojis current user has reacted with per message
+    final currentUserId = _chatService.currentUserId;
+    if (currentUserId != null) {
+      for (final mid in messageIds) {
+        final rows = await _chatService.fetchReactionsForMessage(mid);
+        final mySet = <String>{};
+        for (final r in rows) {
+          if (r.userId == currentUserId) mySet.add(r.emoji);
+        }
+        setState(() => _userReactions[mid] = mySet);
+      }
+    }
+  }
+
+  Future<void> _toggleReaction(String messageId, String emoji) async {
+    final currentUserId = _chatService.currentUserId;
+    if (currentUserId == null) return;
+
+    final mySet = _userReactions[messageId] ?? <String>{};
+    final already = mySet.contains(emoji);
+
+    // Optimistic update
+    setState(() {
+      if (already) {
+        // decrement count
+        final map = _reactionCounts[messageId];
+        if (map != null && map.containsKey(emoji)) {
+          final newCount = map[emoji]! - 1;
+          if (newCount <= 0) {
+            map.remove(emoji);
+          } else {
+            map[emoji] = newCount;
+          }
+        }
+        mySet.remove(emoji);
+        _userReactions[messageId] = mySet;
+      } else {
+        _reactionCounts.putIfAbsent(messageId, () => {});
+        final map = _reactionCounts[messageId]!;
+        map[emoji] = (map[emoji] ?? 0) + 1;
+        mySet.add(emoji);
+        _userReactions[messageId] = mySet;
+      }
+    });
+
+    // Persist change
+    if (already) {
+      await _chatService.removeReaction(messageId, emoji);
+    } else {
+      await _chatService.addReaction(messageId, emoji);
+    }
+  }
+
+  Future<void> _showReactionPicker(ChatMessage message) async {
+    final choices = ['👍', '❤️', '😂', '😮', '😢', '👏', '🎉', '🔥'];
+    final picked = await showModalBottomSheet<String?>(
+      context: context,
+      builder: (context) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: choices
+                .map(
+                  (e) => GestureDetector(
+                    onTap: () => Navigator.of(context).pop(e),
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).colorScheme.surfaceVariant,
+                      ),
+                      child: Text(e, style: const TextStyle(fontSize: 22)),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+        ),
+      ),
+    );
+
+    if (picked != null) {
+      await _toggleReaction(message.id, picked);
+    }
+  }
+
+  void _setupReactionsSubscription() {
+    try {
+      _chatService.subscribeToReactions((payload) {
+        // payload expected to contain: 'eventType' or 'type', and 'record'/'old_record'
+        try {
+          final event = payload['eventType'] ?? payload['type'];
+          final record = payload['record'] as Map<String, dynamic>?;
+          final oldRecord = payload['old_record'] as Map<String, dynamic>?;
+
+          if (record != null && (event == 'INSERT' || event == 'postgres_changes')) {
+            // INSERT
+            final mid = record['message_id'] as String?;
+            final emoji = record['emoji'] as String?;
+            final userId = record['user_id'] as String?;
+            if (mid != null && emoji != null) {
+              setState(() {
+                _reactionCounts.putIfAbsent(mid, () => {});
+                _reactionCounts[mid]![emoji] = (_reactionCounts[mid]![emoji] ?? 0) + 1;
+                if (userId == _chatService.currentUserId) {
+                  _userReactions.putIfAbsent(mid, () => <String>{});
+                  _userReactions[mid]!.add(emoji);
+                }
+              });
+            }
+          } else if (oldRecord != null) {
+            // DELETE
+            final mid = oldRecord['message_id'] as String?;
+            final emoji = oldRecord['emoji'] as String?;
+            final userId = oldRecord['user_id'] as String?;
+            if (mid != null && emoji != null) {
+              setState(() {
+                final map = _reactionCounts[mid];
+                if (map != null && map.containsKey(emoji)) {
+                  final current = map[emoji]! - 1;
+                  if (current <= 0) {
+                    map.remove(emoji);
+                  } else {
+                    map[emoji] = current;
+                  }
+                }
+                if (userId == _chatService.currentUserId) {
+                  _userReactions[mid]?.remove(emoji);
+                }
+              });
+            }
+          }
+        } catch (_) {}
+      });
+    } catch (_) {}
   }
 
   Future<void> _sendMessage() async {
@@ -466,8 +621,11 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     return Align(
       alignment: isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
       child: GestureDetector(
-        onLongPress: isCurrentUser && !message.isDeleted
+        onTap: isCurrentUser && !message.isDeleted
             ? () => _showMessageOptions(message)
+            : null,
+        onLongPress: !message.isDeleted
+            ? () => _showReactionPicker(message)
             : null,
         child: Container(
           margin: const EdgeInsets.only(bottom: UIConstants.spaceMD),
@@ -648,6 +806,41 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                   ],
                 ],
               ),
+              // Reactions row
+              if ((_reactionCounts[message.id]?.isNotEmpty ?? false))
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 6,
+                      runSpacing: 6,
+                      children: _reactionCounts[message.id]!.entries.map((e) {
+                        final emoji = e.key;
+                        final count = e.value;
+                        final isMine = _userReactions[message.id]?.contains(emoji) ?? false;
+                        return GestureDetector(
+                          onTap: () => _toggleReaction(message.id, emoji),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: isMine ? theme.colorScheme.primary.withOpacity(0.15) : theme.colorScheme.surfaceVariant,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(emoji, style: const TextStyle(fontSize: 14)),
+                                const SizedBox(width: 6),
+                                Text(count.toString(), style: theme.textTheme.bodySmall),
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
             ],
           ),
         ),
