@@ -1111,58 +1111,52 @@ Scenario: A Recruiter Reviews a Candidate
 This subsection defines the product scope from a user-value perspective. It organizes the solution into Epics that capture high-level goals and Features that realize those goals in the system.
 
 [discrete]
-==== Abbreviations and ID Conventions:
+==== Abbreviations and ID Conventions
 [cols="1,3",options="header,autowidth"]
 |===
 |Abbrev. |Meaning
 |US |User Story: a user-centered need framed as intent and value.
 |E |Epic: a high-level goal that groups related features and stories.
 |F |Feature: a concrete capability that realizes part of an epic.
-|ReqRef |Requirement Reference: the requirement ID(s) a story or feature maps to.
-|REQ |Requirement: a functional or non-functional specification with a stable ID.
+|ReqRef |Requirement Reference: one or more requirement IDs influenced by a story/feature.
+|REQ |Requirement: functional or non-functional specification.
 |===
 
 [discrete]
-==== Identifier Formats:
+==== Identifier Formats
 [cols="1,2,3,2",options="header,autowidth"]
 |===
 |Type |Format |Components |Example
 
-|User Story ID:
+|User Story ID
 |`US.AREA.NN`
-|`US` = user story.; `AREA` = functional area (e.g., `PROF`, `SRCH`, `MATCH`, `CHAT`, `EVT`, `NOTIF`, `SAFE`); `NN` = two-digit sequence.
+|Functional area (e.g., `PROF`, `SRCH`, `MATCH`, `CHAT`, `EVT`, `NOTIF`, `SAFE`) + sequence.
 |`US.PROF.01`
 
-|Epic ID:
-|`E#` or “Epic E#: Title”.
-|`#` = epic number.; clear title preferred in headings.
-|`E1` or `Epic E1: Candidate Profile & Portfolio`
+|Epic ID
+|`E#`
+|Epic number or “Epic E#: Title”.
+|`E1`, `Epic E1: Candidate Profile & Portfolio`
 
-|Feature ID:
+|Feature ID
 |`F#.N`
-|`#` = epic number; `N` = feature sequence within that epic.
-|`F1.1`, `F3.2`
+|Epic number + feature sequence.
+|`F1.1`
 
-|Requirement ID:
+|Requirement ID
 |`REQ-AREA-TYPE-NN`
-|`AREA` = functional area; `TYPE` = `F` (Functional) or `NF` (Non-functional); `NN` = two-digit sequence.
-|`REQ-PRF-F-01`, `REQ-CHAT-NF-01`
+|`AREA` + `TYPE` (`F` or `NF`) + number.
+|`REQ-PRF-F-01`
 |===
 
 [discrete]
-==== ReqRef Usage (inside a story or feature):
+==== ReqRef Usage
 [cols="1,3",options="header,autowidth"]
 |===
 |Placement |Syntax
-
-|Same line as the title:
-|`US.PROF.01: Publish a complete profile  ReqRef: REQ-PRF-F-01`.
-
-|Next line below the title:
-|`US.PROF.01: Publish a complete profile` +
-`_ReqRef: REQ-PRF-F-01_`.
+|Same line |`US.PROF.01: Publish a complete profile  ReqRef: REQ-PRF-F-01, REQ-PRF-NF-01`
+|Next line |`_ReqRef: REQ-PRF-F-01, REQ-PRF-NF-01_`
 |===
-
 
 &#160;
 
@@ -1184,62 +1178,73 @@ This subsection defines the product scope from a user-value perspective. It orga
 - F1.4 Profile completeness indicator: The system displays a completeness indicator that shows progress toward a fully publishable profile.
 
 [discrete]
-===== _US.PROF.01: Publish a complete profile | ReqRef: REQ-PRF-F-01_
+===== _US.PROF.01: Publish a complete profile  ReqRef: REQ-PRF-F-01, REQ-PRF-F-02, REQ-PRF-NF-01_
 
-_"As a candidate, I want to publish my education, skills, and experience so that recruiters can evaluate fit quickly."_
+_"As a candidate, I want to publish my education, skills, and experience so recruiters can evaluate fit quickly."_
 
-*Assumptions/Dependencies:* verified university email; identity/enrollment verification available.
+This story generates **multiple requirements**:
+- functional profile publishing logic  
+- validation of required fields  
+- performance expectation for publishing and updating  
 
 *Acceptance criteria:*
 [cols="1,1,2",options="header,autowidth"]
 |===
 |Given |When |Then
-|A verified account. |All required fields are completed and saved. |The profile is published and listed as “Complete”.
-|Required info is missing. |Publish is attempted. |Inline errors show exactly which fields remain.
-|Profile is updated. |Changes are saved. |The last-updated timestamp is refreshed.
+|A verified account |All required fields are completed |The profile is published as “Complete”
+|Required info missing |Publish attempted |Inline errors indicate missing fields
+|Profile is updated |Changes saved |Last-updated timestamp refreshed
 |===
 
 &#160;
 
 [discrete]
-===== _US.PROF.02: Add portfolio items | ReqRef: REQ-PRF-F-02_
+===== _US.PROF.02: Add portfolio items  ReqRef: REQ-PRF-F-03, REQ-PRF-NF-02_
 
 _"As a candidate, I want to add portfolio items so that my work is easy to review."_
 
-*Acceptance criteria:*
-[cols="1,1,2",options="header,autowidth"]
-|===
-|Given |When |Then
-|A valid file or public URL |The item is uploaded. |The item appears in a gallery and can be reordered.
-|An unsupported type or size. |Upload is attempted. |An error lists allowed types and maximum size.
-|===
-
-&#160;
-
-[discrete]
-===== _US.PROF.03: Control profile visibility | ReqRef: REQ-PRF-F-03_
-
-_"As a candidate, I want to choose my profile visibility so that I control my exposure."_
+This story results in multiple requirements:
+- upload + type/size validation  
+- performance and reliability constraints  
 
 *Acceptance criteria:*
 [cols="1,1,2",options="header,autowidth"]
 |===
 |Given |When |Then
-|Visibility is set to “Private”. |Recruiters search. |The profile does not appear in results.
-|Visibility is set to “Match-only”. |A mutual Match occurs. |The profile becomes visible to the matched party.
-|Visibility is set to “Public”. |Recruiters search. |The profile can appear in results.
+|Valid file or URL |Upload occurs |Item appears and can be reordered
+|Unsupported type/size |Upload attempted |Error lists allowed types/sizes
 |===
 
 &#160;
 
 [discrete]
-===== E1 Traceability (Stories → Features → Requirements):
-[cols="1,2,2,2",options="header,autowidth"]
+===== _US.PROF.03: Control profile visibility  ReqRef: REQ-PRF-F-04, REQ-PRF-NF-03_
+
+_"As a candidate, I want to choose my profile visibility so I control my exposure."_
+
+This story influences:
+- access-control requirements  
+- search-filtering behavior  
+- privacy/performance guarantees  
+
+*Acceptance criteria:*
+[cols="1,1,2",options="header,autowidth"]
 |===
-|Story ID |Feature |ReqRef |Notes
-|US-PROF-01 |F1.1, F1.4 |REQ-PRF-F-01 |Completeness logic and publish rules.
-|US-PROF-02 |F1.2 |REQ-PRF-F-02 |File/URL validation constraints.
-|US-PROF-03 |F1.3 |REQ-PRF-F-03 |Access control and search filtering.
+|Given |When |Then
+|Visibility = Private |Recruiters search |Profile is hidden
+|Visibility = Match-only |A mutual Match occurs |Profile becomes visible
+|Visibility = Public |Recruiters search |Profile may appear in results
+|===
+&#160;
+
+[discrete]
+===== E1 Traceability (Stories → Features → Requirements)
+[cols="1,2,2,3",options="header,autowidth"]
+|===
+|Story |Features |ReqRef |Notes
+|US.PROF.01 |F1.1, F1.4 |REQ-PRF-F-01, REQ-PRF-F-02, REQ-PRF-NF-01 |One story drives several functional + NF requirements.
+|US.PROF.02 |F1.2 |REQ-PRF-F-03, REQ-PRF-NF-02 |Upload constraints + performance.
+|US.PROF.03 |F1.3 |REQ-PRF-F-04, REQ-PRF-NF-03 |Access-control + privacy logic.
 |===
 
 &#160;
@@ -1260,31 +1265,40 @@ _"As a candidate, I want to choose my profile visibility so that I control my ex
 - F2.3 Candidate detail view: Recruiters can open a detailed candidate view that consolidates profile and portfolio information.
 
 [discrete]
-===== _US.SRCH.01: Publish a company page | ReqRef: REQ-SRCH-F-01_
+===== _US.SRCH.01: Publish a company page  ReqRef: REQ-SRCH-F-01, REQ-SRCH-NF-01_
 
-_"As a recruiter, I want to publish a simple company page so that candidates understand who we are and our roles."_
+_"As a recruiter, I want to publish a company page so candidates understand who we are and our roles."_
+
+One story → multiple requirements:
+- functional publishing behavior  
+- performance/loading guarantees  
 
 *Acceptance criteria:*
 [cols="1,1,2",options="header,autowidth"]
 |===
 |Given |When |Then
-|Logo, description, sectors, and location are provided. |Publishing is requested. |The page becomes visible to candidates.
-|Required info is incomplete. |Publishing is requested. |Prompts indicate missing fields.
+|Logo/description/sectors provided |Publishing requested |Page becomes visible
+|Fields incomplete |Publishing requested |Prompts indicate missing fields
 |===
 
 &#160;
 
 [discrete]
-===== _US.SRCH.02: Filter and rank candidates | ReqRef: REQ-SRCH-F-02_
+===== _US.SRCH.02: Filter and rank candidates  ReqRef: REQ-SRCH-F-02, REQ-SRCH-F-03, REQ-SRCH-NF-02_
 
-_"As a recruiter, I want to filter candidates by skills, role interest, and availability so that I can shortlist relevant profiles."_
+_"As a recruiter, I want to filter and rank candidates so I can efficiently identify high-fit profiles."_
+
+This story influences:
+- multiple functional filtering + ranking requirements  
+- non-functional search performance requirements  
 
 *Acceptance criteria:*
 [cols="1,1,2",options="header,autowidth"]
 |===
 |Given |When |Then
-|Combined filters. |Search is executed. |Results highlight matched terms.
-|Normal traffic and sample data. |Search is executed. |Results load in ~2 seconds (p95).
+|Filter criteria selected |Search executed |Results reflect filters
+|Large candidate set |Ranking requested |Sorted results returned within acceptable delay
+|Invalid filter combination |Search executed |System warns or adjusts filters
 |===
 
 &#160;
