@@ -3169,13 +3169,8 @@ else
 end
 ----
 
-==== LTT 12 & 15: UI-Business Logic Separation & Smart UI Anti-Pattern Elimination
+==== UI-Business Logic Separation & Smart UI Anti-Pattern Elimination
 :author: Luis J. Cruz Cruz
-
-[NOTE]
-====
-*Objective:* Implement Lecture Topic Task 12 (Separate Business Logic from UI) and Lecture Topic Task 15 (Avoid Smart UI Anti-Pattern) by refactoring the SignupScreen to eliminate inline validation, manual state inspection, and navigation logic embedded in event handlers, thereby establishing clear separation between presentation and domain layers.
-====
 
 ===== Problem Statement
 
@@ -3551,14 +3546,14 @@ void _handleNext() {
 
 This implementation directly addresses:
 
-*LTT 12: Separate Business Logic from UI*
+*Separate Business Logic from UI*
 
 * Domain validation moved to `Validators` class
 * Business rules isolated from presentation layer
 * Clear boundaries between layers
 * Testable domain logic
 
-*LTT 15: Avoid Smart UI Anti-Pattern*
+*Avoid Smart UI Anti-Pattern*
 
 * Eliminated inline validation
 * Removed manual state inspection
