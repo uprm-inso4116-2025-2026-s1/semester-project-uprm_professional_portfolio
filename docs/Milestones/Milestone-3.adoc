@@ -2121,6 +2121,136 @@ Future steps include:
 * **Walkthroughs of Documentation**  
   [underline]#Reader walkthroughs will be simulated by having a team member act as an external reviewer to check that each requirement traces back to definitions, models, and implementation elements. This identifies undefined or ambiguous terms and confirms measurable verification coverage.#  
 
+=== Architecture
+
+==== ProfileFactory Design (Lecture Topic Task)
+
+Creating a `StudentProfile` or `RecruiterProfile` are profiles that represent aggregate roots in the domain, and they need to start in a valid state from the moment they are created. Because of this, using a factory for profile creation helps us keep all the rules and requirements in one place and prevents invalid profiles from entering the system.
+
+**Purpose of the ProfileFactory:**
+The goal of the ProfileFactory is to make profile creation consistent and intentional. Instead of having different parts of the system build profiles in different ways, the factory ensures that every new profile is created with the required data and follows the domain rules. This avoids scattered initialization logic and keeps the model cleaner and easier to maintain.
+
+**Profile Invariants:**
+When a profile is created, the following conditions must always be true:
+
+* Every profile must have a unique, immutable UUID. This identity is assigned when the profile is created and cannot change later.
+
+* A profile must start with at least one resume or introductory artifact. This prevents “empty” profiles that cannot participate in matching or recruiter searches.
+
+* A profile must include basic preferences or metadata. These initial settings help guide matching and filtering from the beginning.
+
+* A profile cannot be created for an invalid or incomplete student or recruiter. Any required fields or checks need to be handled inside the factory.
+
+By enforcing these invariants inside the factory, we avoid inconsistent or partially formed profile objects entering the system.
+
+**Factory Responsibilities:**
+The `ProfileFactory` is responsible for:
+
+* Generating the UUID for the new profile  
+* Checking that all required fields are present  
+* Attaching the initial resume or introductory file  
+* Initializing skills, metadata, and preferences with valid starting values  
+* Returning a fully built `StudentProfile` or `RecruiterProfile` object
+
+This keeps the creation logic in one place and makes the model easier to understand and evolve as the system grows.
+
+**Conceptual Example (Illustrative Only):**
+The example below shows how the factory might be used. This is not an implementation, just a conceptual illustration of how creation would work in the domain:
+
+[source]
+----
+profile = ProfileFactory.createStudentProfile(
+    studentId,
+    initialResume,
+    defaultPreferences
+)
+----
+
+This highlights how creation is meant to go through a single, well defined operation rather than ad hoc UI or infrastructure code.
+
+**Relation to the Profile Aggregate:**
+The Profile aggregate includes elements such as resume data, skills, preferences, and other metadata. The factory is responsible for assembling these parts correctly at creation time. After creation, the aggregate can evolve normally, but the initial construction should always come through the factory so the domain rules are respected from the beginning.
+
+Using a factory in this way makes the model clearer, keeps invalid states out of the system, and aligns with Domain Driven Design by giving profile creation a dedicated and meaningful place in the overall architecture.
+
+==== Conceptual Contours Refactor (Lecture Topic Task)
+
+This focuses on clarifying the “conceptual contours” in the current design essentially, identifying where parts of the model have responsibilities that do not naturally belong together. During the review of the MatchingService and ProfileService, a few areas stood out where the logic would benefit from being grouped more intentionally. The goal is not to implement changes, but to surface where the design can be clearer and more cohesive.
+
+**Importance:**  
+When classes blend together operational logic and policy rules, it becomes harder to understand what each layer is responsible for. This can make the system feel more complicated than it really is, especially when adding new matching criteria or adjusting profile related rules. By organizing the model according to its natural boundaries, the design becomes easier to reason about and maintain.
+
+**What was identified:**  
+Two specific issues appeared while reviewing the existing documentation and diagrams:
+
+* Some policy decisions inside the *MatchingService* (like how to weigh certain profile attributes) do not belong in the same place as the core matching workflow.  
+* The *ProfileService* performs certain data preparation steps that are used specifically for evaluating matches. This mixes profile management with match related decision making.
+
+These do not break the design, but they create friction when the team tries to extend or refine the matching logic.
+
+**Proposed Adjustment:**  
+To respect the natural boundaries of the domain, the policy related logic should be separated into a dedicated class `MatchingPolicy`. This class would group the configurable or adjustable rules used when evaluating compatibility between a student and a recruiter. A policy class makes the intention clearer: MatchingService handles matching, while MatchingPolicy handles the “rules of how matching should behave.”
+
+This separation aligns with the conceptual contours described in class: a model becomes easier to evolve when each part reflects one clear idea. After extracting policy oriented logic into its own class, both MatchingService and ProfileService would be slimmer and more focused on their specific concerns.
+
+**Updated Diagram (Conceptual Overview):**  
+The following diagram illustrates how responsibilities can be reorganized to reflect these clearer contours:
+
+[source,plaintext]
+----
+MatchingService
+    ├─ runMatchingWorkflow()
+    ├─ evaluateCandidate()
+    └─ delegates to MatchingPolicy → applyRules()
+
+MatchingPolicy
+    ├─ weightSkills()
+    ├─ checkGPAThreshold()
+    └─ evaluatePreferences()
+
+ProfileService
+    ├─ manageProfileData()
+    ├─ updateSkills()
+    └─ prepareProfileAttributes()
+----
+
+==== Conservation Principle in Recruiter Attention (Lecture Topic Task)
+
+This introduces the idea of recruiter attention being treated as a limited resource within the domain. During real recruiting interactions especially in university events and portfolio reviews recruiters often describe having only a certain amount of attention or “capacity” to spend on students. Because of this, modeling attention as a conserved quantity helps the matching process reflect more realistic decision making.
+
+**Importance:**  
+Right now, the documentation treats matching as if recruiters can evaluate an unlimited number of students equally. In reality, recruiters have constraints: time, focus, and workload. When attention is modeled explicitly, it becomes clearer how the system should behave when a recruiter is overloaded or when too many candidate interactions are happening at once. This refinement aligns the model more closely with real behavior and makes matching policies easier to justify and extend.
+
+**Concept Explanation:**  
+Under the conservation principle, each recruiter starts with a fixed amount of “attention points.” As matches form or as students are evaluated, the recruiter allocates portions of these points. The important part is that the total allocation cannot exceed the fixed amount they have available. This keeps the model consistent and avoids unrealistic scenarios where a recruiter engages deeply with an unlimited number of candidates.
+
+This does not require implementing the logic. Instead, the goal here is to document the concept clearly so that future architectural decisions can rely on a better conceptual foundation.
+
+**Conceptual Formula:**  
+To show the idea clearly, we include a lightweight model of how attention could be expressed:
+
+[source,plaintext]
+----
+totalAttention = 100  (example baseline)
+
+sum(attentionAllocatedToStudents) ≤ totalAttention
+
+If allocation reaches the limit:
+    → matching requests should be queued, deprioritized, or require policy intervention
+----
+
+**Relation:**  
+Modeling attention as a conserved resource helps explain why certain recruiter interactions should be limited or prioritized. It also highlights a realistic scenario frequently mentioned in class discussions: recruiters cannot meaningfully engage with infinite candidates, and the system should reflect that constraint.
+
+Documenting this principle strengthens the domain model by:
+
+* Making recruiter constraints explicit instead of implied  
+* Offering a clearer foundation for future matching policies  
+* Helping the team reason about prioritization and overload  
+* Supporting deeper discussions about fairness and load balancing in matching  
+
+Even without code changes, capturing this idea in the architecture provides a more grounded way to think about recruiter engagement and gives the next milestones a stronger model to build on.
+
 
 == Specific Class Topics
 
@@ -5534,6 +5664,10 @@ The recommendations derived from this research provide concrete guidance for the
 | Carlos E. Cabán González
 | 2.2.5, 3.2.2
 | Modified
+
+| Kaysha L. Pagan Lopez
+| 3.3, 3.3.1, 3.3.2, 3.3.3
+| Added
 
 
 |===
