@@ -109,34 +109,33 @@ class AuthService {
   }
 
   Future<AuthResult> sendPasswordResetEmail(String email) async {
-  try {
-    // First try with deep link (best UX if redirect is whitelisted in Supabase)
-    await _supabase.auth.resetPasswordForEmail(
-      email,
-      redirectTo: _resetRedirectUri, // e.g., uprm-portfolio://reset-password
-    );
-    return AuthResult(success: true);
-  } on AuthException catch (e) {
-    // Fallback: if redirectTo isn’t verified/allowed yet, retry without it
-    final msg = e.message.toLowerCase();
-    final looksLikeRedirectBlocked =
-        msg.contains('redirect') && (msg.contains('verify') || msg.contains('verified'));
+    try {
+      // First try with deep link (best UX if redirect is whitelisted in Supabase)
+      await _supabase.auth.resetPasswordForEmail(
+        email,
+        redirectTo: _resetRedirectUri, // e.g., uprm-portfolio://reset-password
+      );
+      return AuthResult(success: true);
+    } on AuthException catch (e) {
+      // Fallback: if redirectTo isn’t verified/allowed yet, retry without it
+      final msg = e.message.toLowerCase();
+      final looksLikeRedirectBlocked = msg.contains('redirect') &&
+          (msg.contains('verify') || msg.contains('verified'));
 
-    if (looksLikeRedirectBlocked) {
-      try {
-        await _supabase.auth.resetPasswordForEmail(email);
-        return AuthResult(success: true);
-      } on AuthException catch (e2) {
-        return AuthResult(success: false, error: e2.message);
+      if (looksLikeRedirectBlocked) {
+        try {
+          await _supabase.auth.resetPasswordForEmail(email);
+          return AuthResult(success: true);
+        } on AuthException catch (e2) {
+          return AuthResult(success: false, error: e2.message);
+        }
       }
-    }
 
-    return AuthResult(success: false, error: e.message);
-  } catch (e) {
-    return AuthResult(success: false, error: 'Unexpected error: $e');
+      return AuthResult(success: false, error: e.message);
+    } catch (e) {
+      return AuthResult(success: false, error: 'Unexpected error: $e');
     }
   }
-
 
   Future<AuthResult> signInWithOAuth({
     required String provider,
@@ -186,15 +185,15 @@ class AuthService {
   }
 
   Future<AuthResult> updatePassword(String newPassword) async {
-  try {
-    await _supabase.auth.updateUser(
-      UserAttributes(password: newPassword),
-    );
-    return AuthResult(success: true);
-  } on AuthException catch (e) {
-    return AuthResult(success: false, error: e.message);
-  } catch (e) {
-    return AuthResult(success: false, error: 'Unexpected error: $e');
+    try {
+      await _supabase.auth.updateUser(
+        UserAttributes(password: newPassword),
+      );
+      return AuthResult(success: true);
+    } on AuthException catch (e) {
+      return AuthResult(success: false, error: e.message);
+    } catch (e) {
+      return AuthResult(success: false, error: 'Unexpected error: $e');
     }
   }
 
@@ -221,7 +220,6 @@ class AuthService {
 
   // Emits true when Supabase signals password recovery via deep link
   Stream<bool> get onPasswordRecovery => _supabase.auth.onAuthStateChange.map(
-    (s) => s.event == AuthChangeEvent.passwordRecovery ||
-           s.event == AuthChangeEvent.recovery,
-           );
+        (s) => s.event == AuthChangeEvent.passwordRecovery,
+      );
 }

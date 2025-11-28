@@ -9,6 +9,7 @@ import '../core/cubits/auth/auth_cubit.dart';
 import '../core/cubits/auth/auth_state.dart';
 import '../features/auth/login/login_screen.dart';
 import '../features/auth/signup/signup_screen.dart';
+import '../features/auth/forgot_password/forgot_password_screen.dart';
 import '../features/welcome/welcome_screen.dart';
 import '../features/main/main_screen.dart';
 import '../features/profiles/recruiter_profile/recruiter_profile_screen.dart';
@@ -16,7 +17,6 @@ import '../features/profiles/jobseeker_profile/jobseeker_profile_screen.dart';
 import '../features/chat/chat_room_page.dart';
 import '../core/services/auth_service.dart';
 import '../features/auth/reset_password/reset_password_screen.dart';
-
 
 // App router configuration
 class AppRouter {
@@ -94,13 +94,13 @@ class AppRouter {
         GoRoute(
           path: AppConstants.forgotPasswordRoute,
           builder: (context, state) => const ForgotPasswordScreen(),
-          ),
+        ),
 
         // Reset Password
         GoRoute(
           path: AppConstants.resetPasswordRoute,
           builder: (context, state) => const ResetPasswordScreen(),
-          ),
+        ),
 
         // Profile setup routes
         GoRoute(
