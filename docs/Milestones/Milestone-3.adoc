@@ -3217,6 +3217,7 @@ image::..\Images\swipe_process.png[width=70%,align=center]
 _Figure 4.3.2. - 1. State Transitions_
 
 ===== Aggregate Deletion Rules
+:reviewer: Diego A. Pérez Gandarillas
 
 The deletion of a `StudentProfile` must adhere to strict rules to maintain **aggregate consistency**, ensure **data integrity**, and comply with **domain policies**. The following rules apply:
 
@@ -3228,12 +3229,21 @@ The deletion of a `StudentProfile` must adhere to strict rules to maintain **agg
   - Deleting a `StudentProfile` may require cascading deletion or modification of related aggregates:
     - **Enrollments:** Any active or historical enrollments linked to the student must be removed or anonymized.  
     - **Submissions/Assignments:** Student submissions may need to be archived, anonymized, or deleted according to retention policies.
-    - **Notifications/Logs:** Events related to the profile should remain in the audit trail but must be decoupled from personally identifiable information. 
+    - **Notifications/Logs:** Events related to the profile should remain in the audit trail but must be decoupled from personally identifiable information.
+    - #**Matches:** Match records referencing the student must be removed as they lose meaning without the student profile.#
+    - #**Applications:** Application records tied to the student's intent should be removed to maintain referential integrity.#
+    - #**MentorAssignments:** Student-specific mentor assignments must be cleaned up as they are tightly coupled to the student.#
+
+* #**Retention of System-Owned Data**#
+  #- Certain records should be preserved even after profile deletion:#
+    #- **Feedback:** May be retained with soft orphaning for historical reporting and analytics.#
+    #- **AuditLogs:** Must persist for compliance, traceability, and regulatory requirements.#
 
 * **Validation Checks** 
   - Before deletion, the system must validate:  
-    *** That no critical dependencies remain in other aggregates (e.g., group projects, team memberships).
-    *** That deletion will not violate invariants of related domain objects.
+    - That no critical dependencies remain in other aggregates (e.g., group projects, team memberships).
+    - That deletion will not violate invariants of related domain objects.
+    - [.underline]#That all active relationships are properly handled or archived.#
 
 * **Compliance and Audit**
   - All deletion events must be logged with timestamp, actor, and reason for deletion.
@@ -3250,6 +3260,234 @@ The deletion of a `StudentProfile` must adhere to strict rules to maintain **agg
 * **Guard Clauses**
   - Deletion is prevented if any of the above rules are violated. 
   - Only profiles satisfying all deletion conditions are allowed to transition into the `Deletion` state.
+
+[discrete]
+====== #Deletion Policy Matrix#
+
+[cols="2,2,2,3",options="header"]
+|===
+|Entity |Relationship Type |Behavior on Deletion |Reasoning
+
+|`Match`
+|Strong reference
+|**Cascade delete**
+|Match is meaningless without the student
+
+|`Application`
+|Strong reference
+|**Cascade delete**
+|Tied to student's intent; should be removed
+
+|`MentorAssignment`
+|Strong reference
+|**Cascade delete**
+|Student-specific; must be cleaned up
+
+|`Enrollment`
+|Strong reference
+|**Cascade delete or anonymize**
+|Per retention policy requirements
+
+|`Submission`
+|Strong reference
+|**Archive or anonymize**
+|Per institutional retention policy
+
+|`Feedback`
+|Optional/Soft link
+|**Retain (soft orphan)**
+|Used for historical reporting and analytics
+
+|`AuditLog`
+|System-owned
+|**Retain**
+|Must persist for compliance and traceability
+
+|`Notification`
+|Weak reference
+|**Decouple PII**
+|Preserve event trail, remove identifying data
+|===
+
+[discrete]
+====== #Database Schema Enforcement#
+
+#The database schema enforces deletion rules through foreign key constraints:#
+
+[source,sql]
+----
+CREATE TABLE student_profiles (
+  id UUID PRIMARY KEY,
+  user_id UUID NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL,
+  deleted_at TIMESTAMPTZ,
+  deleted_by UUID
+);
+
+CREATE TABLE applications (
+  id UUID PRIMARY KEY,
+  student_id UUID NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
+  program_id UUID NOT NULL,
+  status TEXT NOT NULL,
+  submitted_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE mentor_assignments (
+  id UUID PRIMARY KEY,
+  student_id UUID NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
+  mentor_id UUID NOT NULL,
+  assigned_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE matches (
+  id UUID PRIMARY KEY,
+  student_id UUID NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
+  mentor_id UUID NOT NULL,
+  matched_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE feedback (
+  id UUID PRIMARY KEY,
+  student_id UUID,  -- Nullable to support soft orphaning
+  mentor_id UUID,
+  notes TEXT,
+  submitted_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE audit_logs (
+  id UUID PRIMARY KEY,
+  action TEXT NOT NULL,
+  actor_id UUID,
+  entity_type TEXT,
+  entity_id UUID,
+  created_at TIMESTAMPTZ NOT NULL
+);
+----
+
+[discrete]
+====== #Trade-offs Analysis#
+
+#**Cascade Delete Approach (Primary Strategy)**#
+
+#*Advantages:*#
+#* Ensures no orphaned data or broken relationships#
+#* Simpler cleanup logic and maintenance#
+#* Enforces referential integrity at database level#
+#* Prevents accumulation of stale references#
+
+#*Disadvantages:*#
+#* Risk of accidental mass deletion if not properly guarded#
+#* Loss of historical data for analytics#
+#* Irreversible without backup restoration#
+
+#**Soft Deletion with Orphan Retention (Alternative Strategy)**#
+
+#*Advantages:*#
+#* Preserves historical data for reporting and analysis#
+#* Enables potential recovery or audit review#
+#* Supports compliance with data retention requirements#
+
+#*Disadvantages:*#
+#* Leaves dangling references requiring careful handling#
+#* Requires additional application logic for filtering#
+#* Increases storage requirements over time#
+#* More complex query patterns to exclude deleted records#
+
+#**Hybrid Approach (Implemented)**#
+
+#The system implements a hybrid strategy:#
+#- **Cascade delete** for tightly-coupled entities that lose meaning without the profile#
+#- **Soft orphaning** for loosely-coupled analytics and reporting data#
+#- **Mandatory retention** for system-owned compliance records#
+
+[.underline]#This approach balances data integrity with historical preservation and regulatory compliance.#
+
+[discrete]
+====== #Application-Level Safeguards#
+
+#Before allowing profile deletion, the application layer enforces additional checks:#
+
+#1. **Authorization Verification**#
+   #- Confirm requester is profile owner or system administrator#
+   #- Validate deletion permissions in current context#
+
+#2. **Active Relationship Checks**#
+   #- Warn if active mentor assignments exist#
+   #- Confirm handling of pending applications#
+   #- Verify no active group projects or collaborations#
+
+#3. **Archival Process**#
+   #- Create immutable snapshot before deletion#
+   #- Store in compliance-approved archival system#
+   #- Include all related entity snapshots#
+
+#4. **Audit Trail Creation**#
+   #- Record deletion event with full context#
+   #- Capture: actor ID, timestamp, reason, affected entities#
+   #- Ensure audit entry is immutable#
+
+#5. **Notification Cascade**#
+   #- Alert dependent systems of impending deletion#
+   #- Provide grace period for external system updates#
+   #- Confirm all systems acknowledged deletion#
+
+[discrete]
+====== #Soft Deletion Implementation#
+
+#For scenarios requiring extended data retention:#
+
+[source,sql]
+----
+-- Soft delete implementation
+ALTER TABLE student_profiles ADD COLUMN deleted_at TIMESTAMPTZ;
+ALTER TABLE student_profiles ADD COLUMN deleted_by UUID;
+ALTER TABLE student_profiles ADD COLUMN deletion_reason TEXT;
+
+-- Application queries filter deleted profiles
+CREATE VIEW active_student_profiles AS
+SELECT * FROM student_profiles 
+WHERE deleted_at IS NULL;
+
+-- Periodic cleanup job for aged soft-deleted records
+-- (after retention period expires)
+DELETE FROM student_profiles 
+WHERE deleted_at < NOW() - INTERVAL '7 years'
+AND deletion_reason != 'legal_hold';
+----
+
+[discrete]
+====== #Validation Test Scenarios#
+
+#**Test Case 1: Cascade Verification**#
+#1. Create `StudentProfile` with associated `Match`, `Application`, `MentorAssignment`#
+#2. Execute deletion#
+#3. Verify all dependent records removed#
+#4. Confirm `Feedback` and `AuditLog` persist#
+#5. Validate no orphaned foreign key references remain#
+
+#**Test Case 2: Authorization Enforcement**#
+#1. Attempt deletion as unauthorized user#
+#2. Verify rejection with appropriate error code#
+#3. Confirm profile remains unchanged#
+#4. Validate audit log records failed attempt#
+
+#**Test Case 3: Active Relationship Warning**#
+#1. Create profile with active mentor assignment#
+#2. Initiate deletion#
+#3. Verify system presents active relationship warning#
+#4. Confirm deletion blocked until acknowledged or relationships resolved#
+
+#**Test Case 4: Audit Trail Completeness**#
+#1. Delete profile with full context#
+#2. Verify audit log entry created#
+#3. Confirm all required fields populated#
+#4. Validate audit entry immutability#
+
+#**Test Case 5: Soft Deletion Recovery**#
+#1. Soft delete profile#
+#2. Verify profile hidden from normal queries#
+#3. Execute recovery operation#
+#4. Confirm profile restored with all relationships intact#
 
 === Refactoring Towards Deeper Insight and Breakthroughs
 
@@ -3750,8 +3988,8 @@ _Figure 4.6.2. - 1. Layered view (Presentation, Application, Domain, Infrastruct
 | Modified, Modified
 
 | Diego A. Pérez Gandarillas
-| 2.3.1
-| Added
+| 2.3.1, 4.3.2
+| Added, Modified
 
 | Julian Vivas
 | 4.2.1
