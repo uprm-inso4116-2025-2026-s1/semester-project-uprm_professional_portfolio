@@ -10,6 +10,8 @@ But first, let's define:
 
 "Strategy Design Pattern is a [behavioral design pattern](https://www.geeksforgeeks.org/system-design/behavioral-design-patterns/) that allows you to define a family of algorithms or behaviors, put each of them in a separate class, and make them interchangeable at runtime." (Extracted from GeeksforGeeks website) 
 
+With this in mind, we can define that a strategy pattern for the project is a way to make the make the matching algorithm flexible by separating diffrent matching policies into independent interchangeable components. 
+
 **Why is useful and why we need it for our project?**
 
 It is useful because it allows us to have more flexibility in terms of changing how the matching works without modifying the  rest of the code. It also allow us to reuse strategies across different parts of the system.
