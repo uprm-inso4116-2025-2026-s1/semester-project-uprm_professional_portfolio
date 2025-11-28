@@ -1713,57 +1713,86 @@ The domain requirements are the fundamental rules and constraints of the problem
 
 | DR003 | The system must represent every opening with explicit requirements (min. experience, qualifications, certifications, languages, legal authorizations, work modality, location, compensation range, and start date). | Epic-JobMgmt | T-API-002, T-UI-001
 
-| DR004 | The system must record the number of positions available for each opening and link every opening to its responsible employer. | US-Recruiter-001: Post New Opening | T-DB-003, T-API-003
+| #DR004# | #The system must record the number of available positions for each opening.# | #US-Recruiter-001: Post New Opening# | #T-DB-003#
 
-| DR005 | The system must allow requirement updates for an opening while preserving a complete history of changes. | US-Recruiter-002: Update Opening | T-Audit-001
+| #DR005# | #The system must link every opening to its responsible employer entity.# | #US-Recruiter-001: Post New Opening# | #T-API-003#
 
-| DR006 | The system must represent each candidate profile with education, work history, competencies, certifications, portfolios, and verifiable references. | Epic-ProfileMgmt | T-DB-004
+| #DR006# | #The system must allow requirement updates for an opening.# | #US-Recruiter-002: Update Opening# | #T-Audit-001#
 
-| DR007 | The system must allow attaching documents to the profile, preserving issue date, validity, and verification status. | US-Candidate-001: Upload Resume | T-File-001
+| #DR007# | #The system must preserve a complete history of all requirement changes for an opening (audit trail).# | #US-Recruiter-002: Update Opening# | #T-Audit-001#
 
-| DR008 | The system must record candidate preferences such as areas of interest, desired location, and work modality. | US-Candidate-002: Set Preferences | T-DB-005
+| #DR008# | The system must represent each candidate profile with education, work history, competencies, certifications, portfolios, and verifiable references. | Epic-ProfileMgmt | T-DB-004
 
-| DR009 | The system must represent recruiting events with name, organizer, venue, agenda, date, and capacity, and represent company booths/tables. | Epic-EventMgmt | T-DB-006, T-API-004
+| #DR009# | #The system must allow documents to be attached to the candidate profile.# | #US-Candidate-001: Upload Resume# | #T-File-001#
 
-| DR010 | The system must register attendance and arrival of candidates and recruiters, and enforce registration rules and capacity limits. | US-Event-001: Check-in at Event | T-Event-001, T-API-005
+| #DR010# | #The system must preserve the issue date, validity, and verification status for all attached documents.# | #US-Candidate-001: Upload Resume# | #T-File-001#
 
-| DR011 | The system must model queues in front of booths/tables preserving a first-come, first-served order. | Epic-QueueMgmt | T-Queue-001
+| #DR0011# | The system must record candidate preferences such as areas of interest, desired location, and work modality. | US-Candidate-002: Set Preferences | T-DB-005
 
-| DR012 | The system must allow limiting the duration of each turn, register the closure of each turn, and prevent assigning turns that exceed declared capacity. | US-Event-002: Manage Queue | T-Queue-002
+| #DR012# | #The system must represent recruiting events with name, organizer, venue, agenda, date, and capacity.# | #Epic-EventMgmt# | #T-DB-006, T-API-004#
 
-| DR013 | The system must allow candidates and recruiters to express interest in openings or profiles and record reciprocal expressions. | US-Interaction-001: Express Interest | T-API-006
+| #DR013# | #The system must represent company booths/tables within an event structure.# | #Epic-EventMgmt# | #T-DB-006, T-API-004#
 
-| DR014 | The system must create a Match when both sides express positive interest, preserving the date and context of that event. | US-Interaction-002: Create Match | T-Match-001
+| #DR014# | #The system must register the attendance and arrival of candidates and recruiters at an event.# | #US-Event-001: Check-in at Event# | #T-Event-001#
 
-| DR015 | The system must allow recruiters to define shortlisting criteria and register the decision with its justification. | US-Recruiter-003: Shortlist Candidate | T-API-007
+| #DR015# | #The system must enforce event registration rules and capacity limits upon check-in.# | #US-Event-001: Check-in at Event# | #T-API-005#
 
-| DR016 | The system must allow candidates to withdraw their interest and update any pending Matches. | US-Candidate-003: Withdraw Interest | T-Match-002
+| #DR016# | #The system must model queues in front of event booths/tables.# | #Epic-QueueMgmt# | #T-Queue-001#
 
-| DR017 | The system must represent availability of candidates and recruiters through calendars and time blocks. | Epic-Scheduling | T-DB-007
+| #DR017# | #The system must enforce a first-come, first-served order for modeled queues.# | #Epic-QueueMgmt# | #T-Queue-001#
 
-| DR018 | The system must schedule interviews only on valid Matches, prevent double booking, and register interview outcomes with clear states (continues, rejected, offer extended) and date/responsible party. | US-Scheduling-001: Book Interview | T-Schedule-001
+| #DR018# | #The system must allow limiting the duration of each queue turn.# | #US-Event-002: Manage Queue# | #T-Queue-002#
+| #DR019# | #The system must register the closure of each turn.# | #US-Event-002: Manage Queue# | #T-Queue-002#
 
-| DR019 | The system must allow message exchanges between candidate and recruiter only when there is a valid Match or explicit candidate permission. | US-Communication-001: Send Message | T-Comm-001
+| #DR020# | #The system must prevent assigning turns that would exceed declared capacity or time limits.# | #US-Event-002: Manage Queue# | #T-Queue-002#
 
-| DR020 | The system must register candidate consent for sharing information with an employer or organizer and allow revocation of that consent. | US-Candidate-004: Manage Consent | T-DB-008
+| #DR021# | #The system must allow candidates and recruiters to express positive or negative interest in openings or profiles.# | #US-Interaction-001: Express Interest# | #T-API-006#
 
-| DR021 | The system must compute and display the degree of requirement fulfillment for each candidate (meets, partially meets, does not meet). | US-Recruiter-004: View Match Score | T-Algo-001
+| #DR022# | #The system must record reciprocal expressions of interest.# | #US-Interaction-001: Express Interest# | #T-API-006#
 
-| DR022 | The system must prevent practices that alter queue order without a rule defined by the event (e.g., priority for confirmed appointments). | | T-Queue-003, T-Security-001 
+| #DR023# | #The system must create a Match record when both sides express positive interest.# | #US-Interaction-002: Create Match# | #T-Match-001#
+| #DR024# | #The system must preserve the date and context of every Match creation event.# | #US-Interaction-002: Create Match# | #T-Match-001#
 
-| DR023 | The system must keep an auditable record of shortlisting and rejection decisions, together with their criteria.| | T-Audit-002
+| #DR025# | #The system must allow recruiters to define shortlisting criteria and register the decision.# | #US-Recruiter-003: Shortlist Candidate# | #T-API-007#
 
-| DR024 | The system must notify candidates and recruiters when a Match is created, an interview is confirmed, or when changes to opening requirements affect eligibility. | US-Notification-001 | T-Notif-001
+| #DR026# | #The system must record the justification for every shortlisting or rejection decision.# | #US-Recruiter-003: Shortlist Candidate# | #T-API-007#
 
-| DR025 | The system must notify candidates about recruiting events related to employers or openings in which they have shown interest. | US-Notification-002 | T-Notif-002
+| #DR027# | #The system must allow candidates to withdraw their interest from an opening or Match.# | #US-Candidate-003: Withdraw Interest# | #T-Match-002#
 
-| DR026 | The system must record domain metrics (Match rate, queue waiting time, average turn duration, follow-up rate, event attendance) and support funnel analysis from expression of interest to offer extended. | Epic-Reporting | T-Metric-001
+| #DR028# | #The system must automatically update any pending Matches when interest is withdrawn.# | #US-Candidate-003: Withdraw Interest# | #T-Match-002#
 
-| DR027 | The system must prevent the creation of Matches when any party does not exist or when the opening is closed. | | T-API-008, T-Security-002
+| #DR029# | The system must represent the availability of candidates and recruiters through calendars and time blocks. | Epic-Scheduling | T-DB-007
 
-| DR028 | The system must keep the link between every document and the identity of the person/entity that provided it, together with its validation status. | | T-File-002
+| #DR030# | #The system must schedule interviews only for valid, active Matches.# | #US-Scheduling-001: Book Interview# | #T-Schedule-001#
 
-| DR029 | The system must preserve the full state history of each opening and each candidacy from origin to closure. | | T-Audit-003 
+| #DR031# | #The system must prevent double booking of time slots for interviews.# | #US-Scheduling-001: Book Interview# | #T-Schedule-001#
+
+| #DR032# | #The system must register interview outcomes with clear states (continues, rejected, offer extended) and record the date and responsible party.# | #US-Scheduling-001: Book Interview# | #T-Schedule-001#
+
+| #DR033# | #The system must allow message exchanges between candidate and recruiter.# | #US-Communication-001: Send Message# | #T-Comm-001#
+
+| #DR034# | #The system must restrict message exchanges to only valid Matches or where explicit candidate permission is granted.# | #US-Communication-001: Send Message# | #T-Comm-001#
+
+| #DR035# | #The system must register candidate consent for sharing information with an employer or organizer.# | #US-Candidate-004: Manage Consent# | #T-DB-008#
+
+| #DR036# | #The system must allow the revocation of candidate consent for information sharing.# | #US-Candidate-004: Manage Consent# | #T-DB-008#
+
+| #DR037# | #The system must compute the degree of requirement fulfillment for each candidate against an opening (meets, partially meets, does not meet).# | #US-Recruiter-004: View Match Score# | #T-Algo-001#
+
+| #DR038# | #The system must display the computed degree of requirement fulfillment to the recruiter.# | #US-Recruiter-004: View Match Score# | #T-Algo-001#
+
+| #DR039# | #The system must generate a notification when a Match is created.# | #US-Notification-001# | #T-Notif-001#
+
+| #DR040# | #The system must generate a notification when an interview is confirmed.# | #US-Notification-001# | #T-Notif-001#
+
+| #DR041# | #The system must generate a notification when changes to opening requirements affect a candidate's eligibility.# | #US-Notification-001# | #T-Notif-001#
+
+| #DR042# | The system must notify candidates about recruiting events related to employers or openings in which they have shown interest. | US-Notification-002 | T-Notif-002
+
+| #DR043# | #The system must record domain metrics such as match rate, queue waiting time, average turn duration, follow-up rate, and event attendance.# | #Epic-Reporting# | #T-Metric-001#
+
+| #DR044# | #The system must support funnel analysis from expression of interest to offer extended.# | #Epic-Reporting# | #T-Metric-001#
+
 |===
 
 ==== Interface Requirements
@@ -5484,8 +5513,8 @@ The recommendations derived from this research provide concrete guidance for the
 | Added
 
 | Jahdiel Montero
-| 1.5
-| Modified
+| 1.5, 2.2.3
+| Modified, Added
 
 | Carlos E. Cabán González
 | 2.2.5, 3.2.2
