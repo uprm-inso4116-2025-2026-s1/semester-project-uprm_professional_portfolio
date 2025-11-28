@@ -1813,31 +1813,47 @@ The domain requirements are the fundamental rules and constraints of the problem
 
 ==== Interface Requirements
 
-Interface requirements specify the user-facing aspects of the system.
+Interface requirements define how the system interacts not only with users but also with #external systems, environmental phenomena, and any data or events crossing the system boundary#. This includes user interfaces, system-to-system interfaces, timing constraints, and backend-visible interactions.
 
-[cols="1,4,2,2", options="header"] 
-|=== 
+[cols="1,4,2,2", options="header"]
+|===
 | ID | Description | Linked User Stories/Epics | Verification Tests
 
-| IR001 | The system must provide a structured form during registration for new recruiters to initialize their profile (capturing company name, professional email, and job role). | US-Auth-002: Register as Recruiter | T-UI-010, T-FE-001
+| IR001 | [.underline]#The system must provide a structured registration interface for new recruiters, including fields for company name, professional email, and job role.# | US-Auth-002: Register as Recruiter | T-UI-010, T-FE-001
 
 | IR002 | The initialization process must include a validation step where a confirmation email is sent, and the internal profile must not be active until validation is complete. | | T-BE-001, T-Email-001
 
 | IR003 | The system must provide an edit profile screen for students to update their skills/competencies (e.g., adding new projects). | US-Candidate-005: Update Skills | T-UI-011
 
-| IR004 | The internal skill representation must be updated immediately upon the student saving the changes. | | T-BE-002
+| IR004 | [.underline]#The internal skill representation must be updated within a maximum of 300 ms after the user saves changes, ensuring a measurable, achievable update time instead of an absolute immediate requirement.# | | T-BE-002, T-Perf-001
 
-| IR005 | The system must present a visual notification to both users immediately upon a Match being recorded. | US-Notification-001 | T-UI-012, T-Notif-003
+| IR005 | The system must present a visual notification to both users within #500 ms# of a Match being recorded. | US-Notification-001 | T-UI-012, T-Notif-003
 
-| IR006 | The Match notification interface must clearly indicate who the Match is with and include a prominent means to initiate communication.| | T-UI-013
+| IR006 | The Match notification interface must clearly indicate who the Match is with and include a prominent means to initiate communication. | | T-UI-013
 
 | IR007 | The system must provide a company profile management screen for authorized recruiters to correct company information (e.g., description, website URL). | US-Recruiter-005: Update Company Info | T-UI-014
-  
+
 | IR008 | The system must log all changes made via the company profile management screen. | | T-Log-002
 
 | IR009 | The company name field shall be immutable through the company profile management screen after initial validation; changes must be handled by a separate administrative process. | | T-FE-002, T-Security-003
 
-| IR010 | The system must update the internal state immediately to reflect a user's swipe action on a profile card (recording the decision and removing the card). No explicit save/confirm action is required. | US-Interaction-001: Express Interest | | T-FE-003 
+| IR010 | [.underline]#The system must update the internal state within 200–350 ms to reflect a user's swipe action on a profile card (recording the decision and removing the card), ensuring the round-trip time for card replacement meets performance expectations.# | US-Interaction-001: Express Interest | T-FE-003, T-Perf-002
+
+| #IR011# | #The system must expose a backend interface to retrieve updated profile-card batches, supporting pagination, caching hints, and request timestamps.# | #US-Interaction-002# | #T-API-001#
+
+| #IR012# | #The system must interpret environmental events relevant to the platform - for example, backend-detected account flagging, admin interventions, or automatic expiration of stale matches - and reflect these changes in the user interface within 1 second.# | | #T-BE-004, T-UI-015#
+
+| #IR013# | #The system must provide an interface for the recommendation algorithm to push updated candidate rankings into the frontend, with a maximum push-latency of 400 ms.# | #EP-Recommendation-001# | #T-Rec-001#
+
+| #IR014# | #The system must provide integration endpoints for institutional authentication (e.g., campus login providers), including OAuth2-based token exchange and error-handling interfaces.# | #US-Auth-003# | #T-Security-004, T-API-002#
+
+| #IR015# | #The system must expose a public timestamped event stream (internal-only) that allows admin dashboards to reflect live metrics such as active matches, swipe volume, and onboarding progress.# | #EP-Admin-001# | #T-Event-001#
+
+| #IR016# | #The system must provide visual and programmatic error interfaces for network failures, fallback states, or unavailable profile data, ensuring consistent communication of partial-service conditions.# | | #T-UI-016, T-API-003#
+
+| #IR017# | #The system must reflect environmental constraints such as rate limits, access control decisions, and backend throttling by communicating appropriate messages or delays to the user within 250 ms.# | | #T-Perf-003, T-Security-005#
+
+| #IR018# | #When external job sources (e.g., company ATS integrations or internship feeds) update recruiter data, the system must reflect these changes in the recruiter’s interface within 2 seconds.# | #EP-ExternalSync-001# | #T-Sync-001#
 |===
 
 
@@ -1878,9 +1894,9 @@ Machine requirements specify the hardware, software, and environment needed for 
 
 | MR014 | The application must comply with Google Play Store and Apple App Store distribution guidelines.| | T-Compliance-001 
 
-| MR015 | #Environmental constraints: Development and testing machines must have stable power supply (UPS recommended), controlled room temperature (18–27°C), and low humidity (<60%) to ensure hardware reliability.# | | T-Env-007
+| #MR015# | #Environmental constraints: Development and testing machines must have stable power supply (UPS recommended), controlled room temperature (18–27°C), and low humidity (<60%) to ensure hardware reliability.# | | #T-Env-007#
 
-| MR016 | #Performance expectations: Developer workstations and servers must sustain concurrent builds and testing workflows without degradation; response times for cloud API calls must meet SLA targets.# | | T-Perf-001
+| #MR016# | #Performance expectations: Developer workstations and servers must sustain concurrent builds and testing workflows without degradation; response times for cloud API calls must meet SLA targets.# | | #T-Perf-001#
 |===
 
 
