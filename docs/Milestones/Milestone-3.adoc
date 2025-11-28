@@ -4951,6 +4951,201 @@ Resulting Clarity/Invariants:: Prevents over-specification in overview docs whil
 Artifacts Updated:: docs/Images/*.svg (where applicable); Milestone-2.adoc references; Milestone-1 touch-ups.
 Commits/PRs:: f189551 (Minimal vs Enriched UML template), e0e4ff4 (Modified Milestone-2.adoc).
 
+==== #Spot Duplicate Concepts#
+:author: Yandre Caban Torres
+
+[discrete]
+=== Overview
+
+This document describes the domain model analysis for duplicate concepts and the refactoring decisions applied to reduce redundancy and duplication. This is done by identifying repeated or overlapping structures across bounded contexts, the system improves maintainability, clarity, and consistency.
+
+[discrete]
+=== UML Class Diagram
+
+The diagram illustrates:
+
+- the Authentication, Profile, and Messaging contexts,
+- all classes and their relationships,
+- merged and refactored structures to remove duplication.
+
+UML Diagram:  
+image:../Images/LTT 76_ Spot Duplicate Concepts.png[]
+
+_Figure 4.4.3. - 1. UML Diagram Illustrating Unified Domain Model and Refactored Duplicates_
+
+[discrete]
+==== Bounded Contexts
+
+===== Authentication Context
+
+**Classes:**
+
+**User**
+
+Attributes:
+
+  - `id: String`
+  - `email: String`
+  - `fullName: String`
+  - `role: String`
+  - `createdAt: DateTime`
+
+Methods:
+
+  - `fromJson()`
+  - `toJson()`
+  - `copyWith()`
+
+**Notes on duplicates**
+
+- No duplicates within this context; all user identity data centralized.
+
+[discrete]
+===== Profile Context
+
+**Classes:**
+
+**Address**
+
+Attributes:
+
+  - `line1: String`
+  - `line2: String`
+  - `city: String`
+  - `region: String`
+  - `postalCode: String`
+  - `countryCode: String`
+
+Methods:
+
+  - `toMap()`
+  - `fromMap()`
+
+**Profile** (abstract/generalized)
+
+Attributes:
+
+  - `userId: String`
+  - `createdAt: DateTime`
+  - `bio: String`
+  - `location: String`
+  - `phoneNumber: String`
+  - `updatedAt: DateTime`
+
+**JobSeekerProfile**
+
+Attributes:
+
+  - `skills: List<String>`
+  - `interests: List<String>`
+  - `portfolioURL: String`
+  - `major: String`
+  - `graduationYear: int`
+  - `isStudent: bool`
+  - `jobType: String`
+  - `willingToRelocate: bool`
+  - `address: String`
+
+**RecruiterProfile**
+
+Attributes:
+
+  - `companyName: String`
+  - `companyWebsite: String`
+  - `jobTitle: String`
+  - `industries: List<String>`
+
+**Notes on duplicates**
+
+- `StudentProfile` merged into `JobSeekerProfile`.
+- Abstract `Profile` class unifies shared attributes of all profiles.
+
+
+
+[discrete]
+===== Messaging Context
+
+**Classes:**
+
+**Message**
+
+Attributes:
+
+  - `id: String`
+  - `senderId: String`
+  - `receiverId: String`
+  - `text: String`
+  - `timestamp: DateTime`
+
+Methods:
+
+  - `toJson()`
+  - `fromJson()`
+
+**Conversation**
+
+Attributes:
+
+  - `id: String`
+  - `participants: List<String>`
+  - `messages: List<Message>`
+
+Methods:
+
+  - `addMessage()`
+  - `removeMessage(): bool`
+  - `getMessages(): List<Message>`
+
+**ChatServiceInterface**
+
+Methods:
+
+  - `sendMessage()`
+  - `addMessage()`
+  - `removeMessage()`
+  - `getMessages()`
+  - `reset()`
+
+**ChatService / ChatServiceSupabase**
+
+  - Encapsulates conversation handling with optional persistence integration.
+
+**Notes on duplicates**
+
+- `Message` class unified across all chat services.
+- `Conversation` ensures single structure for message storage.
+
+
+[discrete]
+==== Duplicate Concepts Identified and Refactored
+
+[cols="3,^2,5",options="header",]
+|===
+| Original Concept | Duplicate | Decision
+
+| StudentProfile  
+| JobSeekerProfile  
+| Merged into JobSeekerProfile 
+
+| Profile attributes in multiple classes 
+| JobSeekerProfile & RecruiterProfile 
+| Abstract Profile class introduced
+
+| Message class in ChatService and Supabase 
+| Message 
+| Unified under Messaging Context
+
+|===
+
+
+[discrete]
+==== Summary
+
+- Duplicates resolved and structures unified.
+- Shared value objects reused across contexts.
+- The domain model is cleaner, easier to maintain, and aligned with bounded contexts.
+
+
 === Relating Desing Patterns to the Domain Model
 
 ==== #Identifying Weak Spots in Domain Model#
@@ -5044,6 +5239,256 @@ _Figure 4.5.1. - 3. UML Diagram Illustrating Matching Module Accessing Profile D
 [discrete]
 The diagram illustrates how the Matching module accesses Profile data through the **IProfileReader** interface and works with stored snapshots. This structure decouples matching from live Profile updates, ensuring historical match data remains consistent and auditable.
 
+==== #Factor Behavioral Alternatives#
+:author: Yandre Caban Torres
+
+[discrete]
+=== Overview
+
+The Factor Behavioral Alternatives model shows how different aspects of a Job Seeker’s profile are evaluated using a set of modular and extensible ranking operations. Instead of relying on a single rigid scoring algorithm, the system introduces a series of ranking strategies, each responsible for assessing one behavioral or profile-based dimension (skills, interests, student status, location, among others.).
+
+This modular decomposition allows the platform to:
+
+- adapt ranking behavior across contexts (e.g., job searching, student filtering, internship matching),
+- extend the scoring model without modifying the core domain object,
+- evaluate profiles consistently while respecting separation.
+
+The design applies a clear application of the Strategy Pattern, enabling flexible configuration of ranking behavior based on use cases.
+
+[discrete]
+=== UML Class Diagram
+
+The diagram captures:
+
+- the `JobSeekerProfile` domain object,
+- the `RankingStrategy` abstraction,
+- a composite strategy responsible for orchestrating ranking,
+- all concrete ranking strategies used in evaluation.
+
+UML Diagram:  
+image:../Images/LTT 63_ Factor Behavioral Alternatives.png[]
+
+_Figure 4.5.2. - 1. UML Diagram Illustrating Factor Behavioral Alternatives Patterns_
+
+[discrete]
+==== Domain Model: `JobSeekerProfile`
+
+`JobSeekerProfile` represents the central data structure processed by all ranking strategies. It contains both static user attributes (major, job type, skills) and behavioral attributes (activity timestamps, relocation preference).
+
+This class is intentionally kept pure and free from ranking logic.  
+It acts as input for ranking and is shielded from any outward dependency on ranking strategies.
+
+**Attributes**
+
+- `id: String`
+- `userId: String` 
+- `major: String`
+- `graduationYear: int`
+- `bio: String`
+- `location: String`
+- `phoneNumber: String`
+- `skills: List<String>`
+- `interests: List<String>`
+- `resumeUrl: String`
+- `portfolioUrl: String`
+- `linkedInUrl: String` 
+- `githubUrl: String`
+- `isStudent: bool` 
+- `jobType: String`
+- `willingToRelocate: bool`  
+- `createdAt: DateTime` 
+- `updatedAt: DateTime` 
+
+**Methods**
+
+- `toJson()` 
+- `fromJson()`   
+- `copyWith()` 
+
+This model ensures clean separation between profile representation and evaluation behavior.
+
+[discrete]
+==== Interface: `RankingStrategy`
+
+The `RankingStrategy` interface defines the required contract for any strategy that computes a ranking score.
+
+**Method**
+
+- `rank(profile: JobSeekerProfile): double`
+
+This formalizes:
+
+- what each strategy must compute,
+- how strategies are expected to behave,
+- and how the composite interacts with them.
+
+Every strategy focuses on one dimension of the profile, which makes the system highly maintainable and easy to evolve.
+
+[discrete]
+==== Composite Ranking Strategy
+
+**Class:** `CompositeRankingStrategy`
+
+The composite serves as the organizer of the evaluation process.  
+It stores a list of strategies, iterates through them, and combines the results to generate a final score.
+
+**Attributes**
+
+- `strategies: List<RankingStrategy>`
+
+**Methods**
+
+- `addStrategy(strategy)`
+- `removeStrategy(strategy)`
+- `rank(profile): double`
+
+**Why Composite Pattern?**
+
+The composite allows:
+
+- easy experimentation by enabling or disabling strategies,
+- context-specific ranking behaviors,
+- clean extensibility if new ranking logic emerges.
+
+Instead of a massive algorithm, ranking emerges from the composition of small and focused strategies.
+
+[discrete]
+==== Concrete Ranking Strategies
+
+Each strategy implements `RankingStrategy` and is responsible for evaluating a targeted dimension of the profile.  
+
+
+===== 1 StudentStatusRankingStrategy
+
+**Attributes**
+
+- `studentWeight: double`
+- `nonStudentWeight: double`  
+
+**Uses**
+
+- `isStudent`  
+
+**Purpose**
+
+Evaluates whether the profile belongs to a student or a non-student.  
+Useful for internship prioritization, university pipelines, and early career programs.
+
+
+===== 2 SkillRankingStrategy
+
+**Attributes**
+
+- `skillWeights: Map<String,double>` 
+
+**Uses**
+
+- `skills`  
+
+**Purpose**
+
+Measures how well a profile’s skills align with the desired or weighted skills.  
+Enables skill-driven job ranking and specialization matching.
+
+
+===== 3 JobTypeRankingStrategy
+
+**Attributes**
+
+- `jobTypeWeights: Map<String,double>`  
+
+**Uses**
+
+- `jobType`  
+
+**Purpose**
+
+Scores profiles depending on their job preference (e.g., internship, part-time, full-time).
+
+
+===== 4 ActivityRankingStrategy
+
+**Attributes**
+
+- `isStudentWeight: double`  
+- `jobTypeWeight: double`
+
+**Uses**
+
+- `createdAt`  
+- `updatedAt` 
+- `isStudent`
+- `jobType`
+
+**Purpose**
+
+Helps prioritize engaged users and discourage stale profile surfacing.
+
+
+===== 5 GPARankingStrategy
+
+**Attributes**
+
+- `graduationYearWeight: double`  
+- `majorWeight: double`  
+
+**Uses**
+
+- `graduationYear`  
+- `major`  
+
+**Purpose**
+
+Adds structure to academic scoring (e.g., seniority, program relevance).  
+Serves as a proxy for certain academic patterns.
+
+
+===== 6 LocationRankingStrategy
+
+**Attributes**
+
+- `preferredLocations: List<String>`  
+- `locationWeights: double`  
+
+**Uses**
+
+- `location`  
+- `willingToRelocate` 
+
+**Purpose**
+
+Assesses geographic alignment.  
+Supports local hiring, remote filters, and relocation-friendly ranking.
+
+
+===== 7 InterestRankingStrategy
+
+**Attributes**
+
+- `interestWeights: Map<String,double>`  
+
+**Uses**
+
+- `interests`  
+
+**Purpose**
+
+Scores based on thematic or domain interests, improving personalization and relevance of recommendations.
+
+[discrete]
+==== UML Relationship Summary
+
+1. **CompositeRankingStrategy → RankingStrategy (Composition):**  
+   The composite owns the strategies and defines evaluation order.
+
+2. **Concrete Strategies → RankingStrategy (Interface Realization):**  
+   Each ranking behavior implements the shared scoring contract.
+
+3. **CompositeRankingStrategy → Concrete Strategies (Association):**  
+   Composite aggregates a configurable set of strategies.
+
+4. **JobSeekerProfile (Independent Domain Object):**  
+   No backward dependency on ranking logic; ensures clean layering.
 
 
 === Strategic Desing
@@ -5633,6 +6078,127 @@ The recommendations derived from this research provide concrete guidance for the
 - [x] Clear linkage between findings and project's modeling requirements (mapped to features, challenges, and architectural decisions)
 - [x] References properly cited with URLs, ISBNs, and publication details
 
+=== #Maintaining Model Integrity#
+==== #Evaluate Model Integrity Patterns#
+:author: Yandre Caban Torres
+
+[discrete]
+=== Overview
+
+This document describes the boundaries between key subsystems in the domain model and the model-integrity patterns applied to maintain separation, clarity, and consistency.  
+
+It includes:
+
+- The main bounded contexts of the system
+- Upstream and downstream relationships
+- Model-integrity patterns applied (ACL, Shared Kernel, Customer–Supplier, Conformist)
+- Rationale behind each pattern
+- A context map diagram for visual understanding
+
+[discrete]
+=== Context Map Diagram
+
+The diagram provides a high-level view of the bounded contexts, their relationships, and the integrity patterns applied.
+
+UML Diagram:  
+
+image:../Images/LTT 79_ Evaluate Model Integrity Patterns.png[]
+
+_Figure 4.7.1. - 1. Context Map for Model Integrity Patterns_
+
+[discrete]
+==== Bounded Contexts and Patterns
+
+===== Authentication Context
+
+**Responsibilities**
+
+- UserIdentity  
+- Login / SignUp  
+- UserID  
+
+**Upstream**: None  
+**Downstream**: Profile Management Context  
+
+**Pattern Applied**: **Customer–Supplier + ACL**  
+
+- ACL: `toProfileModel`  
+- Authentication provides stable identity data; Profile Management consumes it with translation.
+
+
+===== Profile Management Context
+
+**Responsibilities**
+
+- JobSeekerProfile  
+- StudentProfile  
+- Address  
+- Profile domain logic  
+
+**Upstream**: Authentication Context  
+
+**Downstream**: Chat / Messaging Context, Supabase Persistence Context  
+
+**Patterns Applied**:  
+
+**Conformist** (toward Chat / Messaging Context) 
+
+  - Chat consumes `profileId` and profile structure without forcing Profile domain changes.  
+
+**Shared Kernel + ACL** (toward Supabase Persistence Context) 
+
+  - ACL: `ProfileRowMapper`  
+  - Ensures stable, shared domain rules and mapping for persistence.  
+
+
+===== Chat / Messaging Context
+
+**Responsibilities**
+
+- ChatMessage  
+- Conversation  
+- Messaging services  
+
+**Upstream**: Profile Management Context 
+
+**Downstream**: Supabase Persistence Context  
+
+**Pattern Applied**: **Shared Kernel + ACL**  
+
+- ACL: `ChatRowMapper`  
+- Provides consistent translation for chat persistence.
+
+
+===== Supabase Persistence Context
+
+**Responsibilities**
+
+- Persistence access  
+- Database tables  
+- Raw rows / maps  
+
+**Upstream**: Profile Management Context, Chat / Messaging Context 
+
+**Downstream**: None  
+
+**Pattern Applied**: **Shared Kernel**  
+
+- Ensures consistent persistence rules and mappings across contexts.
+
+[discrete]
+==== Why These Patterns?
+
+Applying these patterns ensures:
+
+- Avoidance of tight coupling between domain areas  
+- Clear ownership of data and responsibilities  
+- Independent evolution of each context  
+- Controlled translation through ACLs  
+- Separation of persistence logic from domain concerns  
+- Messaging and profile domains remain clean and focused  
+- Reduced cross-context assumptions and improved maintainability
+
+
 == Log Book
 
 [cols="3,^2,5",options="header",]
@@ -5697,6 +6263,10 @@ The recommendations derived from this research provide concrete guidance for the
 
 | Kaysha L. Pagan Lopez
 | 3.3, 3.3.1, 3.3.2, 3.3.3
+| Added
+
+| Yandre Caban Torres
+| 4.7, 4.7.1, 4.5.2, 4.4.3
 | Added
 
 
