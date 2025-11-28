@@ -2254,6 +2254,33 @@ END) as unread_count
 
 image::../Images/create_acc_pt1.jpg[Profile Card UI, align=center, width=40%]
 
+
+===== Sign in
+image:../Images/sign_in.jpg[Flower,width=480,height=720]
+
+|=== 
+|Account creation pt1 | Account creation pt2
+|image:../Images/create_acc_pt1.jpg[Flower,width=480,height=720]| image:../Images/create_acc_pt2.jpg[Itinerary, align=center, pdfwidth=90%]
+|===
+
+|=== 
+|Recruiter pt1 | Recruiter pt2
+|image:../Images/recruiter_pt1.jpg[Flower,width=480,height=720]| image:../Images/recruiter_pt2.jpg[Itinerary, align=center, pdfwidth=90%]
+|===
+
+|===
+|Job Seeker pt1 | Job Seeker pt2
+|image:../Images/jobseeker_pt1.jpg[Flower,width=480,height=720] | image:../Images/jobseeker_pt2.jpg[Flower,width=480,height=720]
+|===
+
+===== Profile
+
+image:../Images/profile.jpg[Flower,width=480,height=720]
+
+===== Matches
+
+image:../Images/swipe.jpg[Flower,width=480,height=720]
+
 == Analytic Part
 
 === Concept Analysis
