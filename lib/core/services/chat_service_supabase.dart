@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import './chat_service.dart'; // ChatMessage
+import './chat_service.dart'; // ChatMessage, MessageReaction
 
 class ChatServiceSupabase {
   ChatServiceSupabase({
@@ -210,5 +210,102 @@ class ChatServiceSupabase {
       isDeleted: (m['is_deleted'] as bool?) ?? false,
       updatedAt: updatedAt,
     );
+  }
+
+  // ---------------- Reactions ----------------
+
+  /// Add a reaction for the current user to a message. Idempotent due to unique index.
+  Future<bool> addReaction(String messageId, String emoji) async {
+    final user = _client.auth.currentUser;
+    if (user == null) return false;
+
+    try {
+      // Use same pattern as other queries in the project
+      await _client.from('message_reactions').insert({
+        'message_id': messageId,
+        'user_id': user.id,
+        'emoji': emoji,
+      });
+      return true;
+    } on PostgrestException catch (e, st) {
+      debugPrint('[chat_service_supabase] addReaction PG error: ${e.message}\n$st');
+      return false;
+    } on Exception catch (e, st) {
+      debugPrint('[chat_service_supabase] addReaction error: $e\n$st');
+      return false;
+    }
+  }
+
+  /// Remove a reaction for the current user from a message.
+  Future<bool> removeReaction(String messageId, String emoji) async {
+    final user = _client.auth.currentUser;
+    if (user == null) return false;
+
+    try {
+      final res = await _client
+          .from('message_reactions')
+          .delete()
+          .match({'message_id': messageId, 'user_id': user.id, 'emoji': emoji})
+          .select();
+      return (res as List).isNotEmpty;
+    } on PostgrestException catch (e, st) {
+      debugPrint('[chat_service_supabase] removeReaction PG error: ${e.message}\n$st');
+      return false;
+    } on Exception catch (e, st) {
+      debugPrint('[chat_service_supabase] removeReaction error: $e\n$st');
+      return false;
+    }
+  }
+
+  /// Fetch aggregated reaction counts for a list of message IDs.
+  /// Returns a map: messageId -> { emoji -> count }
+  Future<Map<String, Map<String, int>>> fetchReactionsForMessages(List<String> messageIds) async {
+    if (messageIds.isEmpty) return {};
+
+    final Map<String, Map<String, int>> result = {};
+    try {
+      // Fetch per-message to avoid using Postgrest 'in' helper that may not be available
+      for (final mid in messageIds) {
+        final rows = await _client
+            .from('message_reactions')
+            .select('emoji')
+            .eq('message_id', mid);
+
+        final data = (rows as List).cast<Map<String, dynamic>>();
+        final map = <String, int>{};
+        for (final r in data) {
+          final emoji = r['emoji'] as String;
+          map[emoji] = (map[emoji] ?? 0) + 1;
+        }
+        if (map.isNotEmpty) result[mid] = map;
+      }
+      return result;
+    } catch (e, st) {
+      debugPrint('[chat_service_supabase] fetchReactionsForMessages error: $e\n$st');
+      return result;
+    }
+  }
+
+  /// Fetch reactions (individual rows) for a single message
+  Future<List<MessageReaction>> fetchReactionsForMessage(String messageId) async {
+    try {
+        final rows = await _client
+          .from('message_reactions')
+          .select()
+          .eq('message_id', messageId);
+
+        final data = (rows as List).cast<Map<String, dynamic>>();
+      return data.map((r) => MessageReaction.fromRow(r)).toList();
+    } catch (e, st) {
+      debugPrint('[chat_service_supabase] fetchReactionsForMessage error: $e\n$st');
+      return [];
+    }
+  }
+
+  // Realtime subscriptions are platform/version sensitive. For now this method is a no-op.
+  // We fetch reactions on demand and update after local changes. Implement a realtime
+  // subscription if your Supabase client/runtime supports it.
+  void subscribeToReactions(void Function(Map<String, dynamic> payload) onEvent) {
+    // no-op
   }
 }

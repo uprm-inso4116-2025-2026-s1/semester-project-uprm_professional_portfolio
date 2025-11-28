@@ -150,3 +150,28 @@ class ChatService extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+/// Represents a reaction to a message
+class MessageReaction {
+  MessageReaction({
+    required this.id,
+    required this.messageId,
+    required this.userId,
+    required this.emoji,
+    required this.createdAt,
+  });
+
+  final String id;
+  final String messageId;
+  final String userId;
+  final String emoji;
+  final DateTime createdAt;
+
+  factory MessageReaction.fromRow(Map<String, dynamic> r) => MessageReaction(
+        id: r['id'] as String,
+        messageId: r['message_id'] as String,
+        userId: r['user_id'] as String,
+        emoji: r['emoji'] as String,
+        createdAt: DateTime.parse(r['created_at'] as String).toUtc(),
+      );
+}
