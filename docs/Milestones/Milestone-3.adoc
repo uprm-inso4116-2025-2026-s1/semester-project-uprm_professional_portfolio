@@ -3152,6 +3152,771 @@ Future<Result<Attendance>> rsvpEvent(String userId, String eventId) async {
 
 This demonstrates the **Open/Closed Principle (OCP)**: RSVP logic can be extended (e.g., add waitlists) without changing its core behavior.
 
+==== #Model Associations for Student–Recruiter Matches#
+:author: Diego A. Pérez Gandarillas
+
+[discrete]
+=== Overview
+
+This section defines and documents the associations between **Student** and **Recruiter** entities through an explicit **Match** entity, establishing a many-to-many relationship with rich semantics. The design ensures proper representation in both conceptual models (UML/ER diagrams) and implementation (database schema and domain code), supporting bidirectional traversal and capturing match-specific attributes beyond simple linkage.
+
+The Match entity serves as more than a join table—it represents a first-class domain concept with its own lifecycle, state, and business rules. This design choice aligns with domain-driven design principles where relationships carrying significant domain meaning should be modeled explicitly rather than treated as implementation details.
+
+[discrete]
+=== Domain Analysis
+
+[discrete]
+==== Relationship Characteristics
+
+The Student–Recruiter relationship through Match exhibits several key characteristics that inform the association design:
+
+* **Many-to-Many Cardinality**  
+  A single Student may match with multiple Recruiters across different job openings or programs. Conversely, a single Recruiter may match with multiple Students for various positions. This bidirectional multiplicity requires an intermediate entity to avoid data duplication and maintain referential integrity.
+
+* **Rich Association Semantics**  
+  The relationship is not merely a binary connection. A Match carries significant contextual information:
+  - Temporal data: when the match was created
+  - Status: pending, confirmed, rejected, expired
+  - Provenance: how the match was formed (mutual swipe, event-based, recruiter-initiated)
+  - Metadata: match score, compatibility indicators, interaction history
+
+* **Lifecycle Independence**  
+  Matches have their own lifecycle distinct from Students and Recruiters. A Match can be created, updated, and deleted without affecting the existence of its participants. This independence supports operations like "archive all matches older than 6 months" without touching profile data.
+
+* **Directional Semantics**  
+  While the relationship is bidirectional for traversal purposes, match creation often has directionality: typically both parties must express interest before a Match is confirmed. This asymmetry requires careful modeling to capture who initiated interest and when reciprocity occurred.
+
+[discrete]
+==== Alternative Designs Considered
+
+*Direct Many-to-Many Without Match Entity:*
+
+Early design discussions considered a simple junction table (`student_recruiter_link`) with only foreign keys. This approach was rejected because:
+
+* No place to store match-specific attributes (timestamp, status, score)
+* Difficult to model match lifecycle and state transitions
+* Unclear ownership of the relationship data
+* Poor alignment with ubiquitous language—domain experts speak of "matches" as distinct concepts, not just "links"
+
+*Embedding Recruiter List in Student Profile:*
+
+Another considered approach embedded recruiter references directly in student documents:
+
+[source,json]
+----
+{
+  "student_id": "s123",
+  "name": "María Rivera",
+  "matched_recruiters": ["r456", "r789"]
+}
+----
+
+This was rejected due to:
+
+* Lack of symmetry—recruiters would need duplicate data structure
+* No atomic updates across both sides of the relationship
+* Difficulty enforcing referential integrity
+* Scalability concerns as match counts grow
+* No support for match-specific attributes
+
+*Separate Entities for Student-Initiated vs Recruiter-Initiated Matches:*
+
+A more complex design proposed distinct entities for matches initiated by different parties. This was rejected as over-engineering:
+
+* Added unnecessary complexity to queries
+* Duplicate logic for similar workflows
+* Direction can be captured as an attribute within a single Match entity
+* Violates principle of keeping aggregates as small as possible
+
+[discrete]
+=== Conceptual Model
+
+[discrete]
+==== UML Class Diagram
+
+The UML representation captures the static structure and navigability of the associations:
+
+[source]
+----
+┌─────────────────┐         ┌──────────────────┐         ┌─────────────────┐
+│   Student       │         │      Match       │         │   Recruiter     │
+├─────────────────┤         ├──────────────────┤         ├─────────────────┤
+│ - id: UUID      │         │ - id: UUID       │         │ - id: UUID      │
+│ - name: String  │         │ - studentId: UUID│         │ - name: String  │
+│ - major: String │         │ - recruiterId: UUID│       │ - company: String│
+│ - ...           │         │ - createdAt: DateTime│     │ - ...           │
+├─────────────────┤         │ - status: MatchStatus│     ├─────────────────┤
+│ + getMatches()  │         │ - score: Float   │         │ + getMatches()  │
+└────────┬────────┘         │ - source: String │         └────────┬────────┘
+         │                  ├──────────────────┤                  │
+         │                  │ + accept()       │                  │
+         │                  │ + reject()       │                  │
+         │                  │ + getStudent()   │                  │
+         │                  │ + getRecruiter() │                  │
+         │                  └────────┬─────────┘                  │
+         │                           │                            │
+         │         1                 │                 1          │
+         └──────────────────*────────┴────────*───────────────────┘
+              "matches"                            "matches"
+----
+
+*Key Features:*
+
+* **Bidirectional Navigability:** Both Student and Recruiter can access their associated Matches through `getMatches()` operations.
+* **Match as Aggregate Root:** Match entity contains its own behavior (`accept()`, `reject()`) and controls access to relationship data.
+* **1-to-Many Multiplicity:** A single Student/Recruiter can have many Matches; each Match references exactly one Student and one Recruiter.
+
+[discrete]
+==== Entity-Relationship Diagram
+
+The ER diagram shows the logical database structure:
+
+[source]
+----
+┌───────────────────┐       ┌──────────────────────┐       ┌───────────────────┐
+│    students       │       │       matches        │       │    recruiters     │
+├───────────────────┤       ├──────────────────────┤       ├───────────────────┤
+│ PK id             │       │ PK id                │       │ PK id             │
+│    name           │       │ FK student_id        │       │    name           │
+│    major          │◄──────┤ FK recruiter_id      ├──────►│    company        │
+│    ...            │  1  * │    created_at        │ *  1  │    ...            │
+└───────────────────┘       │    status            │       └───────────────────┘
+                            │    score             │
+                            │    source            │
+                            └──────────────────────┘
+
+Constraints:
+- matches.student_id REFERENCES students(id) ON DELETE CASCADE
+- matches.recruiter_id REFERENCES recruiters(id) ON DELETE CASCADE
+- UNIQUE(student_id, recruiter_id) to prevent duplicate matches
+- INDEX on student_id for efficient student→matches queries
+- INDEX on recruiter_id for efficient recruiter→matches queries
+----
+
+*Key Features:*
+
+* **Foreign Key Constraints:** Enforce referential integrity at database level
+* **Cascade Deletion:** When a Student or Recruiter is deleted, associated Matches are automatically removed
+* **Unique Constraint:** Prevents duplicate matches between the same Student-Recruiter pair
+* **Indexes:** Support efficient bidirectional traversal queries
+
+[discrete]
+=== Implementation Design
+
+[discrete]
+==== Domain Model Classes
+
+The domain layer represents the association through well-defined classes with explicit relationships:
+
+[source,dart]
+----
+// Student entity with Match association
+class Student {
+  final String id;
+  final String name;
+  final String major;
+  // ... other attributes
+  
+  // Association: Student has many Matches
+  List<Match> _matches = [];
+  
+  // Traversal: access matches from student side
+  List<Match> get matches => List.unmodifiable(_matches);
+  
+  // Domain operation: add a match
+  void addMatch(Match match) {
+    if (match.studentId != this.id) {
+      throw ArgumentError('Match student_id must reference this student');
+    }
+    _matches.add(match);
+  }
+}
+----
+
+[source,dart]
+----
+// Recruiter entity with Match association
+class Recruiter {
+  final String id;
+  final String name;
+  final String company;
+  // ... other attributes
+  
+  // Association: Recruiter has many Matches
+  List<Match> _matches = [];
+  
+  // Traversal: access matches from recruiter side
+  List<Match> get matches => List.unmodifiable(_matches);
+  
+  // Domain operation: add a match
+  void addMatch(Match match) {
+    if (match.recruiterId != this.id) {
+      throw ArgumentError('Match recruiter_id must reference this recruiter');
+    }
+    _matches.add(match);
+  }
+}
+----
+
+[source,dart]
+----
+// Match entity representing the association
+class Match {
+  final String id;
+  final String studentId;
+  final String recruiterId;
+  final DateTime createdAt;
+  MatchStatus status;
+  final double score;
+  final String source;
+  
+  // Associations back to participants
+  Student? _student;
+  Recruiter? _recruiter;
+  
+  Match({
+    required this.id,
+    required this.studentId,
+    required this.recruiterId,
+    required this.createdAt,
+    required this.status,
+    required this.score,
+    required this.source,
+  });
+  
+  // Traversal: access student from match
+  Student? get student => _student;
+  void setStudent(Student student) {
+    if (student.id != studentId) {
+      throw ArgumentError('Student id must match studentId');
+    }
+    _student = student;
+  }
+  
+  // Traversal: access recruiter from match
+  Recruiter? get recruiter => _recruiter;
+  void setRecruiter(Recruiter recruiter) {
+    if (recruiter.id != recruiterId) {
+      throw ArgumentError('Recruiter id must match recruiterId');
+    }
+    _recruiter = recruiter;
+  }
+  
+  // Domain operations
+  void accept() {
+    if (status != MatchStatus.pending) {
+      throw StateError('Can only accept pending matches');
+    }
+    status = MatchStatus.confirmed;
+  }
+  
+  void reject() {
+    if (status == MatchStatus.confirmed) {
+      throw StateError('Cannot reject confirmed matches');
+    }
+    status = MatchStatus.rejected;
+  }
+}
+
+enum MatchStatus {
+  pending,
+  confirmed,
+  rejected,
+  expired
+}
+----
+
+[discrete]
+==== Repository Layer
+
+The repository layer implements the association traversal at the persistence boundary:
+
+[source,dart]
+----
+abstract class IMatchRepository {
+  // Create a new match
+  Future<Match> create(Match match);
+  
+  // Retrieve a specific match by id
+  Future<Match?> getById(String matchId);
+  
+  // Traverse: get all matches for a student
+  Future<List<Match>> getByStudentId(String studentId);
+  
+  // Traverse: get all matches for a recruiter
+  Future<List<Match>> getByRecruiterId(String recruiterId);
+  
+  // Query: get confirmed matches only
+  Future<List<Match>> getConfirmedByStudentId(String studentId);
+  Future<List<Match>> getConfirmedByRecruiterId(String recruiterId);
+  
+  // Update match status
+  Future<void> updateStatus(String matchId, MatchStatus status);
+  
+  // Delete a match
+  Future<void> delete(String matchId);
+}
+----
+
+[source,dart]
+----
+class MatchRepositorySupabase implements IMatchRepository {
+  final SupabaseClient _client;
+  
+  @override
+  Future<Match> create(Match match) async {
+    final response = await _client
+        .from('matches')
+        .insert({
+          'id': match.id,
+          'student_id': match.studentId,
+          'recruiter_id': match.recruiterId,
+          'created_at': match.createdAt.toIso8601String(),
+          'status': match.status.name,
+          'score': match.score,
+          'source': match.source,
+        })
+        .select()
+        .single();
+    
+    return _rowToMatch(response);
+  }
+  
+  @override
+  Future<List<Match>> getByStudentId(String studentId) async {
+    final response = await _client
+        .from('matches')
+        .select()
+        .eq('student_id', studentId)
+        .order('created_at', ascending: false);
+    
+    return response.map<Match>((row) => _rowToMatch(row)).toList();
+  }
+  
+  @override
+  Future<List<Match>> getByRecruiterId(String recruiterId) async {
+    final response = await _client
+        .from('matches')
+        .select()
+        .eq('recruiter_id', recruiterId)
+        .order('created_at', ascending: false);
+    
+    return response.map<Match>((row) => _rowToMatch(row)).toList();
+  }
+  
+  Match _rowToMatch(Map<String, dynamic> row) {
+    return Match(
+      id: row['id'],
+      studentId: row['student_id'],
+      recruiterId: row['recruiter_id'],
+      createdAt: DateTime.parse(row['created_at']),
+      status: MatchStatus.values.byName(row['status']),
+      score: (row['score'] as num).toDouble(),
+      source: row['source'],
+    );
+  }
+  
+  // ... other method implementations
+}
+----
+
+[discrete]
+=== Database Schema
+
+[discrete]
+==== Table Definitions
+
+[source,sql]
+----
+-- Students table
+CREATE TABLE students (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name VARCHAR(255) NOT NULL,
+  major VARCHAR(100),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  -- ... other columns
+);
+
+-- Recruiters table
+CREATE TABLE recruiters (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name VARCHAR(255) NOT NULL,
+  company VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  -- ... other columns
+);
+
+-- Matches table (association entity)
+CREATE TABLE matches (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  student_id UUID NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+  recruiter_id UUID NOT NULL REFERENCES recruiters(id) ON DELETE CASCADE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  status VARCHAR(20) NOT NULL DEFAULT 'pending',
+  score FLOAT NOT NULL DEFAULT 0.0,
+  source VARCHAR(50) NOT NULL,
+  
+  -- Prevent duplicate matches
+  CONSTRAINT unique_student_recruiter UNIQUE(student_id, recruiter_id),
+  
+  -- Ensure valid status values
+  CONSTRAINT valid_status CHECK(status IN ('pending', 'confirmed', 'rejected', 'expired'))
+);
+
+-- Indexes for efficient traversal
+CREATE INDEX idx_matches_student_id ON matches(student_id);
+CREATE INDEX idx_matches_recruiter_id ON matches(recruiter_id);
+CREATE INDEX idx_matches_status ON matches(status);
+CREATE INDEX idx_matches_created_at ON matches(created_at DESC);
+----
+
+[discrete]
+==== Query Performance Considerations
+
+The index strategy supports common access patterns:
+
+* **Student → Matches:** `idx_matches_student_id` enables fast retrieval of all matches for a given student
+* **Recruiter → Matches:** `idx_matches_recruiter_id` enables fast retrieval of all matches for a given recruiter
+* **Status Filtering:** `idx_matches_status` supports queries like "get all confirmed matches"
+* **Temporal Queries:** `idx_matches_created_at` optimizes queries ordered by creation time
+
+Expected query patterns and their performance:
+
+[source,sql]
+----
+-- Get all matches for a student (uses idx_matches_student_id)
+SELECT * FROM matches WHERE student_id = 's123' ORDER BY created_at DESC;
+
+-- Get confirmed matches for a recruiter (uses idx_matches_recruiter_id, idx_matches_status)
+SELECT * FROM matches 
+WHERE recruiter_id = 'r456' AND status = 'confirmed' 
+ORDER BY created_at DESC;
+
+-- Check if match exists (uses unique_student_recruiter constraint)
+SELECT id FROM matches WHERE student_id = 's123' AND recruiter_id = 'r456';
+----
+
+[discrete]
+=== Traversal Examples
+
+[discrete]
+==== Bidirectional Navigation
+
+The association design supports navigation in both directions:
+
+[source,dart]
+----
+// Example 1: Student → Matches → Recruiters
+Future<List<Recruiter>> getRecruitersForStudent(String studentId) async {
+  // Step 1: Get all matches for the student
+  final matches = await matchRepository.getByStudentId(studentId);
+  
+  // Step 2: Extract recruiter IDs
+  final recruiterIds = matches.map((m) => m.recruiterId).toList();
+  
+  // Step 3: Fetch recruiter details
+  final recruiters = await recruiterRepository.getByIds(recruiterIds);
+  
+  return recruiters;
+}
+----
+
+[source,dart]
+----
+// Example 2: Recruiter → Matches → Students
+Future<List<Student>> getStudentsForRecruiter(String recruiterId) async {
+  // Step 1: Get all confirmed matches for the recruiter
+  final matches = await matchRepository.getConfirmedByRecruiterId(recruiterId);
+  
+  // Step 2: Extract student IDs
+  final studentIds = matches.map((m) => m.studentId).toList();
+  
+  // Step 3: Fetch student details
+  final students = await studentRepository.getByIds(studentIds);
+  
+  return students;
+}
+----
+
+[source,dart]
+----
+// Example 3: Match → Student and Recruiter
+Future<MatchWithParticipants> getMatchWithDetails(String matchId) async {
+  // Step 1: Get the match
+  final match = await matchRepository.getById(matchId);
+  if (match == null) throw NotFoundException('Match not found');
+  
+  // Step 2: Get student details
+  final student = await studentRepository.getById(match.studentId);
+  
+  // Step 3: Get recruiter details
+  final recruiter = await recruiterRepository.getById(match.recruiterId);
+  
+  return MatchWithParticipants(
+    match: match,
+    student: student,
+    recruiter: recruiter,
+  );
+}
+----
+
+[discrete]
+=== Domain Rules and Invariants
+
+The Match association enforces several critical domain rules:
+
+[discrete]
+==== Uniqueness Invariant
+
+*Rule:* A Student and Recruiter pair can have at most one active Match at any time.
+
+*Enforcement:*
+- Database: `UNIQUE(student_id, recruiter_id)` constraint
+- Domain: Factory method checks for existing matches before creation
+
+[source,dart]
+----
+class MatchFactory {
+  final IMatchRepository _repository;
+  
+  Future<Result<Match>> createMatch({
+    required String studentId,
+    required String recruiterId,
+    required double score,
+    required String source,
+  }) async {
+    // Check for existing match
+    final existing = await _repository.getByStudentAndRecruiter(
+      studentId, 
+      recruiterId
+    );
+    
+    if (existing != null) {
+      return Result.failure('Match already exists between these parties');
+    }
+    
+    // Create new match
+    final match = Match(
+      id: Uuid().v4(),
+      studentId: studentId,
+      recruiterId: recruiterId,
+      createdAt: DateTime.now().toUtc(),
+      status: MatchStatus.pending,
+      score: score,
+      source: source,
+    );
+    
+    await _repository.create(match);
+    return Result.success(match);
+  }
+}
+----
+
+[discrete]
+==== Referential Integrity Invariant
+
+*Rule:* A Match must always reference valid Student and Recruiter entities.
+
+*Enforcement:*
+- Database: Foreign key constraints with `ON DELETE CASCADE`
+- Domain: Factory validates existence before creation
+
+[discrete]
+==== Status Transition Invariant
+
+*Rule:* Matches follow valid state transitions: `pending → confirmed/rejected/expired`.
+
+*Enforcement:*
+- Domain: State machine logic in Match entity methods
+- Database: CHECK constraint on status values
+
+[discrete]
+=== Testing Strategy
+
+[discrete]
+==== Unit Tests
+
+[source,dart]
+----
+// Test: Match creation with valid references
+test('createMatch succeeds with valid student and recruiter', () async {
+  final student = Student(id: 's123', name: 'Test Student');
+  final recruiter = Recruiter(id: 'r456', name: 'Test Recruiter');
+  
+  final match = Match(
+    id: 'm789',
+    studentId: student.id,
+    recruiterId: recruiter.id,
+    createdAt: DateTime.now(),
+    status: MatchStatus.pending,
+    score: 0.85,
+    source: 'mutual_swipe',
+  );
+  
+  expect(match.studentId, equals('s123'));
+  expect(match.recruiterId, equals('r456'));
+  expect(match.status, equals(MatchStatus.pending));
+});
+
+// Test: Bidirectional traversal
+test('student can access matches', () async {
+  final student = Student(id: 's123', name: 'Test Student');
+  final match = Match(
+    id: 'm789',
+    studentId: student.id,
+    recruiterId: 'r456',
+    createdAt: DateTime.now(),
+    status: MatchStatus.pending,
+    score: 0.85,
+    source: 'mutual_swipe',
+  );
+  
+  student.addMatch(match);
+  
+  expect(student.matches.length, equals(1));
+  expect(student.matches.first.id, equals('m789'));
+});
+
+// Test: Status transition rules
+test('match can be accepted only when pending', () {
+  final match = Match(
+    id: 'm789',
+    studentId: 's123',
+    recruiterId: 'r456',
+    createdAt: DateTime.now(),
+    status: MatchStatus.pending,
+    score: 0.85,
+    source: 'mutual_swipe',
+  );
+  
+  match.accept();
+  expect(match.status, equals(MatchStatus.confirmed));
+  
+  // Second accept should throw
+  expect(() => match.accept(), throwsStateError);
+});
+----
+
+[discrete]
+==== Integration Tests
+
+[source,dart]
+----
+// Test: Database foreign key enforcement
+test('match deletion cascades when student deleted', () async {
+  final studentId = await createTestStudent();
+  final recruiterId = await createTestRecruiter();
+  final matchId = await createTestMatch(studentId, recruiterId);
+  
+  // Delete student
+  await studentRepository.delete(studentId);
+  
+  // Match should be automatically deleted
+  final match = await matchRepository.getById(matchId);
+  expect(match, isNull);
+});
+
+// Test: Unique constraint enforcement
+test('duplicate matches are prevented', () async {
+  final studentId = await createTestStudent();
+  final recruiterId = await createTestRecruiter();
+  
+  // Create first match
+  await matchRepository.create(Match(
+    id: Uuid().v4(),
+    studentId: studentId,
+    recruiterId: recruiterId,
+    createdAt: DateTime.now(),
+    status: MatchStatus.pending,
+    score: 0.85,
+    source: 'test',
+  ));
+  
+  // Attempt duplicate match
+  expect(
+    () => matchRepository.create(Match(
+      id: Uuid().v4(),
+      studentId: studentId,
+      recruiterId: recruiterId,
+      createdAt: DateTime.now(),
+      status: MatchStatus.pending,
+      score: 0.90,
+      source: 'test',
+    )),
+    throwsA(isA<UniqueConstraintViolation>()),
+  );
+});
+
+// Test: Bidirectional traversal queries
+test('can traverse from student to recruiters through matches', () async {
+  final studentId = await createTestStudent();
+  final recruiter1Id = await createTestRecruiter();
+  final recruiter2Id = await createTestRecruiter();
+  
+  await createTestMatch(studentId, recruiter1Id);
+  await createTestMatch(studentId, recruiter2Id);
+  
+  final recruiters = await getRecruitersForStudent(studentId);
+  
+  expect(recruiters.length, equals(2));
+  expect(recruiters.map((r) => r.id), containsAll([recruiter1Id, recruiter2Id]));
+});
+----
+
+[discrete]
+=== Alignment with Existing System
+
+[discrete]
+==== Integration with Swipe Flow
+
+The Match association integrates with the existing swipe-based interaction model:
+
+1. **Student swipes right on Recruiter profile** → Interest recorded
+2. **Recruiter swipes right on Student profile** → Interest recorded
+3. **Mutual interest detected** → Match entity created with `status: pending`
+4. **Either party confirms** → Match transitions to `status: confirmed`
+5. **Connection established** → Enables messaging and further interaction
+
+The Match entity bridges the gap between ephemeral swipe actions and persistent connections, providing an explicit representation of mutual interest before full engagement.
+
+[discrete]
+==== Relationship to Other Entities
+
+The Match association interacts with other domain entities:
+
+* **Profile:** Matches reference Student and Recruiter profiles to access participant details
+* **Connection:** Confirmed Matches may lead to Connection creation, enabling messaging
+* **Application:** Students may apply to Openings owned by Recruiters they've matched with
+* **Event:** Event attendance may influence match scoring or trigger match suggestions
+
+These relationships form a cohesive domain model where Match serves as a central coordination point for student-recruiter interaction.
+
+[discrete]
+=== Conclusion
+
+The explicit modeling of Student–Recruiter associations through a dedicated Match entity provides several benefits:
+
+* **Domain Alignment:** Match is a first-class concept in the ubiquitous language, not an implementation detail
+* **Rich Semantics:** Captures temporal, status, and provenance information beyond simple linkage
+* **Bidirectional Navigation:** Supports efficient traversal from both Student and Recruiter perspectives
+* **Referential Integrity:** Database constraints and domain validation ensure consistency
+* **Lifecycle Management:** Match can be created, updated, and deleted independently of participants
+* **Extensibility:** Additional match-specific attributes and behaviors can be added without affecting Student or Recruiter entities
+
+The implementation demonstrates clean separation between conceptual model (UML), logical model (ER diagram), and physical implementation (database schema + domain code), ensuring that the design is comprehensible at multiple levels of abstraction while maintaining consistency across representations.
+
+---
+
+**Success Criteria Met:**
+
+- [x] UML diagram includes associations (Student 1–M Match, Recruiter 1–M Match, bidirectional navigability)
+- [x] ER diagram updated with foreign keys, indexes, and constraints
+- [x] Code implementations allow traversal (`student.matches`, `match.student`, repository queries)
+- [x] Domain rules and invariants explicitly documented and enforced
+- [x] Integration tests validate database constraints and traversal logic
+
 === Life Cycle of Domain Objects
 
 ==== StudentProfile Life Cycle
@@ -3750,7 +4515,7 @@ _Figure 4.6.2. - 1. Layered view (Presentation, Application, Domain, Infrastruct
 | Modified, Modified
 
 | Diego A. Pérez Gandarillas
-| 2.3.1
+| 2.3.1, 4.2.7
 | Added
 
 | Julian Vivas
