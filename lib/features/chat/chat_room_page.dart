@@ -39,15 +39,19 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   final Map<String, Map<String, int>> _reactionCounts = {};
   // Which emojis the current user has reacted with per message
   final Map<String, Set<String>> _userReactions = {};
+  
+  RealtimeChannel? _messageChannel;
 
   @override
   void initState() {
     super.initState();
     _loadMessages();
+    _setupMessageSubscription();
   }
 
   @override
   void dispose() {
+    _messageChannel?.unsubscribe();
     _messageController.dispose();
     _scrollController.dispose();
     super.dispose();
@@ -70,6 +74,37 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       _loadReactionsForMessages(_messages.map((m) => m.id).toList());
       _scrollToBottom();
     }
+  }
+
+  void _setupMessageSubscription() {
+    _messageChannel = _chatService.subscribeToMessages(
+      widget.conversationId,
+      onInsert: (message) {
+        if (!mounted) return;
+        // Don't add if it's from current user (already added optimistically)
+        if (message.senderId == _chatService.currentUserId) return;
+        
+        setState(() {
+          _messages.add(message);
+        });
+        _scrollToBottom();
+      },
+      onUpdate: (message) {
+        if (!mounted) return;
+        setState(() {
+          final index = _messages.indexWhere((m) => m.id == message.id);
+          if (index != -1) {
+            _messages[index] = message;
+          }
+        });
+      },
+      onDelete: (messageId) {
+        if (!mounted) return;
+        setState(() {
+          _messages.removeWhere((m) => m.id == messageId);
+        });
+      },
+    );
   }
 
   Future<void> _loadReactionsForMessages(List<String> messageIds) async {
