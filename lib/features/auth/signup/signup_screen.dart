@@ -221,7 +221,7 @@ class _SignupScreenState extends State<SignupScreen> {
         if (_selectedRole == AppConstants.recruiterRole) {
           context.go(AppConstants.recruiterProfileRoute);
         } else {
-          context.go(AppConstants.jobseekerProfileRoute);
+          await context.push(AppConstants.jobseekerProfileRoute);
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

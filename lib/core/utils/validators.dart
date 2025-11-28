@@ -96,4 +96,24 @@ class Validators {
 
     return null;
   }
+
+  // Role validation - domain rule for signup process
+  static String? validateRole(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please select your role to continue';
+    }
+
+    // Validate against allowed roles (domain rule)
+    final allowedRoles = [
+      AppConstants.jobseekerRole,
+      AppConstants.recruiterRole,
+      AppConstants.studentRole,
+    ];
+
+    if (!allowedRoles.contains(value)) {
+      return 'Invalid role selected';
+    }
+
+    return null;
+  }
 }
