@@ -303,9 +303,9 @@ Source code development is a top priority on this project, its success depends o
 
 A key outcome of this project is the emergence of several derived goals that extend beyond the primary function of matching recruiters and job seekers. These goals leverage the platform's unique data and position to create secondary, significant value.
 
-One major derived goal is the generation of actionable market intelligence. The matching process naturally produces a rich stream of data on skills, salaries, and hiring trends. By systematically learning from this data, the platform can provide a "Career GPS" for job seekers, offering personalized guidance on skill gaps, real-time salary benchmarking, and potential career trajectories. For recruiters, this intelligence enables strategic talent acquisition by identifying hidden talent pools, providing competitive benchmarking on metrics like time-to-hire, and predicting emerging skill demands. This transforms the platform from a simple transactional tool into an indispensable, intelligent partner for all users, with the data also serving as a critical feedback loop for the platform's own strategic development and product roadmap.
+One major derived goal is the generation of actionable market intelligence. The matching process naturally produces a rich stream of data on skills, salaries, and hiring trends. By systematically learning from this data, [.underline]#this intelligence enables strategic talent acquisition for recruiters by identifying hidden talent pools, providing competitive benchmarking on metrics like time-to-hire, and predicting emerging skill demands. Furthermore, this aggregate data serves as a critical feedback loop for the platform's own strategic development and product roadmap, ensuring the service remains optimally aligned with real-world market needs. This transforms the platform from a simple transactional tool into an indispensable, intelligent partner for talent leaders and the platform itself.#
 
-A second derived goal involves creating a dynamic bridge between education and industry. The data generated provides a real-time map of the skills employers need versus the skills candidates possess. This allows the platform to become a vital feedback mechanism for universities and bootcamps, helping them validate and modernize their curricula to close specific skills gaps, such as a lack of training in high-demand tools like Docker. For students, it empowers informed educational investment by highlighting which courses and skills will most effectively increase their employability. On a broader scale, this data can fuel regional economic development by helping cities identify critical talent shortages and create targeted workforce programs, ultimately building a stronger, more aligned local economy.
+A second derived goal involves creating a dynamic bridge between education and industry. The data generated provides [.underline]#a real-time, aggregate map of the skills employers need versus the skills the collective candidate pool possesses. This allows the platform to become a vital feedback mechanism for universities and bootcamps, helping them validate and modernize their curricula to close specific, large-scale skills gaps, such as a lack of training in high-demand tools like Docker. On a broader scale, this data can fuel regional economic development by helping cities and governments# identify critical talent shortages and create targeted workforce programs, ultimately building a stronger, more aligned local economy.
 
 Finally, a crucial derived goal is to transform the job search from a black box into a guided journey for the candidate. The platform can leverage its collective data to demystify the process, providing unprecedented transparency. This includes empowering job seekers with data-backed salary insights that illuminate how specific skills impact pay, enabling confident negotiation. It also involves providing a realistic "mirror" to the market, showing candidates exactly how their profile measures up and pinpointing specific areas for improvement. By offering a "pulse" on typical hiring timelines and illuminating common career progression paths, the platform reduces the anxiety and uncertainty of job hunting. This shifts its value proposition from merely finding a job to becoming a trusted advisor for managing an entire career, thereby building immense user loyalty and trust.
 
@@ -814,7 +814,7 @@ This narrative ties the abstract model to observable work. The multiplicities cl
 ==== Events, Actions, and Behaviors
 #The following are concrete examples of events, actions, and behaviors derived from the domain observations. Each example includes a description of the type, triggering conditions, subsequent actions, and postconditions to illustrate how these elements manifest in the student-recruiter interaction context.#
 
-image::../Images/EventsActionsEntitiesUML.png[]
+image::../Images/EventsActionsEntitiesUML.png[width=100%,align=center]
 
 ===== [underline]#_Recruiting event announced (event → actions → follow-up events)_#
 
@@ -1805,33 +1805,37 @@ Machine requirements specify the hardware, software, and environment needed for 
 |=== 
 | ID | Description | Linked User Stories/Epics | Verification Tests
 
-| MR001 | Developer Workstations must meet a minimum specification of Dual-core processor (Intel i5/AMD equivalent), 8 GB RAM, and 256 GB SSD. | Epic-DevSetup | T-Env-001
+| MR001 | [underline]#Developer workstations must meet a minimum specification of Dual-core processor (Intel i5/AMD equivalent), 8 GB RAM, 256 GB SSD, and GPU capable of supporting Flutter/Android/iOS emulators efficiently.# | Epic-DevSetup | T-Env-001
 
-| MR002 | Mobile Devices for Testing must include Android devices running Android 10.0+ with at least 3 GB RAM and iOS devices running iOS 15+ (e.g., iPhone 11 or newer). | Epic-Testing | T-Env-002
+| MR002 | [underline]#Mobile devices for testing must include Android devices running Android 10.0+ with at least 3 GB RAM and iOS devices running iOS 15+ (e.g., iPhone 11 or newer). Devices must support automated UI testing frameworks where applicable.# | Epic-Testing | T-Env-002
 
 | MR003 | Servers / Cloud Hosting must meet a minimum specification of 2 vCPUs, 4 GB RAM, and 50 GB storage. | Epic-Deployment | T-Env-003
 
-| MR004 | The Flutter SDK (latest stable release) and Dart SDK (bundled with Flutter) must be used for development. | | T-Tool-001
+| MR004 | [underline]#The Flutter SDK (latest stable release) and Dart SDK (bundled with Flutter) must be used for development. Development environment must support hot reload and debugging tools.# | | T-Tool-001
 
-| MR005 | Android Studio and Xcode must be used for builds and emulators/simulators. | | T-Tool-002
+| MR005 | [underline]#Android Studio and Xcode must be used for builds and emulators/simulators, including latest stable versions and plugins for Flutter development.# | | T-Tool-002
 
-| MR006 | Git and GitHub must be used for version control and collaboration. | | T-Tool-003
+| MR006 | [underline]#Git and GitHub must be used for version control and collaboration; Git workflow must include feature branches and pull requests.# | | T-Tool-003
 
 | MR007 | SQLite must be used for local offline storage. | | T-DB-009
 
 | MR008 | Firebase, AWS, or Azure must be used for authentication, notifications, and backend integration. | | T-API-009
 
-| MR009 | Developer machines must run Windows 10/11 or macOS Monterey+. | | T-Env-004
+| MR009 | [underline]#Developer machines must run Windows 10/11 or macOS Monterey+ with all necessary dependencies installed.# | | T-Env-004
   
 | MR010 | The application must be deployed to targets running Android 10+ and iOS 15+. | | T-Env-005
 
-| MR011 | A stable broadband connection (≥10 Mbps) must be available for syncing and testing cloud services.|  | T-Env-006
+| MR011 | [underline]#A stable broadband connection (≥10 Mbps) must be available for syncing and testing cloud services; latency should not exceed 100ms in normal conditions.# |  | T-Env-006
 
 | MR012 | All client-server communication must use HTTPS. | | T-Security-004
 
 | MR013 | Developers must test on both Android and iOS environments. | | T-Test-001
 
 | MR014 | The application must comply with Google Play Store and Apple App Store distribution guidelines.| | T-Compliance-001 
+
+| MR015 | #Environmental constraints: Development and testing machines must have stable power supply (UPS recommended), controlled room temperature (18–27°C), and low humidity (<60%) to ensure hardware reliability.# | | T-Env-007
+
+| MR016 | #Performance expectations: Developer workstations and servers must sustain concurrent builds and testing workflows without degradation; response times for cloud API calls must meet SLA targets.# | | T-Perf-001
 |===
 
 
@@ -2063,25 +2067,28 @@ Future steps include:
 
 
 ==== Verification Strategy
-Verification ensures that the documentation is internally consistent and traceable across milestones.
 
 * **Peer Reviews (Planned)**  
-  Each section of the documentation (terminology, requirements, narrative) will be reviewed by a different team member. Early reviews already revealed ambiguities between the terms “candidate” and “student,” which were clarified.
+[underline]#Each section of the documentation (terminology, requirements, narrative) will be reviewed by a different team member. Reviews confirm consistent terminology, measurable requirements, and proper linkage to design elements.#  
+  Early reviews revealed ambiguities between the terms “candidate” and “student,” which were clarified.
 
 * **Checklists**  
-  A milestone-based checklist will be used:  
+  [underline]#A milestone-based checklist will be used to explicitly verify each requirement and trace it to design and implementation elements:#  
   - Every requirement uses only defined terms.  
-  - Requirements map to at least one domain concept.  
-  - No contradictions between terminology and requirements.  
+  - Requirements map to at least one domain concept and at least one corresponding design element.  
+  - No contradictions exist between terminology, requirements, and design.  
   - Requirements are measurable and testable (planned for Milestone 2).  
+  - Step-by-step verification actions are defined for each requirement where applicable (e.g., functional test procedures, walkthroughs).
 
 * **Traceability Matrix (Planned)**  
-  A lightweight traceability matrix will link:  
-  - *Requirements → Goals* (does each requirement support at least one documented goal?).  
-  - *Requirements → Terminology* (is consistent terminology used?).  
+  [underline]#A lightweight traceability matrix will be maintained to link requirements to goals, terminology, verification methods, and design elements. This ensures all verification is explicit and measurable:#  
+  - *Requirements → Goals* (ensuring each requirement supports at least one documented goal).  
+  - *Requirements → Terminology* (ensuring consistent and correct terminology).  
+  - *Requirements → Verification Method* (explicitly showing how each requirement will be verified, including specific tests or procedures).  
+  - *Requirements → Design / Implementation* (ensuring traceability from requirement to the actual design and implementation artifacts).
 
 * **Walkthroughs of Documentation**  
-  We will simulate “reader walkthroughs,” where one team member acts as an external reviewer and checks whether requirements can be traced back to definitions. This approach helps identify undefined or ambiguous terms.
+  [underline]#Reader walkthroughs will be simulated by having a team member act as an external reviewer to check that each requirement traces back to definitions, models, and implementation elements. This identifies undefined or ambiguous terms and confirms measurable verification coverage.#  
 
 
 == Specific Class Topics
@@ -3217,6 +3224,7 @@ image::..\Images\swipe_process.png[width=70%,align=center]
 _Figure 4.3.2. - 1. State Transitions_
 
 ===== Aggregate Deletion Rules
+:reviewer: Diego A. Pérez Gandarillas
 
 The deletion of a `StudentProfile` must adhere to strict rules to maintain **aggregate consistency**, ensure **data integrity**, and comply with **domain policies**. The following rules apply:
 
@@ -3228,12 +3236,21 @@ The deletion of a `StudentProfile` must adhere to strict rules to maintain **agg
   - Deleting a `StudentProfile` may require cascading deletion or modification of related aggregates:
     - **Enrollments:** Any active or historical enrollments linked to the student must be removed or anonymized.  
     - **Submissions/Assignments:** Student submissions may need to be archived, anonymized, or deleted according to retention policies.
-    - **Notifications/Logs:** Events related to the profile should remain in the audit trail but must be decoupled from personally identifiable information. 
+    - **Notifications/Logs:** Events related to the profile should remain in the audit trail but must be decoupled from personally identifiable information.
+    - #**Matches:** Match records referencing the student must be removed as they lose meaning without the student profile.#
+    - #**Applications:** Application records tied to the student's intent should be removed to maintain referential integrity.#
+    - #**MentorAssignments:** Student-specific mentor assignments must be cleaned up as they are tightly coupled to the student.#
+
+* #**Retention of System-Owned Data**#
+  #- Certain records should be preserved even after profile deletion:#
+    #- **Feedback:** May be retained with soft orphaning for historical reporting and analytics.#
+    #- **AuditLogs:** Must persist for compliance, traceability, and regulatory requirements.#
 
 * **Validation Checks** 
   - Before deletion, the system must validate:  
-    *** That no critical dependencies remain in other aggregates (e.g., group projects, team memberships).
-    *** That deletion will not violate invariants of related domain objects.
+    - That no critical dependencies remain in other aggregates (e.g., group projects, team memberships).
+    - That deletion will not violate invariants of related domain objects.
+    - [.underline]#That all active relationships are properly handled or archived.#
 
 * **Compliance and Audit**
   - All deletion events must be logged with timestamp, actor, and reason for deletion.
@@ -3552,6 +3569,233 @@ The StudentProfile.id identity model is now fully enforced:
 * Integration tests confirm trigger behavior
 
 This identity foundation ensures stability across the entire Professional Portfolio system and supports reliable relationships between students, recruiters, matches, and all connected modules.
+[discrete]
+====== #Deletion Policy Matrix#
+
+[cols="2,2,2,3",options="header"]
+|===
+|Entity |Relationship Type |Behavior on Deletion |Reasoning
+
+|`Match`
+|Strong reference
+|**Cascade delete**
+|Match is meaningless without the student
+
+|`Application`
+|Strong reference
+|**Cascade delete**
+|Tied to student's intent; should be removed
+
+|`MentorAssignment`
+|Strong reference
+|**Cascade delete**
+|Student-specific; must be cleaned up
+
+|`Enrollment`
+|Strong reference
+|**Cascade delete or anonymize**
+|Per retention policy requirements
+
+|`Submission`
+|Strong reference
+|**Archive or anonymize**
+|Per institutional retention policy
+
+|`Feedback`
+|Optional/Soft link
+|**Retain (soft orphan)**
+|Used for historical reporting and analytics
+
+|`AuditLog`
+|System-owned
+|**Retain**
+|Must persist for compliance and traceability
+
+|`Notification`
+|Weak reference
+|**Decouple PII**
+|Preserve event trail, remove identifying data
+|===
+
+[discrete]
+====== #Database Schema Enforcement#
+
+#The database schema enforces deletion rules through foreign key constraints:#
+
+[source,sql]
+----
+CREATE TABLE student_profiles (
+  id UUID PRIMARY KEY,
+  user_id UUID NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL,
+  deleted_at TIMESTAMPTZ,
+  deleted_by UUID
+);
+
+CREATE TABLE applications (
+  id UUID PRIMARY KEY,
+  student_id UUID NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
+  program_id UUID NOT NULL,
+  status TEXT NOT NULL,
+  submitted_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE mentor_assignments (
+  id UUID PRIMARY KEY,
+  student_id UUID NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
+  mentor_id UUID NOT NULL,
+  assigned_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE matches (
+  id UUID PRIMARY KEY,
+  student_id UUID NOT NULL REFERENCES student_profiles(id) ON DELETE CASCADE,
+  mentor_id UUID NOT NULL,
+  matched_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE feedback (
+  id UUID PRIMARY KEY,
+  student_id UUID,  -- Nullable to support soft orphaning
+  mentor_id UUID,
+  notes TEXT,
+  submitted_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE audit_logs (
+  id UUID PRIMARY KEY,
+  action TEXT NOT NULL,
+  actor_id UUID,
+  entity_type TEXT,
+  entity_id UUID,
+  created_at TIMESTAMPTZ NOT NULL
+);
+----
+
+[discrete]
+====== #Trade-offs Analysis#
+
+#**Cascade Delete Approach (Primary Strategy)**#
+
+#*Advantages:*#
+#* Ensures no orphaned data or broken relationships#
+#* Simpler cleanup logic and maintenance#
+#* Enforces referential integrity at database level#
+#* Prevents accumulation of stale references#
+
+#*Disadvantages:*#
+#* Risk of accidental mass deletion if not properly guarded#
+#* Loss of historical data for analytics#
+#* Irreversible without backup restoration#
+
+#**Soft Deletion with Orphan Retention (Alternative Strategy)**#
+
+#*Advantages:*#
+#* Preserves historical data for reporting and analysis#
+#* Enables potential recovery or audit review#
+#* Supports compliance with data retention requirements#
+
+#*Disadvantages:*#
+#* Leaves dangling references requiring careful handling#
+#* Requires additional application logic for filtering#
+#* Increases storage requirements over time#
+#* More complex query patterns to exclude deleted records#
+
+#**Hybrid Approach (Implemented)**#
+
+#The system implements a hybrid strategy:#
+#- **Cascade delete** for tightly-coupled entities that lose meaning without the profile#
+#- **Soft orphaning** for loosely-coupled analytics and reporting data#
+#- **Mandatory retention** for system-owned compliance records#
+
+[.underline]#This approach balances data integrity with historical preservation and regulatory compliance.#
+
+[discrete]
+====== #Application-Level Safeguards#
+
+#Before allowing profile deletion, the application layer enforces additional checks:#
+
+#1. **Authorization Verification**#
+   #- Confirm requester is profile owner or system administrator#
+   #- Validate deletion permissions in current context#
+
+#2. **Active Relationship Checks**#
+   #- Warn if active mentor assignments exist#
+   #- Confirm handling of pending applications#
+   #- Verify no active group projects or collaborations#
+
+#3. **Archival Process**#
+   #- Create immutable snapshot before deletion#
+   #- Store in compliance-approved archival system#
+   #- Include all related entity snapshots#
+
+#4. **Audit Trail Creation**#
+   #- Record deletion event with full context#
+   #- Capture: actor ID, timestamp, reason, affected entities#
+   #- Ensure audit entry is immutable#
+
+#5. **Notification Cascade**#
+   #- Alert dependent systems of impending deletion#
+   #- Provide grace period for external system updates#
+   #- Confirm all systems acknowledged deletion#
+
+[discrete]
+====== #Soft Deletion Implementation#
+
+#For scenarios requiring extended data retention:#
+
+[source,sql]
+----
+-- Soft delete implementation
+ALTER TABLE student_profiles ADD COLUMN deleted_at TIMESTAMPTZ;
+ALTER TABLE student_profiles ADD COLUMN deleted_by UUID;
+ALTER TABLE student_profiles ADD COLUMN deletion_reason TEXT;
+
+-- Application queries filter deleted profiles
+CREATE VIEW active_student_profiles AS
+SELECT * FROM student_profiles 
+WHERE deleted_at IS NULL;
+
+-- Periodic cleanup job for aged soft-deleted records
+-- (after retention period expires)
+DELETE FROM student_profiles 
+WHERE deleted_at < NOW() - INTERVAL '7 years'
+AND deletion_reason != 'legal_hold';
+----
+
+[discrete]
+====== #Validation Test Scenarios#
+
+#**Test Case 1: Cascade Verification**#
+#1. Create `StudentProfile` with associated `Match`, `Application`, `MentorAssignment`#
+#2. Execute deletion#
+#3. Verify all dependent records removed#
+#4. Confirm `Feedback` and `AuditLog` persist#
+#5. Validate no orphaned foreign key references remain#
+
+#**Test Case 2: Authorization Enforcement**#
+#1. Attempt deletion as unauthorized user#
+#2. Verify rejection with appropriate error code#
+#3. Confirm profile remains unchanged#
+#4. Validate audit log records failed attempt#
+
+#**Test Case 3: Active Relationship Warning**#
+#1. Create profile with active mentor assignment#
+#2. Initiate deletion#
+#3. Verify system presents active relationship warning#
+#4. Confirm deletion blocked until acknowledged or relationships resolved#
+
+#**Test Case 4: Audit Trail Completeness**#
+#1. Delete profile with full context#
+#2. Verify audit log entry created#
+#3. Confirm all required fields populated#
+#4. Validate audit entry immutability#
+
+#**Test Case 5: Soft Deletion Recovery**#
+#1. Soft delete profile#
+#2. Verify profile hidden from normal queries#
+#3. Execute recovery operation#
+#4. Confirm profile restored with all relationships intact#
 
 === Refactoring Towards Deeper Insight and Breakthroughs
 
@@ -4052,8 +4296,8 @@ _Figure 4.6.2. - 1. Layered view (Presentation, Application, Domain, Infrastruct
 | Modified, Modified
 
 | Diego A. Pérez Gandarillas
-| 2.3.1, 4.3.3
-| Added
+| 2.3.1, 4.3.2, 4.3.3
+| Added, Modified
 
 | Julian Vivas
 | 4.2.1
@@ -4070,6 +4314,15 @@ _Figure 4.6.2. - 1. Layered view (Presentation, Application, Domain, Infrastruct
 | Horeb Cotto Rosado
 | 4.3.2
 | Added
+
+| Jahdiel Montero
+| 1.5
+| Modified
+
+| Carlos E. Cabán González
+| 2.2.5, 3.2.2
+| Modified
+
 
 |===
 '''
