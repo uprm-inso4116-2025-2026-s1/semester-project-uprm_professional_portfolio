@@ -6,27 +6,6 @@ Prof. Marko Schütz-Schmuck
 :toc:
 :sectnums:
 
-[discrete]
-== Notation for Changes
-[cols="3,2,5",options="header"]
-|===
-| Symbol | Function | Example
-
-| #Highlight#
-| Added
-| #This text is new.#
-
-| [.underline]#Underline#
-| Paraphrased 
-| [.underline]#This text has been modified.#
-
-| [line-through]#Strikethrough#
-| Removed
-| [line-through]#This text is no longer relevant.#
-|===
-'''
-
-
 
 == Informative Part
 
@@ -47,41 +26,41 @@ For Milestone 1, the team was organized into four functional groups. These are R
 [cols="3,2,5",options="header"]
 |===
 | Student | GitHub username | Tasks
-| Luis J. Cruz Cruz _(Team Leader)_ | link:https://github.com/LuisJCruz[@LuisJCruz] | #4, #16, #45, #69, #76, #98
-| Yandre Cabán Torres | link:https://github.com/YandreCaban[@YandreCaban] | #16, #35, #69, #72
-| Carlos A. Ferrer Hayes | link:https://github.com/CarlosxFerrer[@CarlosxFerrer] | #16, #34, #69, #75
-| Osvaldo F. Figueroa Canino | link:https://github.com/Osvaldoo1414[@Osvaldoo1414] | #16, #36, #60, #62, #69, #71, #91
-| Ariana P. Rodríguez Méndez | link:https://github.com/arianrodz21[@arianrodz21] | #37, #69, #73
+| Luis J. Cruz Cruz _(Team Leader)_ | link:https://github.com/LuisJCruz[@LuisJCruz] | 4, 16, 45, 69, 76, 98
+| Yandre Cabán Torres | link:https://github.com/YandreCaban[@YandreCaban] | 16, 35, 69, 72
+| Carlos A. Ferrer Hayes | link:https://github.com/CarlosxFerrer[@CarlosxFerrer] | 16, 34, 69, 75
+| Osvaldo F. Figueroa Canino | link:https://github.com/Osvaldoo1414[@Osvaldoo1414] | 16, 36, 60, 62, 69, 71, 91
+| Ariana P. Rodríguez Méndez | link:https://github.com/arianrodz21[@arianrodz21] | 37, 69, 73
 |===
 [cols="3,2,5",options="header"]
 |===
 | Student | GitHub username | Tasks
-| Jean P. I. Sánchez Félix _(Team Leader)_ | link:https://github.com/JeanSanchezFelix[@JeanSanchezFelix] | #2, #15, #23, #24, #26, #38, #45, #59, #76, #92, #96, #98
-| Carlos E. Cabán González | link:https://github.com/Carloscaban[@Carloscaban] | #24, #32, #33
-| Jahdiel E. Montero Alicea | link:https://github.com/JadStelar[@JadStelar] | #29, #30, #31, #67
-| Kiara N. Pérez Rivera | link:https://github.com/kiarancole[@kiarancole] | #38, #39, #47, #48, #60, #61, #63, #99
-| Pedro A. Rodríguez Vélez | link:https://github.com/PedroRodz[@PedroRodz] | #13, #14, #24, #26, #28, #38, #39, #41, #49, #52, #53, #57, #82
-| Alexa M. Zaragoza Torres | link:https://github.com/alexamzt[@alexamzt] | #24, #25, #26, #27, #38, #39, #50, #51, #53, #54, #55, #56, #101
+| Jean P. I. Sánchez Félix _(Team Leader)_ | link:https://github.com/JeanSanchezFelix[@JeanSanchezFelix] | 2, 15, 23, 24, 26, 38, 45, 59, 76, 92, 96, 98
+| Carlos E. Cabán González | link:https://github.com/Carloscaban[@Carloscaban] | 24, 32, 33
+| Jahdiel E. Montero Alicea | link:https://github.com/JadStelar[@JadStelar] | 29, 30, 31, 67
+| Kiara N. Pérez Rivera | link:https://github.com/kiarancole[@kiarancole] | 38, 39, 47, 48, 60, 61, 63, 99
+| Pedro A. Rodríguez Vélez | link:https://github.com/PedroRodz[@PedroRodz] | 13, 14, 24, 26, 28, 38, 39, 41, 49, 52, 53, 57, 82
+| Alexa M. Zaragoza Torres | link:https://github.com/alexamzt[@alexamzt] | 24, 25, 26, 27, 38, 39, 50, 51, 53, 54, 55, 56, 101
 |===
 
 [cols="3,2,5",options="header"]
 |===
 | Student | GitHub username | Tasks
-| Diego Pérez Ganradillas _(Team Leader)_ | link:https://github.com/diegoperez16[@diegoperez16] | #17, #18, #21, #45, #65, #76, #78, #93, #94, #98, #103
-| Axel A. Orta Félix | link:https://github.com/Axl47[@Axl47] | #20
-| Carlos Pepin Delgado |  link:https://github.com/carlospepin23[@carlospepin23] | #19, #21, #40, #42, #43, #44, #83, #84, #85, #86, #181, #191, #194, #195, #197, #200, #218, #228, #336, #337, #338
-| Ryan R. Vélez Villarrubia | link:https://github.com/RyanVelez101[@RyanVelez101] | #66, #95
+| Diego Pérez Ganradillas _(Team Leader)_ | link:https://github.com/diegoperez16[@diegoperez16] | 17, 18, 21, 45, 65, 76, 78, 93, 94, 98, 103
+| Axel A. Orta Félix | link:https://github.com/Axl47[@Axl47] | 20
+| Carlos Pepin Delgado |  link:https://github.com/carlospepin23[@carlospepin23] | 19, 21, 40, 42, 43, 44, 83, 84, 85, 86, 181, 191, 194, 195, 197, 200, 218, 228, 336, 337, 338
+| Ryan R. Vélez Villarrubia | link:https://github.com/RyanVelez101[@RyanVelez101] | 66, 95
 |===
 
 [cols="3,2,5",options="header"]
 |===
 | Student | GitHub username | Tasks
-| Horeb Cotto Rosado _(Team Leader)_ | link:https://github.com/horebcotto21[@horebcotto21] | #6, #12, #45, #68, #76, #98
-| Samarys Barreiro Meléndez | link:https://github.com/SamarysB[@SamarysB] | #7, #77
-| Fernando Castro Cancel | link:https://github.com/fernan-castro[@fernan-castro] | #10, #74
-| Abdiel Cotto Claudio | link:https://github.com/abdielcotto[@abdielcotto] | #11, #70
-| Naedra J. Feliciano Agostini | link:https://github.com/Naedra[@Naedra] | #8, #79, #97
-| Heribiell A. Rodríguez Cruz | link:https://github.com/LightPolution[@LightPolution] | #9, #38, #53, #58
+| Horeb Cotto Rosado _(Team Leader)_ | link:https://github.com/horebcotto21[@horebcotto21] | 6, 12, 45, 68, 76, 98
+| Samarys Barreiro Meléndez | link:https://github.com/SamarysB[@SamarysB] | 7, 77
+| Fernando Castro Cancel | link:https://github.com/fernan-castro[@fernan-castro] | 10, 74
+| Abdiel Cotto Claudio | link:https://github.com/abdielcotto[@abdielcotto] | 11, 70
+| Naedra J. Feliciano Agostini | link:https://github.com/Naedra[@Naedra] | 8, 79, 97
+| Heribiell A. Rodríguez Cruz | link:https://github.com/LightPolution[@LightPolution] | 9, 38, 53, 58
 |===
 
 === Current Situation, Needs, Ideas
@@ -153,13 +132,13 @@ The project's span is focused on creating a scalable and user-friendly solution 
 
 ==== Synopsis
 
-The project aims to develop a mobile application that modernizes how students and recruiters connect by addressing the inefficiencies of traditional job search methods. It uses a swiping-based interface to enable dynamic and real time engagement between students presenting their qualifications and recruiters offering opportunities. Throughout its lifecycle, the project will progress through several key phases: requirements engineering to define user and system needs, software architecture and design to establish the platform’s structure, implementation of both front-end and back-end components, and systematic testing and validation to ensure reliability and usability.# #An iterative approach will be adopted, allowing feedback to refine requirements and improve design over time. The final goal is to deliver a scalable and efficient application that enhances job placement success, fosters meaningful recruiter to student connections, and maintains user centered quality across all development stages.
+The project aims to develop a mobile application that modernizes how students and recruiters connect by addressing the inefficiencies of traditional job search methods. It uses a swiping-based interface to enable dynamic and real time engagement between students presenting their qualifications and recruiters offering opportunities. Throughout its lifecycle, the project will progress through several key phases: requirements engineering to define user and system needs, software architecture and design to establish the platform’s structure, implementation of both front-end and back-end components, and systematic testing and validation to ensure reliability and usability. An iterative approach will be adopted, allowing feedback to refine requirements and improve design over time. The final goal is to deliver a scalable and efficient application that enhances job placement success, fosters meaningful recruiter to student connections, and maintains user centered quality across all development stages.
 
 === Other Activities than Just Developing Source Code
 
-#Although implementation is central to the project, a significant portion of the work since Milestone 1 consisted of non-coding activities that shaped the system’s direction, clarified requirements, validated assumptions, and prepared the team for upcoming development. This section documents planning, research, experimentation, testing preparation, and design exploration work that contributed directly to the system’s maturity.#
+Although implementation is central to the project, a significant portion of the work since Milestone 1 consisted of non-coding activities that shaped the system’s direction, clarified requirements, validated assumptions, and prepared the team for upcoming development. This section documents planning, research, experimentation, testing preparation, and design exploration work that contributed directly to the system’s maturity.
 
-==== #Requirements Refinement and Domain Understanding#
+==== Requirements Refinement and Domain Understanding
 Throughout Milestones 1-3, the team conducted several rounds of requirement clarification to reinforce the foundation of the system and align with the evolving domain model (Candidate, Recruiter, Profile, Opening, Application).
 
 ===== Domain Exploration Workshops
@@ -186,7 +165,7 @@ Throughout Milestones 1-3, the team conducted several rounds of requirement clar
 
 These activities ensured a deeper understanding of user needs and established a solid basis for design and implementation.
 
-==== #Design and Architecture Exploration#
+==== Design and Architecture Exploration
 
 Multiple design-oriented sessions occurred to visualize and reason about the evolving system structure.
 
@@ -222,7 +201,7 @@ Multiple design-oriented sessions occurred to visualize and reason about the evo
 
 These activities informed structural and behavioral foundations for upcoming implementation.
 
-==== #Research and Technology Evaluation#
+==== Research and Technology Evaluation
 
 Significant research effort took place to guide development decisions and ensure alignment with industry standards.
 
@@ -243,7 +222,7 @@ Significant research effort took place to guide development decisions and ensure
 
 This research shaped the conceptual basis for MatchService and related components.
 
-==== #Testing Activities#
+==== Testing Activities
 This involves deciding how unit testing, integration testing, and usability evaluation will eventually be carried out once prototypes and code are available. In parallel, version control practices such as branching strategies, pull requests, and code reviews can already be defined so the team is prepared to manage collaboration effectively when development begins. These preparatory activities set the standard for a structured and reliable workflow.
 
 ===== Early Validation and Experimentation
@@ -265,7 +244,7 @@ This involves deciding how unit testing, integration testing, and usability eval
 
 These activities ensured analytical rigor before any code was written.
 
-==== #Project Management and Coordination#
+==== Project Management and Coordination
 
 Consistent coordination activities supported progress clarity and team alignment.
 
@@ -285,7 +264,7 @@ Consistent coordination activities supported progress clarity and team alignment
 ===== Communication Management
 Project management and communication establish the general structure that ties everything together during this milestone. Setting clear milestone goals, assigning responsibilities, and documenting meeting outcomes help the team stay organized and avoid confusion. Regular communication ensures that issues are identified and addressed early, while planning for security, privacy, and future phases prepares the project for ongoing development. By combining documentation, early planning for testing and version control, and strong management practices with the coding that will follow, the team lays the foundation for a successful project.
 
-===== #Documentation and Logbook Updates#
+===== Documentation and Logbook Updates
 Source code development is a top priority on this project, its success depends on several activities that extend beyond programming. Documentation plays a crucial role in keeping the project aligned, covering goals, requirements, architectural decisions, and detailed contributions. Well-maintained records make it easier for members to integrate into new teams and ensure stakeholders remain informed about progress, scope, and direction throughout the project.
 
 
@@ -303,9 +282,9 @@ Source code development is a top priority on this project, its success depends o
 
 A key outcome of this project is the emergence of several derived goals that extend beyond the primary function of matching recruiters and job seekers. These goals leverage the platform's unique data and position to create secondary, significant value.
 
-One major derived goal is the generation of actionable market intelligence. The matching process naturally produces a rich stream of data on skills, salaries, and hiring trends. By systematically learning from this data, [.underline]#this intelligence enables strategic talent acquisition for recruiters by identifying hidden talent pools, providing competitive benchmarking on metrics like time-to-hire, and predicting emerging skill demands. Furthermore, this aggregate data serves as a critical feedback loop for the platform's own strategic development and product roadmap, ensuring the service remains optimally aligned with real-world market needs. This transforms the platform from a simple transactional tool into an indispensable, intelligent partner for talent leaders and the platform itself.#
+One major derived goal is the generation of actionable market intelligence. The matching process naturally produces a rich stream of data on skills, salaries, and hiring trends. By systematically learning from this data, this intelligence enables strategic talent acquisition for recruiters by identifying hidden talent pools, providing competitive benchmarking on metrics like time-to-hire, and predicting emerging skill demands. Furthermore, this aggregate data serves as a critical feedback loop for the platform's own strategic development and product roadmap, ensuring the service remains optimally aligned with real-world market needs. This transforms the platform from a simple transactional tool into an indispensable, intelligent partner for talent leaders and the platform itself.
 
-A second derived goal involves creating a dynamic bridge between education and industry. The data generated provides [.underline]#a real-time, aggregate map of the skills employers need versus the skills the collective candidate pool possesses. This allows the platform to become a vital feedback mechanism for universities and bootcamps, helping them validate and modernize their curricula to close specific, large-scale skills gaps, such as a lack of training in high-demand tools like Docker. On a broader scale, this data can fuel regional economic development by helping cities and governments# identify critical talent shortages and create targeted workforce programs, ultimately building a stronger, more aligned local economy.
+A second derived goal involves creating a dynamic bridge between education and industry. The data generated provides a real-time, aggregate map of the skills employers need versus the skills the collective candidate pool possesses. This allows the platform to become a vital feedback mechanism for universities and bootcamps, helping them validate and modernize their curricula to close specific, large-scale skills gaps, such as a lack of training in high-demand tools like Docker. On a broader scale, this data can fuel regional economic development by helping cities and governments identify critical talent shortages and create targeted workforce programs, ultimately building a stronger, more aligned local economy.
 
 Finally, a crucial derived goal is to transform the job search from a black box into a guided journey for the candidate. The platform can leverage its collective data to demystify the process, providing unprecedented transparency. This includes empowering job seekers with data-backed salary insights that illuminate how specific skills impact pay, enabling confident negotiation. It also involves providing a realistic "mirror" to the market, showing candidates exactly how their profile measures up and pinpointing specific areas for improvement. By offering a "pulse" on typical hiring timelines and illuminating common career progression paths, the platform reduces the anxiety and uncertainty of job hunting. This shifts its value proposition from merely finding a job to becoming a trusted advisor for managing an entire career, thereby building immense user loyalty and trust.
 
@@ -318,7 +297,7 @@ Finally, a crucial derived goal is to transform the job search from a black box 
 ==== Domain Rough Sketch
 
 NOTE: This is an unprocessed collection of notes, quotes, and observations from the domain (student–recruiter interactions). 
-#However, analytic abstractions derived from these notes have been added inline.#
+However, analytic abstractions derived from these notes have been added inline.
 
 
 *Student (Abdul, Mechanical Engineering senior)*:  
@@ -328,7 +307,7 @@ When I finally got to the table, the recruiter just smiled, took my résumé, an
 
 - → *Observation:* Waiting fatigue, impersonal exchanges, uncertainty about follow-up.  
 
-- → #**Derived concepts**: _queue duration_, _interaction brevity_, _candidate recognizability_, _physical discomfort_, _interaction outcome uncertainty_.#
+- → **Derived concepts**: _queue duration_, _interaction brevity_, _candidate recognizability_, _physical discomfort_, _interaction outcome uncertainty_.
 
 
 *Recruiter (Corey, Lilly Pharmaceuticals)*:  
@@ -337,7 +316,7 @@ I jot quick notes on sticky labels: ‘Python — confident’, ‘Good communic
 Later, when reviewing, I can’t always recall which student said what.”  
 
 - → *Observation:* Recruiters rely on quick, shorthand impressions; limited retention of individual details.  
-- → #**Derived concepts**: _meeting duration_, _candidate trait extraction_, _note/annotation_, _memory fade_, _reviewing constraints_.#
+- → **Derived concepts**: _meeting duration_, _candidate trait extraction_, _note/annotation_, _memory fade_, _reviewing constraints_.
 
 
 *Student (Maria, Computer Engineering junior)*:  
@@ -347,7 +326,7 @@ It’s so loud you have to almost shout to be heard.”
 
 - → *Observation:* Physical fatigue and environmental noise affect both comfort and communication quality.  
 
-- → #**Derived concepts**: _environmental noise_, _communication friction_, _mobility constraints_, _time pressure_, _crowd density_.#
+- → **Derived concepts**: _environmental noise_, _communication friction_, _mobility constraints_, _time pressure_, _crowd density_.
 
 
 *Recruiter (Daniel, local tech startup)*:  
@@ -357,7 +336,7 @@ If a student brings something visual, like a project or a QR code to their portf
 
 - → *Observation:* Recruiters value portfolio evidence over résumé lines; digital aids improve recall. 
  
-- → #**Derived concepts**: _information reinforcement_, _portfolio artifact_, _digital reference_, _interaction fatigue_, _memory support tools_.#
+- → **Derived concepts**: _information reinforcement_, _portfolio artifact_, _digital reference_, _interaction fatigue_, _memory support tools_.
 
 
 *Student (Lina, Electrical Engineering sophomore)*:  
@@ -366,7 +345,7 @@ After two months, no one replied, and I started to wonder if my applications wer
 
 - → *Observation:* Lack of transparency in the post-fair pipeline; unclear feedback loop between applicant systems.  
 
-- → #**Derived concepts**: _application visibility_, _pipeline opacity_, _multi-platform submissions_, _response latency_.#
+- → **Derived concepts**: _application visibility_, _pipeline opacity_, _multi-platform submissions_, _response latency_.
 
 
 *Recruiter (Rafael, mid-sized design firm)*:  
@@ -375,7 +354,7 @@ If the first batch of candidates looks good, we stop looking. There’s just too
 
 - → *Observation:* Recruiting process favors early applicants; short attention window post-fair.
   
-- → #**Derived concepts**: _review window_, _candidate availability_, _early-selection bias_, _time-limited screening_.#
+- → **Derived concepts**: _review window_, _candidate availability_, _early-selection bias_, _time-limited screening_.
 
 
 *Student (Jorge, freshman)*:  
@@ -385,7 +364,7 @@ I mostly went this year just to practice — to get used to talking.”
 
 - → *Observation:* Early-year students attend fairs for exposure rather than placement; recruiters focus on upperclassmen.  
 
-- → #**Derived concepts**: _experience gap_, _interaction purpose variance_, _preparation asymmetry_, _first-time candidate behavior_.#
+- → **Derived concepts**: _experience gap_, _interaction purpose variance_, _preparation asymmetry_, _first-time candidate behavior_.
 
 
 *Recruiter (Helen, aerospace company)*:  
@@ -394,7 +373,7 @@ We’d love to pre-screen them, maybe through a short survey or a skill-based fi
 
 - → *Observation:* Recruiters express need for pre-fair filtering and digital preparation workflows.
 
-- → #**Derived concepts**: _preparedness level_, _pre-screening questionnaire_, _role-awareness_, _skill matching_.#
+- → **Derived concepts**: _preparedness level_, _pre-screening questionnaire_, _role-awareness_, _skill matching_.
 
 
 *Student (Emilio, Software Engineering senior)*:  
@@ -403,7 +382,7 @@ It’s hard to show personality or teamwork skills when the line behind you is t
 
 - → *Observation:* Limited interaction window leads to superficial evaluation; “soft skills” remain under-assessed.  
 
-- → #**Derived concepts**: _interaction time constraint_, _soft-skill invisibility_, _queue pressure_, _rapid-assessment mode_.#
+- → **Derived concepts**: _interaction time constraint_, _soft-skill invisibility_, _queue pressure_, _rapid-assessment mode_.
 
 
 *Recruiter (Isabel, consulting firm)*:  
@@ -412,7 +391,7 @@ When I reach out later, they’ll reply ‘Oh, you were the ones with the blue w
 
 - → *Observation:* Brand association through physical tokens enhances recall; small sensory cues matter.  
 
-- → #**Derived concepts**: _brand token_, _sensory cue_, _recall aid_, _brand-to-memory mapping_.#
+- → **Derived concepts**: _brand token_, _sensory cue_, _recall aid_, _brand-to-memory mapping_.
 
 
 *Student (Arjun, Industrial Engineering senior)*:  
@@ -420,7 +399,7 @@ When I reach out later, they’ll reply ‘Oh, you were the ones with the blue w
 
 - → *Observation:* Desire for instant or early feedback mechanisms post-interaction.  
 
-- → #**Derived concepts**: _feedback latency_, _candidate anxiety cycle_, _instant-evaluation desire_.#
+- → **Derived concepts**: _feedback latency_, _candidate anxiety cycle_, _instant-evaluation desire_.
 
 
 *Recruiter (Paula, tech recruiter)*:  
@@ -429,7 +408,7 @@ That’s why sometimes new applicants don’t get the same attention.”
 
 - → *Observation:* Prior familiarity skews fairness; existing relationships heavily influence hiring behavior.  
 
-- → #**Derived concepts**: _familiarity bias_, _trust-weighted selection_, _returning applicant advantage_.#
+- → **Derived concepts**: _familiarity bias_, _trust-weighted selection_, _returning applicant advantage_.
 
 
 *Student (Elena, Business Administration major)*:  
@@ -438,7 +417,7 @@ Later, I realized that the quieter booths in the back actually had time to talk.
 
 - → *Observation:* Spatial arrangement and booth placement affect engagement quality.  
 
-- → #**Derived concepts**: _booth location_, _interaction density_, _engagement opportunity_, _crowding effect_.#
+- → **Derived concepts**: _booth location_, _interaction density_, _engagement opportunity_, _crowding effect_.
 
 
 *Career Advisor (Lucia, UPRM)*:  
@@ -447,7 +426,7 @@ On the other side, recruiters tell us they want better visibility into who’s c
 
 - → *Observation:* Advisors recognize preparation asymmetry; opportunities for platform pre-matching. 
 
-- → #**Derived concepts**: _target-list preparation_, _candidate pre-registration_, _roster visibility_, _pre-match potential_.#
+- → **Derived concepts**: _target-list preparation_, _candidate pre-registration_, _roster visibility_, _pre-match potential_.
 
 ==== Terminology
 
@@ -457,23 +436,23 @@ Each term below is derived from raw observations in the Domain Rough Sketch (2.1
 
 This structured approach ensures transparency in how our domain vocabulary emerged from real-world observations rather than being imposed artificially. When new terms are needed, they should follow this same pattern of clear derivation from documented domain phenomena.
 
-#The terms are now organized into Domain Nouns, Domain Verbs, and Domain Constraints to align with ubiquitous language structure in Domain-Driven Design.#
+The terms are now organized into Domain Nouns, Domain Verbs, and Domain Constraints to align with ubiquitous language structure in Domain-Driven Design.
 ====
 
 [discrete]
-=== #Domain Nouns (entities, objects, abstractions)#
+=== Domain Nouns (entities, objects, abstractions)
 
 *Applicant* :: (entity, domain)
 A person, usually a student or recent graduate, pursuing professional chances. Candidates strive to highlight their abilities and credentials via their portfolios.
-[.small]#_Derived from: "Students often rely on school provided career services for resume templates"; "Student: 'I applied through Handshake, LinkedIn, and the company website'"_#
+[.small]_Derived from: "Students often rely on school provided career services for resume templates"; "Student: 'I applied through Handshake, LinkedIn, and the company website'"_
 
 *Employer* :: (entity, domain)
 An organization that owns openings and ultimately employs candidates. Multiple recruiters may represent the same employer during sourcing and selection.
-[.small]#_Derived from: "Recruiter: 'We usually contact students weeks later'"; multiple references to company and employer context_#
+[.small]_Derived from: "Recruiter: 'We usually contact students weeks later'"; multiple references to company and employer context_
 
 *Recruiter* :: (actor, domain)
 A hiring professional acting on behalf of an employer to discover, evaluate, and engage candidates. A candidate may interact with several recruiters for the same employer.
-[.small]#_Derived from: "We meet hundreds of students in a single afternoon"; "Some recruiters only target juniors and seniors"; "Recruiters: 'We prefer quick ways to identify students with the right skills'"_#
+[.small]_Derived from: "We meet hundreds of students in a single afternoon"; "Some recruiters only target juniors and seniors"; "Recruiters: 'We prefer quick ways to identify students with the right skills'"_
 
 *Portfolio* :: (entity, domain)
 A collection of an applicant’s work, projects, and achievements. Portfolios provide recruiters with evidence of professional skills.
@@ -486,11 +465,11 @@ An educational or professional credential (e.g., degree, certification) that ind
 
 *Work Modality* :: (entity, domain)
 The way in which work is performed, such as on site, remote, or hybrid.
-[.small]#_Derived from: Students value flexibility in work arrangements; need for early expectation alignment on work modality_#
+[.small]_Derived from: Students value flexibility in work arrangements; need for early expectation alignment on work modality_
 
 *Compensation Range* :: (attribute, domain)
 The expected or offered salary **plus applicable benefits** (e.g., equity/options, health plan, stipends, shuttle/transport, on-site meals). Considered between applicant and employer.
-[.small]#_Derived from: "Early expectation alignment on role scope, compensation range, work modality, and timeline"; need for transparency in total compensation_#
+[.small]_Derived from: "Early expectation alignment on role scope, compensation range, work modality, and timeline"; need for transparency in total compensation_
 
 *Location* :: (attribute, domain)
 The geographic context for a role or event (e.g., city/region/country) or “remote-eligible,” used for discovery and filtering.
@@ -506,50 +485,50 @@ The relationship established upon mutual interest. Day-to-day interaction typica
 
 *First Conversation* :: (event, domain)
 The initial professional interaction after a confirmed connection, typically between an applicant and a **recruiter**; it may still be considered as leading to a connection with the **employer**.
-[.small]#_Derived from: "Student: 'I'm nervous approaching a recruiter if I don't already know about the company'"; importance of structured initial interactions_#
+[.small]_Derived from: "Student: 'I'm nervous approaching a recruiter if I don't already know about the company'"; importance of structured initial interactions_
 
 *Interview Modality* :: (taxonomy, domain)
 The manner in which an interview is conducted (e.g., in-person, virtual). Serves as the parent concept for specific interview types.
-[.small]#_Derived from: "Job fairs are often loud, crowded, chaotic"; need for flexible interaction formats_#
+[.small]_Derived from: "Job fairs are often loud, crowded, chaotic"; need for flexible interaction formats_
 
 *Validity Period* :: (attribute, domain)
 The time window during which an offer remains actionable before it expires.
 
-[line-through]*Clarifications* :: [line-through]#(process, domain)#
-[line-through]#Bidirectional questions and answers to resolve ambiguities (scope, duties, timeline) without changing negotiated terms.#
+*Clarifications* :: (process, domain)
+Bidirectional questions and answers to resolve ambiguities (scope, duties, timeline) without changing negotiated terms.
 
-[line-through]*Adjustments* :: [line-through]#(process, domain)#
-[line-through]#Mutually agreed changes to offer terms (e.g., title, start date, compensation range) prior to acceptance.#
+*Adjustments* :: (process, domain)
+Mutually agreed changes to offer terms (e.g., title, start date, compensation range) prior to acceptance.
 
-[line-through]*Accept* :: [line-through]#(decision/event, domain)#
-[line-through]#The applicant’s affirmative decision to proceed under the current offer within its validity period.#
+*Accept* :: (decision/event, domain)
+The applicant’s affirmative decision to proceed under the current offer within its validity period.
 
-[line-through]*Decline* :: [line-through]#(decision/event, domain)#
-[line-through]#The applicant’s explicit decision not to proceed under the current offer.#
+*Decline* :: (decision/event, domain)
+The applicant’s explicit decision not to proceed under the current offer.
 
-[line-through]*Ghosting* :: [line-through]#(behavior, domain)#
-[line-through]#The act of ceasing communication without notice, leading to inefficiency in the recruitment process.#
-[line-through]#[.small]##_Derived from: "Student: 'I never know if recruiters actually looked at my resume or if it went into a pile'"; lack of feedback and communication_###
+*Ghosting* :: (behavior, domain)
+The act of ceasing communication without notice, leading to inefficiency in the recruitment process.
+[.small]_Derived from: "Student: 'I never know if recruiters actually looked at my resume or if it went into a pile'"; lack of feedback and communication_
 
 *Identity Assurance* :: (behavior, domain)
 The process of verifying that participants are authentic and represent legitimate individuals.
-[.small]#_Derived from: Need for "trust factor" mentioned by recruiters; importance of verified connections_#
+[.small]_Derived from: Need for "trust factor" mentioned by recruiters; importance of verified connections_
 
 *Recruitment Event* :: (entity, domain)
 A scheduled occasion, such as a job fair or networking session, where applicants and employers directly engage.
-[.small]#_Derived from: Multiple references to job fairs; "At the job fair, I stood in line 40 minutes just to hand over my resume"_#
+[.small]_Derived from: Multiple references to job fairs; "At the job fair, I stood in line 40 minutes just to hand over my resume"_
 
 *Expectation Alignment* :: (behavior, domain)
 The process of clarifying and agreeing on key role aspects, including scope, compensation, timeline, and modality.
-[.small]#_Derived from: "Recruiters say a lot of students come unprepared, don't know what positions are open"; need for upfront clarity_#
+[.small]_Derived from: "Recruiters say a lot of students come unprepared, don't know what positions are open"; need for upfront clarity_
 
 *Trust and Safety* :: (behavior, domain)
 The assurance that professional interactions occur under respectful conduct, secure data handling, and clear reporting mechanisms.
-[.small]#_Derived from: Recruiters mentioning "trust factor" with known candidates; need for safe, professional interactions_#
+[.small]_Derived from: Recruiters mentioning "trust factor" with known candidates; need for safe, professional interactions_
 
-[line-through]*Feedback* :: [line-through]#(event, domain)#
-[line-through]#Information shared between employer and applicant regarding application status, interest, or evaluation, enabling transparency.#
-[line-through]#[.small]##_Derived from: "Student: 'I wish I knew immediately if I had a chance instead of waiting months'"; need for timely updates_###
+*Feedback* :: (event, domain)
+Information shared between employer and applicant regarding application status, interest, or evaluation, enabling transparency.
+[.small]_Derived from: "Student: 'I wish I knew immediately if I had a chance instead of waiting months'"; need for timely updates_
 
 *User* :: (technical/authentication, domain)
 An authenticated account in the system. Each User is typed as either Candidate (e.g., Student) or Recruiter; avoid using “User” to describe domain roles.
@@ -568,15 +547,15 @@ A Recruiter’s profile including employer association, role/title, sectors, loc
 
 *Profile Card* :: (ui artifact, domain)
 Condensed, swipeable representation of a Profile shown in the Discovery Feed.
-[.small]#_Derived from: "Recruiters: 'We prefer quick ways to identify students with the right skills'"; need for efficient profile scanning_#
+[.small]_Derived from: "Recruiters: 'We prefer quick ways to identify students with the right skills'"; need for efficient profile scanning_
 
 *Discovery Feed* :: (experience, domain)
 A personalized deck of Profile Cards presented for evaluation.
-[.small]#_Derived from: "After a while, names and faces blur together"; need for structured, paced discovery_#
+[.small]_Derived from: "After a while, names and faces blur together"; need for structured, paced discovery_
 
 *Swipe* :: (action, domain)
 The primary gesture to evaluate a Profile Card. Right-swipe = Like; left-swipe = Pass.
-[.small]#_Derived from: "Students compare the process to 'speed dating'"; need for quick, clear interest signals_#
+[.small]_Derived from: "Students compare the process to 'speed dating'"; need for quick, clear interest signals_
 
 *Like* :: (action, domain)
 An expression of interest on a Profile Card (right-swipe). Stored by the system for Match evaluation.
@@ -587,17 +566,17 @@ A dismissal on a Profile Card (left-swipe). Removes the card from the current se
 *Match* :: (event, domain)
 Created only when both sides have explicitly liked each other’s Profile Cards (mutual interest signaling).
 
-[line-through]*Message* :: [line-through]#(entity/action, domain)#
-[line-through]#A communication exchanged only when a valid Connection exists (or explicit permission).#
-[line-through]#[.small]##_Derived from: "Informal hallway conversations sometimes lead to opportunities"; need for structured yet natural communication_###
+*Message* :: (entity/action, domain)
+A communication exchanged only when a valid Connection exists (or explicit permission).
+[.small]_Derived from: "Informal hallway conversations sometimes lead to opportunities"; need for structured yet natural communication_
 
 *Opening (Job Opening)* :: (entity, domain)
 A role posted by an Employer with explicit Requirements, Location, Work Modality, Compensation Range, and Start Date.
-[.small]#_Derived from: "Recruiters say a lot of students come unprepared, don't know what positions are open"; need for clear role definition_#
+[.small]_Derived from: "Recruiters say a lot of students come unprepared, don't know what positions are open"; need for clear role definition_
 
 *Requirements* :: (structure, domain)
 Must-have and nice-to-have criteria for an Opening (e.g., skills, eligibility, language, authorization). Used to assess Eligibility.
-[.small]#_Derived from: Recruiter notes like "Has Python", "Strong communication", "Not ready"; need for structured evaluation criteria_#
+[.small]_Derived from: Recruiter notes like "Has Python", "Strong communication", "Not ready"; need for structured evaluation criteria_
 
 *Eligibility* :: (assessment, domain)
 Whether a Candidate meets the Requirements of an Opening (meets / partially meets / does not meet).
@@ -608,8 +587,8 @@ A curated set of Candidates selected by a Recruiter for next steps (review, outr
 *Interview* :: (event, domain)
 A scheduled conversation following a Connection/Shortlist; must respect non-overlapping time blocks and uses an Interview Modality.
 
-[line-through]*RSVP* :: [line-through]#(action/state, domain)#
-[line-through]#An explicit intent to attend an Event; updates capacity and powers reminders.#
+*RSVP* :: (action/state, domain)
+An explicit intent to attend an Event; updates capacity and powers reminders.
 
 *Offer* :: (entity, domain)
 A proposal from an Employer to a Candidate with explicit terms (role, Compensation Range, Location/Work Modality, Start Date) and a Validity Period.
@@ -624,65 +603,65 @@ Exposure level of a StudentProfile: Public (searchable), By Match (visible only 
 The authenticated runtime context for a User. Authorizes actions (swipes, messages, RSVPs).
 
 [discrete]
-=== #Domain Verbs (actions, events, operations)#
+=== Domain Verbs (actions, events, operations)
 
-*#Apply#* :: (action, domain)
+*Apply* :: (action, domain)
 A student submits an Application to an Opening, freezing artifacts at submission time.  
-[.small]#_Performed by: Student | Purpose: Enables triage and interview selection based on consistent, versioned evidence._#
+[.small]_Performed by: Student | Purpose: Enables triage and interview selection based on consistent, versioned evidence._
 
-*#Publish#* :: (action, domain)
+*Publish* :: (action, domain)
 Make a Profile or Company page visible according to Visibility settings.  
-[.small]#_Performed by: Student / Recruiter | Purpose: Allows discovery and evaluation within the matching process._#
+[.small]_Performed by: Student / Recruiter | Purpose: Allows discovery and evaluation within the matching process._
 
-*#Filter#* :: (action, domain)
+*Filter* :: (action, domain)
 Narrow candidates or openings by skill, modality, authorization, or availability.  
-[.small]#_Performed by: Recruiter / System | Purpose: Supports fast triage and prioritization of relevant matches._#
+[.small]_Performed by: Recruiter / System | Purpose: Supports fast triage and prioritization of relevant matches._
 
-*#Swipe#* :: (action, domain)
+*Swipe* :: (action, domain)
 Evaluate a Profile Card using a Like or Pass decision.  
-[.small]#_Performed by: Student / Recruiter | Purpose: Generates interest signals used to determine Match eligibility._#
+[.small]_Performed by: Student / Recruiter | Purpose: Generates interest signals used to determine Match eligibility._
 
-*#Like#* / *#Pass#* :: (action, domain)
+*Like* / *Pass* :: (action, domain)
 Rapid interest-signaling gestures that drive Match formation.  
-[.small]#_Performed by: Student / Recruiter | Purpose: Determines if a Match will be created._#
+[.small]_Performed by: Student / Recruiter | Purpose: Determines if a Match will be created._
 
-*#Match#* :: (system event, domain)
+*Match* :: (system event, domain)
 Created when both sides explicitly Like each other’s Profile Card.  
-[.small]#_Performed by: System | Purpose: Establishes a Connection and unlocks communication._#
+[.small]_Performed by: System | Purpose: Establishes a Connection and unlocks communication._
 
-*#Clarify#* :: (process, domain)
+*Clarify* :: (process, domain)
 Exchange bidirectional questions and answers to resolve uncertainties without altering terms.  
-[.small]#_Performed by: Student / Recruiter | Purpose: Reduces ambiguity and supports informed decision-making._#
+[.small]_Performed by: Student / Recruiter | Purpose: Reduces ambiguity and supports informed decision-making._
 
-*#Adjust#* :: (process, domain)
+*Adjust* :: (process, domain)
 Modify terms such as title, start date, or compensation before acceptance.  
-[.small]#_Performed by: Student / Recruiter | Purpose: Supports negotiation and alignment before final decision._#
+[.small]_Performed by: Student / Recruiter | Purpose: Supports negotiation and alignment before final decision._
 
-*#Message#* :: (action/event, domain)
+*Message* :: (action/event, domain)
 Exchange communication once a valid Connection exists.  
-[.small]#_Performed by: Student / Recruiter | Purpose: Coordinates next steps and reduces delays or ghosting._#
+[.small]_Performed by: Student / Recruiter | Purpose: Coordinates next steps and reduces delays or ghosting._
 
-*#RSVP#* :: (action/domain)
+*RSVP* :: (action/domain)
 Declare intent to attend an Event and trigger reminders; updates event capacity.  
-[.small]#_Performed by: Student | Purpose: Enables event scheduling and attendance management._#
+[.small]_Performed by: Student | Purpose: Enables event scheduling and attendance management._
 
-*#Report#* / *#Block#* :: (action, domain)
+*Report* / *Block* :: (action, domain)
 Safety-focused controls to restrict visibility or escalate moderation.  
-[.small]#_Performed by: Student / Recruiter / System | Purpose: Preserves trust, safety, and platform integrity._#
+[.small]_Performed by: Student / Recruiter / System | Purpose: Preserves trust, safety, and platform integrity._
 
-*#Provide Feedback#* :: (event, domain)
+*Provide Feedback* :: (event, domain)
 Share status, evaluation, guidance, or closure between recruiter and candidate.  
-[.small]#_Performed by: Recruiter / System | Purpose: Improves transparency and reduces uncertainty._#
+[.small]_Performed by: Recruiter / System | Purpose: Improves transparency and reduces uncertainty._
 
 [discrete]
-=== #Domain Constraints# / #Rules (invariant business conditions)#  
+=== Domain Constraints / Rules (invariant business conditions)  
 
-*#Single active offer per application#* :: Prevents contradictory decisions.
-*#Frozen artifacts after Apply#* :: Preserves evidence used in triage.
-*#Mutual interest required for Match#* :: No implicit or unilateral matching.
-*#Visibility always respected#* :: Profiles not shown outside configured scope.
-*#Offer validity window must exist#* :: Does not allow open-ended offers.
-*#Immutable decision history#* :: Notes and interview outcomes cannot be overwritten.
+*Single active offer per application* :: Prevents contradictory decisions.
+*Frozen artifacts after Apply* :: Preserves evidence used in triage.
+*Mutual interest required for Match* :: No implicit or unilateral matching.
+*Visibility always respected* :: Profiles not shown outside configured scope.
+*Offer validity window must exist* :: Does not allow open-ended offers.
+*Immutable decision history* :: Notes and interview outcomes cannot be overwritten.
 
 
 [discrete]
@@ -800,7 +779,7 @@ Through this structure, the system adheres to the principles of high cohesion an
 [discrete]
 === Language and abstractions used consistently
 
-* Ubiquitous terms include Student, Opening, Application, Interview, Offer, Acceptance, Reminder, and Notification. #These are treated as core domain nouns reused across 2.1.1, 2.2.1, and 2.2.2.#
+* Ubiquitous terms include Student, Opening, Application, Interview, Offer, Acceptance, Reminder, and Notification. These are treated as core domain nouns reused across 2.1.1, 2.2.1, and 2.2.2.
 * Application is the aggregate root for interviews, offer, acceptance, and decision notes. All changes that affect the decision state go through the application.
 * Offer Deadline is a value that carries time zone and precision to minutes.
 * Artifact Version captures the exact resume or portfolio snapshot attached to an application.
@@ -812,13 +791,13 @@ Through this structure, the system adheres to the principles of high cohesion an
 This narrative ties the abstract model to observable work. The multiplicities clarify what can exist at the same time. The invariants prevent silent corruption such as orphaned offers or moving deadlines without trace. The edge cases show where business rules bend and how the system should keep truth and history. The language aligns with the rough sketch and the terminology so that design, code, and tests refer to the same concepts.
 
 ==== Events, Actions, and Behaviors
-#The following are concrete examples of events, actions, and behaviors derived from the domain observations. Each example includes a description of the type, triggering conditions, subsequent actions, and postconditions to illustrate how these elements manifest in the student-recruiter interaction context.#
+The following are concrete examples of events, actions, and behaviors derived from the domain observations. Each example includes a description of the type, triggering conditions, subsequent actions, and postconditions to illustrate how these elements manifest in the student-recruiter interaction context.
 
 image::../Images/EventsActionsEntitiesUML.png[width=100%,align=center]
 _Figure 2.3.1 - 1. UML Diagram of Events, Actions, and Entities_
 
 
-===== [underline]#_Recruiting event announced (event → actions → follow-up events)_#
+===== _Recruiting event announced (event → actions → follow-up events)_
 
 * **Type:** event  
 * **Event:** A recruiting event has just been announced.  
@@ -829,64 +808,64 @@ _Figure 2.3.1 - 1. UML Diagram of Events, Actions, and Entities_
 * **Postcondition:** Candidates become aware of opportunities and plan attendance or early applications.  
 * **Reference:** Desire to pre-screen before the fair.
 
-===== [underline]#_Candidate checked in (event interleaved with action)_#
+===== _Candidate checked in (event interleaved with action)_
 * **Type:** event  
 * **Event:** Candidate has just arrived and checked in.  
 * **Action:** Candidate registers, receives map and agenda.  
 * **Postcondition:** Candidate is now able to navigate booths and interact with recruiters.
 
-===== [underline]#_Queue formed in front of booth (event explained in flow)_#
+===== _Queue formed in front of booth (event explained in flow)_
 * **Type:** event  
 * **Event:** A queue has formed in front of a booth due to multiple candidate arrivals.  
 * **Actions:** Staff organizes line, candidates wait and skim notes or portfolios.  
 * **Postcondition:** Long waits → reduced interaction quality.
 
-===== [underline]#_Recruiter solicited introduction (action → event sequence)_#
+===== _Recruiter solicited introduction (action → event sequence)_
 * **Type:** event (solicitation) paired with action (pitch delivery)  
 * **Event:** Recruiter has just requested an introduction from the candidate.  
 * **Action:** Candidate delivers a short pitch; recruiter asks fast clarifying questions.  
 * **Postcondition:** First impression formed under noisy, rushed conditions.
 
-===== [underline]#_Resume/portfolio handed over (action → event + entity appearance)_#
+===== _Resume/portfolio handed over (action → event + entity appearance)_
 * **Type:** hybrid  
 * **Action:** Candidate hands over resume/portfolio.  
 * **Event:** Resume/portfolio has just been received by recruiter.  
 * **Entity:** Resume/portfolio enters a pile, folder, or digital queue.  
 * **Postcondition:** Document becomes part of a review set and may lose visibility.
 
-===== [underline]#_Recruiter recording notes (operation → event clearly separated per feedback)_#
+===== _Recruiter recording notes (operation → event clearly separated per feedback)_
 * **Type:** operation + event  
 * **Operation (action):** Recruiter writes quick notes immediately after interacting with the candidate (“has Python”, “not ready”).  
 * **Event:** A note has just been recorded and stored in the notes repository.  
 * **Postcondition:** Candidate now has tag-linked metadata enabling future recall.  
 * **Clarification from feedback:** Distinguishes *the act of writing* from *the event of having completed the note*.
 
-===== [underline]#_Informal meetup occurred (event with embedded actions)_#
+===== _Informal meetup occurred (event with embedded actions)_
 * **Type:** event  
 * **Event:** An informal or accidental meetup has just occurred outside the booth.  
 * **Actions:** Short exchange, recruiter asks spontaneous questions, candidate improvises answers.  
 * **Postcondition:** Lead or opportunity may arise spontaneously.
 
-===== [underline]#_Multichannel application submitted (action → event → entity)_#
+===== _Multichannel application submitted (action → event → entity)_
 * **Type:** hybrid  
 * **Action:** Candidate submits applications across multiple portals.  
 * **Event:** Application submission has just occurred (possibly in duplicate).  
 * **Entity:** Application record stored in multiple systems.  
 * **Postcondition:** Recruiters encounter duplicate or inconsistent entries.
 
-===== [underline]#_Pre-screen completed (operation → event)_#
+===== _Pre-screen completed (operation → event)_
 * **Type:** event  
 * **Operation:** System or recruiter runs heuristics or filters on candidate data.  
 * **Event:** Pre-screening has just been completed.  
 * **Postcondition:** Candidate marked “eligible” or “ruled out."
 
-===== [underline]#_Invitation/follow-up delayed (event contextualized)_#
+===== _Invitation/follow-up delayed (event contextualized)_
 * **Type:** event  
 * **Event:** A follow-up or invitation is now delayed beyond expected timeline.  
 * **Actions:** Recruiter eventually contacts candidate after backlog clears.  
 * **Postcondition:** Candidate may have lost interest or accepted another offer.
 
-===== [underline]#_Decision to stop sourcing (operation → event)_#
+===== _Decision to stop sourcing (operation → event)_
 * **Type:** operation + event  
 * **Operation:** Recruiter analyzes applicant pool and decides to stop sourcing.  
 * **Event:** Decision to halt sourcing has just been officially made.  
@@ -1050,7 +1029,7 @@ _Figure 2.3.1 - 1. UML Diagram of Events, Actions, and Entities_
 
 ==== Function Signatures
 
-[.line-through]#This section describes the key operations that define the system's behavior. Each function signature is presented with its conceptual explanation, separating domain concepts from UI artifacts.#
+[.line-through]This section describes the key operations that define the system's behavior. Each function signature is presented with its conceptual explanation, separating domain concepts from UI artifacts.
 
 ===== 1. `getNextProfile`
 
@@ -1166,12 +1145,12 @@ This subsection defines the product scope from a user-value perspective. It orga
 |`US.PROF.01`
 
 |Epic ID
-|`E#`
-|Epic number or “Epic E#: Title”.
+|`E`
+|Epic number or “Epic E: Title”.
 |`E1`, `Epic E1: Candidate Profile & Portfolio`
 
 |Feature ID
-|`F#.N`
+|`F.N`
 |Epic number + feature sequence.
 |`F1.1`
 
@@ -1190,7 +1169,7 @@ This subsection defines the product scope from a user-value perspective. It orga
 |Next line |`_ReqRef: REQ-PRF-F-01, REQ-PRF-NF-01_`
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== *_Epic E1: Candidate Profile & Portfolio_*
@@ -1228,7 +1207,7 @@ This story generates **multiple requirements**:
 |Profile is updated |Changes saved |Last-updated timestamp refreshed
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== _US.PROF.02: Add portfolio items  ReqRef: REQ-PRF-F-03, REQ-PRF-NF-02_
@@ -1247,7 +1226,7 @@ This story results in multiple requirements:
 |Unsupported type/size |Upload attempted |Error lists allowed types/sizes
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== _US.PROF.03: Control profile visibility  ReqRef: REQ-PRF-F-04, REQ-PRF-NF-03_
@@ -1267,7 +1246,7 @@ This story influences:
 |Visibility = Match-only |A mutual Match occurs |Profile becomes visible
 |Visibility = Public |Recruiters search |Profile may appear in results
 |===
-&#160;
+&160;
 
 [discrete]
 ===== E1 Traceability (Stories → Features → Requirements)
@@ -1279,7 +1258,7 @@ This story influences:
 |US.PROF.03 |F1.3 |REQ-PRF-F-04, REQ-PRF-NF-03 |Access-control + privacy logic.
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== *_Epic E2: Recruiter Discovery & Search_*
@@ -1313,7 +1292,7 @@ One story → multiple requirements:
 |Fields incomplete |Publishing requested |Prompts indicate missing fields
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== _US.SRCH.02: Filter and rank candidates  ReqRef: REQ-SRCH-F-02, REQ-SRCH-F-03, REQ-SRCH-NF-02_
@@ -1333,7 +1312,7 @@ This story influences:
 |Invalid filter combination |Search executed |System warns or adjusts filters
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== E2 Traceability (Stories → Features → Requirements):
@@ -1344,7 +1323,7 @@ This story influences:
 |US-SRCH-02 |F2.2, F2.3 |REQ-SRCH-F-02 |Filter set and performance target.
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== *_Epic E3: Matching & Messaging_*
@@ -1374,7 +1353,7 @@ _"As a candidate, I want to like or pass quickly so that I can move fast through
 |A profile is shown. |Pass is pressed. |That profile is removed from the current session.
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== _US.MATCH.02: Get notified on mutual like | ReqRef: REQ-MATCH-F-02_
@@ -1388,7 +1367,7 @@ _"As a user, I want to be notified when there is a mutual like so that a convers
 |Both sides liked each other. |The system detects mutual like. |A chat thread opens and an in-app notification is sent.
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== _US.CHAT.01: Exchange messages with safety | ReqRef: REQ-CHAT-F-01_
@@ -1403,7 +1382,7 @@ _"As a matched user, I want to exchange messages so that next steps can be coord
 |The other party is blocked. |They attempt to send a message. |The message is not delivered and no notification is generated.
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== E3 Traceability (Stories → Features → Requirements):
@@ -1415,7 +1394,7 @@ _"As a matched user, I want to exchange messages so that next steps can be coord
 |US-CHAT-01 |F3.3 |REQ-CHAT-F-01 |Realtime delivery, receipts, block rules.
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== *_Epic E4: Events & Notifications_*
@@ -1445,7 +1424,7 @@ _"As a candidate, I want to see upcoming recruiting events and RSVP so that oppo
 |An RSVP exists. |The event is 24 hours away. |An in-app reminder is delivered.
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== _US.NOTIF.01: Respect notification preferences | ReqRef: REQ-NOTIF-F-01_
@@ -1460,7 +1439,7 @@ _"As a user, I want notifications to follow my channel and quiet-hour settings s
 |The user opted in to in-app only. |A reminder must be sent. |Only in-app is used; no email or SMS is sent.
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== E4 Traceability (Stories → Features → Requirements):
@@ -1471,7 +1450,7 @@ _"As a user, I want notifications to follow my channel and quiet-hour settings s
 |US-NOTIF-01 |F4.3 |REQ-NOTIF-F-01 |Quiet hours and channel policy.
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== *_Epic E5: Safety & Moderation_*
@@ -1500,7 +1479,7 @@ _"As a user, I want to report a profile so that moderation can review and act."_
 |A report is submitted. |- |A moderation case is created with timestamp and reporter ID.
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== _US.SAFE.02: Block interactions | ReqRef: REQ-SAFE-F-02_
@@ -1515,7 +1494,7 @@ _"As a user, I want to block a profile so that it no longer appears or can initi
 |Unblock is requested. |- |Visibility and messaging return to the pre-block state.
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== E5 Traceability (Stories → Features → Requirements):
@@ -1526,16 +1505,16 @@ _"As a user, I want to block a profile so that it no longer appears or can initi
 |US-SAFE-02 |F5.2 |REQ-SAFE-F-02 |Block and unblock policy with propagation.
 |===
 
-&#160;
+&160;
 
 
 ==== Personas
 
-[line-through]#**Narrative personas for Milestone 1 & 2:**#
+**Narrative personas for Milestone 1 & 2:**
 
 The personas below represent our core user segments and ground the scope of this product. For each persona we outline goals, pains, typical behaviors, and accessibility needs, and we link them to the stories, epics, and features defined in 2.2.1. We’ll reference these personas by name during planning and reviews to keep decisions concrete and tied to user value.
 
-[line-through]
+
 .María “New Grad” Rivera — University Candidate (mobile-first)
 [cols="1,3"]
 |===
@@ -1652,10 +1631,10 @@ The personas below represent our core user segments and ground the scope of this
 |Mina (Intl. Grad) |X |X |X |X |X
 |===
 
-&#160;
+&160;
 [discrete]
 
-#**Narrative Personas**#
+**Narrative Personas**
 
 The following personas reinterpret our earlier feature-focused profiles as vivid, system-independent characters drawn from the domain. Each one should feel like a real person whose name can act as shorthand for their wishes, goals, fears, and decision habits
 
@@ -1726,8 +1705,8 @@ The following personas reinterpret our earlier feature-focused profiles as vivid
 |Decision Tendencies|Reads policies and settings carefully, turning off most channels by default. She stays engaged with platforms that respect her boundaries and make it easy to report or block inappropriate behavior.
 |Recruiting Habits|Prefers written communication that leaves a trace and lets her think before replying. She appreciates recruiters who introduce themselves clearly, explain why they reached out, and give her options instead of ultimatums.
 |Tech & Environment|Uses a mid-range Android phone as her main device, often on battery-saver mode, and checks messages in set windows during the day rather than continuously.
-|Visual Cue|Ana on a quiet balcony in the evening, phone in hand, carefully toggling notification switches before tapping "save".#
-|Domain Role|#Embodies the Safety-focused Candidate whose trust depends on predictable notifications, clear controls, and effective moderation paths.
+|Visual Cue|Ana on a quiet balcony in the evening, phone in hand, carefully toggling notification switches before tapping "save".
+|Domain Role|Embodies the Safety-focused Candidate whose trust depends on predictable notifications, clear controls, and effective moderation paths.
 |===
 
 .Mina "International Grad" Shah - Narrative Persona
@@ -1759,107 +1738,107 @@ The domain requirements are the fundamental rules and constraints of the problem
 
 | DR003 | The system must represent every opening with explicit requirements (min. experience, qualifications, certifications, languages, legal authorizations, work modality, location, compensation range, and start date). | Epic-JobMgmt | T-API-002, T-UI-001
 
-| [underline]#DR004# | [underline]#The system must record the number of available positions for each opening.# | [underline]#US-Recruiter-001: Post New Opening# | [underline]#T-DB-003#
+| DR004 | The system must record the number of available positions for each opening. | US-Recruiter-001: Post New Opening | T-DB-003
 
-| [underline]#DR005# | [underline]#The system must link every opening to its responsible employer entity.# | [underline]#US-Recruiter-001: Post New Opening# | [underline]#T-API-003#
+| DR005 | The system must link every opening to its responsible employer entity. | US-Recruiter-001: Post New Opening | T-API-003
 
-| [underline]#DR006# | [underline]#The system must allow requirement updates for an opening.# | [underline]#US-Recruiter-002: Update Opening# | [underline]#T-Audit-001#
+| DR006 | The system must allow requirement updates for an opening. | US-Recruiter-002: Update Opening | T-Audit-001
 
-| [underline]#DR007# | [underline]#The system must preserve a complete history of all requirement changes for an opening (audit trail).# | [underline]#US-Recruiter-002: Update Opening# | [underline]#T-Audit-001#
+| DR007 | The system must preserve a complete history of all requirement changes for an opening (audit trail). | US-Recruiter-002: Update Opening | T-Audit-001
 
-| [underline]#DR008# | The system must represent each candidate profile with education, work history, competencies, certifications, portfolios, and verifiable references. | Epic-ProfileMgmt | T-DB-004
+| DR008 | The system must represent each candidate profile with education, work history, competencies, certifications, portfolios, and verifiable references. | Epic-ProfileMgmt | T-DB-004
 
-| [underline]#DR009# | [underline]#The system must allow documents to be attached to the candidate profile.# | [underline]#US-Candidate-001: Upload Resume# | [underline]#T-File-001#
+| DR009 | The system must allow documents to be attached to the candidate profile. | US-Candidate-001: Upload Resume | T-File-001
 
-| [underline]#DR010# | [underline]#The system must preserve the issue date, validity, and verification status for all attached documents.# | [underline]#US-Candidate-001: Upload Resume# | [underline]#T-File-001#
+| DR010 | The system must preserve the issue date, validity, and verification status for all attached documents. | US-Candidate-001: Upload Resume | T-File-001
 
-| [underline]#DR0011# | The system must record candidate preferences such as areas of interest, desired location, and work modality. | US-Candidate-002: Set Preferences | T-DB-005
+| DR0011 | The system must record candidate preferences such as areas of interest, desired location, and work modality. | US-Candidate-002: Set Preferences | T-DB-005
 
-| [underline]#DR012# | [underline]#The system must represent recruiting events with name, organizer, venue, agenda, date, and capacity.# | [underline]#Epic-EventMgmt# | [underline]#T-DB-006, T-API-004#
+| DR012 | The system must represent recruiting events with name, organizer, venue, agenda, date, and capacity. | Epic-EventMgmt | T-DB-006, T-API-004
 
-| [underline]#DR013# | [underline]#The system must represent company booths/tables within an event structure.# | [underline]#Epic-EventMgmt# | [underline]#T-DB-006, T-API-004#
+| DR013 | The system must represent company booths/tables within an event structure. | Epic-EventMgmt | T-DB-006, T-API-004
 
-| [underline]#DR014# | [underline]#The system must register the attendance and arrival of candidates and recruiters at an event.# | [underline]#US-Event-001: Check-in at Event# | [underline]#T-Event-001#
+| DR014 | The system must register the attendance and arrival of candidates and recruiters at an event. | US-Event-001: Check-in at Event | T-Event-001
 
-| [underline]#DR015# | [underline]#The system must enforce event registration rules and capacity limits upon check-in.# | [underline]#US-Event-001: Check-in at Event# | [underline]#T-API-005#
+| DR015 | The system must enforce event registration rules and capacity limits upon check-in. | US-Event-001: Check-in at Event | T-API-005
 
-| [underline]#DR016# | [underline]#The system must model queues in front of event booths/tables.# | [underline]#Epic-QueueMgmt# | [underline]#T-Queue-001#
+| DR016 | The system must model queues in front of event booths/tables. | Epic-QueueMgmt | T-Queue-001
 
-| [underline]#DR017# | [underline]#The system must enforce a first-come, first-served order for modeled queues.# | [underline]#Epic-QueueMgmt# | [underline]#T-Queue-001#
+| DR017 | The system must enforce a first-come, first-served order for modeled queues. | Epic-QueueMgmt | T-Queue-001
 
-| [underline]#DR018# | [underline]#The system must allow limiting the duration of each queue turn.# | [underline]#US-Event-002: Manage Queue# | [underline]#T-Queue-002#
+| DR018 | The system must allow limiting the duration of each queue turn. | US-Event-002: Manage Queue | T-Queue-002
 
-| [underline]#DR019# | [underline]#The system must register the closure of each turn.# | [underline]#US-Event-002: Manage Queue# | [underline]#T-Queue-002#
+| DR019 | The system must register the closure of each turn. | US-Event-002: Manage Queue | T-Queue-002
 
-| [underline]#DR020# | [underline]#The system must prevent assigning turns that would exceed declared capacity or time limits.# | [underline]#US-Event-002: Manage Queue# | [underline]#T-Queue-002#
+| DR020 | The system must prevent assigning turns that would exceed declared capacity or time limits. | US-Event-002: Manage Queue | T-Queue-002
 
-| [underline]#DR021# | [underline]#The system must allow candidates and recruiters to express positive or negative interest in openings or profiles.# | [underline]#US-Interaction-001: Express Interest# | [underline]#T-API-006#
+| DR021 | The system must allow candidates and recruiters to express positive or negative interest in openings or profiles. | US-Interaction-001: Express Interest | T-API-006
 
-| [underline]#DR022# | [underline]#The system must record reciprocal expressions of interest.# | [underline]#US-Interaction-001: Express Interest# | [underline]#T-API-006#
+| DR022 | The system must record reciprocal expressions of interest. | US-Interaction-001: Express Interest | T-API-006
 
-| [underline]#DR023# | [underline]#The system must create a Match record when both sides express positive interest.# | [underline]#US-Interaction-002: Create Match# | [underline]#T-Match-001#
+| DR023 | The system must create a Match record when both sides express positive interest. | US-Interaction-002: Create Match | T-Match-001
 
-| [underline]#DR024# | [underline]#The system must preserve the date and context of every Match creation event.# | [underline]#US-Interaction-002: Create Match# | [underline]#T-Match-001#
+| DR024 | The system must preserve the date and context of every Match creation event. | US-Interaction-002: Create Match | T-Match-001
 
-| [underline]#DR025# | [underline]#The system must allow recruiters to define shortlisting criteria and register the decision.# | [underline]#US-Recruiter-003: Shortlist Candidate# | [underline]#T-API-007#
+| DR025 | The system must allow recruiters to define shortlisting criteria and register the decision. | US-Recruiter-003: Shortlist Candidate | T-API-007
 
-| [underline]#DR026# | [underline]#The system must record the justification for every shortlisting or rejection decision.# | [underline]#US-Recruiter-003: Shortlist Candidate# | [underline]#T-API-007#
+| DR026 | The system must record the justification for every shortlisting or rejection decision. | US-Recruiter-003: Shortlist Candidate | T-API-007
 
-| [underline]#DR027# | [underline]#The system must allow candidates to withdraw their interest from an opening or Match.# | [underline]#US-Candidate-003: Withdraw Interest# | [underline]#T-Match-002#
+| DR027 | The system must allow candidates to withdraw their interest from an opening or Match. | US-Candidate-003: Withdraw Interest | T-Match-002
 
-| [underline]#DR028# | [underline]#The system must automatically update any pending Matches when interest is withdrawn.# | [underline]#US-Candidate-003: Withdraw Interest# | [underline]#T-Match-002#
+| DR028 | The system must automatically update any pending Matches when interest is withdrawn. | US-Candidate-003: Withdraw Interest | T-Match-002
 
-| [underline]#DR029# | [underline]#The system must represent the availability of candidates and recruiters through calendars and time blocks.# | [underline]#Epic-Scheduling# | [underline]#T-DB-007# 
+| DR029 | The system must represent the availability of candidates and recruiters through calendars and time blocks. | Epic-Scheduling | T-DB-007 
 
-| #DR030# | #The system must schedule interviews only for valid, active Matches.# | #US-Scheduling-001: Book Interview# | #T-Schedule-001#
+| DR030 | The system must schedule interviews only for valid, active Matches. | US-Scheduling-001: Book Interview | T-Schedule-001
 
-| #DR031# | #The system must prevent double booking of time slots for interviews.# | #US-Scheduling-001: Book Interview# | #T-Schedule-001#
+| DR031 | The system must prevent double booking of time slots for interviews. | US-Scheduling-001: Book Interview | T-Schedule-001
 
-| #DR032# | #The system must register interview outcomes with clear states (continues, rejected, offer extended) and record the date and responsible party.# | #US-Scheduling-001: Book Interview# | #T-Schedule-001#
+| DR032 | The system must register interview outcomes with clear states (continues, rejected, offer extended) and record the date and responsible party. | US-Scheduling-001: Book Interview | T-Schedule-001
 
-| #DR033# | #The system must allow message exchanges between candidate and recruiter.# | #US-Communication-001: Send Message# | #T-Comm-001#
+| DR033 | The system must allow message exchanges between candidate and recruiter. | US-Communication-001: Send Message | T-Comm-001
 
-| #DR034# | #The system must restrict message exchanges to only valid Matches or where explicit candidate permission is granted.# | #US-Communication-001: Send Message# | #T-Comm-001#
+| DR034 | The system must restrict message exchanges to only valid Matches or where explicit candidate permission is granted. | US-Communication-001: Send Message | T-Comm-001
 
-| #DR035# | #The system must register candidate consent for sharing information with an employer or organizer.# | #US-Candidate-004: Manage Consent# | #T-DB-008#
+| DR035 | The system must register candidate consent for sharing information with an employer or organizer. | US-Candidate-004: Manage Consent | T-DB-008
 
-| #DR036# | #The system must allow the revocation of candidate consent for information sharing.# | #US-Candidate-004: Manage Consent# | #T-DB-008#
+| DR036 | The system must allow the revocation of candidate consent for information sharing. | US-Candidate-004: Manage Consent | T-DB-008
 
-| #DR037# | #The system must compute the degree of requirement fulfillment for each candidate against an opening (meets, partially meets, does not meet).# | #US-Recruiter-004: View Match Score# | #T-Algo-001#
+| DR037 | The system must compute the degree of requirement fulfillment for each candidate against an opening (meets, partially meets, does not meet). | US-Recruiter-004: View Match Score | T-Algo-001
 
-| #DR038# | #The system must display the computed degree of requirement fulfillment to the recruiter.# | #US-Recruiter-004: View Match Score# | #T-Algo-001#
+| DR038 | The system must display the computed degree of requirement fulfillment to the recruiter. | US-Recruiter-004: View Match Score | T-Algo-001
 
-| #DR039# | #The system must generate a notification when a Match is created.# | #US-Notification-001# | #T-Notif-001#
+| DR039 | The system must generate a notification when a Match is created. | US-Notification-001 | T-Notif-001
 
-| #DR040# | #The system must generate a notification when an interview is confirmed.# | #US-Notification-001# | #T-Notif-001#
+| DR040 | The system must generate a notification when an interview is confirmed. | US-Notification-001 | T-Notif-001
 
-| #DR041# | #The system must generate a notification when changes to opening requirements affect a candidate's eligibility.# | #US-Notification-001# | #T-Notif-001#
+| DR041 | The system must generate a notification when changes to opening requirements affect a candidate's eligibility. | US-Notification-001 | T-Notif-001
 
-| #DR042# | #The system must notify candidates about recruiting events related to employers or openings in which they have shown interest.# | #US-Notification-002# | #T-Notif-002#
+| DR042 | The system must notify candidates about recruiting events related to employers or openings in which they have shown interest. | US-Notification-002 | T-Notif-002
 
-| #DR043# | #The system must record domain metrics such as match rate, queue waiting time, average turn duration, follow-up rate, and event attendance.# | #Epic-Reporting# | #T-Metric-001#
+| DR043 | The system must record domain metrics such as match rate, queue waiting time, average turn duration, follow-up rate, and event attendance. | Epic-Reporting | T-Metric-001
 
-| #DR044# | #The system must support funnel analysis from expression of interest to offer extended.# | #Epic-Reporting# | #T-Metric-001#
+| DR044 | The system must support funnel analysis from expression of interest to offer extended. | Epic-Reporting | T-Metric-001
 
 |===
 
 ==== Interface Requirements
 
-Interface requirements define how the system interacts not only with users but also with #external systems, environmental phenomena, and any data or events crossing the system boundary#. This includes user interfaces, system-to-system interfaces, timing constraints, and backend-visible interactions.
+Interface requirements define how the system interacts not only with users but also with external systems, environmental phenomena, and any data or events crossing the system boundary. This includes user interfaces, system-to-system interfaces, timing constraints, and backend-visible interactions.
 
 [cols="1,4,2,2", options="header"]
 |===
 | ID | Description | Linked User Stories/Epics | Verification Tests
 
-| IR001 | [.underline]#The system must provide a structured registration interface for new recruiters, including fields for company name, professional email, and job role.# | US-Auth-002: Register as Recruiter | T-UI-010, T-FE-001
+| IR001 | The system must provide a structured registration interface for new recruiters, including fields for company name, professional email, and job role. | US-Auth-002: Register as Recruiter | T-UI-010, T-FE-001
 
 | IR002 | The initialization process must include a validation step where a confirmation email is sent, and the internal profile must not be active until validation is complete. | | T-BE-001, T-Email-001
 
 | IR003 | The system must provide an edit profile screen for students to update their skills/competencies (e.g., adding new projects). | US-Candidate-005: Update Skills | T-UI-011
 
-| IR004 | [.underline]#The internal skill representation must be updated within a maximum of 300 ms after the user saves changes, ensuring a measurable, achievable update time instead of an absolute immediate requirement.# | | T-BE-002, T-Perf-001
+| IR004 | The internal skill representation must be updated within a maximum of 300 ms after the user saves changes, ensuring a measurable, achievable update time instead of an absolute immediate requirement. | | T-BE-002, T-Perf-001
 
-| IR005 | The system must present a visual notification to both users within #500 ms# of a Match being recorded. | US-Notification-001 | T-UI-012, T-Notif-003
+| IR005 | The system must present a visual notification to both users within 500 ms of a Match being recorded. | US-Notification-001 | T-UI-012, T-Notif-003
 
 | IR006 | The Match notification interface must clearly indicate who the Match is with and include a prominent means to initiate communication. | | T-UI-013
 
@@ -1869,23 +1848,23 @@ Interface requirements define how the system interacts not only with users but a
 
 | IR009 | The company name field shall be immutable through the company profile management screen after initial validation; changes must be handled by a separate administrative process. | | T-FE-002, T-Security-003
 
-| IR010 | [.underline]#The system must update the internal state within 200–350 ms to reflect a user's swipe action on a profile card (recording the decision and removing the card), ensuring the round-trip time for card replacement meets performance expectations.# | US-Interaction-001: Express Interest | T-FE-003, T-Perf-002
+| IR010 | The system must update the internal state within 200–350 ms to reflect a user's swipe action on a profile card (recording the decision and removing the card), ensuring the round-trip time for card replacement meets performance expectations. | US-Interaction-001: Express Interest | T-FE-003, T-Perf-002
 
-| #IR011# | #The system must expose a backend interface to retrieve updated profile-card batches, supporting pagination, caching hints, and request timestamps.# | #US-Interaction-002# | #T-API-001#
+| IR011 | The system must expose a backend interface to retrieve updated profile-card batches, supporting pagination, caching hints, and request timestamps. | US-Interaction-002 | T-API-001
 
-| #IR012# | #The system must interpret environmental events relevant to the platform - for example, backend-detected account flagging, admin interventions, or automatic expiration of stale matches - and reflect these changes in the user interface within 1 second.# | | #T-BE-004, T-UI-015#
+| IR012 | The system must interpret environmental events relevant to the platform - for example, backend-detected account flagging, admin interventions, or automatic expiration of stale matches - and reflect these changes in the user interface within 1 second. | | T-BE-004, T-UI-015
 
-| #IR013# | #The system must provide an interface for the recommendation algorithm to push updated candidate rankings into the frontend, with a maximum push-latency of 400 ms.# | #EP-Recommendation-001# | #T-Rec-001#
+| IR013 | The system must provide an interface for the recommendation algorithm to push updated candidate rankings into the frontend, with a maximum push-latency of 400 ms. | EP-Recommendation-001 | T-Rec-001
 
-| #IR014# | #The system must provide integration endpoints for institutional authentication (e.g., campus login providers), including OAuth2-based token exchange and error-handling interfaces.# | #US-Auth-003# | #T-Security-004, T-API-002#
+| IR014 | The system must provide integration endpoints for institutional authentication (e.g., campus login providers), including OAuth2-based token exchange and error-handling interfaces. | US-Auth-003 | T-Security-004, T-API-002
 
-| #IR015# | #The system must expose a public timestamped event stream (internal-only) that allows admin dashboards to reflect live metrics such as active matches, swipe volume, and onboarding progress.# | #EP-Admin-001# | #T-Event-001#
+| IR015 | The system must expose a public timestamped event stream (internal-only) that allows admin dashboards to reflect live metrics such as active matches, swipe volume, and onboarding progress. | EP-Admin-001 | T-Event-001
 
-| #IR016# | #The system must provide visual and programmatic error interfaces for network failures, fallback states, or unavailable profile data, ensuring consistent communication of partial-service conditions.# | | #T-UI-016, T-API-003#
+| IR016 | The system must provide visual and programmatic error interfaces for network failures, fallback states, or unavailable profile data, ensuring consistent communication of partial-service conditions. | | T-UI-016, T-API-003
 
-| #IR017# | #The system must reflect environmental constraints such as rate limits, access control decisions, and backend throttling by communicating appropriate messages or delays to the user within 250 ms.# | | #T-Perf-003, T-Security-005#
+| IR017 | The system must reflect environmental constraints such as rate limits, access control decisions, and backend throttling by communicating appropriate messages or delays to the user within 250 ms. | | T-Perf-003, T-Security-005
 
-| #IR018# | #When external job sources (e.g., company ATS integrations or internship feeds) update recruiter data, the system must reflect these changes in the recruiter’s interface within 2 seconds.# | #EP-ExternalSync-001# | #T-Sync-001#
+| IR018 | When external job sources (e.g., company ATS integrations or internship feeds) update recruiter data, the system must reflect these changes in the recruiter’s interface within 2 seconds. | EP-ExternalSync-001 | T-Sync-001
 |===
 
 
@@ -1898,27 +1877,27 @@ Machine requirements specify the hardware, software, and environment needed for 
 |=== 
 | ID | Description | Linked User Stories/Epics | Verification Tests
 
-| MR001 | [underline]#Developer workstations must meet a minimum specification of Dual-core processor (Intel i5/AMD equivalent), 8 GB RAM, 256 GB SSD, and GPU capable of supporting Flutter/Android/iOS emulators efficiently.# | Epic-DevSetup | T-Env-001
+| MR001 | Developer workstations must meet a minimum specification of Dual-core processor (Intel i5/AMD equivalent), 8 GB RAM, 256 GB SSD, and GPU capable of supporting Flutter/Android/iOS emulators efficiently. | Epic-DevSetup | T-Env-001
 
-| MR002 | [underline]#Mobile devices for testing must include Android devices running Android 10.0+ with at least 3 GB RAM and iOS devices running iOS 15+ (e.g., iPhone 11 or newer). Devices must support automated UI testing frameworks where applicable.# | Epic-Testing | T-Env-002
+| MR002 | Mobile devices for testing must include Android devices running Android 10.0+ with at least 3 GB RAM and iOS devices running iOS 15+ (e.g., iPhone 11 or newer). Devices must support automated UI testing frameworks where applicable. | Epic-Testing | T-Env-002
 
 | MR003 | Servers / Cloud Hosting must meet a minimum specification of 2 vCPUs, 4 GB RAM, and 50 GB storage. | Epic-Deployment | T-Env-003
 
-| MR004 | [underline]#The Flutter SDK (latest stable release) and Dart SDK (bundled with Flutter) must be used for development. Development environment must support hot reload and debugging tools.# | | T-Tool-001
+| MR004 | The Flutter SDK (latest stable release) and Dart SDK (bundled with Flutter) must be used for development. Development environment must support hot reload and debugging tools. | | T-Tool-001
 
-| MR005 | [underline]#Android Studio and Xcode must be used for builds and emulators/simulators, including latest stable versions and plugins for Flutter development.# | | T-Tool-002
+| MR005 | Android Studio and Xcode must be used for builds and emulators/simulators, including latest stable versions and plugins for Flutter development. | | T-Tool-002
 
-| MR006 | [underline]#Git and GitHub must be used for version control and collaboration; Git workflow must include feature branches and pull requests.# | | T-Tool-003
+| MR006 | Git and GitHub must be used for version control and collaboration; Git workflow must include feature branches and pull requests. | | T-Tool-003
 
 | MR007 | SQLite must be used for local offline storage. | | T-DB-009
 
 | MR008 | Firebase, AWS, or Azure must be used for authentication, notifications, and backend integration. | | T-API-009
 
-| MR009 | [underline]#Developer machines must run Windows 10/11 or macOS Monterey+ with all necessary dependencies installed.# | | T-Env-004
+| MR009 | Developer machines must run Windows 10/11 or macOS Monterey+ with all necessary dependencies installed. | | T-Env-004
   
 | MR010 | The application must be deployed to targets running Android 10+ and iOS 15+. | | T-Env-005
 
-| MR011 | [underline]#A stable broadband connection (≥10 Mbps) must be available for syncing and testing cloud services; latency should not exceed 100ms in normal conditions.# |  | T-Env-006
+| MR011 | A stable broadband connection (≥10 Mbps) must be available for syncing and testing cloud services; latency should not exceed 100ms in normal conditions. |  | T-Env-006
 
 | MR012 | All client-server communication must use HTTPS. | | T-Security-004
 
@@ -1926,9 +1905,9 @@ Machine requirements specify the hardware, software, and environment needed for 
 
 | MR014 | The application must comply with Google Play Store and Apple App Store distribution guidelines.| | T-Compliance-001 
 
-| #MR015# | #Environmental constraints: Development and testing machines must have stable power supply (UPS recommended), controlled room temperature (18–27°C), and low humidity (<60%) to ensure hardware reliability.# | | #T-Env-007#
+| MR015 | Environmental constraints: Development and testing machines must have stable power supply (UPS recommended), controlled room temperature (18–27°C), and low humidity (<60%) to ensure hardware reliability. | | T-Env-007
 
-| #MR016# | #Performance expectations: Developer workstations and servers must sustain concurrent builds and testing workflows without degradation; response times for cloud API calls must meet SLA targets.# | | #T-Perf-001#
+| MR016 | Performance expectations: Developer workstations and servers must sustain concurrent builds and testing workflows without degradation; response times for cloud API calls must meet SLA targets. | | T-Perf-001
 |===
 
 
@@ -1962,7 +1941,7 @@ image::../Images/database-schema.svg[Database Schema, align=center, pdfwidth=90%
 _Figure 2.3.1 - 5. Database schema diagram (ER) showing core domain tables — users, student_profiles, programs, program_applications, mentor_assignments, matches, conversations, messages, conversation_participants, feedback, audit_logs, companies, jobs, and job_applications — with primary keys, foreign keys, relationships, and key indices used for deduplication, matching, and conversation threading._
 
 
-==== [underline]#Selected Fragments of the Implementation#
+==== Selected Fragments of the Implementation
 
 The implementation fragments presented here illustrate how the proposed system realizes its core concepts—profiles, swiping, matching, messaging, and event participation—within the domain of student-recruiter interactions. They are not exhaustive; instead, they demonstrate how selected components are translated into concrete structures and operations while maintaining a **clear separation between domain logic and UI representation**. This separation ensures that domain functions (business rules, state changes, eligibility checks) are distinct from presentation widgets (ProfileCard) that render the data.
 
@@ -2036,14 +2015,6 @@ class ProfileCard extends StatelessWidget {
   }
 }
 ```
-
-==== #Visual Representation of the Implementation#
-
-This section presents the **actual UI visuals** of the application, showing how domain concepts are represented to the user. The images illustrate the design of ProfileCards, swiping interactions, match notifications, messaging screens, and event participation views.
-
-
-image::../Images/create_acc_pt1.jpg[Profile Card UI, align=center, width=40%]
-
 
 == Analytic Part
 
@@ -2134,7 +2105,7 @@ Abdul updates his profile, adding a brief description and project artifacts. Onc
 Aisha is a volunteer mentor from the tech industry who joined the platform through a university partnership. She specifies her domain as “data science and product analytics.”  
 Daniel, a computer engineering student, signs up for mentoring. He lists his interests as “AI systems,” “data visualization,” and “career readiness.”  
 
-The system’s mentor matching service pairs them based on overlapping interests. #The match occurs because the platform organizes expertise, skills and interests into a shared parent domain "Data Science",which includes subdomains such as AI systems and data visualization. Daniel's interests fall under these subdomains, allowing the matching algorithm to recognize a conceptual overlap between his interest and Aisha's data-science expertise, making her a suitable mentor.#
+The system’s mentor matching service pairs them based on overlapping interests. The match occurs because the platform organizes expertise, skills and interests into a shared parent domain "Data Science",which includes subdomains such as AI systems and data visualization. Daniel's interests fall under these subdomains, allowing the matching algorithm to recognize a conceptual overlap between his interest and Aisha's data-science expertise, making her a suitable mentor.
 
 During the first meeting, Daniel mentions wanting to add his internship project portfolio. Aisha advises him to include visualizations of his code metrics. Later, Daniel updates his portfolio accordingly.  
 
@@ -2177,11 +2148,11 @@ Future steps include:
 ==== Verification Strategy
 
 * **Peer Reviews (Planned)**  
-[underline]#Each section of the documentation (terminology, requirements, narrative) will be reviewed by a different team member. Reviews confirm consistent terminology, measurable requirements, and proper linkage to design elements.#  
+Each section of the documentation (terminology, requirements, narrative) will be reviewed by a different team member. Reviews confirm consistent terminology, measurable requirements, and proper linkage to design elements.  
   Early reviews revealed ambiguities between the terms “candidate” and “student,” which were clarified.
 
 * **Checklists**  
-  [underline]#A milestone-based checklist will be used to explicitly verify each requirement and trace it to design and implementation elements:#  
+  A milestone-based checklist will be used to explicitly verify each requirement and trace it to design and implementation elements:  
   - Every requirement uses only defined terms.  
   - Requirements map to at least one domain concept and at least one corresponding design element.  
   - No contradictions exist between terminology, requirements, and design.  
@@ -2189,14 +2160,14 @@ Future steps include:
   - Step-by-step verification actions are defined for each requirement where applicable (e.g., functional test procedures, walkthroughs).
 
 * **Traceability Matrix (Planned)**  
-  [underline]#A lightweight traceability matrix will be maintained to link requirements to goals, terminology, verification methods, and design elements. This ensures all verification is explicit and measurable:#  
+  A lightweight traceability matrix will be maintained to link requirements to goals, terminology, verification methods, and design elements. This ensures all verification is explicit and measurable:  
   - *Requirements → Goals* (ensuring each requirement supports at least one documented goal).  
   - *Requirements → Terminology* (ensuring consistent and correct terminology).  
   - *Requirements → Verification Method* (explicitly showing how each requirement will be verified, including specific tests or procedures).  
   - *Requirements → Design / Implementation* (ensuring traceability from requirement to the actual design and implementation artifacts).
 
 * **Walkthroughs of Documentation**  
-  [underline]#Reader walkthroughs will be simulated by having a team member act as an external reviewer to check that each requirement traces back to definitions, models, and implementation elements. This identifies undefined or ambiguous terms and confirms measurable verification coverage.#  
+  Reader walkthroughs will be simulated by having a team member act as an external reviewer to check that each requirement traces back to definitions, models, and implementation elements. This identifies undefined or ambiguous terms and confirms measurable verification coverage.  
 
 === Architecture
 
@@ -2396,7 +2367,7 @@ Mid-market Tech Recruiter · Date: 2025-10-05 · Mode: phone (28 min) · Region:
 |Automation |48/96h nudges; 2h feedback prompt
 |===
 
-&#160;
+&160;
 
 *Interview 2:*
 Agency Recruiter (multi-timezone) · Date: 2025-10-06 · Mode: video (28 min) · Region: urban + suburban sites · Anonymized
@@ -2437,7 +2408,7 @@ Agency Recruiter (multi-timezone) · Date: 2025-10-06 · Mode: video (28 min) ·
 |Consent |Per-channel opt-ins saved
 |===
 
-&#160;
+&160;
 [discrete]
 ===== Synthesis
 
@@ -2468,7 +2439,7 @@ Agency Recruiter (multi-timezone) · Date: 2025-10-06 · Mode: video (28 min) ·
 |Snooze Ends |Recruiter |At wake time |Low |In-app |Thread top
 |===
 
-&#160;
+&160;
 
 [discrete]
 ===== Prioritization
@@ -2643,7 +2614,7 @@ _Figure 4.1.2. - 1. Itinerary of recruiter scenario showing the various stages a
 image::../Images/UML.match.entity.diagram.jpg[UML, align=center, pdfwidth=90%]
 _Figure 4.1.2. - 2. UML diagram showing the entities involved in the matching process between recruiters and students._
 
-==== #Communication and the use of Language: Modeling Out Loud for Swipe Flow#
+==== Communication and the use of Language: Modeling Out Loud for Swipe Flow
 :author: Alexa M. Zaragoza Torres
 // This LTT corresponds to the first section of Milestone 2.
 // I was advised to include it under the Milestone document for clarity and organization.
@@ -3789,7 +3760,7 @@ Future<Result<Attendance>> rsvpEvent(String userId, String eventId) async {
 
 This demonstrates the **Open/Closed Principle (OCP)**: RSVP logic can be extended (e.g., add waitlists) without changing its core behavior.
 
-==== #Model Associations for Student–Recruiter Matches#
+==== Model Associations for Student–Recruiter Matches
 :author: Diego A. Pérez Gandarillas
 
 [discrete]
@@ -4605,20 +4576,20 @@ The deletion of a `StudentProfile` must adhere to strict rules to maintain **agg
     - **Enrollments:** Any active or historical enrollments linked to the student must be removed or anonymized.  
     - **Submissions/Assignments:** Student submissions may need to be archived, anonymized, or deleted according to retention policies.
     - **Notifications/Logs:** Events related to the profile should remain in the audit trail but must be decoupled from personally identifiable information.
-    - #**Matches:** Match records referencing the student must be removed as they lose meaning without the student profile.#
-    - #**Applications:** Application records tied to the student's intent should be removed to maintain referential integrity.#
-    - #**MentorAssignments:** Student-specific mentor assignments must be cleaned up as they are tightly coupled to the student.#
+    - **Matches:** Match records referencing the student must be removed as they lose meaning without the student profile.
+    - **Applications:** Application records tied to the student's intent should be removed to maintain referential integrity.
+    - **MentorAssignments:** Student-specific mentor assignments must be cleaned up as they are tightly coupled to the student.
 
-* #**Retention of System-Owned Data**#
-  #- Certain records should be preserved even after profile deletion:#
-    #- **Feedback:** May be retained with soft orphaning for historical reporting and analytics.#
-    #- **AuditLogs:** Must persist for compliance, traceability, and regulatory requirements.#
+* **Retention of System-Owned Data**
+  - Certain records should be preserved even after profile deletion:
+    - **Feedback:** May be retained with soft orphaning for historical reporting and analytics.
+    - **AuditLogs:** Must persist for compliance, traceability, and regulatory requirements.
 
 * **Validation Checks** 
   - Before deletion, the system must validate:  
     - That no critical dependencies remain in other aggregates (e.g., group projects, team memberships).
     - That deletion will not violate invariants of related domain objects.
-    - [.underline]#That all active relationships are properly handled or archived.#
+    - That all active relationships are properly handled or archived.
 
 * **Compliance and Audit**
   - All deletion events must be logged with timestamp, actor, and reason for deletion.
@@ -4670,7 +4641,7 @@ _Figure 4.3.3. - 1. Repository Pattern_
 Client should not be worried about the implementation details, on our project there are two types, recruiters and job seekers, the job seekers ask the system to show the jobs/programs with their criteria and the recruiters ask the system for the job seekers with the criteria they specify. Repository hides the queries and reconstitution needed for the request of the user. The functions inside the repository gather entities using relational algorithm in SQL from the database (Supabase). The values of weight for the skills and job roles are not stored inside database they are stored locally in client and used to apply cosine similarity metric matching algorithm.
 
 
-==== #Entity Identity for Student Profiles#
+==== Entity Identity for Student Profiles
 :author: Diego A. Pérez Gandarillas
 
 [discrete]
@@ -4972,7 +4943,7 @@ The StudentProfile.id identity model is now fully enforced:
 
 This identity foundation ensures stability across the entire Professional Portfolio system and supports reliable relationships between students, recruiters, matches, and all connected modules.
 [discrete]
-====== #Deletion Policy Matrix#
+====== Deletion Policy Matrix
 
 [cols="2,2,2,3",options="header"]
 |===
@@ -5020,9 +4991,9 @@ This identity foundation ensures stability across the entire Professional Portfo
 |===
 
 [discrete]
-====== #Database Schema Enforcement#
+====== Database Schema Enforcement
 
-#The database schema enforces deletion rules through foreign key constraints:#
+The database schema enforces deletion rules through foreign key constraints:
 
 [source,sql]
 ----
@@ -5075,76 +5046,76 @@ CREATE TABLE audit_logs (
 ----
 
 [discrete]
-====== #Trade-offs Analysis#
+====== Trade-offs Analysis
 
-#**Cascade Delete Approach (Primary Strategy)**#
+**Cascade Delete Approach (Primary Strategy)**
 
-#*Advantages:*#
-#* Ensures no orphaned data or broken relationships#
-#* Simpler cleanup logic and maintenance#
-#* Enforces referential integrity at database level#
-#* Prevents accumulation of stale references#
+*Advantages:*
+* Ensures no orphaned data or broken relationships
+* Simpler cleanup logic and maintenance
+* Enforces referential integrity at database level
+* Prevents accumulation of stale references
 
-#*Disadvantages:*#
-#* Risk of accidental mass deletion if not properly guarded#
-#* Loss of historical data for analytics#
-#* Irreversible without backup restoration#
+*Disadvantages:*
+* Risk of accidental mass deletion if not properly guarded
+* Loss of historical data for analytics
+* Irreversible without backup restoration
 
-#**Soft Deletion with Orphan Retention (Alternative Strategy)**#
+**Soft Deletion with Orphan Retention (Alternative Strategy)**
 
-#*Advantages:*#
-#* Preserves historical data for reporting and analysis#
-#* Enables potential recovery or audit review#
-#* Supports compliance with data retention requirements#
+*Advantages:*
+* Preserves historical data for reporting and analysis
+* Enables potential recovery or audit review
+* Supports compliance with data retention requirements
 
-#*Disadvantages:*#
-#* Leaves dangling references requiring careful handling#
-#* Requires additional application logic for filtering#
-#* Increases storage requirements over time#
-#* More complex query patterns to exclude deleted records#
+*Disadvantages:*
+* Leaves dangling references requiring careful handling
+* Requires additional application logic for filtering
+* Increases storage requirements over time
+* More complex query patterns to exclude deleted records
 
-#**Hybrid Approach (Implemented)**#
+**Hybrid Approach (Implemented)**
 
-#The system implements a hybrid strategy:#
-#- **Cascade delete** for tightly-coupled entities that lose meaning without the profile#
-#- **Soft orphaning** for loosely-coupled analytics and reporting data#
-#- **Mandatory retention** for system-owned compliance records#
+The system implements a hybrid strategy:
+- **Cascade delete** for tightly-coupled entities that lose meaning without the profile
+- **Soft orphaning** for loosely-coupled analytics and reporting data
+- **Mandatory retention** for system-owned compliance records
 
-[.underline]#This approach balances data integrity with historical preservation and regulatory compliance.#
-
-[discrete]
-====== #Application-Level Safeguards#
-
-#Before allowing profile deletion, the application layer enforces additional checks:#
-
-#1. **Authorization Verification**#
-   #- Confirm requester is profile owner or system administrator#
-   #- Validate deletion permissions in current context#
-
-#2. **Active Relationship Checks**#
-   #- Warn if active mentor assignments exist#
-   #- Confirm handling of pending applications#
-   #- Verify no active group projects or collaborations#
-
-#3. **Archival Process**#
-   #- Create immutable snapshot before deletion#
-   #- Store in compliance-approved archival system#
-   #- Include all related entity snapshots#
-
-#4. **Audit Trail Creation**#
-   #- Record deletion event with full context#
-   #- Capture: actor ID, timestamp, reason, affected entities#
-   #- Ensure audit entry is immutable#
-
-#5. **Notification Cascade**#
-   #- Alert dependent systems of impending deletion#
-   #- Provide grace period for external system updates#
-   #- Confirm all systems acknowledged deletion#
+This approach balances data integrity with historical preservation and regulatory compliance.
 
 [discrete]
-====== #Soft Deletion Implementation#
+====== Application-Level Safeguards
 
-#For scenarios requiring extended data retention:#
+Before allowing profile deletion, the application layer enforces additional checks:
+
+1. **Authorization Verification**
+   - Confirm requester is profile owner or system administrator
+   - Validate deletion permissions in current context
+
+2. **Active Relationship Checks**
+   - Warn if active mentor assignments exist
+   - Confirm handling of pending applications
+   - Verify no active group projects or collaborations
+
+3. **Archival Process**
+   - Create immutable snapshot before deletion
+   - Store in compliance-approved archival system
+   - Include all related entity snapshots
+
+4. **Audit Trail Creation**
+   - Record deletion event with full context
+   - Capture: actor ID, timestamp, reason, affected entities
+   - Ensure audit entry is immutable
+
+5. **Notification Cascade**
+   - Alert dependent systems of impending deletion
+   - Provide grace period for external system updates
+   - Confirm all systems acknowledged deletion
+
+[discrete]
+====== Soft Deletion Implementation
+
+For scenarios requiring extended data retention:
 
 [source,sql]
 ----
@@ -5166,38 +5137,38 @@ AND deletion_reason != 'legal_hold';
 ----
 
 [discrete]
-====== #Validation Test Scenarios#
+====== Validation Test Scenarios
 
-#**Test Case 1: Cascade Verification**#
-#1. Create `StudentProfile` with associated `Match`, `Application`, `MentorAssignment`#
-#2. Execute deletion#
-#3. Verify all dependent records removed#
-#4. Confirm `Feedback` and `AuditLog` persist#
-#5. Validate no orphaned foreign key references remain#
+**Test Case 1: Cascade Verification**
+1. Create `StudentProfile` with associated `Match`, `Application`, `MentorAssignment`
+2. Execute deletion
+3. Verify all dependent records removed
+4. Confirm `Feedback` and `AuditLog` persist
+5. Validate no orphaned foreign key references remain
 
-#**Test Case 2: Authorization Enforcement**#
-#1. Attempt deletion as unauthorized user#
-#2. Verify rejection with appropriate error code#
-#3. Confirm profile remains unchanged#
-#4. Validate audit log records failed attempt#
+**Test Case 2: Authorization Enforcement**
+1. Attempt deletion as unauthorized user
+2. Verify rejection with appropriate error code
+3. Confirm profile remains unchanged
+4. Validate audit log records failed attempt
 
-#**Test Case 3: Active Relationship Warning**#
-#1. Create profile with active mentor assignment#
-#2. Initiate deletion#
-#3. Verify system presents active relationship warning#
-#4. Confirm deletion blocked until acknowledged or relationships resolved#
+**Test Case 3: Active Relationship Warning**
+1. Create profile with active mentor assignment
+2. Initiate deletion
+3. Verify system presents active relationship warning
+4. Confirm deletion blocked until acknowledged or relationships resolved
 
-#**Test Case 4: Audit Trail Completeness**#
-#1. Delete profile with full context#
-#2. Verify audit log entry created#
-#3. Confirm all required fields populated#
-#4. Validate audit entry immutability#
+**Test Case 4: Audit Trail Completeness**
+1. Delete profile with full context
+2. Verify audit log entry created
+3. Confirm all required fields populated
+4. Validate audit entry immutability
 
-#**Test Case 5: Soft Deletion Recovery**#
-#1. Soft delete profile#
-#2. Verify profile hidden from normal queries#
-#3. Execute recovery operation#
-#4. Confirm profile restored with all relationships intact#
+**Test Case 5: Soft Deletion Recovery**
+1. Soft delete profile
+2. Verify profile hidden from normal queries
+3. Execute recovery operation
+4. Confirm profile restored with all relationships intact
 
 === Refactoring Towards Deeper Insight and Breakthroughs
 
@@ -5302,32 +5273,32 @@ This Discovery Journal records key domain insights and refactors that, during de
 - Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/pull/188
 
 [discrete]
-===== #Entry 11: Patterns in Matching Module.#
+===== Entry 11: Patterns in Matching Module.
 
-- #Context/Problem: The matching logic required selecting a concrete implementation based on the current user's role. If implemented directly in MatchesState, the conditional logic could lead to tight coupling.#
+- Context/Problem: The matching logic required selecting a concrete implementation based on the current user's role. If implemented directly in MatchesState, the conditional logic could lead to tight coupling.
 
-- #Domain Insight: The matcher is an abstract whose specific implementation should be decoupled from the code that uses it. The choice of which matcher to use is a separate concern from displaying matches.#
+- Domain Insight: The matcher is an abstract whose specific implementation should be decoupled from the code that uses it. The choice of which matcher to use is a separate concern from displaying matches.
 
-- #Change Applied: Proposed adoption of the Factory Method design pattern. This patern will be responsible for encapsulating the conditional logic required to instantiate the correct matcher implementation.#
+- Change Applied: Proposed adoption of the Factory Method design pattern. This patern will be responsible for encapsulating the conditional logic required to instantiate the correct matcher implementation.
 
-- #Impact: The clarity of intent for the MatchesState class would improve, as it now simply requests a matcher without knowing the underlying implementation. Maintenance would also improve, since adding new user roles would not need too many lines of code.#
+- Impact: The clarity of intent for the MatchesState class would improve, as it now simply requests a matcher without knowing the underlying implementation. Maintenance would also improve, since adding new user roles would not need too many lines of code.
 
-- #Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/353#
+- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/353
 
 [discrete]
-===== #Entry 12: Factory Pattern to Enforce Invariants#
+===== Entry 12: Factory Pattern to Enforce Invariants
 
-- #Context/Problem: Profile objects are critical domain entities, where creation methods could lack centralized control, risking the instantiation of invalid states.#
+- Context/Problem: Profile objects are critical domain entities, where creation methods could lack centralized control, risking the instantiation of invalid states.
 
-- #Domain Insight: A profile is meaningful if its core invariants are met at the moment of creation. The responsibility for guaranteeing this validity is separate from the behavior of the profile object. This is where the factory method pattern would come in.#
+- Domain Insight: A profile is meaningful if its core invariants are met at the moment of creation. The responsibility for guaranteeing this validity is separate from the behavior of the profile object. This is where the factory method pattern would come in.
 
-- #Change Applied Idea: Implement the profile factory to encapsulate all creation logic. It would make the profile constructor private or protected to force all users to use the factory.#
+- Change Applied Idea: Implement the profile factory to encapsulate all creation logic. It would make the profile constructor private or protected to force all users to use the factory.
 
-- #Impact: Guaranteeing invariants, in this case the UUID and an initial resume attached. This would simplify downstream logic.#
+- Impact: Guaranteeing invariants, in this case the UUID and an initial resume attached. This would simplify downstream logic.
 
-- #Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/381#
+- Reference: https://github.com/uprm-inso4116-2025-2026-s1/semester-project-uprm_professional_portfolio/issues/381
 
-==== #Continuous Refactoring Log#
+==== Continuous Refactoring Log
 :author: Alexa M. Zaragoza Torres
 
 [NOTE]
@@ -5397,7 +5368,7 @@ Resulting Clarity/Invariants:: Prevents over-specification in overview docs whil
 Artifacts Updated:: docs/Images/*.svg (where applicable); Milestone-2.adoc references; Milestone-1 touch-ups.
 Commits/PRs:: f189551 (Minimal vs Enriched UML template), e0e4ff4 (Modified Milestone-2.adoc).
 
-==== #Spot Duplicate Concepts#
+==== Spot Duplicate Concepts
 :author: Yandre Caban Torres
 
 [discrete]
@@ -5594,7 +5565,7 @@ Methods:
 
 === Relating Desing Patterns to the Domain Model
 
-==== #Identifying Weak Spots in Domain Model#
+==== Identifying Weak Spots in Domain Model
 :author: Jean P. I. Sanchez
 
 [discrete]
@@ -5685,7 +5656,7 @@ _Figure 4.5.1. - 3. UML Diagram Illustrating Matching Module Accessing Profile D
 [discrete]
 The diagram illustrates how the Matching module accesses Profile data through the **IProfileReader** interface and works with stored snapshots. This structure decouples matching from live Profile updates, ensuring historical match data remains consistent and auditable.
 
-==== #Factor Behavioral Alternatives#
+==== Factor Behavioral Alternatives
 :author: Yandre Caban Torres
 
 [discrete]
@@ -5940,7 +5911,7 @@ Scores based on thematic or domain interests, improving personalization and rele
 === Strategic Desing
 
 
-==== #Distilling the Core Domain#
+==== Distilling the Core Domain
 :author: Jean P. I. Sanchez
 
 [discrete]
@@ -6041,7 +6012,7 @@ This classification guides decision-making in several ways:
 * Planning future refactoring efforts by prioritizing areas that directly impact the platform’s competitive advantage.
 
 
-==== #Large-Scale Structure Proposal#
+==== Large-Scale Structure Proposal
 :author: Jean P. I. Sanchez
 
 [discrete]
@@ -6133,7 +6104,7 @@ _Figure 4.6.2. - 1. Layered view (Presentation, Application, Domain, Infrastruct
 
 5. **Cross-cutting Concerns (Bottom Band)**: This horizontally aligned band spans the entire architecture. It covers functionalities that apply across all layers—authentication, logging, validation, monitoring, and tracing. Unlike the four main layers, cross-cutting concerns do not sit in the vertical call stack; they are injected or run alongside each layer through middleware, shared libraries, or centralized services.
 
-==== #Explore Prior Art for Modeling#
+==== Explore Prior Art for Modeling
 :author: Diego A. Pérez Gandarillas
 
 [discrete]
@@ -6525,7 +6496,7 @@ The recommendations derived from this research provide concrete guidance for the
 - [x] References properly cited with URLs, ISBNs, and publication details
 
 === Maintaining Model Integrity
-==== #Evaluate Model Integrity Patterns#
+==== Evaluate Model Integrity Patterns
 :author: Yandre Caban Torres
 
 [discrete]
