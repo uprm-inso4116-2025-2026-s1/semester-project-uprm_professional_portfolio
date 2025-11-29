@@ -2160,7 +2160,7 @@ This image captures the message editing functionality in action. A modal dialog 
 
 ====== Image 5: Clean Chat View After Message Deletion
 
-image::../Images/CommInterface_ChatPage.jpeg[Chat View After Deletion,align=center, width=40%]
+image::../Images/CommInterface_ChatPage.jpg[Chat View After Deletion,align=center, width=40%]
 
 This image shows the conversation interface after a message has been successfully deleted, demonstrating the soft deletion implementation.
 
