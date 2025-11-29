@@ -1,22 +1,21 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'components/role_badge.dart';
 import 'core/constants/env_prod.dart';
+import 'core/cubits/auth/auth_cubit.dart';
+import 'core/services/auth_service.dart';
+import 'core/services/storage_service.dart';
 import 'core/theme/app_theme.dart';
 import 'routes/app_router.dart';
-import 'core/cubits/auth/auth_cubit.dart';
-import 'core/services/storage_service.dart';
-import 'core/services/auth_service.dart';
-import 'components/role_badge.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Ensure runtime vars are present
   Env.assertProvided();
 
-  // Initialize Supabase
   await Supabase.initialize(
     url: Env.supabaseUrl,
     anonKey: Env.supabaseAnonKey,
@@ -30,7 +29,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Create both services
     final storageService = StorageService();
     final authService = AuthService();
     final authCubit = AuthCubit(storageService, authService);
@@ -41,7 +39,7 @@ class MyApp extends StatelessWidget {
         title: 'UPRM Professional Portfolio',
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        routerConfig: AppRouter.router,
+        routerConfig: AppRouter.createRouter(authCubit),
         debugShowCheckedModeBanner: false,
         builder: (context, child) {
           if (!kIsWeb || child == null) {

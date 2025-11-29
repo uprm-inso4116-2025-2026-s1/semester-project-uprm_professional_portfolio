@@ -1,16 +1,20 @@
-// Update your existing SignupScreen
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
+
 import '../../../components/custom_button.dart';
 import '../../../components/custom_text_field.dart';
+import '../../../components/oauth_button.dart';
 import '../../../components/role_selection_card.dart';
-import '../../../components/oauth_button.dart'; // Add this import
 import '../../../core/constants/app_constants.dart';
 import '../../../core/constants/ui_constants.dart';
-import '../../../core/utils/validators.dart';
 import '../../../core/cubits/auth/auth_cubit.dart';
 import '../../../core/cubits/auth/auth_state.dart';
+import '../../../core/services/profile_service.dart';
+import '../../../core/services/storage_service.dart';
+import '../../../core/utils/validators.dart';
+import './widgets/signup_avatar_uploader_widget.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -29,6 +33,11 @@ class _SignupScreenState extends State<SignupScreen> {
   String? _selectedRole;
   bool _isOAuthLoading = false;
   String? _currentOAuthProvider;
+
+  XFile? _selectedImageFile;
+
+  final StorageService _storageService = StorageService();
+  final ProfileService _profileService = ProfileService();
 
   @override
   void dispose() {
@@ -68,6 +77,16 @@ class _SignupScreenState extends State<SignupScreen> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: UIConstants.spaceMD),
+
+                SignupAvatarSelector(
+                  onImageSelected: (image) {
+                    setState(() {
+                      _selectedImageFile = image;
+                    });
+                  },
+                ),
+                const SizedBox(height: UIConstants.spaceXL),
+
                 Text(
                   'Choose your role to get started',
                   style: theme.textTheme.bodyLarge?.copyWith(
@@ -77,7 +96,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: UIConstants.spaceXL),
 
-                // Role selection
+                /// Role selection
                 Text(
                   'I am a...',
                   style: theme.textTheme.titleMedium?.copyWith(
@@ -89,11 +108,11 @@ class _SignupScreenState extends State<SignupScreen> {
                 RoleSelectionCard(
                   title: 'Job Seeker / Student',
                   description:
-                      'Looking for internships, jobs, or career opportunities',
+                  'Looking for internships, jobs, or career opportunities',
                   icon: Icons.school,
                   isSelected: _selectedRole == AppConstants.jobseekerRole,
                   onTap: () => setState(
-                      () => _selectedRole = AppConstants.jobseekerRole),
+                          () => _selectedRole = AppConstants.jobseekerRole),
                 ),
                 const SizedBox(height: UIConstants.spaceMD),
 
@@ -103,7 +122,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   icon: Icons.business,
                   isSelected: _selectedRole == AppConstants.recruiterRole,
                   onTap: () => setState(
-                      () => _selectedRole = AppConstants.recruiterRole),
+                          () => _selectedRole = AppConstants.recruiterRole),
                 ),
                 const SizedBox(height: UIConstants.spaceXL),
 
@@ -111,7 +130,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 _buildOAuthSection(context),
                 const SizedBox(height: UIConstants.spaceXL),
 
-                // Divider with "or" text
                 Row(
                   children: [
                     Expanded(child: Divider(color: theme.colorScheme.outline)),
@@ -129,7 +147,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: UIConstants.spaceXL),
 
-                // Form fields
+                /// Form fields
                 CustomTextField(
                   label: 'Full Name',
                   hint: 'Enter your full name',
@@ -172,7 +190,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: UIConstants.spaceXL),
 
-                // Terms and conditions
+                /// Terms and conditions
                 Text(
                   'By creating an account, you agree to our Terms of Service and Privacy Policy.',
                   style: theme.textTheme.bodySmall?.copyWith(
@@ -182,7 +200,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: UIConstants.spaceLG),
 
-                // Next button
+                /// Next button
                 CustomButton(
                   text: 'Next',
                   onPressed: _handleNext,
@@ -190,7 +208,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                 const SizedBox(height: UIConstants.spaceLG),
 
-                // Sign in link
+                /// Sign in link
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -221,15 +239,15 @@ class _SignupScreenState extends State<SignupScreen> {
         Text(
           'Sign up with',
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+            fontWeight: FontWeight.w600,
+          ),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: UIConstants.spaceMD),
         OAuthButton(
           provider: 'google',
           label: 'Continue with Google',
-          icon: Icons.g_mobiledata, // You can use a custom icon here
+          icon: Icons.g_mobiledata,
           isLoading: _isOAuthLoading && _currentOAuthProvider == 'google',
           onPressed: () => _handleOAuthSignIn('google'),
         ),
@@ -263,7 +281,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void _handleNext() async {
-    // Validate role selection
+    /// Validate role selection
     if (_selectedRole == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -276,22 +294,23 @@ class _SignupScreenState extends State<SignupScreen> {
 
     if (!_formKey.currentState!.validate()) return;
 
+    final authCubit = context.read<AuthCubit>();
+
     print('[SignupScreen] Starting signup process');
 
-    // Create user account using AuthCubit
-    await context.read<AuthCubit>().signUp(
-          _emailController.text.trim(),
-          _passwordController.text,
-          _nameController.text.trim(),
-          _selectedRole!,
-        );
+    await authCubit.signUp(
+      _emailController.text.trim(),
+      _passwordController.text,
+      _nameController.text.trim(),
+      _selectedRole!,
+    );
 
     if (!mounted) return;
 
     print('[SignupScreen] Checking auth state after signup');
 
     // Check the auth state
-    final authState = context.read<AuthCubit>().state;
+    final authState = authCubit.state;
 
     if (authState is AuthError) {
       print('[SignupScreen] Signup failed with error: ${authState.message}');
@@ -307,8 +326,29 @@ class _SignupScreenState extends State<SignupScreen> {
     }
 
     if (authState is AuthAuthenticated) {
-      print('[SignupScreen] Signup successful, navigating to profile form');
-      // Navigate to profile form based on role
+      print('[SignupScreen] Signup successful, checking for avatar upload');
+
+      if (_selectedImageFile != null) {
+        try {
+          final publicUrl = await _storageService.uploadProfilePicture(_selectedImageFile!);
+
+          await _profileService.updateAvatarUrl(publicUrl);
+
+          final updatedUser = authState.user.copyWith(avatarUrl: publicUrl);
+          authCubit.updateUser(updatedUser);
+
+          print('[SignupScreen] Avatar uploaded and profile updated.');
+        } catch (e) {
+          print('[SignupScreen] WARNING: Failed to upload optional avatar: $e');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Profile picture upload failed: ${e.toString()}'),
+              backgroundColor: Theme.of(context).colorScheme.error,
+            ),
+          );
+        }
+      }
+
       if (_selectedRole == AppConstants.recruiterRole) {
         context.go(AppConstants.recruiterProfileRoute);
       } else {

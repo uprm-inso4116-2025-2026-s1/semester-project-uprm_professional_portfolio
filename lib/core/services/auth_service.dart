@@ -1,5 +1,6 @@
-﻿import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+﻿import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:supabase_flutter/supabase_flutter.dart' as supa;
+
 import '../../models/user.dart' as app_models;
 import '../constants/app_constants.dart';
 
@@ -11,22 +12,17 @@ class AuthResult {
 }
 
 class AuthService {
-  final SupabaseClient _supabase = Supabase.instance.client;
+  final supa.SupabaseClient _supabase = supa.Supabase.instance.client;
 
-  app_models.User? _currentUser;
+  app_models.User? _currentUserCache;
 
+  /// App-level current user
   app_models.User? get currentUser {
-    final user = _supabase.auth.currentUser;
-    if (user == null) return _currentUser;
-
-    return app_models.User(
-      id: user.id,
-      email: user.email!,
-      fullName: (user.userMetadata?['full_name'] as String?) ?? 'User',
-      role:
-          (user.userMetadata?['role'] as String?) ?? AppConstants.jobseekerRole,
-      createdAt: DateTime.now(),
-    );
+    final supa.User? user = _supabase.auth.currentUser;
+    if (user == null) {
+      return _currentUserCache;
+    }
+    return _fromSupabaseUser(user);
   }
 
   bool get isLoggedIn => _supabase.auth.currentUser != null;
@@ -38,7 +34,7 @@ class AuthService {
     required String role,
   }) async {
     try {
-      final AuthResponse response = await _supabase.auth.signUp(
+      final supa.AuthResponse response = await _supabase.auth.signUp(
         email: email,
         password: password,
         data: {
@@ -48,13 +44,7 @@ class AuthService {
       );
 
       if (response.user != null) {
-        _currentUser = app_models.User(
-          id: response.user!.id,
-          email: email,
-          fullName: fullName,
-          role: role,
-          createdAt: DateTime.now(),
-        );
+        _currentUserCache = _fromSupabaseUser(response.user!);
         return AuthResult(success: true);
       } else {
         return AuthResult(
@@ -62,8 +52,8 @@ class AuthService {
           error: 'Signup failed. Please try again.',
         );
       }
-    } on AuthException catch (e) {
-      return AuthResult(success: false, error: e.message);
+    } on supa.AuthException catch (e) {
+      return AuthResult(success: false, error: _friendlyAuthMessage(e));
     } catch (e) {
       return AuthResult(
         success: false,
@@ -74,21 +64,14 @@ class AuthService {
 
   Future<AuthResult> login(String email, String password) async {
     try {
-      final AuthResponse response = await _supabase.auth.signInWithPassword(
+      final supa.AuthResponse response =
+      await _supabase.auth.signInWithPassword(
         email: email,
         password: password,
       );
 
       if (response.user != null) {
-        final user = response.user!;
-        _currentUser = app_models.User(
-          id: user.id,
-          email: user.email!,
-          fullName: (user.userMetadata?['full_name'] as String?) ?? 'User',
-          role: (user.userMetadata?['role'] as String?) ??
-              AppConstants.jobseekerRole,
-          createdAt: DateTime.now(),
-        );
+        _currentUserCache = _fromSupabaseUser(response.user!);
         return AuthResult(success: true);
       } else {
         return AuthResult(
@@ -96,8 +79,8 @@ class AuthService {
           error: 'Login failed. Please try again.',
         );
       }
-    } on AuthException catch (e) {
-      return AuthResult(success: false, error: e.message);
+    } on supa.AuthException catch (e) {
+      return AuthResult(success: false, error: _friendlyAuthMessage(e));
     } catch (e) {
       return AuthResult(
         success: false,
@@ -111,18 +94,20 @@ class AuthService {
     String? role,
   }) async {
     try {
-      OAuthProvider oauthProvider;
+      supa.OAuthProvider oauthProvider;
 
       switch (provider.toLowerCase()) {
         case 'google':
-          oauthProvider = OAuthProvider.google;
+          oauthProvider = supa.OAuthProvider.google;
           break;
         case 'linkedin':
-          oauthProvider = OAuthProvider.linkedin;
+          oauthProvider = supa.OAuthProvider.linkedin;
           break;
         default:
           return AuthResult(
-              success: false, error: 'Unsupported OAuth provider');
+            success: false,
+            error: 'Unsupported OAuth provider',
+          );
       }
 
       await _supabase.auth.signInWithOAuth(
@@ -131,7 +116,7 @@ class AuthService {
       );
 
       return AuthResult(success: true);
-    } on AuthException catch (e) {
+    } on supa.AuthException catch (e) {
       return AuthResult(success: false, error: e.message);
     } catch (e) {
       return AuthResult(
@@ -142,6 +127,7 @@ class AuthService {
   }
 
   Future<AuthResult> linkAccountWithOAuth(String provider) async {
+    // Not implemented right now
     return AuthResult(
       success: false,
       error: 'Account linking is not currently supported',
@@ -150,43 +136,33 @@ class AuthService {
 
   Future<void> logout() async {
     await _supabase.auth.signOut();
-    _currentUser = null;
+    _currentUserCache = null;
   }
 
   Future<bool> checkAuthStatus() async {
-    final session = _supabase.auth.currentSession;
+    final supa.Session? session = _supabase.auth.currentSession;
     if (session?.user != null) {
-      final user = session!.user;
-      _currentUser = app_models.User(
-        id: user.id,
-        email: user.email!,
-        fullName: (user.userMetadata?['full_name'] as String?) ?? 'User',
-        role: (user.userMetadata?['role'] as String?) ??
-            AppConstants.jobseekerRole,
-        createdAt: DateTime.now(),
-      );
+      _currentUserCache = _fromSupabaseUser(session!.user);
       return true;
     }
-    _currentUser = null;
+    _currentUserCache = null;
     return false;
   }
 
-  // ----------------------------
-  // Helpers
-  // ----------------------------
-  model.User _fromSupabaseUser(supa.User sUser) {
+  /// Map Supabase user → our app user model
+  app_models.User _fromSupabaseUser(supa.User sUser) {
     final meta = sUser.userMetadata ?? const <String, dynamic>{};
 
-    // Supabase's createdAt is String (ISO-8601). Convert to DateTime safely.
     final createdAtStr = sUser.createdAt;
     final createdAt = DateTime.tryParse(createdAtStr) ?? DateTime.now();
 
-    return model.User(
+    return app_models.User(
       id: sUser.id,
       email: sUser.email ?? '',
-      fullName: (meta['full_name'] as String?) ?? '',
+      fullName: (meta['full_name'] as String?) ?? 'User',
       role: (meta['role'] as String?) ?? AppConstants.jobseekerRole,
       createdAt: createdAt,
+      avatarUrl: meta['avatar_url'] as String?,
     );
   }
 
@@ -207,13 +183,37 @@ class AuthService {
     return e.message;
   }
 
-  // Get auth state changes stream
-  Stream<supa.AuthState> get authStateChanges => _sb.auth.onAuthStateChange;
-}
+  /// Update avatar_url in Supabase user metadata and refresh cache
+  Future<AuthResult> updateAvatarUrl(String avatarUrl) async {
+    try {
+      final supa.User? user = _supabase.auth.currentUser;
+      if (user == null) {
+        return AuthResult(success: false, error: 'Not logged in');
+      }
 
-// Auth result class
-class AuthResult {
-  AuthResult({required this.success, this.error});
-  final bool success;
-  final String? error;
+      final newMeta = Map<String, dynamic>.from(user.userMetadata ?? {});
+      newMeta['avatar_url'] = avatarUrl;
+
+      final res = await _supabase.auth.updateUser(
+        supa.UserAttributes(data: newMeta),
+      );
+
+      if (res.user != null) {
+        _currentUserCache = _fromSupabaseUser(res.user!);
+      }
+
+      return AuthResult(success: true);
+    } on supa.AuthException catch (e) {
+      return AuthResult(success: false, error: _friendlyAuthMessage(e));
+    } catch (e) {
+      return AuthResult(
+        success: false,
+        error: 'Failed to update avatar: ${e.toString()}',
+      );
+    }
+  }
+
+  /// Stream of Supabase auth state changes (not the Cubit state)
+  Stream<supa.AuthState> get authStateChanges =>
+      _supabase.auth.onAuthStateChange;
 }

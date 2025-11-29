@@ -5,8 +5,8 @@ import '../../core/constants/app_constants.dart';
 import '../../core/constants/ui_constants.dart';
 import '../../core/cubits/auth/auth_cubit.dart';
 import '../../core/cubits/auth/auth_state.dart';
+import './widgets/avatar_uploader_widget.dart';
 
-/// Settings screen with profile access and logout
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -39,19 +39,8 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundColor: theme.colorScheme.primary,
-                        child: Text(
-                          user.fullName.isNotEmpty
-                              ? user.fullName[0].toUpperCase()
-                              : 'U',
-                          style: theme.textTheme.displayMedium?.copyWith(
-                            color: theme.colorScheme.onPrimary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+                      AvatarUploaderWidget(user: user),
+
                       const SizedBox(height: UIConstants.spaceMD),
                       Text(
                         user.fullName,
@@ -109,7 +98,6 @@ class SettingsScreen extends StatelessWidget {
                   title: 'Profile',
                   subtitle: 'View and edit your profile',
                   onTap: () {
-                    // Navigate to profile based on role
                     if (user.role == AppConstants.recruiterRole) {
                       context.push(AppConstants.recruiterProfileRoute);
                     } else {
@@ -172,7 +160,7 @@ class SettingsScreen extends StatelessWidget {
 
                 const SizedBox(height: UIConstants.spaceXL),
 
-                // Logout button
+                /// Logout button
                 Padding(
                   padding: const EdgeInsets.all(UIConstants.spaceLG),
                   child: SizedBox(

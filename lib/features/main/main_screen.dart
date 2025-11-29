@@ -1,10 +1,10 @@
 ﻿import 'package:flutter/material.dart';
+
+import '../chat/conversations_page.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../settings/settings_screen.dart';
-import '../chat/conversations_page.dart';
 
 class MainScreen extends StatefulWidget {
-
   const MainScreen({super.key, this.initialIndex = 0});
   final int initialIndex;
 
@@ -29,50 +29,38 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _screens,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat_bubble),
-            label: 'Conversations',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ),
+    body: IndexedStack(
+      index: _selectedIndex < _screens.length ? _selectedIndex : 0,
+      children: _screens,
+    ),
+    bottomNavigationBar: BottomAppBar(
+      elevation: 8,
+      child: Container(
+        height: 60,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
+            // Index 2 (Placeholder)
             _navItem(
-              index: 2, // placeholder - to be implemented later
+              index: 2,
               icon: Icons.star_outline_rounded,
             ),
+            // Index 3 (Placeholder)
             _navItem(
-              index: 3, // placeholder - to be implemented later
+              index: 3,
               icon: Icons.search_outlined,
             ),
+            // Index 0 (Dashboard)
             _navItem(
               index: 0,
               icon: Icons.home_outlined,
             ),
+            // Index 4 (Placeholder)
             _navItem(
-              index: 4, // placeholder - to be implemented later
+              index: 4,
               icon: Icons.chat_bubble_outline,
             ),
+            // Index 1 (Conversations)
             _navItem(
               index: 1,
               icon: Icons.person_outlined,
@@ -80,7 +68,8 @@ class _MainScreenState extends State<MainScreen> {
           ],
         ),
       ),
-    );
+    ),
+  );
 
   // --- NavBar Helper ---
   Widget _navItem({required int index, required IconData icon}) {
@@ -102,7 +91,7 @@ class _MainScreenState extends State<MainScreen> {
             Icon(
               icon,
               size: 26,
-              color: isActive ? const Color(0xFF2B7D61) : Colors.white,
+              color: isActive ? const Color(0xFF2B7D61) : Colors.grey.shade600,
             ),
           ],
         ),
